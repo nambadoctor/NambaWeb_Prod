@@ -1,0 +1,19 @@
+.MainPage {
+    display: flex;
+    flex: 8;
+}
+
+.row {
+    display:flex; 
+    flex-direction:row;
+    justify-content: space-between;
+}
+
+.rowWith20PXGap {
+    display:flex; 
+    flex-direction:row;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
