@@ -6,12 +6,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from "./Auth/Provider/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Provider } from "react-redux"
+import store from './store'
+
 
 ReactDOM.render(
   <BrowserRouter>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
   </BrowserRouter>,
   document.getElementById('root')
 );

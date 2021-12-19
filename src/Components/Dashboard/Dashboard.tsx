@@ -1,41 +1,28 @@
-import { Component, ChangeEvent, FC } from "react";
+import { Component } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllOrgs } from "../../Actions/OrganisationActions";
+import { OrganisationState } from "../../Reducers/OrganisationsReducer";
 import getUserType from "../../Services/Common/GetUserTypeService"
+
 type Props = {}
 
 type State = {
-  temp:string
+  temp: string
 }
 
+function Dashboard() {
+  const dispatch = useDispatch();
+  const {orgs} = useSelector(this.state => state.)
 
-export default class Dashboard extends Component<Props, State> {
+  const getAllOrganisations = () => {
+    dispatch(getAllOrgs());
+  };
 
-  constructor(props: Props) {
-    super(props);
-
-    //BIND FUNCTIONS WITH STATE
-    this.getUserTypeCaller = this.getUserTypeCaller.bind(this);
-
-    //SET INITIAL VALUES IN STATE
-    this.state = {
-      temp: "",
-    };
-  }
-
-  componentDidMount() {
-      console.log("Hitting Here");
-      getUserType();
-  }
-
-  getUserTypeCaller() {
-
-  }
-
-  render() {
-
-    return (
-      <div className="">
-          HEY BRO
-      </div>
-    );
-  }
+  return (
+    <>
+      <button onClick={getAllOrganisations}> CLICK ME </button>
+    </>
+  );
 }
+
+export default Dashboard;
