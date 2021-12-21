@@ -1,18 +1,11 @@
-import { Component } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllOrgs } from "../../Actions/OrganisationActions";
-import { OrganisationState } from "../../Reducers/OrganisationsReducer";
-import getUserType from "../../Services/Common/GetUserTypeService"
-
-type Props = {}
-
-type State = {
-  temp: string
-}
+import { RootStore } from "../../store";
 
 function Dashboard() {
   const dispatch = useDispatch();
-  const {orgs} = useSelector(this.state => state.)
+
+  const orgState = useSelector((state: RootStore) => state.Org);
 
   const getAllOrganisations = () => {
     dispatch(getAllOrgs());
@@ -20,7 +13,10 @@ function Dashboard() {
 
   return (
     <>
-      <button onClick={getAllOrganisations}> CLICK ME </button>
+      <div>
+        <button onClick={getAllOrganisations}> {orgState.organisations != null ? orgState.organisations.length : "Testing"} </button>
+      </div>
+
     </>
   );
 }
