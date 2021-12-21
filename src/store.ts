@@ -1,27 +1,14 @@
-import { createStore, compose, applyMiddleware, combineReducers } from "redux"; 
-import thunk, {ThunkMiddleware} from "redux-thunk";
-import { OrganisationState, orgReducer } from "./Reducers/OrganisationsReducer";
-import { Action } from "./Types/ActionType";
+import { createStore, applyMiddleware, combineReducers } from "redux"; 
+import thunk from "redux-thunk";
+import {composeWithDevTools} from "redux-devtools-extension";
+import { orgReducer } from "./Reducers/OrganisationsReducer";
 
 const rootReducer = combineReducers({
-    Org: orgReducer,
+    Org: orgReducer
 });
 
-interface rootState extends
-    OrganisationState
-{}
+const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
-export interface DispatchAction extends Action {
-    payload: Partial<rootState>;
-}
+export type RootStore = ReturnType<typeof rootReducer>
 
-const middleware = thunk as ThunkMiddleware<rootState, DispatchAction>;
-
-const ReduxDevTools =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
-
-export default createStore(
-    rootReducer,
-    compose(applyMiddleware(middleware),ReduxDevTools)
-);
+export default Store

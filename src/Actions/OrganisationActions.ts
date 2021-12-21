@@ -7,7 +7,7 @@ import http from "../http-common";
 function setOrgsTypeHelper (organisations:Array<IOrganisationData>) {
   return {
     type: Org_Types.SET_LOCAL_ORGS,
-    payload: organisations
+    payload: ["1","2","3"] //organisations
   };
 }
 
@@ -16,5 +16,5 @@ export const setOrgs = (organisations:Array<IOrganisationData>): Action => (setO
 export const getAllOrgs = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
   let response = await http.get<Array<IOrganisationData>>("/Organisation");
   console.log(response.data)
-  dispatch(setOrgsTypeHelper(response.data));
+  dispatch(setOrgs(response.data));
 };
