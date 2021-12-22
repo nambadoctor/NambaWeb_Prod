@@ -7,7 +7,7 @@ import GetHeaderHelper from "./GetHeaderHelper";
 function setUserTypeAction(userType: string) {
     return {
         type: GetUserType_Types.SET_LOCAL_USER_TYPES,
-        payload: ""
+        payload: userType
     };
 }
 
@@ -16,7 +16,7 @@ export const setUserType = (userType: string): Action => (setUserTypeAction(user
 export const GetUserType = (): ThunkAction<void, UserTypeState, null, Action> => async dispatch => {
     let headersVals = await GetHeaderHelper();
     console.log(headersVals)
-    let response = await http.get<string>("/UserType", {headers : headersVals}); //UserType
+    let response = await http.get<string>("/UserType", {headers : headersVals});
     console.log(response.data)
     dispatch(setUserType(response.data));
 };
