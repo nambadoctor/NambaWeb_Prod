@@ -12,9 +12,7 @@ function App() {
   return (
     <div>
       <Topbar />
-      <div className="container">
-        {!user ? <LoginPage /> : <Dashboard />}
-      </div>
+      {!user ? <LoginPage /> : <Dashboard />}
     </div>
   );
 }

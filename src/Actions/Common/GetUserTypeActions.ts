@@ -1,7 +1,7 @@
 import { Action } from "../../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import http from "../../http-common";
-import { GetUserType_Types, UserTypeState } from "../../Reducers/Common/GetUserTypeReducer";
+import { GetUserType_Types, UserTypeState } from "../../Reducers/Common/UserStateReducer";
 import GetHeaderHelper from "./GetHeaderHelper";
 
 function setUserTypeAction(userType: string) {

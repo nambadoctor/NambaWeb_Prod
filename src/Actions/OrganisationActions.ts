@@ -12,12 +12,12 @@ function setOrgsTypeHelper (organisations:Array<IOrganisationData>) {
   };
 }
 
-export const setOrgs = (organisations:Array<IOrganisationData>): Action => (setOrgsTypeHelper(organisations));
+export const SetOrgs = (organisations:Array<IOrganisationData>): Action => (setOrgsTypeHelper(organisations));
 
-export const getAllOrgs = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
+export const GetAllOrgs = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
   let headersContent = await GetHeadersHelper();
-  let response = await http.get<Array<IOrganisationData>>("/Organisations", {headers : headersContent});
+  let response = await http.get<Array<IOrganisationData>>("/Organisation", {headers : headersContent});
   console.log(response.data)
-  dispatch(setOrgs(response.data));
+  dispatch(SetOrgs(response.data));
 };
  

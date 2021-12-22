@@ -2,9 +2,13 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { orgReducer } from "./Reducers/OrganisationsReducer";
+import { userStateReducer } from "./Reducers/Common/UserStateReducer";
+import { appointmentReducer } from "./Reducers/AppointmentsReducer";
 
 const rootReducer = combineReducers({
-    Org: orgReducer
+    OrgReducer: orgReducer,
+    UserStateReducer: userStateReducer,
+    AppointmentReducer: appointmentReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
