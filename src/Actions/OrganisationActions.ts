@@ -3,18 +3,21 @@ import IOrganisationData from "../Types/Organisation";
 import {ThunkAction} from "redux-thunk";
 import { OrganisationState, Org_Types } from "../Reducers/OrganisationsReducer";
 import http from "../http-common";
+import GetHeadersHelper from "./Common/GetHeaderHelper";
 
 function setOrgsTypeHelper (organisations:Array<IOrganisationData>) {
   return {
     type: Org_Types.SET_LOCAL_ORGS,
-    payload: ["1","2","3"] //organisations
+    payload: organisations
   };
 }
 
 export const setOrgs = (organisations:Array<IOrganisationData>): Action => (setOrgsTypeHelper(organisations));
 
 export const getAllOrgs = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
-  let response = await http.get<Array<IOrganisationData>>("/Organisation");
+  let headersContent = await GetHeadersHelper();
+  let response = await http.get<Array<IOrganisationData>>("/Organisations", {headers : headersContent});
   console.log(response.data)
   dispatch(setOrgs(response.data));
 };
+ 

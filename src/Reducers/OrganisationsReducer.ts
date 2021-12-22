@@ -1,14 +1,12 @@
 import { Action } from "../Types/ActionType"
 import IOrganisationData from "../Types/Organisation";
-import { Reducer } from "redux";
-import { getAllOrgs } from "../Actions/OrganisationActions";
 
 export enum Org_Types {
     SET_LOCAL_ORGS = "SET_LOCAL_ORGS"
 }
 
 export interface OrganisationState {
-    organisations: string[]
+    organisations: IOrganisationData[]
 }
 
 const initialState:OrganisationState = {

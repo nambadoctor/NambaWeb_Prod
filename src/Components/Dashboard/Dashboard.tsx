@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getAllOrgs } from "../../Actions/OrganisationActions";
+import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
 import { RootStore } from "../../store";
 
 function Dashboard() {
@@ -8,7 +8,7 @@ function Dashboard() {
   const orgState = useSelector((state: RootStore) => state.Org);
 
   const getAllOrganisations = () => {
-    dispatch(getAllOrgs());
+    dispatch(GetUserType());
   };
 
   return (

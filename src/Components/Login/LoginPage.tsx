@@ -1,6 +1,6 @@
 import { Component, ChangeEvent, useContext, useRef } from "react";
 import { Button, Container, Form } from "react-bootstrap";
-import { SignInWithPhoneNumberHelper } from "../../Actions/LoginActions"
+import { SignInWithPhoneNumberHelper } from "../../Actions/Common/LoginActions"
 
 type Props = {}
 
