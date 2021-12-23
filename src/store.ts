@@ -4,11 +4,13 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import { orgReducer } from "./Reducers/OrganisationsReducer";
 import { userStateReducer } from "./Reducers/Common/UserStateReducer";
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
+import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReducer";
 
 const rootReducer = combineReducers({
     OrgReducer: orgReducer,
     UserStateReducer: userStateReducer,
-    AppointmentReducer: appointmentReducer
+    AppointmentReducer: appointmentReducer,
+    AppointmentCategoryReducer: appointmentCategoryReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

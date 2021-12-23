@@ -4,6 +4,7 @@ import { useContext } from "react";
 import Topbar from './Components/Topbar/Topbar';
 import LoginPage from './Components/Login/LoginPage';
 import Dashboard from './Components/Dashboard/Dashboard';
+import './index.css'
 
 function App() {
 
