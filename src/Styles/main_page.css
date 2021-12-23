@@ -3,12 +3,6 @@
     flex: 8;
 }
 
-.row {
-    display: inline-block;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
 .rowWith20PXGap {
     display: flex;
     flex-direction: row;
