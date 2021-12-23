@@ -1,20 +1,27 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { GetAllAppointments } from '../../Actions/AppointmentActions';
+import { GetAllAppointments, setCategoryFilteredAppointments } from '../../Actions/AppointmentActions';
 import { RootStore } from '../../store';
 import IDeNormalisedAppointmentData from '../../Types/DeNormalisedAppointment';
 import { convertDaysIntoNearestUnit, getReadableDateString } from '../../Utils/GeneralUtils';
 import { PeopleAltRounded, VideoCameraFront } from '@mui/icons-material';
 import "../../Styles/main_page.css"
 import "../../Styles/appointment_table.css"
+import AppointmentStatusEnum from '../../Types/Enums/AppointmentStatusEnums';
+import AppointmentsVitalsDisplayCards from '../DisplayCard/AppointmentsVitalsDisplayCards';
 
 export default function AppointmentsTable() {
     const dispatch = useDispatch();
     const appointmentState = useSelector((state: RootStore) => state.AppointmentReducer);
+    const appointmentCategoryState = useSelector((state: RootStore) => state.AppointmentCategoryReducer);
 
     const getAllAppointments = () => {
         dispatch(GetAllAppointments());
     };
+
+    useEffect(() => {
+        dispatch(setCategoryFilteredAppointments(appointmentCategoryState.selectedCategory, appointmentState.appointments))
+    }, [appointmentCategoryState.selectedCategory])
 
     useEffect(() => {
         getAllAppointments()
@@ -37,6 +44,19 @@ export default function AppointmentsTable() {
         return convertDaysIntoNearestUnit(days);
     }
 
+    function getDisplayNameForAppointmentState(appointmentState: string) {
+        switch (appointmentState) {
+            case AppointmentStatusEnum.Confirmed:
+                return "Confirmed";
+            case AppointmentStatusEnum.StartedConsultation:
+                return "Started";
+            case AppointmentStatusEnum.Finished:
+                return "Finished";
+            case AppointmentStatusEnum.Cancelled:
+                return "Cancelled";
+        }
+    }
+
     return (
         <div className="appointmentTable">
             {/* <div className="row">
@@ -46,7 +66,7 @@ export default function AppointmentsTable() {
                     <ResponsiveDateRangePicker onDateRangeChange={this.onDateRangeChanged} value={this.state.dateSelectedvalue}></ResponsiveDateRangePicker>
                 </div>
             </div> */}
-            {/* <AppointmentsVitalsDisplayCards appointments={appointments} onCategoryChange={this.changeFilter} selectedCategory={this.state.selectedCategory}></AppointmentsVitalsDisplayCards> */}
+            <AppointmentsVitalsDisplayCards></AppointmentsVitalsDisplayCards>
             {/* <Divider style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}></Divider> */}
             <table className="appointmentTableTable">
                 <tr className="appointmentTableTr">
@@ -57,9 +77,7 @@ export default function AppointmentsTable() {
                     <th className="appointmentTableTh">Appointment Date</th>
                 </tr>
                 {appointmentState.appointments.length != 0 &&
-                    appointmentState.appointments
-                        .reverse()
-                        //.filter(appointment => (appointment.appointment.status == this.state.selectedCategory || this.state.selectedCategory == "Total"))
+                    appointmentState.filteredAppointments
                         .map((appointment: IDeNormalisedAppointmentData, index: number) => (
                             <tr className="appointmentTableTr">
                                 <span className="appointmentTableName">
@@ -70,11 +88,12 @@ export default function AppointmentsTable() {
                                 <td className="appointmentTableCusName">{appointment.customerName}</td>
                                 <td className="appointmentTableCusLastVisited">{getLastVisitForCustomer(appointment.appointment.customerId)}</td>
                                 <td className="appointmentTableStatus">
-                                    <button className={"appointmentTableButton " + appointment.appointment.status}>{appointment.appointment.status}</button>
+                                    <button className={"appointmentTableButton " + appointment.appointment.status}>{getDisplayNameForAppointmentState(appointment.appointment.status)}</button>
                                 </td>
                                 <td className="appointmentTableDate">{getReadableDateString(appointment.appointment.scheduledAppointmentStartTime)}</td>
                             </tr>
-                        ))}
+                        ))
+                        .reverse()}
             </table>
         </div>
     )
