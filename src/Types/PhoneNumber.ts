@@ -1,8 +1,8 @@
 export default interface IPhoneNumberData {
     id:string,
-    IsNew: boolean,
-    CountryCode: string,
-    Number: string,
-    Type: string,
-    IsDeleted: boolean
+    isNew: boolean,
+    countryCode: string,
+    number: string,
+    type: string,
+    isDeleted: boolean
 }

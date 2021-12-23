@@ -15,14 +15,15 @@ export default function AppointmentsTable() {
     const appointmentState = useSelector((state: RootStore) => state.AppointmentReducer);
     const appointmentCategoryState = useSelector((state: RootStore) => state.AppointmentCategoryReducer);
     const selectedDatesState = useSelector((state: RootStore) => state.SelectedDatesReducer);
+    const organisationState = useSelector((state: RootStore) => state.OrgReducer)
 
     const getAllAppointments = () => {
         dispatch(GetAllAppointments());
     };
 
     useEffect(() => {
-        dispatch(setFilteredAppointments(appointmentCategoryState.selectedCategory, selectedDatesState.dates, appointmentState.appointments))
-    }, [appointmentCategoryState.selectedCategory, selectedDatesState.dates])
+        dispatch(setFilteredAppointments(appointmentCategoryState.selectedCategory, selectedDatesState.dates, appointmentState.appointments, organisationState.selectedOrganisation))
+    }, [appointmentCategoryState.selectedCategory, selectedDatesState.dates, organisationState.selectedOrganisation])
 
     useEffect(() => {
         getAllAppointments()

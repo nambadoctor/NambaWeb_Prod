@@ -8,7 +8,7 @@ import { RootStore } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import IOrganisationData from '../../Types/Organisation';
 import { useEffect } from 'react';
-import { GetAllOrgs } from '../../Actions/OrganisationActions';
+import { GetAllOrgs, SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -53,8 +53,6 @@ const StyledMenu = styled((props: MenuProps) => (
 
 interface IProps {
     menuOptions: Array<string>
-    selectedMenuOption: string
-    onMenuOptionChange: (menuOption: string) => void
 }
 
 export default function OrganisationPicker() {
@@ -73,14 +71,15 @@ export default function OrganisationPicker() {
         setAnchorEl(null);
     };
 
-    function getSelectedOption(organisation: IOrganisationData) {
+    function getSelectedOption(organisation?: IOrganisationData) {
+        dispatch(SetLocallySelectedOrg(organisation))
         handleClose()
     }
 
     useEffect(() => {
         dispatch(GetAllOrgs());
     }, [])
-    
+
     return (
         <div>
             <Button
@@ -93,7 +92,7 @@ export default function OrganisationPicker() {
                 onClick={handleClick}
                 endIcon={<KeyboardArrowDownIcon />}
             >
-                {organisationState.selectedOrganisation != null ? organisationState.selectedOrganisation!.Name : "Nambadoctor"}
+                {organisationState.selectedOrganisation != null ? organisationState.selectedOrganisation!.name : "Nambadoctor"}
             </Button>
             <StyledMenu
                 id="demo-customized-menu"
@@ -105,8 +104,10 @@ export default function OrganisationPicker() {
                 onClose={handleClose}
             >
 
-                {organisationState.organisations.map((organisation: IOrganisationData, index: number) => (
-                    <MenuItem onClick={() => { getSelectedOption(organisation) }} disableRipple> {organisation.Name} </MenuItem>
+                <MenuItem onClick={() => { getSelectedOption() }} disableRipple> NambaDoctor </MenuItem>
+
+                {organisationState.organisations.length != 0 && organisationState.organisations.map((organisation: IOrganisationData, index: number) => (
+                    <MenuItem onClick={() => { getSelectedOption(organisation) }} disableRipple> {organisation.name} </MenuItem>
                 ))}
 
             </StyledMenu>

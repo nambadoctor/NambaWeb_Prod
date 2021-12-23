@@ -12,12 +12,18 @@ function setOrgsTypeHelper (organisations:Array<IOrganisationData>) {
   };
 }
 
+function setSelectedOrgTypeHelper (organisation?:IOrganisationData) {
+  return {
+    type: Org_Types.SET_LOCAL_SELECTED_ORG,
+    payload: organisation
+  };
+}
+
 export const SetOrgs = (organisations:Array<IOrganisationData>): Action => (setOrgsTypeHelper(organisations));
+export const SetLocallySelectedOrg = (organisation?:IOrganisationData) : Action => (setSelectedOrgTypeHelper(organisation))
 
 export const GetAllOrgs = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
   let headersContent = await GetHeadersHelper();
   let response = await http.get<Array<IOrganisationData>>("/Organisation", {headers : headersContent});
-  console.log(response.data)
   dispatch(SetOrgs(response.data));
 };
- 
