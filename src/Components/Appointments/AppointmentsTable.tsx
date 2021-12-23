@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { GetAllAppointments, setCategoryFilteredAppointments } from '../../Actions/AppointmentActions';
+import { GetAllAppointments, setFilteredAppointments } from '../../Actions/AppointmentActions';
 import { RootStore } from '../../store';
 import IDeNormalisedAppointmentData from '../../Types/DeNormalisedAppointment';
 import { convertDaysIntoNearestUnit, getReadableDateString } from '../../Utils/GeneralUtils';
@@ -14,14 +14,15 @@ export default function AppointmentsTable() {
     const dispatch = useDispatch();
     const appointmentState = useSelector((state: RootStore) => state.AppointmentReducer);
     const appointmentCategoryState = useSelector((state: RootStore) => state.AppointmentCategoryReducer);
+    const selectedDatesState = useSelector((state: RootStore) => state.SelectedDatesReducer);
 
     const getAllAppointments = () => {
         dispatch(GetAllAppointments());
     };
 
     useEffect(() => {
-        dispatch(setCategoryFilteredAppointments(appointmentCategoryState.selectedCategory, appointmentState.appointments))
-    }, [appointmentCategoryState.selectedCategory])
+        dispatch(setFilteredAppointments(appointmentCategoryState.selectedCategory, selectedDatesState.dates, appointmentState.appointments))
+    }, [appointmentCategoryState.selectedCategory, selectedDatesState.dates])
 
     useEffect(() => {
         getAllAppointments()

@@ -1,19 +1,12 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
-import { GetAllOrgs } from "../../Actions/OrganisationActions";
-import { RootStore } from "../../store";
 import AppointmentsTable from "../Appointments/AppointmentsTable"
+import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
+import "../../Styles/main_page.css"
 
 function Dashboard() {
   const dispatch = useDispatch();
-
-  const userState = useSelector((state: RootStore) => state.UserStateReducer);
-  const orgState = useSelector((state: RootStore) => state.OrgReducer);
-
-  const getAllOrganisations = () => {
-    dispatch(GetAllOrgs());
-  }; 
 
   const getUserType = () => {
     dispatch(GetUserType())
@@ -25,7 +18,10 @@ function Dashboard() {
 
   return (
     <>
-      <AppointmentsTable></AppointmentsTable>
+      <div className="rowWith20PXGap">
+        <AppointmentsTable></AppointmentsTable>
+        <DatePickerComponent></DatePickerComponent>
+      </div>
     </>
   );
 }
