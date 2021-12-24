@@ -1,27 +1,26 @@
 import React from "react";
 import "./topbar.css";
-import { NotificationsNone, Language, Settings } from "@mui/icons-material";
+import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 
 export default function Topbar() {
+
+  const logo = require('../../Assets/NDLogo.png');
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">NAMBADOCTOR</span>
+          <img alt='logo' style={{ width: 60, height: 60, borderRadius: 15, marginRight: 10 }} src={String(logo)} />
+          <span className="logo">NAMBA DOCTOR</span>
         </div>
         <div className="topRight">
+          <OrganisationPicker></OrganisationPicker>
           <div className="topbarIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
+            Appointments
           </div>
           <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">2</span>
+            Patients
           </div>
-          <div className="topbarIconContainer">
-            <Settings />
-          </div>
-          <img src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="topAvatar" />
         </div>
       </div>
     </div>

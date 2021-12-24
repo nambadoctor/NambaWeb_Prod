@@ -51,10 +51,6 @@ const StyledMenu = styled((props: MenuProps) => (
     },
 }));
 
-interface IProps {
-    menuOptions: Array<string>
-}
-
 export default function OrganisationPicker() {
     const dispatch = useDispatch()
 
@@ -77,8 +73,8 @@ export default function OrganisationPicker() {
     }
 
     useEffect(() => {
-        dispatch(GetAllOrgs());
-    }, [])
+        dispatch(GetAllOrgs());   
+    }, []);
 
     return (
         <div>

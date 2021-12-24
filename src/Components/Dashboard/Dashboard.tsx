@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
 import AppointmentsTable from "../Appointments/AppointmentsTable"
 import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
-import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
+import Topbar from "../Topbar/Topbar";
 import "../../Styles/main_page.css"
 
 function Dashboard() {
@@ -19,11 +19,14 @@ function Dashboard() {
 
   return (
     <>
-      <div className="rowWith20PXGap">
-        <OrganisationPicker></OrganisationPicker>
-        <AppointmentsTable></AppointmentsTable>
-        <DatePickerComponent></DatePickerComponent>
+      <div>
+        <Topbar />
+        <div className="rowWith20PXGap">
+          <AppointmentsTable></AppointmentsTable>
+          <DatePickerComponent></DatePickerComponent>
+        </div>
       </div>
+
     </>
   );
 }

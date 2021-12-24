@@ -12,7 +12,6 @@ function App() {
 
   return (
     <div>
-      <Topbar />
       {!user ? <LoginPage /> : <Dashboard />}
     </div>
   );

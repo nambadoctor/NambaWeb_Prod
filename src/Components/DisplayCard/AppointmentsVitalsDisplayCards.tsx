@@ -11,7 +11,7 @@ export default function AppointmentsVitalsDisplayCards() {
 
     function getNumOfAppointmentsByStatus(status: String): number {
         var count = 0;
-        appointmentState.appointments.forEach(element => {
+        appointmentState.filteredAppointments.forEach(element => {
             if (element.appointment.status == status) {
                 count += 1;
             }
@@ -37,7 +37,7 @@ export default function AppointmentsVitalsDisplayCards() {
             <div className={getCardStyling("Total")}
                 onClick={() => setCategoryChange("Total")}>
                 <span className="displaycardTitle">Total: </span>
-                <span className="displaycardMoney">{appointmentState.appointments.length}</span>
+                <span className="displaycardMoney">{appointmentState.filteredAppointments.length}</span>
             </div>
             <div className={getCardStyling("Confirmed")}
                 onClick={() => setCategoryChange("Confirmed")}>
