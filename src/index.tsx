@@ -7,13 +7,16 @@ import { AuthProvider } from "./Auth/Provider/AuthProvider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from "react-redux"
 import store from './store'
+import { NativeBaseProvider } from 'native-base'; //extendTheme
 
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <NativeBaseProvider> {/* theme={theme} */}
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </NativeBaseProvider>
     </Provider>
   </BrowserRouter>,
   document.getElementById('root')

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import Button from '@mui/material/Button';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -9,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IOrganisationData from '../../Types/Organisation';
 import { useEffect } from 'react';
 import { GetAllOrgs, SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
+import "../../Styles/organisation_picker.css"
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -73,23 +73,18 @@ export default function OrganisationPicker() {
     }
 
     useEffect(() => {
-        dispatch(GetAllOrgs());   
+        dispatch(GetAllOrgs());
     }, []);
 
     return (
         <div>
-            <Button
-                id="demo-customized-button"
-                aria-controls="demo-customized-menu"
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                variant="contained"
-                disableElevation
-                onClick={handleClick}
-                endIcon={<KeyboardArrowDownIcon />}
-            >
-                {organisationState.selectedOrganisation != null ? organisationState.selectedOrganisation!.name : "Nambadoctor"}
-            </Button>
+            <div className="orgSwitcherButtonContainer">
+                <button className="orgSwitcherButton" onClick={handleClick}>
+                    {organisationState.selectedOrganisation != null ? organisationState.selectedOrganisation!.name : "Nambadoctor"}
+                </button>
+                <KeyboardArrowDownIcon style={{fill: "white"}}></KeyboardArrowDownIcon>
+            </div>
+
             <StyledMenu
                 id="demo-customized-menu"
                 MenuListProps={{

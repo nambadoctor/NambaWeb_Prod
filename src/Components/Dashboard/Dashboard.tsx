@@ -4,7 +4,7 @@ import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
 import AppointmentsTable from "../Appointments/AppointmentsTable"
 import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
 import Topbar from "../Topbar/Topbar";
-import "../../Styles/main_page.css"
+import "../../Styles/main_page.css";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -26,7 +26,6 @@ function Dashboard() {
           <DatePickerComponent></DatePickerComponent>
         </div>
       </div>
-
     </>
   );
 }

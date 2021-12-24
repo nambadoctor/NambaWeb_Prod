@@ -6,13 +6,17 @@ import { userStateReducer } from "./Reducers/Common/UserStateReducer";
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
 import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReducer";
 import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
+import { loggedInUserStateReducer } from "./Reducers/Common/LoggedInUserStateReducer";
+import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 
 const rootReducer = combineReducers({
     OrgReducer: orgReducer,
     UserStateReducer: userStateReducer,
     AppointmentReducer: appointmentReducer,
     AppointmentCategoryReducer: appointmentCategoryReducer,
-    SelectedDatesReducer: selectedDateReducer
+    SelectedDatesReducer: selectedDateReducer,
+    LoggedInUserStateReducer: loggedInUserStateReducer,
+    SelectedUserTabStateReducer: selectedUserTabReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
