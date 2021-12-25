@@ -7,6 +7,7 @@ import { AppointmentState, Appointment_Types } from "../Reducers/AppointmentsRed
 import IAppointmentData from "../Types/Appointment";
 import IOrganisationData from "../Types/Organisation";
 import { isDatesEqual } from "../Utils/GeneralUtils";
+import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 
 function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>) {
   return {
@@ -15,7 +16,7 @@ function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>
   };
 }
 
-function setFilteredAppointmentsHelper(
+function filterAppointments(
   dates: Date[],
   appointments: Array<IDenormalisedAppointmentData>,
   selectedOrganisation?: IOrganisationData) {
@@ -47,22 +48,30 @@ function setFilteredAppointmentsHelper(
     }
   });
 
+  return filteredAppointments;
+}
+
+function setFilteredAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>) {
+
   return {
     type: Appointment_Types.SET_LOCAL_FILTERED_APPOINTMENTS,
-    payload: filteredAppointments
+    payload: appointments
   };
 }
 
 export const SetAppointments = (appointments: Array<IDenormalisedAppointmentData>): Action => (setAppointmentsHelper(appointments));
-export const setFilteredAppointments = (
-  dates: Date[],
-  appointments: Array<IDenormalisedAppointmentData>,
-  selectedOrganisation?: IOrganisationData): Action => (setFilteredAppointmentsHelper(dates, appointments, selectedOrganisation));
+
+
+export const setFilteredAppointments = (dates: Date[], appointments: Array<IDenormalisedAppointmentData>, selectedOrganisation?: IOrganisationData): ThunkAction<void, AppointmentState, null, Action> => async dispatch => {
+  var filteredAppointments = filterAppointments(dates, appointments, selectedOrganisation);
+  dispatch(setFilteredAppointmentsHelper(filteredAppointments));
+  dispatch(SetDatesWithAppointmentsRange(appointments));
+};
+
 
 export const GetAllAppointments = (): ThunkAction<void, AppointmentState, null, Action> => async dispatch => {
   let headersContent = await GetHeadersHelper();
   let response = await http.get<Array<IDenormalisedAppointmentData>>("/Appointment", { headers: headersContent });
-  console.log("APPOINTMENTS: " + response.data);
   dispatch(SetAppointments(response.data));
   dispatch(setFilteredAppointments([new Date(), new Date()], response.data)); //To set filtered as TOTAL each time page loads up
 };

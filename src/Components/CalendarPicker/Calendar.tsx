@@ -9,17 +9,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { SetSelectedDateRange } from '../../Actions/SelectedDateActions';
 import { RootStore } from '../../store';
-import { CalendarTheme } from '../../Styles/CalendarTheme';
 import { months } from '../../Utils/CalendarConst';
+import '../../Styles/CalendarStyling.css';
+import { CalendarTheme } from '../../Styles/CalendarTheme';
 import { generateMatrix } from '../../Utils/CalendarUtils';
 import { useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { Box, ZStack } from 'native-base';
 
 export default function Calendar() {
     const dispatch = useDispatch()
     const [viewingDate, setViewingDate] = useState(new Date());
     const selectedDatesState = useSelector((state: RootStore) => (state.SelectedDatesReducer));
+
 
     useEffect(() => {
         setDates(new Date())
@@ -37,6 +40,13 @@ export default function Calendar() {
         }
     };
 
+    function getDateWithAppointmentIndicator() {
+        return
+        <ZStack alignItems="center" justifyContent="center">
+            <Box bg="white" size="2" width="150" marginTop="95" />
+        </ZStack>
+    }
+
     const matrix = generateMatrix(viewingDate);
 
     let rows = [];
@@ -52,10 +62,8 @@ export default function Calendar() {
                             style={[
                                 styles.date,
                                 (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item == selectedDatesState.dates[0].getDate())
-                                    ? styles.activeDate
-                                    : styles.inActiveDate,
-                            ]}>
-                            <Text
+                                    ? styles.activeDate : styles.inActiveDate]}>
+                            <Text ellipsizeMode='tail'
                                 style={[styles.dateText, {
                                     color: colIndex == 0 ? CalendarTheme.error : CalendarTheme.text,
                                     fontWeight: (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item == selectedDatesState.dates[0].getDate())
@@ -78,19 +86,19 @@ export default function Calendar() {
 
     return (
         <div>
-            {selectedDatesState.dates[0] &&
+            {(selectedDatesState.dates[0] && selectedDatesState.datesWithAppointments) &&
                 <div>
                     <View style={styles.actionContainer}>
-                        <button style={{ height: 30, backgroundColor:"white", border:"none" }} onClick={() => changeMonth(-1)}>
-                            {<ArrowBackIosIcon style={{ fill: "blue", height:17 }}></ArrowBackIosIcon>}
+                        <button style={{ height: 30, backgroundColor: "white", border: "none" }} onClick={() => changeMonth(-1)}>
+                            {<ArrowBackIosIcon style={{ fill: "blue", height: 17 }}></ArrowBackIosIcon>}
                         </button>
 
                         <Text style={styles.currentDate}>
                             {`${months[viewingDate.getMonth()]} ${viewingDate.getFullYear()}`}
                         </Text>
 
-                        <button style={{ height: 30, backgroundColor:"white", border:"none" }} onClick={() => changeMonth(+1)}>
-                            {<ArrowForwardIosIcon style={{ fill: "blue", height:17 }}></ArrowForwardIosIcon>}
+                        <button style={{ height: 30, backgroundColor: "white", border: "none" }} onClick={() => changeMonth(+1)}>
+                            {<ArrowForwardIosIcon style={{ fill: "blue", height: 17 }}></ArrowForwardIosIcon>}
                         </button>
                     </View>
                     <View>{rows}</View>
@@ -116,6 +124,7 @@ const styles = StyleSheet.create({
     },
     activeDate: { backgroundColor: CalendarTheme.primary, borderRadius: 20 },
     inActiveDate: { backgroundColor: '#fff' },
+    dateWithAppointment: { backgroundColor: CalendarTheme.primary },
     dateText: {
         textAlign: 'center',
         fontSize: 14

@@ -31,7 +31,7 @@ export default function Topbar() {
           <img alt='logo' style={{ width: 60, height: 60, borderRadius: 15, marginRight: 10 }} src={String(logo)} />
           <span className="logo">NAMBA DOCTOR</span>
         </div>
-        <div className="topRight">
+        <div className="topRight"> 
           <OrganisationPicker></OrganisationPicker>
           <div>
             {selectedTabState.selectedTab == TopBarNavItemConstants.APPOINTMENTS ?
