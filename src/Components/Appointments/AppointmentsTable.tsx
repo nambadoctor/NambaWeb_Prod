@@ -22,7 +22,7 @@ export default function AppointmentsTable() {
     };
 
     useEffect(() => {
-        dispatch(setFilteredAppointments(appointmentCategoryState.selectedCategory, selectedDatesState.dates, appointmentState.appointments, organisationState.selectedOrganisation))
+        dispatch(setFilteredAppointments(selectedDatesState.dates, appointmentState.appointments, organisationState.selectedOrganisation))
     }, [appointmentCategoryState.selectedCategory, selectedDatesState.dates, organisationState.selectedOrganisation])
 
     useEffect(() => {

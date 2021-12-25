@@ -6,6 +6,7 @@ import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { AppointmentState, Appointment_Types } from "../Reducers/AppointmentsReducer";
 import IAppointmentData from "../Types/Appointment";
 import IOrganisationData from "../Types/Organisation";
+import { isDatesEqual } from "../Utils/GeneralUtils";
 
 function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>) {
   return {
@@ -15,7 +16,6 @@ function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>
 }
 
 function setFilteredAppointmentsHelper(
-  selectedCategory: string,
   dates: Date[],
   appointments: Array<IDenormalisedAppointmentData>,
   selectedOrganisation?: IOrganisationData) {
@@ -23,8 +23,11 @@ function setFilteredAppointmentsHelper(
   var filteredAppointments: Array<IDenormalisedAppointmentData> = new Array<IDenormalisedAppointmentData>();
 
   function checkForDateCompliance(appointment: IAppointmentData) {
-    return (dates[0] <= new Date(appointment.scheduledAppointmentStartTime) && new Date(appointment.scheduledAppointmentStartTime) <= dates[1])
+    var appointmentDate = new Date(appointment.scheduledAppointmentStartTime)
+    var check = isDatesEqual(dates[0], appointmentDate)
+    return check;
   }
+
 
   function checkForOrgCompliance(appointment: IAppointmentData) {
     if (selectedOrganisation != null) {
@@ -40,7 +43,6 @@ function setFilteredAppointmentsHelper(
       checkForOrgCompliance(appointment.appointment)) {
       //CHECK FOR CATEGORY TYPE IS DONE IN THE MAPPING IN APPOINTMENTSTABLE.TSX
 
-      console.log(new Date(appointment.appointment.actualAppointmentStartTime))
       filteredAppointments.push(appointment);
     }
   });
@@ -53,15 +55,14 @@ function setFilteredAppointmentsHelper(
 
 export const SetAppointments = (appointments: Array<IDenormalisedAppointmentData>): Action => (setAppointmentsHelper(appointments));
 export const setFilteredAppointments = (
-  selectedCategory: string,
   dates: Date[],
   appointments: Array<IDenormalisedAppointmentData>,
-  selectedOrganisation?: IOrganisationData): Action => (setFilteredAppointmentsHelper(selectedCategory, dates, appointments, selectedOrganisation));
+  selectedOrganisation?: IOrganisationData): Action => (setFilteredAppointmentsHelper(dates, appointments, selectedOrganisation));
 
 export const GetAllAppointments = (): ThunkAction<void, AppointmentState, null, Action> => async dispatch => {
   let headersContent = await GetHeadersHelper();
   let response = await http.get<Array<IDenormalisedAppointmentData>>("/Appointment", { headers: headersContent });
   console.log("APPOINTMENTS: " + response.data);
   dispatch(SetAppointments(response.data));
-  dispatch(setFilteredAppointments("Total", [new Date(), new Date()], response.data)); //To set filtered as TOTAL each time page loads up
+  dispatch(setFilteredAppointments([new Date(), new Date()], response.data)); //To set filtered as TOTAL each time page loads up
 };
