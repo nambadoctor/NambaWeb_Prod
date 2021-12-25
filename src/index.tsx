@@ -12,7 +12,7 @@ import { NativeBaseProvider } from 'native-base'; //extendTheme
 ReactDOM.render(
   <BrowserRouter>
     <Provider store={store}>
-      <NativeBaseProvider> {/* theme={theme} */}
+      <NativeBaseProvider>
         <AuthProvider>
           <App />
         </AuthProvider>

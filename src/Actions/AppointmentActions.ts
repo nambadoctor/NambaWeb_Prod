@@ -37,8 +37,9 @@ function setFilteredAppointmentsHelper(
 
   appointments.forEach(appointment => {
     if (checkForDateCompliance(appointment.appointment) &&
-      checkForOrgCompliance(appointment.appointment) &&
-      (appointment.appointment.status == selectedCategory || selectedCategory == "Total")) {
+      checkForOrgCompliance(appointment.appointment)) {
+      //CHECK FOR CATEGORY TYPE IS DONE IN THE MAPPING IN APPOINTMENTSTABLE.TSX
+
       console.log(new Date(appointment.appointment.actualAppointmentStartTime))
       filteredAppointments.push(appointment);
     }

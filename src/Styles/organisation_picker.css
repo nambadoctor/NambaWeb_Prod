@@ -7,6 +7,14 @@
     font-weight: bold;
 }
 
+.orgSwitcherDropDownIcon {
+    border: 0px;
+    padding: 0px;
+    background-color: #1054c4;
+    color: white;
+    height: 55px;
+}
+
 .orgSwitcherButtonContainer {
     align-items: center;
     background-color: #1054c4;

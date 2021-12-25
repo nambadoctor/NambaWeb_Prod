@@ -4,6 +4,11 @@ export enum Set_User_Selected_Tab_Types {
     SET_LOCAL_SELECTED_USER_TAB = "SET_LOCAL_SELECTED_USER_TAB"
 }
 
+export enum TopBarNavItemConstants {
+    APPOINTMENTS = "Appointments",
+    PATIENTS = "Patients"
+}
+
 export interface UserTypeState {
     selectedTab: string
 }

@@ -4,6 +4,7 @@ import { useContext } from "react";
 import LoginPage from './Components/Login/LoginPage';
 import Dashboard from './Components/Dashboard/Dashboard';
 import './index.css'
+import { Routes, Route } from "react-router-dom";
 
 function App() {
 
@@ -11,7 +12,12 @@ function App() {
 
   return (
     <div>
-      {!user ? <LoginPage /> : <Dashboard />}
+      {!user ? <LoginPage /> :
+        <Routes>
+          <Route path="/" element={<Dashboard></Dashboard>} />
+          <Route path="/Dashboard/*" element={<Dashboard></Dashboard>} />
+        </Routes>
+      }
     </div>
   );
 }

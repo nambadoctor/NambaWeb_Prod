@@ -5,6 +5,8 @@ import AppointmentsTable from "../Appointments/AppointmentsTable"
 import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
 import Topbar from "../Topbar/Topbar";
 import "../../Styles/main_page.css";
+import { Routes, Route } from "react-router-dom";
+
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -17,14 +19,21 @@ function Dashboard() {
     getUserType()
   }, [])
 
-  return (
+  function AppointmentsAndCalendarComp() {
+    return <div className="rowWith20PXGap">
+      <AppointmentsTable></AppointmentsTable>
+      <DatePickerComponent></DatePickerComponent>
+    </div>
+  }
+
+  return(
     <>
       <div>
         <Topbar />
-        <div className="rowWith20PXGap">
-          <AppointmentsTable></AppointmentsTable>
-          <DatePickerComponent></DatePickerComponent>
-        </div>
+        <Routes>
+          <Route path="/Appointments" element={AppointmentsAndCalendarComp()} />
+          <Route path="/Patients" element={<div>Hello Patients</div>} />
+        </Routes>
       </div>
     </>
   );

@@ -82,7 +82,7 @@ export default function OrganisationPicker() {
                 <button className="orgSwitcherButton" onClick={handleClick}>
                     {organisationState.selectedOrganisation != null ? organisationState.selectedOrganisation!.name : "Nambadoctor"}
                 </button>
-                <KeyboardArrowDownIcon style={{fill: "white"}}></KeyboardArrowDownIcon>
+                <button className="orgSwitcherDropDownIcon" onClick={handleClick}> {<KeyboardArrowDownIcon style={{fill: "white"}}></KeyboardArrowDownIcon>} </button>
             </div>
 
             <StyledMenu

@@ -80,6 +80,7 @@ export default function AppointmentsTable() {
                 </tr>
                 {appointmentState.appointments.length != 0 &&
                     appointmentState.filteredAppointments
+                        .filter(appointment => (appointment.appointment.status == appointmentCategoryState.selectedCategory || appointmentCategoryState.selectedCategory == "Total"))
                         .map((appointment: IDeNormalisedAppointmentData, index: number) => (
                             <tr className="appointmentTableTr">
                                 <span className="appointmentTableName">
