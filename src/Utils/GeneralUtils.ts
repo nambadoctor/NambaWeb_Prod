@@ -31,3 +31,18 @@ export const isDatesEqual = (date1: Date, date2: Date): boolean => {
         date1.getMonth() === date2.getMonth() &&
         date1.getDate() === date2.getDate();
 }
+
+export const checkDatesWithOnlyMonthAndDay = (date: Date, dates: Date[]): boolean => {
+    dates.forEach(element => {
+        if (isDatesEqual(date, element)) {
+            return true;
+        }
+    });
+
+    return false;
+}
+
+export const checkIfNumber = (o: any) => {
+    const s = String(o)
+    return !isNaN(+s) && isFinite(+s) && (typeof o === 'number' || !/e/i.test(s))
+}

@@ -1,7 +1,8 @@
 import { weekDays, daysInEachMonth } from './CalendarConst';
+import { checkIfNumber } from '../Utils/GeneralUtils';
 
 export function generateMatrix(currentDate: Date) {
-    let matrix: (number | string)[][] = [];
+    let matrix: (number | string | Date)[][] = [];
 
     // Create header of days
     matrix[0] = weekDays;
@@ -37,6 +38,16 @@ export function generateMatrix(currentDate: Date) {
                 matrix[row][col] = counter++;
             } else if (row > 1 && counter <= maxDays) {
                 matrix[row][col] = counter++;
+            }
+        }
+    }
+
+    //NEED TO LOOP THROUGH TWICE. ONLY WAY I CAN PROPERLY SET DATE VALUES INSTEAD OF INTEGER
+    for (let row = 1; row < 7; row++) {
+        for (let col = 0; col < 7; col++) {
+            var existingVal = matrix[row][col]
+            if (existingVal != null && existingVal != -1 && checkIfNumber(existingVal)) {
+                matrix[row][col] = new Date(year, month, Number(matrix[row][col]));
             }
         }
     }

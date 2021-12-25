@@ -16,7 +16,6 @@ import { generateMatrix } from '../../Utils/CalendarUtils';
 import { useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Box, ZStack } from 'native-base';
 
 export default function Calendar() {
     const dispatch = useDispatch()
@@ -40,11 +39,26 @@ export default function Calendar() {
         }
     };
 
-    function getDateWithAppointmentIndicator() {
-        return
-        <ZStack alignItems="center" justifyContent="center">
-            <Box bg="white" size="2" width="150" marginTop="95" />
-        </ZStack>
+    function getActiveOrInactiveDate(item: Date) {
+        if (Date.parse(String(item)) != NaN) {
+            var newDate = new Date(item)
+            if (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && newDate.getDate() == selectedDatesState.dates[0].getDate()) {
+                return styles.activeDate;
+            } else {
+                return styles.inActiveDate;
+            }
+        } else {
+            return styles.inActiveDate;
+        }
+    }
+
+    function getDisplayableItem(item: Date) {
+        if ((String(Date.parse(String(item))) != "NaN")) {
+            var newDate = new Date(item)
+            return newDate.getDate()
+        } else {
+            return item;
+        }
     }
 
     const matrix = generateMatrix(viewingDate);
@@ -61,15 +75,15 @@ export default function Calendar() {
                             onPress={() => _onPress(item)}
                             style={[
                                 styles.date,
-                                (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item == selectedDatesState.dates[0].getDate())
-                                    ? styles.activeDate : styles.inActiveDate]}>
-                            <Text ellipsizeMode='tail'
+                                getActiveOrInactiveDate(item)
+                            ]}>
+                            <Text
                                 style={[styles.dateText, {
                                     color: colIndex == 0 ? CalendarTheme.error : CalendarTheme.text,
                                     fontWeight: (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item == selectedDatesState.dates[0].getDate())
                                         ? 'bold' : 'normal',
                                 }]}>
-                                {item != -1 ? item : ''}
+                                {item != -1 ? getDisplayableItem(item) : ''}
                             </Text>
                         </TouchableOpacity>}
                 </div>

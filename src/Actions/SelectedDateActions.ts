@@ -19,8 +19,6 @@ function setDatesWithAppointmentsRangeHelper(appointments: IDeNormalisedAppointm
         }
     });
 
-    console.log("DATES WITH APPOINTMENTS: " + datesToSet)
-
     return {
         type: SelectedDateReducer.SET_LOCAL_DATES_WITH_APPOINTMENTS,
         payload: datesToSet
