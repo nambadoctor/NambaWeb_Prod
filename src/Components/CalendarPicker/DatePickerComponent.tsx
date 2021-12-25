@@ -17,7 +17,8 @@ function DatePickerComponent() {
     }, [date])
 
     return (
-        <div className='app'>
+        <div className='app' style={{marginTop:20, marginRight:20}}>
+            <h4>Calendar</h4>
             <div className='calendar-container'>
                 <Calendar
                     onChange={setDate}

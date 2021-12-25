@@ -1,12 +1,13 @@
-.MainPage {
+.MainPageow {
     display: flex;
     flex: 8;
 }
 
 .rowWith20PXGap {
+    position: absolute;
+    width: 100%;
     display: flex;
     flex-direction: row;
     gap: 20px;
-    align-items: center;
-    margin-bottom: 20px;
+    vertical-align: top;
 }

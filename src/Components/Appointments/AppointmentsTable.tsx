@@ -60,44 +60,47 @@ export default function AppointmentsTable() {
     }
 
     return (
-        <div className="appointmentTable">
-            {/* <div className="row">
+        <div className="appointmentTableContainer">
+            <h4>Appointments</h4>
+            <AppointmentsVitalsDisplayCards></AppointmentsVitalsDisplayCards>
+            <div className="appointmentTable">
+                {/* <div className="row">
                 <h3 className="appointmentTableTitle" style={{ marginRight: 20, marginBottom: 20 }}>Appointments</h3>
                 <div className="rowWith20PXGap">
                     <CustomisedMenus menuOptions={DateRangeMenuItems} selectedMenuOption={this.state.selectedTimeMenuOption} onMenuOptionChange={this.onPredefinedTimeRangeDropDownChange}></CustomisedMenus>
                     <ResponsiveDateRangePicker onDateRangeChange={this.onDateRangeChanged} value={this.state.dateSelectedvalue}></ResponsiveDateRangePicker>
                 </div>
             </div> */}
-            <AppointmentsVitalsDisplayCards></AppointmentsVitalsDisplayCards>
-            {/* <Divider style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}></Divider> */}
-            <table className="appointmentTableTable">
-                <tr className="appointmentTableTr">
-                    <th className="appointmentTableTh"></th>
-                    <th className="appointmentTableTh">Customer Name</th>
-                    <th className="appointmentTableTh">Customer Last Visit</th>
-                    <th className="appointmentTableTh">Status</th>
-                    <th className="appointmentTableTh">Appointment Date</th>
-                </tr>
-                {appointmentState.appointments.length != 0 &&
-                    appointmentState.filteredAppointments
-                        .filter(appointment => (appointment.appointment.status == appointmentCategoryState.selectedCategory || appointmentCategoryState.selectedCategory == "Total"))
-                        .map((appointment: IDeNormalisedAppointmentData, index: number) => (
-                            <tr className="appointmentTableTr">
-                                <span className="appointmentTableName">
-                                    {appointment.appointment.isInPersonAppointment ?
-                                        <PeopleAltRounded className="appointmentStatusIcon"></PeopleAltRounded> :
-                                        <VideoCameraFront className="appointmentStatusIcon"></VideoCameraFront>}
-                                </span>
-                                <td className="appointmentTableCusName">{appointment.customerName}</td>
-                                <td className="appointmentTableCusLastVisited">{getLastVisitForCustomer(appointment.appointment.customerId)}</td>
-                                <td className="appointmentTableStatus">
-                                    <button className={"appointmentTableButton " + appointment.appointment.status}>{getDisplayNameForAppointmentState(appointment.appointment.status)}</button>
-                                </td>
-                                <td className="appointmentTableDate">{getReadableDateString(appointment.appointment.scheduledAppointmentStartTime)}</td>
-                            </tr>
-                        ))
-                        .reverse()}
-            </table>
+                {/* <Divider style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}></Divider> */}
+                <table className="appointmentTableTable">
+                    <tr className="appointmentTableTr">
+                        <th className="appointmentTableTh"></th>
+                        <th className="appointmentTableTh">Name</th>
+                        <th className="appointmentTableTh">Last Visit</th>
+                        <th className="appointmentTableTh">Status</th>
+                        <th className="appointmentTableTh">Appointment Time</th>
+                    </tr>
+                    {appointmentState.appointments.length != 0 &&
+                        appointmentState.filteredAppointments
+                            .filter(appointment => (appointment.appointment.status == appointmentCategoryState.selectedCategory || appointmentCategoryState.selectedCategory == "Total"))
+                            .map((appointment: IDeNormalisedAppointmentData, index: number) => (
+                                <tr className="appointmentTableTr">
+                                    <span className="appointmentTableName">
+                                        {appointment.appointment.isInPersonAppointment ?
+                                            <PeopleAltRounded className="appointmentStatusIcon"></PeopleAltRounded> :
+                                            <VideoCameraFront className="appointmentStatusIcon"></VideoCameraFront>}
+                                    </span>
+                                    <td className="appointmentTableCusName">{appointment.customerName}</td>
+                                    <td className="appointmentTableCusLastVisited">{getLastVisitForCustomer(appointment.appointment.customerId)}</td>
+                                    <td className="appointmentTableStatus">
+                                        <button className={"appointmentTableButton " + appointment.appointment.status}>{getDisplayNameForAppointmentState(appointment.appointment.status)}</button>
+                                    </td>
+                                    <td className="appointmentTableDate">{getReadableDateString(appointment.appointment.scheduledAppointmentStartTime)}</td>
+                                </tr>
+                            ))
+                            .reverse()}
+                </table>
+            </div>
         </div>
     )
 }

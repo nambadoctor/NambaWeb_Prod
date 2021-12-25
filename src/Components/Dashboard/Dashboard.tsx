@@ -26,7 +26,7 @@ function Dashboard() {
     </div>
   }
 
-  return(
+  return (
     <>
       <div>
         <Topbar />
