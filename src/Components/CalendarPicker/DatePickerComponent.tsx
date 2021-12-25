@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useDispatch } from 'react-redux';
 import { SetSelectedDateRange } from '../../Actions/SelectedDateActions';
+import Calendar from './Calendar';
 
 function DatePickerComponent() {
     const dispatch = useDispatch();
@@ -17,13 +17,12 @@ function DatePickerComponent() {
     }, [date])
 
     return (
-        <div className='app' style={{marginTop:20, marginRight:20}}>
+        <div className='app' style={{ marginTop: 20, marginRight: 20 }}>
             <h4>Calendar</h4>
             <div className='calendar-container'>
                 <Calendar
-                    onChange={setDate}
-                    selectRange={true}
-                    defaultValue={date}
+                    // Initially visible day, week, month and year. Default = Date()
+                    current={date[0]}
                 />
             </div>
         </div>
