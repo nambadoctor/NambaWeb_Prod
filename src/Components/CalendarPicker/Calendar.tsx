@@ -16,12 +16,14 @@ import { generateMatrix } from '../../Utils/CalendarUtils';
 import { useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { checkIfDateExists, isDatesEqual } from '../../Utils/GeneralUtils';
+import ICustomDateData from '../../Types/CustomDate';
+import IMatrixDateObj from '../../Types/CustomDate';
 
 export default function Calendar() {
     const dispatch = useDispatch()
     const [viewingDate, setViewingDate] = useState(new Date());
     const selectedDatesState = useSelector((state: RootStore) => (state.SelectedDatesReducer));
-
 
     useEffect(() => {
         setDates(new Date())
@@ -31,42 +33,38 @@ export default function Calendar() {
         dispatch(SetSelectedDateRange([date, date]))
     }
 
-    const _onPress = (item: number) => {
-        if (typeof item !== 'string' && item != -1) {
-            const newDate = new Date(selectedDatesState.dates[0].setDate(item));
-            newDate.setMonth(viewingDate.getMonth())
-            setDates(newDate)
+    const _onPress = (item: IMatrixDateObj) => {
+        if (item.title == "" && !item.emptyDate) {
+            setDates(item.date)
         }
     };
 
-    function getActiveOrInactiveDate(item: Date) {
-        if (Date.parse(String(item)) != NaN) {
-            var newDate = new Date(item)
-            if (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && newDate.getDate() == selectedDatesState.dates[0].getDate()) {
-                return styles.activeDate;
+    function getActiveOrInactiveDate(item: ICustomDateData) {
+        if (checkIfDateExists(item) && (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item.date.getDate() == selectedDatesState.dates[0].getDate())) {
+            return styles.activeDate;
+        } else {
+            if (item.hasAppointment) {
+                return styles.markedDate;
             } else {
                 return styles.inActiveDate;
             }
-        } else {
-            return styles.inActiveDate;
         }
     }
 
-    function getDisplayableItem(item: Date) {
-        if ((String(Date.parse(String(item))) != "NaN")) {
-            var newDate = new Date(item)
-            return newDate.getDate()
+    function getDisplayableItem(item: ICustomDateData) {
+        if (checkIfDateExists(item)) {
+            return item.date.getDate()
         } else {
-            return item;
+            return item.title;
         }
     }
 
-    const matrix = generateMatrix(viewingDate);
+    const matrix = generateMatrix(viewingDate, selectedDatesState.datesWithAppointments);
 
     let rows = [];
 
     rows = matrix.map((row: any, rowIndex: number) => {
-        let rowItems = row.map((item: any, colIndex: number) => {
+        let rowItems = row.map((item: ICustomDateData, colIndex: number) => {
             return (
                 <div>
                     {selectedDatesState.dates[0] &&
@@ -80,10 +78,10 @@ export default function Calendar() {
                             <Text
                                 style={[styles.dateText, {
                                     color: colIndex == 0 ? CalendarTheme.error : CalendarTheme.text,
-                                    fontWeight: (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item == selectedDatesState.dates[0].getDate())
+                                    fontWeight: (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item.date.getDate() == selectedDatesState.dates[0].getDate())
                                         ? 'bold' : 'normal',
                                 }]}>
-                                {item != -1 ? getDisplayableItem(item) : ''}
+                                {getDisplayableItem(item)}
                             </Text>
                         </TouchableOpacity>}
                 </div>
@@ -137,6 +135,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     activeDate: { backgroundColor: CalendarTheme.primary, borderRadius: 20 },
+    markedDate: { backgroundColor: CalendarTheme.markedDate, borderRadius: 20 },
     inActiveDate: { backgroundColor: '#fff' },
     dateWithAppointment: { backgroundColor: CalendarTheme.primary },
     dateText: {

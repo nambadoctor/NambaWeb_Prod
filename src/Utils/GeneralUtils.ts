@@ -1,3 +1,5 @@
+import IMatrixDateObj from "../Types/CustomDate";
+
 export const getReadableDateString = (date: string) =>
     new Date(date).toLocaleDateString("default", {
         day: "2-digit",
@@ -33,16 +35,26 @@ export const isDatesEqual = (date1: Date, date2: Date): boolean => {
 }
 
 export const checkDatesWithOnlyMonthAndDay = (date: Date, dates: Date[]): boolean => {
+    var containsIsTrue = false;
+
     dates.forEach(element => {
         if (isDatesEqual(date, element)) {
-            return true;
+            containsIsTrue = true;
         }
     });
 
-    return false;
+    return containsIsTrue;
 }
 
 export const checkIfNumber = (o: any) => {
     const s = String(o)
     return !isNaN(+s) && isFinite(+s) && (typeof o === 'number' || !/e/i.test(s))
+}
+
+export const checkIfDateExists = (item: IMatrixDateObj) => {
+    if (item.title == "" && !item.emptyDate) {
+        return true
+    } else {
+        return false
+    }
 }

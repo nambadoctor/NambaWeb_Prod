@@ -1,8 +1,10 @@
 import { weekDays, daysInEachMonth } from './CalendarConst';
-import { checkIfNumber } from '../Utils/GeneralUtils';
+import { checkDatesWithOnlyMonthAndDay, checkIfNumber } from '../Utils/GeneralUtils';
+import ICustomDateData from '../Types/CustomDate';
+import { v4 as uuidv4 } from 'uuid';
 
-export function generateMatrix(currentDate: Date) {
-    let matrix: (number | string | Date)[][] = [];
+export function generateMatrix(currentDate: Date, datesToMark:Date[]) {
+    let matrix: ICustomDateData[][] = [];
 
     // Create header of days
     matrix[0] = weekDays;
@@ -31,13 +33,13 @@ export function generateMatrix(currentDate: Date) {
     for (let row = 1; row < 7; row++) {
         matrix[row] = [];
         for (let col = 0; col < 7; col++) {
-            matrix[row][col] = -1;
+            matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: true, tempCounter: 0 };
 
             if (row == 1 && col >= firstDay) {
                 // in first row the date should start from the from day of the week
-                matrix[row][col] = counter++;
+                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: false, tempCounter: counter++ };
             } else if (row > 1 && counter <= maxDays) {
-                matrix[row][col] = counter++;
+                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: false, tempCounter: counter++ };;
             }
         }
     }
@@ -46,11 +48,18 @@ export function generateMatrix(currentDate: Date) {
     for (let row = 1; row < 7; row++) {
         for (let col = 0; col < 7; col++) {
             var existingVal = matrix[row][col]
-            if (existingVal != null && existingVal != -1 && checkIfNumber(existingVal)) {
-                matrix[row][col] = new Date(year, month, Number(matrix[row][col]));
+            if (existingVal != null && !existingVal.emptyDate && existingVal.title == "" && existingVal.tempCounter != 0) {
+                var customDate = existingVal;
+                customDate.date = new Date(year, month, Number(matrix[row][col].tempCounter));
+                if (checkDatesWithOnlyMonthAndDay(customDate.date, datesToMark)) {
+                    customDate.hasAppointment = true;
+                }
+                matrix[row][col] = customDate;
             }
         }
     }
+
+    console.log(matrix)
 
     return matrix;
 }
