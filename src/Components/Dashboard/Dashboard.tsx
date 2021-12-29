@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
-import AppointmentsTable from "../Appointments/AppointmentsTable"
 import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
 import Topbar from "../Topbar/Topbar";
 import "../../Styles/main_page.css";
 import { Routes, Route } from "react-router-dom";
+import PatientsTable from "../PatientsList/PatientsTable";
+import AppointmentsTableView from "../Appointments/AppointmentsTableView";
 
 
 function Dashboard() {
@@ -21,8 +22,14 @@ function Dashboard() {
 
   function AppointmentsAndCalendarComp() {
     return <div className="rowWith20PXGap">
-      <AppointmentsTable></AppointmentsTable>
+      <AppointmentsTableView></AppointmentsTableView>
       <DatePickerComponent></DatePickerComponent>
+    </div>
+  }
+
+  function PatientsViewComp () {
+    return <div>
+      <PatientsTable></PatientsTable>
     </div>
   }
 
@@ -32,7 +39,7 @@ function Dashboard() {
         <Topbar />
         <Routes>
           <Route path="/Appointments" element={AppointmentsAndCalendarComp()} />
-          <Route path="/Patients" element={<div>Hello Patients</div>} />
+          <Route path="/Patients" element={PatientsViewComp()} />
         </Routes>
       </div>
     </>

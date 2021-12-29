@@ -1,35 +1,35 @@
-.appointmentTableContainer {
+.patientTableContainer {
     flex: 7;
     margin: 20px;
 }
 
-.appointmentTable {
+.patientTable {
     -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
     padding: 20px;
 }
 
-.appointmentTableTitle {
+.patientTableTitle {
     font-size: 22px;
     font-weight: 600;
 }
 
-.appointmentTableTable {
+.patientTableTable {
     width: 100%;
     border-spacing: 20px;
 }
 
-.appointmentTableTh {
+.patientTableTh {
     text-align: left;
 }
 
-.appointmentTableUser {
+.patientTableUser {
     display: inline;
     align-items: center;
     font-weight: 600;
 }
 
-.appointmentTableImg {
+.patientTableImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -37,12 +37,12 @@
     margin-right: 10px;
 }
 
-.appointmentTableDate,
-.appointmentTableAmount {
+.patientTableDate,
+.patientTableAmount {
     font-weight: 300;
 }
 
-.appointmentTableButton {
+.patientTableButton {
     padding: 3px 9px;
     border: none;
     border-radius: 5px;
@@ -51,26 +51,26 @@
     text-align: left;
 }
 
-.appointmentTableTr:hover {
+.patientTableTr:hover {
     background-color: rgb(240, 240, 255);
 }
 
-.appointmentTableButton.Confirmed {
+.patientTableButton.Confirmed {
     background-color: #e5faf2;
     color: #3bb077;
 }
 
-.appointmentTableButton.Finished {
+.patientTableButton.Finished {
     background-color: #fff0f1;
     color: #d95087;
 }
 
-.appointmentTableButton.StartedConsultation {
+.patientTableButton.StartedConsultation {
     background-color: #ebf1fe;
     color: #2a7ade;
 }
 
-.appointmentStatusIcon {
+.patientStatusIcon {
     font-size: 20px !important;
     color: #5fa3f7;
 }

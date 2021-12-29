@@ -1,9 +1,10 @@
 import Calendar from "../CalendarPicker/Calendar"
+import '../../Styles/CalendarStyling.css'
 
 function DatePickerComponent() {
 
     return (
-        <div className='app' style={{ marginTop: 20, marginRight: 20 }}>
+        <div className="datePickerContainer">
             <Calendar/>
         </div>
     );

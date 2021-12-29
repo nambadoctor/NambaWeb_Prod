@@ -33,13 +33,13 @@ export function generateMatrix(currentDate: Date, datesToMark:Date[]) {
     for (let row = 1; row < 7; row++) {
         matrix[row] = [];
         for (let col = 0; col < 7; col++) {
-            matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: true, tempCounter: 0 };
+            matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", isDayHeader: false, emptyDate: true, tempCounter: 0 };
 
             if (row == 1 && col >= firstDay) {
                 // in first row the date should start from the from day of the week
-                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: false, tempCounter: counter++ };
+                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", isDayHeader: false, emptyDate: false, tempCounter: counter++ };
             } else if (row > 1 && counter <= maxDays) {
-                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", emptyDate: false, tempCounter: counter++ };;
+                matrix[row][col] = { id: uuidv4(), date: new Date(), hasAppointment: false, title: "", isDayHeader: false, emptyDate: false, tempCounter: counter++ };;
             }
         }
     }

@@ -16,7 +16,7 @@ export default function Topbar() {
 
   function getBottomDivider() {
     return <ZStack alignItems="center" justifyContent="center">
-      <Box bg="white" size="2" width="150" marginTop="95" />
+      <Box bg="white" size="1" width="150" marginTop="95" />
     </ZStack>
   }
 

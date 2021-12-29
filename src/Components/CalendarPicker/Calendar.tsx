@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { SetSelectedDateRange } from '../../Actions/SelectedDateActions';
 import { RootStore } from '../../store';
-import { months } from '../../Utils/CalendarConst';
+import { months, weekDays } from '../../Utils/CalendarConst';
 import '../../Styles/CalendarStyling.css';
 import { CalendarTheme } from '../../Styles/CalendarTheme';
 import { generateMatrix } from '../../Utils/CalendarUtils';
@@ -19,6 +19,7 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { checkIfDateExists, isDatesEqual } from '../../Utils/GeneralUtils';
 import ICustomDateData from '../../Types/CustomDate';
 import IMatrixDateObj from '../../Types/CustomDate';
+import CircleIcon from '@mui/icons-material/Circle';
 
 export default function Calendar() {
     const dispatch = useDispatch()
@@ -43,11 +44,7 @@ export default function Calendar() {
         if (checkIfDateExists(item) && (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item.date.getDate() == selectedDatesState.dates[0].getDate())) {
             return styles.activeDate;
         } else {
-            if (item.hasAppointment) {
-                return styles.markedDate;
-            } else {
-                return styles.inActiveDate;
-            }
+            return styles.inActiveDate;
         }
     }
 
@@ -59,7 +56,15 @@ export default function Calendar() {
         }
     }
 
+    function checkIfCurrentDateSelected(item: IMatrixDateObj) {
+        return (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item.date.getDate() == selectedDatesState.dates[0].getDate())
+    }
+
     const matrix = generateMatrix(viewingDate, selectedDatesState.datesWithAppointments);
+
+    function getHasAppointmentMarker() {
+        return <CircleIcon style={{ fill: "blue", height: 5, width: 5 }}> </CircleIcon>
+    }
 
     let rows = [];
 
@@ -75,14 +80,18 @@ export default function Calendar() {
                                 styles.date,
                                 getActiveOrInactiveDate(item)
                             ]}>
-                            <Text
-                                style={[styles.dateText, {
-                                    color: colIndex == 0 ? CalendarTheme.error : CalendarTheme.text,
-                                    fontWeight: (viewingDate.getMonth() == selectedDatesState.dates[0].getMonth() && item.date.getDate() == selectedDatesState.dates[0].getDate())
-                                        ? 'bold' : 'normal',
-                                }]}>
-                                {getDisplayableItem(item)}
-                            </Text>
+                            <div className="textAndAppointmentIndicatorContainer">
+                                <Text
+                                    style={[styles.dateText, {
+                                        color: (checkIfCurrentDateSelected(item) && !item.isDayHeader) ? CalendarTheme.whiteText : CalendarTheme.text,
+                                        fontWeight: (checkIfCurrentDateSelected(item) || item.isDayHeader)
+                                            ? 'bold' : 'normal',
+                                    }]}>
+                                    {getDisplayableItem(item)}
+                                </Text>
+
+                                {getActiveOrInactiveDate(item) == styles.inActiveDate && item.hasAppointment ? getHasAppointmentMarker() : <div />}
+                            </div>
                         </TouchableOpacity>}
                 </div>
             );
@@ -100,20 +109,22 @@ export default function Calendar() {
         <div>
             {(selectedDatesState.dates[0] && selectedDatesState.datesWithAppointments) &&
                 <div>
-                    <View style={styles.actionContainer}>
-                        <button style={{ height: 30, backgroundColor: "white", border: "none" }} onClick={() => changeMonth(-1)}>
-                            {<ArrowBackIosIcon style={{ fill: "blue", height: 17 }}></ArrowBackIosIcon>}
+                    <div className="titleAndActionContainer">
+                        <button className="actionItem" onClick={() => changeMonth(-1)}>
+                            {<ArrowBackIosIcon style={{ fill: "white", height: 17 }}></ArrowBackIosIcon>}
                         </button>
 
-                        <Text style={styles.currentDate}>
+                        <div className="titleItem">
                             {`${months[viewingDate.getMonth()]} ${viewingDate.getFullYear()}`}
-                        </Text>
+                        </div>
 
-                        <button style={{ height: 30, backgroundColor: "white", border: "none" }} onClick={() => changeMonth(+1)}>
-                            {<ArrowForwardIosIcon style={{ fill: "blue", height: 17 }}></ArrowForwardIosIcon>}
+                        <button className="actionItem" onClick={() => changeMonth(+1)}>
+                            {<ArrowForwardIosIcon style={{ fill: "white", height: 17 }}></ArrowForwardIosIcon>}
                         </button>
-                    </View>
-                    <View>{rows}</View>
+                    </div>
+                    <div className="datePickerBox">
+                        <View>{rows}</View>
+                    </div>
                 </div>
             }
         </div>
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    activeDate: { backgroundColor: CalendarTheme.primary, borderRadius: 20 },
+    activeDate: { color: 'white', backgroundColor: '#1672f9', borderRadius: 20 },
     markedDate: { backgroundColor: CalendarTheme.markedDate, borderRadius: 20 },
     inActiveDate: { backgroundColor: '#fff' },
     dateWithAppointment: { backgroundColor: CalendarTheme.primary },
@@ -142,6 +153,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 14
     },
-    actionContainer: { flexDirection: 'row', justifyContent: 'space-around', flex: 1, marginTop: 8 },
-    currentDate: { fontWeight: '600', fontSize: 23, textAlign: 'center', marginBottom: 10 },
 });
