@@ -12,12 +12,11 @@ import { RootStore } from '../../store';
 import IDeNormalisedAppointmentData from '../../Types/DeNormalisedAppointment';
 import { convertDaysIntoNearestUnit, getReadableDateString } from '../../Utils/GeneralUtils';
 import { PeopleAltRounded, VideoCameraFront } from '@mui/icons-material';
-import "../../Styles/main_page.css"
 import AppointmentStatusEnum from '../../Types/Enums/AppointmentStatusEnums';
 import { makeStyles } from '@mui/styles';
 import { Typography } from '@mui/material';
 
-const useStyles = makeStyles(() => ({
+const useAppointmentTableStyles = makeStyles(() => ({
     table: {
         minWidth: 650
     },
@@ -56,7 +55,7 @@ export default function AppointmentsTable() {
     const selectedDatesState = useSelector((state: RootStore) => state.SelectedDatesReducer);
     const organisationState = useSelector((state: RootStore) => state.OrgReducer)
 
-    const classes = useStyles();
+    const classes = useAppointmentTableStyles();
 
     const getAllAppointments = () => {
         dispatch(GetAllAppointments());
@@ -121,10 +120,11 @@ export default function AppointmentsTable() {
     }
 
     return (
-        <TableContainer component={Paper} style={{ marginTop: 20, marginLeft: 20, borderRadius: 15 }}>
+        <TableContainer component={Paper} style={{ borderRadius: 15 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
+                        <TableCell className={classes.tableHeaderCell} align="left"></TableCell>
                         <TableCell className={classes.tableHeaderCell} align="left">Name</TableCell>
                         <TableCell className={classes.tableHeaderCell} align="left">Last Visit</TableCell>
                         <TableCell className={classes.tableHeaderCell} align="left">Status</TableCell>
@@ -137,6 +137,13 @@ export default function AppointmentsTable() {
                             .filter(appointment => (appointment.appointment.status == appointmentCategoryState.selectedCategory || appointmentCategoryState.selectedCategory == "Total"))
                             .map((appointment: IDeNormalisedAppointmentData, index: number) => (
                                 <TableRow key={appointment.appointment.id}>
+                                    <TableCell align="left">
+                                        <span className="appointmentTableName">
+                                            {appointment.appointment.isInPersonAppointment ?
+                                                <PeopleAltRounded style={{color: "#149c4a"}}></PeopleAltRounded> :
+                                                <VideoCameraFront style={{color: "#0863e4"}}></VideoCameraFront>}
+                                        </span>
+                                    </TableCell>
                                     <TableCell align="left">{appointment.customerName}</TableCell>
                                     <TableCell align="left">{getLastVisitForCustomer(appointment.appointment.customerId)}</TableCell>
                                     <TableCell>

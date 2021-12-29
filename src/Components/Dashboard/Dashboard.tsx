@@ -3,9 +3,8 @@ import { useDispatch } from "react-redux";
 import { GetUserType } from "../../Actions/Common/GetUserTypeActions";
 import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent"
 import Topbar from "../Topbar/Topbar";
-import "../../Styles/main_page.css";
 import { Routes, Route } from "react-router-dom";
-import PatientsTable from "../PatientsList/PatientsTable";
+import PatientsTableView from "../PatientsList/PatientsTableView";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
 
 
@@ -21,15 +20,15 @@ function Dashboard() {
   }, [])
 
   function AppointmentsAndCalendarComp() {
-    return <div className="rowWith20PXGap">
+    return <div style={{margin: 20, display: 'flex', flexDirection: 'row', gap: 20}}>
       <AppointmentsTableView></AppointmentsTableView>
       <DatePickerComponent></DatePickerComponent>
     </div>
   }
 
   function PatientsViewComp () {
-    return <div>
-      <PatientsTable></PatientsTable>
+    return <div style={{margin: 20}}>
+      <PatientsTableView></PatientsTableView>
     </div>
   }
 

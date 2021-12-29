@@ -1,12 +1,7 @@
-.datePickerContainer {
-  margin-top: 20px;
-}
-
 .datePickerBox {
   border: solid 1px;
   border-radius: 0px 0px 15px 15px;
   border-color: #d0dbf5;
-  margin-right: 20px;
   padding-left: 15px;
   padding-right: 15px;
 }
@@ -17,7 +12,6 @@
   justify-content: space-around;
   background-color: #1672f9;
   border-radius: 15px 15px 0px 0px;
-  margin-right: 20px;
 }
 
 .actionItem {
