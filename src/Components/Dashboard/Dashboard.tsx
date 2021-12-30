@@ -6,7 +6,7 @@ import Topbar from "../Topbar/Topbar";
 import { Routes, Route } from "react-router-dom";
 import PatientsTableView from "../PatientsList/PatientsTableView";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
-
+import { Container, Row, Col } from 'react-bootstrap'
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -20,14 +20,14 @@ function Dashboard() {
   }, [])
 
   function AppointmentsAndCalendarComp() {
-    return <div style={{margin: 20, display: 'flex', flexDirection: 'row', gap: 20}}>
+    return <div style={{ margin: 20, display: 'flex', flexDirection: 'row', gap: 20 }}>
       <AppointmentsTableView></AppointmentsTableView>
       <DatePickerComponent></DatePickerComponent>
     </div>
   }
 
-  function PatientsViewComp () {
-    return <div style={{margin: 20}}>
+  function PatientsViewComp() {
+    return <div style={{ margin: 20 }}>
       <PatientsTableView></PatientsTableView>
     </div>
   }
@@ -36,10 +36,13 @@ function Dashboard() {
     <>
       <div>
         <Topbar />
-        <Routes>
-          <Route path="/Appointments" element={AppointmentsAndCalendarComp()} />
-          <Route path="/Patients" element={PatientsViewComp()} />
-        </Routes>
+
+        <div style={{marginTop:100}}>
+          <Routes>
+            <Route path="/Appointments" element={AppointmentsAndCalendarComp()} />
+            <Route path="/Patients" element={PatientsViewComp()} />
+          </Routes>
+        </div>
       </div>
     </>
   );
