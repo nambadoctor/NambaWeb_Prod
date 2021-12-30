@@ -106,7 +106,7 @@ export default function Calendar() {
     };
 
     return (
-        <div>
+        <div className="wholeCalendarContainer">
             {(selectedDatesState.dates[0] && selectedDatesState.datesWithAppointments) &&
                 <div>
                     <div className="titleAndActionContainer">

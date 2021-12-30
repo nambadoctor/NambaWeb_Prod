@@ -21,14 +21,24 @@ function Dashboard() {
 
   function AppointmentsAndCalendarComp() {
     return <div style={{ margin: 20, display: 'flex', flexDirection: 'row', gap: 20 }}>
-      <AppointmentsTableView></AppointmentsTableView>
-      <DatePickerComponent></DatePickerComponent>
+      <Container fluid>
+        <Row>
+          <Col md='9'>
+            <AppointmentsTableView></AppointmentsTableView>
+          </Col>
+          <Col md='3'>
+            <DatePickerComponent></DatePickerComponent>
+          </Col>
+        </Row>
+      </Container>
     </div>
   }
 
   function PatientsViewComp() {
     return <div style={{ margin: 20 }}>
-      <PatientsTableView></PatientsTableView>
+      <Container fluid>
+        <PatientsTableView></PatientsTableView>
+      </Container>
     </div>
   }
 
@@ -37,7 +47,7 @@ function Dashboard() {
       <div>
         <Topbar />
 
-        <div style={{marginTop:100}}>
+        <div style={{ marginTop: 100 }}>
           <Routes>
             <Route path="/Appointments" element={AppointmentsAndCalendarComp()} />
             <Route path="/Patients" element={PatientsViewComp()} />

@@ -45,9 +45,13 @@ export function generateMatrix(currentDate: Date, datesToMark:Date[]) {
     }
 
     //NEED TO LOOP THROUGH TWICE. ONLY WAY I CAN PROPERLY SET DATE VALUES INSTEAD OF INTEGER
+    var lastRowEmpty = true; //CHECK LAST ROW OF MATRIX FOR ALL EMPTY VALS
     for (let row = 1; row < 7; row++) {
         for (let col = 0; col < 7; col++) {
             var existingVal = matrix[row][col]
+            if (row == 6 && !existingVal.emptyDate) {
+                lastRowEmpty = false;
+            } 
             if (existingVal != null && !existingVal.emptyDate && existingVal.title == "" && existingVal.tempCounter != 0) {
                 var customDate = existingVal;
                 customDate.date = new Date(year, month, Number(matrix[row][col].tempCounter));
@@ -59,7 +63,11 @@ export function generateMatrix(currentDate: Date, datesToMark:Date[]) {
         }
     }
 
-    console.log(matrix)
+    if (lastRowEmpty) {
+        matrix[6].splice(0)
+    }
+
+    //console.log(matrix)
 
     return matrix;
 }
