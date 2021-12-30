@@ -120,7 +120,7 @@ export default function AppointmentsTable() {
     }
 
     return (
-        <TableContainer component={Paper} style={{ borderRadius: 15 }}>
+        <TableContainer component={Paper} style={{ borderRadius: 15, marginBottom: 10 }}>
             <Table sx={{ minWidth: 700 }} aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
