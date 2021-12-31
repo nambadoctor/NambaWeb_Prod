@@ -1,5 +1,5 @@
 import { Action } from "../../Types/ActionType";
-import { UITrigger_Types } from "../../Reducers/Common/UIControlReducer";
+import { UITrigger_Types } from "../../Reducers/Common/UITriggerReducer";
 
 //TODO: MAKE ALL COMMON USECASE ACTIONS IN ONE FILE
 function setBooleanPayload(payload: boolean, actionType: string) {

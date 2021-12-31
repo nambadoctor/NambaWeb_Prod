@@ -1,7 +1,7 @@
 import { RootStore } from "../store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GetUserType } from "../Actions/Common/GetUserTypeActions";
+import { GetServiceProviderBasic } from "../Actions/Common/ServiceProviderBasicActions";
 import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import { SetLocallySelectedOrg, SetOrgs } from "../Actions/OrganisationActions";
 import { SetOrgPickerModalToggle } from "../Actions/Common/UIControlActions";
@@ -10,6 +10,23 @@ export default function useServiceProviderBasicHook() {
     const dispatch = useDispatch();
 
     const serviceProviderBasicState = useSelector((state: RootStore) => state.ServiceProviderBasicReducer)
+
+    useEffect(() => {
+        dispatch(GetServiceProviderBasic());
+    }, [])
+
+    useEffect(() => {
+        if (serviceProviderBasicState.serviceProvider != undefined || serviceProviderBasicState.serviceProvider != null) {
+            checkForDefaultOrg()
+
+            //TODO: handle empty or null organisations
+
+            //Setting orgs of that service provider in org state
+            dispatch(SetOrgs(serviceProviderBasicState.serviceProvider!.organisations))
+        } else {
+            //TODO: Handle empty value in client
+        }
+    }, [serviceProviderBasicState.serviceProvider])
 
     function checkForDefaultOrg() {
         var hasDefaultOrg = false;
@@ -25,23 +42,6 @@ export default function useServiceProviderBasicHook() {
             dispatch(SetOrgPickerModalToggle(true))
         }
     }
-
-    useEffect(() => {
-        dispatch(GetUserType());
-    }, [])
-
-    useEffect(() => {
-        if (serviceProviderBasicState.serviceProvider != undefined || serviceProviderBasicState.serviceProvider != null) {
-            checkForDefaultOrg()
-
-            //TODO: handle empty or null organisations
-
-            //Setting orgs of that service provider in org state
-            dispatch(SetOrgs(serviceProviderBasicState.serviceProvider!.organisations))
-        } else {
-            //TODO: Handle empty value in client
-        }
-    }, [serviceProviderBasicState.serviceProvider])
 
     return {
         serviceProviderBasicState: serviceProviderBasicState

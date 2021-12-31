@@ -5,17 +5,17 @@ import { GetUserType_Types, ServiceProviderBasicState } from "../../Reducers/Com
 import GetAuthHeader from "./GetHeaderHelper";
 import IServiceProviderBasic from "../../Types/ClientDataModels/ServiceProviderBasic";
 
-function setUserTypeAction(userType: IServiceProviderBasic) {
+function setServiceProviderBasicAction(serviceProviderBasic: IServiceProviderBasic) {
     return {
         type: GetUserType_Types.SET_LOCAL_USER_TYPES,
-        payload: userType
+        payload: serviceProviderBasic
     };
 }
 
-export const setUserType = (userType: IServiceProviderBasic): Action => (setUserTypeAction(userType));
+export const setServiceProviderBasic = (serviceProviderBasic: IServiceProviderBasic): Action => (setServiceProviderBasicAction(serviceProviderBasic));
 
-export const GetUserType = (): ThunkAction<void, ServiceProviderBasicState, null, Action> => async dispatch => {
+export const GetServiceProviderBasic = (): ThunkAction<void, ServiceProviderBasicState, null, Action> => async dispatch => {
     let headersVals = await GetAuthHeader();
     let response = await http.get<IServiceProviderBasic>("/ServiceProvider", {headers : headersVals});
-    dispatch(setUserType(response.data));
+    dispatch(setServiceProviderBasic(response.data));
 };

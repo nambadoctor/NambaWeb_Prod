@@ -8,7 +8,7 @@ import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReduce
 import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
 import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 import { customerReducer } from "./Reducers/CustomersReducer";
-import { uiTriggerReducer } from "./Reducers/Common/UIControlReducer";
+import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
 
 const rootReducer = combineReducers({
     OrgReducer: orgReducer,

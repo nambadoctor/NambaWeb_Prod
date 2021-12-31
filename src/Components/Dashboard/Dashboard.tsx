@@ -42,7 +42,7 @@ function Dashboard() {
     );
   }
 
-  function mainDashboardView() {
+  function MainDashboardView() {
     return (
       <div>
         <Topbar />
@@ -63,7 +63,7 @@ function Dashboard() {
   return (
     <>
       <div>
-        {serviceProviderBasicState.serviceProvider ? mainDashboardView() : <div>TODO: Handle Non Existent User</div>}
+        {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <div>TODO: Handle Non Existent User</div>}
         <OrganisationInitialModalPickerComponent/>
       </div>
     </>
