@@ -2,7 +2,7 @@ import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension";
 import { orgReducer } from "./Reducers/OrganisationsReducer";
-import { userStateReducer } from "./Reducers/Common/UserStateReducer";
+import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBasicReducer";
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
 import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReducer";
 import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
@@ -12,7 +12,7 @@ import { customerReducer } from "./Reducers/CustomersReducer";
 
 const rootReducer = combineReducers({
     OrgReducer: orgReducer,
-    UserStateReducer: userStateReducer,
+    ServiceProviderBasicReducer: serviceProviderBasicReducer,
     AppointmentReducer: appointmentReducer,
     AppointmentCategoryReducer: appointmentCategoryReducer,
     SelectedDatesReducer: selectedDateReducer,

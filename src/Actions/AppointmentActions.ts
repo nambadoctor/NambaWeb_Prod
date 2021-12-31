@@ -8,6 +8,7 @@ import IAppointmentData from "../Types/Appointment";
 import IOrganisationData from "../Types/Organisation";
 import { isDatesEqual } from "../Utils/GeneralUtils";
 import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
+import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 
 function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>) {
   return {
@@ -19,7 +20,7 @@ function setAppointmentsHelper(appointments: Array<IDenormalisedAppointmentData>
 function filterAppointments(
   dates: Date[],
   appointments: Array<IDenormalisedAppointmentData>,
-  selectedOrganisation?: IOrganisationData) {
+  selectedOrganisation?: IOrganisationBasic) {
 
   var filteredAppointments: Array<IDenormalisedAppointmentData> = new Array<IDenormalisedAppointmentData>();
 
@@ -62,7 +63,7 @@ function setFilteredAppointmentsHelper(appointments: Array<IDenormalisedAppointm
 export const SetAppointments = (appointments: Array<IDenormalisedAppointmentData>): Action => (setAppointmentsHelper(appointments));
 
 
-export const setFilteredAppointments = (dates: Date[], appointments: Array<IDenormalisedAppointmentData>, selectedOrganisation?: IOrganisationData): ThunkAction<void, AppointmentState, null, Action> => async dispatch => {
+export const setFilteredAppointments = (dates: Date[], appointments: Array<IDenormalisedAppointmentData>, selectedOrganisation?: IOrganisationBasic): ThunkAction<void, AppointmentState, null, Action> => async dispatch => {
   var filteredAppointments = filterAppointments(dates, appointments, selectedOrganisation);
   dispatch(setFilteredAppointmentsHelper(filteredAppointments));
   dispatch(SetDatesWithAppointmentsRange(appointments));

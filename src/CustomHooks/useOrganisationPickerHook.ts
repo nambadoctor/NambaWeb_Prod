@@ -6,6 +6,7 @@ import {
   SetLocallySelectedOrg,
 } from "../Actions/OrganisationActions";
 import IOrganisationData from "../Types/Organisation";
+import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 
 export default function useOrganisationPickerHook() {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function useOrganisationPickerHook() {
     setAnchorEl(null);
   };
 
-  function getSelectedOption(organisation?: IOrganisationData) {
+  function getSelectedOption(organisation?: IOrganisationBasic) {
     dispatch(SetLocallySelectedOrg(organisation));
     handleClose();
   }

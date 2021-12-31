@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import IOrganisationData from "../../Types/Organisation";
 import "../../Styles/organisation_picker.css";
 import useOrganisationPickerHook from "../../CustomHooks/useOrganisationPickerHook";
+import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -64,7 +65,7 @@ export default function OrganisationPicker() {
         <button className="orgSwitcherButton" onClick={handleClick}>
           {organisationState.selectedOrganisation != null
             ? organisationState.selectedOrganisation!.name
-            : "Nambadoctor"}
+            : "Please Select An Organisation"}
         </button>
         <button className="orgSwitcherDropDownIcon" onClick={handleClick}>
           {" "}
@@ -85,18 +86,9 @@ export default function OrganisationPicker() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem
-          onClick={() => {
-            getSelectedOption();
-          }}
-          disableRipple
-        >
-          NambaDoctor
-        </MenuItem>
-
         {organisationState.organisations.length !== 0 &&
           organisationState.organisations.map(
-            (organisation: IOrganisationData, index: number) => (
+            (organisation: IOrganisationBasic, index: number) => (
               <MenuItem
                 onClick={() => {
                   getSelectedOption(organisation);

@@ -8,4 +8,8 @@
     color: inherit;
 }
 
+.org-selector-modal {
+    width: 100px;
+} 
+
 @import url("https://cdn.syncfusion.com/ej2/material.css");

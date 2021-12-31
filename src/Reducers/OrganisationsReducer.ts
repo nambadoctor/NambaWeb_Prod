@@ -1,4 +1,5 @@
 import { Action } from "../Types/ActionType"
+import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import IOrganisationData from "../Types/Organisation";
 
 export enum Org_Types {
@@ -7,8 +8,8 @@ export enum Org_Types {
 }
 
 export interface OrganisationState {
-  organisations: IOrganisationData[];
-  selectedOrganisation?: IOrganisationData
+  organisations: IOrganisationBasic[];
+  selectedOrganisation?: IOrganisationBasic
 }
 
 const initialState: OrganisationState = {
@@ -18,6 +19,7 @@ const initialState: OrganisationState = {
 export const orgReducer = (state: OrganisationState = initialState, action: Action): OrganisationState => {
   switch (action.type) {
     case Org_Types.SET_LOCAL_ORGS:
+      console.log("RECIEVED ORGS TO SELECT: " + action.payload)
       return {
         ...state,
         organisations: action.payload,

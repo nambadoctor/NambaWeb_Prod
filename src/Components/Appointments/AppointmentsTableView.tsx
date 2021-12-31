@@ -54,7 +54,7 @@ export default function AppointmentsTable() {
     getDisplayNameForAppointmentState,
   } = useAppointmentsTableHook();
   return (
-    <TableContainer component={Paper} style={{ borderRadius: 15 }}>
+    <TableContainer component={Paper} style={{ borderRadius: 15, marginBottom: 10 }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow style={{ height: 10 }}>
@@ -82,7 +82,7 @@ export default function AppointmentsTable() {
               .filter(
                 (appointment) =>
                   appointment.appointment.status ===
-                    appointmentCategoryState.selectedCategory ||
+                  appointmentCategoryState.selectedCategory ||
                   appointmentCategoryState.selectedCategory === "Total"
               )
               .map(
