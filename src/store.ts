@@ -6,9 +6,9 @@ import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBa
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
 import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReducer";
 import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
-import { loggedInUserStateReducer } from "./Reducers/Common/LoggedInUserStateReducer";
 import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 import { customerReducer } from "./Reducers/CustomersReducer";
+import { uiTriggerReducer } from "./Reducers/Common/UIControlReducer";
 
 const rootReducer = combineReducers({
     OrgReducer: orgReducer,
@@ -16,9 +16,9 @@ const rootReducer = combineReducers({
     AppointmentReducer: appointmentReducer,
     AppointmentCategoryReducer: appointmentCategoryReducer,
     SelectedDatesReducer: selectedDateReducer,
-    LoggedInUserStateReducer: loggedInUserStateReducer,
     SelectedUserTabStateReducer: selectedUserTabReducer,
-    CustomersReducer: customerReducer
+    CustomersReducer: customerReducer,
+    UITriggerReducer: uiTriggerReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

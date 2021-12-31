@@ -7,13 +7,13 @@ import { Container, Row, Col, Modal, Button } from "react-bootstrap";
 import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
 import "../../App.css"
 import useServiceProviderBasicHook from "../../CustomHooks/useGetUserTypeHook";
-import OrganisationInitialModalPicker from "../OrganisationPicker/OrganisationInitialModalPicker";
+import OrganisationInitialModalPickerComponent from "../OrganisationPicker/OrganisationInitialModalPickerComponent";
 
 function Dashboard() {
 
   const { serviceProviderBasicState } = useServiceProviderBasicHook();
 
-  function AppointmentsAndCalendarComp() {
+  function AppointmentsAndCalendarView() {
     return (
       <div
         style={{ margin: 20, display: "flex", flexDirection: "row", gap: 20 }}
@@ -32,7 +32,7 @@ function Dashboard() {
     );
   }
 
-  function PatientsViewComp() {
+  function PatientsView() {
     return (
       <div style={{ margin: 20 }}>
         <Container fluid>
@@ -50,20 +50,21 @@ function Dashboard() {
           <Routes>
             <Route
               path="/Appointments"
-              element={AppointmentsAndCalendarComp()}
+              element={AppointmentsAndCalendarView()}
             />
-            <Route path="/Patients" element={PatientsViewComp()} />
+            <Route path="/Patients" element={PatientsView()} />
           </Routes>
         </div>
       </div>
     );
   }
 
+  //MAIN RENDER FUNCTION
   return (
     <>
       <div>
-        {serviceProviderBasicState.serviceProvider ? mainDashboardView() : <div>Hello</div>}
-        <OrganisationInitialModalPicker/>
+        {serviceProviderBasicState.serviceProvider ? mainDashboardView() : <div>TODO: Handle Non Existent User</div>}
+        <OrganisationInitialModalPickerComponent/>
       </div>
     </>
   );

@@ -4,17 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { GetUserType } from "../Actions/Common/GetUserTypeActions";
 import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import { SetLocallySelectedOrg, SetOrgs } from "../Actions/OrganisationActions";
+import { SetOrgPickerModalToggle } from "../Actions/Common/UIControlActions";
 
 export default function useServiceProviderBasicHook() {
     const dispatch = useDispatch();
 
     const serviceProviderBasicState = useSelector((state: RootStore) => state.ServiceProviderBasicReducer)
-
-    //Org Selector Modal
-    const [showOrgSelectorToggle, setshowOrgSelector] = useState(false)
-    const handleShow = () => setshowOrgSelector(true);
-    const handleClose = () => setshowOrgSelector(false);
-    //--
 
     function checkForDefaultOrg() {
         var hasDefaultOrg = false;
@@ -27,13 +22,8 @@ export default function useServiceProviderBasicHook() {
         });
  
         if (!hasDefaultOrg) {
-            handleShow();
+            dispatch(SetOrgPickerModalToggle(true))
         }
-    }
-
-    function selectOrg(selectedOrg?:IOrganisationBasic) {
-        handleClose()
-        dispatch(SetLocallySelectedOrg(selectedOrg))
     }
 
     useEffect(() => {
@@ -45,6 +35,8 @@ export default function useServiceProviderBasicHook() {
             checkForDefaultOrg()
 
             //TODO: handle empty or null organisations
+
+            //Setting orgs of that service provider in org state
             dispatch(SetOrgs(serviceProviderBasicState.serviceProvider!.organisations))
         } else {
             //TODO: Handle empty value in client
@@ -52,9 +44,6 @@ export default function useServiceProviderBasicHook() {
     }, [serviceProviderBasicState.serviceProvider])
 
     return {
-        serviceProviderBasicState: serviceProviderBasicState,
-        showOrgSelector: showOrgSelectorToggle,
-        selectOrg,
-        handleShow
+        serviceProviderBasicState: serviceProviderBasicState
     };
 }
