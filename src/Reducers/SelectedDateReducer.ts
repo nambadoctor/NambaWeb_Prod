@@ -6,12 +6,12 @@ export enum SelectedDateReducer {
 }
 
 export interface SelectedDateState {
-  dates: Date[],
+  selectedDateRage: Date[],
   datesWithAppointments: Date[]
 }
 
 const initialState: SelectedDateState = {
-  dates: [],
+  selectedDateRage: [],
   datesWithAppointments: []
 }
 
@@ -20,7 +20,7 @@ export const selectedDateReducer = (state: SelectedDateState = initialState, act
     case SelectedDateReducer.SET_LOCAL_SELECTED_DATES:
       return {
         ...state,
-        dates: action.payload,
+        selectedDateRage: action.payload,
       }
     case SelectedDateReducer.SET_LOCAL_DATES_WITH_APPOINTMENTS:
       return {

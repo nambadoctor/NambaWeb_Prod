@@ -6,11 +6,13 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IDeNormalisedAppointmentData from "../../Types/DeNormalisedAppointment";
-import { getReadableDateString } from "../../Utils/GeneralUtils";
+import { convertDaysIntoNearestUnit, getReadableDateString } from "../../Utils/GeneralUtils";
 import { PeopleAltRounded, VideoCameraFront } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
-import useAppointmentsTableHook from "../../CustomHooks/useAppointmentsTableHook";
+import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -46,13 +48,67 @@ const useAppointmentTableStyles = makeStyles(() => ({
 
 export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
-  const {
-    appointmentState,
-    appointmentCategoryState,
-    getLastVisitForCustomer,
-    getBackgroundColorForAppointmentState,
-    getDisplayNameForAppointmentState,
-  } = useAppointmentsTableHook();
+
+  const appointmentState = useSelector((state: RootState) => state.AppointmentState);
+
+  //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
+  function getLastVisitForCustomer(customerId: string) {
+    var lastVisitedDate = new Date();
+    appointmentState.appointments.forEach((element) => {
+      if (element.appointment.customerId === customerId) {
+        var currentAppointmentDate = new Date(
+          element.appointment.scheduledAppointmentStartTime
+        );
+        if (currentAppointmentDate < lastVisitedDate) {
+          lastVisitedDate = currentAppointmentDate;
+        }
+      }
+    });
+
+    var currentDate = new Date();
+    var Time = currentDate.getTime() - lastVisitedDate.getTime();
+    var days = Time / (1000 * 3600 * 24);
+    return convertDaysIntoNearestUnit(days);
+  }
+
+  function getDisplayNameForAppointmentState(appointmentState: string) {
+    switch (appointmentState) {
+      case AppointmentStatusEnum.Confirmed:
+        return "Confirmed";
+      case AppointmentStatusEnum.StartedConsultation:
+        return "Started";
+      case AppointmentStatusEnum.Finished:
+        return "Finished";
+      case AppointmentStatusEnum.Cancelled:
+        return "Cancelled";
+      default:
+        break;
+    }
+  }
+
+  function getBackgroundColorForAppointmentState(appointmentState: string) {
+    // return is [background color, font color]
+    var colorCodesToReturn = ["", ""];
+    switch (appointmentState) {
+      case AppointmentStatusEnum.Confirmed:
+        colorCodesToReturn = ["#e5faf2", "#3bb077"];
+        break;
+      case AppointmentStatusEnum.StartedConsultation:
+        colorCodesToReturn = ["#ebf1fe", "#2a7ade"];
+        break;
+      case AppointmentStatusEnum.Finished:
+        colorCodesToReturn = ["#fff0f1", "#d95087"];
+        break;
+      case AppointmentStatusEnum.Cancelled:
+        colorCodesToReturn = ["", ""];
+        break;
+      default:
+        break;
+    }
+
+    return colorCodesToReturn;
+  }
+
   return (
     <TableContainer component={Paper} style={{ borderRadius: 15, marginBottom: 10 }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -78,13 +134,7 @@ export default function AppointmentsTable() {
         </TableHead>
         <TableBody>
           {appointmentState.appointments.length !== 0 &&
-            appointmentState.filteredAppointments
-              .filter(
-                (appointment) =>
-                  appointment.appointment.status ===
-                  appointmentCategoryState.selectedCategory ||
-                  appointmentCategoryState.selectedCategory === "Total"
-              )
+            appointmentState.appointments
               .map(
                 (appointment: IDeNormalisedAppointmentData, index: number) => (
                   <TableRow key={appointment.appointment.id}>

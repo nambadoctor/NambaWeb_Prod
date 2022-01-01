@@ -1,4 +1,4 @@
-import { RootStore } from "../store";
+import { RootState } from "../store";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GetServiceProviderBasic } from "../Actions/Common/ServiceProviderBasicActions";
@@ -9,7 +9,7 @@ import { SetOrgPickerModalToggle } from "../Actions/Common/UIControlActions";
 export default function useServiceProviderBasicHook() {
     const dispatch = useDispatch();
 
-    const serviceProviderBasicState = useSelector((state: RootStore) => state.ServiceProviderBasicReducer)
+    const serviceProviderBasicState = useSelector((state: RootState) => state.ServiceProviderBasicState)
 
     useEffect(() => {
         dispatch(GetServiceProviderBasic());

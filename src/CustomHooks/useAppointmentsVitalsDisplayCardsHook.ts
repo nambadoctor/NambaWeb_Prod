@@ -1,14 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SetAppointmentCategory } from "../Actions/AppointmentCategoryAction";
-import { RootStore } from "../store";
+import { RootState } from "../store";
 
 export default function useAppointmentsVitalsDisplayCardsHook() {
   const dispatch = useDispatch();
   const appointmentCategoryState = useSelector(
-    (state: RootStore) => state.AppointmentCategoryReducer
+    (state: RootState) => state.AppointmentCategoryState
   );
   const appointmentState = useSelector(
-    (state: RootStore) => state.AppointmentReducer
+    (state: RootState) => state.AppointmentState
   );
 
   function getNumOfAppointmentsByStatus(status: String): number {

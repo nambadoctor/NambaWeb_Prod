@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { SetSelectedDateRange } from "../Actions/SelectedDateActions";
-import { RootStore } from "../store";
+import { RootState } from "../store";
 import { generateMatrix } from "../Utils/CalendarUtils";
 import { checkIfDateExists } from "../Utils/GeneralUtils";
 import IMatrixDateObj from "../Types/CustomDate";
@@ -11,7 +11,7 @@ export default function useCalendarHook() {
   const dispatch = useDispatch();
   const [viewingDate, setViewingDate] = useState(new Date());
   const selectedDatesState = useSelector(
-    (state: RootStore) => state.SelectedDatesReducer
+    (state: RootState) => state.SelectedDatesState
   );
 
   useEffect(() => {
@@ -38,8 +38,8 @@ export default function useCalendarHook() {
 
   function checkIfCurrentDateSelected(item: IMatrixDateObj) {
     return (
-      viewingDate.getMonth() === selectedDatesState.dates[0].getMonth() &&
-      item.date.getDate() === selectedDatesState.dates[0].getDate()
+      viewingDate.getMonth() === selectedDatesState.selectedDateRage[0].getMonth() &&
+      item.date.getDate() === selectedDatesState.selectedDateRage[0].getDate()
     );
   }
 

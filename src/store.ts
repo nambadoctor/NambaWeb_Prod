@@ -11,18 +11,18 @@ import { customerReducer } from "./Reducers/CustomersReducer";
 import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
 
 const rootReducer = combineReducers({
-    OrgReducer: orgReducer,
-    ServiceProviderBasicReducer: serviceProviderBasicReducer,
-    AppointmentReducer: appointmentReducer,
-    AppointmentCategoryReducer: appointmentCategoryReducer,
-    SelectedDatesReducer: selectedDateReducer,
-    SelectedUserTabStateReducer: selectedUserTabReducer,
-    CustomersReducer: customerReducer,
-    UITriggerReducer: uiTriggerReducer
+    OrgState: orgReducer,
+    ServiceProviderBasicState: serviceProviderBasicReducer,
+    AppointmentState: appointmentReducer,
+    AppointmentCategoryState: appointmentCategoryReducer,
+    SelectedDatesState: selectedDateReducer,
+    SelectedUserTabState: selectedUserTabReducer,
+    CustomersState: customerReducer,
+    UITriggerState: uiTriggerReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
-export type RootStore = ReturnType<typeof rootReducer>
-
 export default Store
+
+export type RootState = ReturnType<typeof rootReducer>

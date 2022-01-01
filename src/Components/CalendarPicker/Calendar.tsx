@@ -29,8 +29,8 @@ export default function Calendar() {
   function getActiveOrInactiveDate(item: ICustomDateData) {
     if (
       checkIfDateExists(item) &&
-      viewingDate.getMonth() === selectedDatesState.dates[0].getMonth() &&
-      item.date.getDate() === selectedDatesState.dates[0].getDate()
+      viewingDate.getMonth() === selectedDatesState.selectedDateRage[0].getMonth() &&
+      item.date.getDate() === selectedDatesState.selectedDateRage[0].getDate()
     ) {
       return styles.activeDate;
     } else {
@@ -42,7 +42,7 @@ export default function Calendar() {
     let rowItems = row.map((item: ICustomDateData, colIndex: number) => {
       return (
         <div>
-          {selectedDatesState.dates[0] && (
+          {selectedDatesState.selectedDateRage[0] && (
             <TouchableOpacity
               key={colIndex}
               onPress={() => _onPress(item)}
@@ -67,7 +67,7 @@ export default function Calendar() {
                   {getDisplayableItem(item)}
                 </Text>
                 {getActiveOrInactiveDate(item) === styles.inActiveDate &&
-                item.hasAppointment ? (
+                  item.hasAppointment ? (
                   getHasAppointmentMarker()
                 ) : (
                   <div />
@@ -87,7 +87,7 @@ export default function Calendar() {
 
   return (
     <div className="wholeCalendarContainer">
-      {selectedDatesState.dates[0] && selectedDatesState.datesWithAppointments && (
+      {selectedDatesState.selectedDateRage[0] && selectedDatesState.datesWithAppointments && (
         <div>
           <div className="titleAndActionContainer">
             <button className="actionItem" onClick={() => changeMonth(-1)}>

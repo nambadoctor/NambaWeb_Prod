@@ -3,8 +3,7 @@ import Topbar from "../Topbar/Topbar";
 import { Routes, Route } from "react-router-dom";
 import PatientsTableView from "../PatientsList/PatientsTableView";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
-import { Container, Row, Col, Modal, Button } from "react-bootstrap";
-import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
+import { Container, Row, Col } from "react-bootstrap";
 import "../../App.css"
 import useServiceProviderBasicHook from "../../CustomHooks/useGetUserTypeHook";
 import OrganisationInitialModalPickerComponent from "../OrganisationPicker/OrganisationInitialModalPickerComponent";
@@ -24,7 +23,8 @@ function Dashboard() {
               <AppointmentsTableView />
             </Col>
             <Col md="3">
-              <DatePickerComponent />
+              <Row><DatePickerComponent /></Row>
+              {/* <Row><PhoneNumberEntryView /></Row> */}
             </Col>
           </Row>
         </Container>

@@ -1,6 +1,5 @@
 import { Action } from "../Types/ActionType"
 import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
-import IOrganisationData from "../Types/Organisation";
 
 export enum Org_Types {
   SET_LOCAL_ORGS = "SET_LOCAL_ORGS",

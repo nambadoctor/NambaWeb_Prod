@@ -1,4 +1,4 @@
-import { RootStore } from "../store";
+import { RootState } from "../store";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,7 +14,7 @@ export default function useOrganisationPickerHook() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const organisationState = useSelector((state: RootStore) => state.OrgReducer);
+  const organisationState = useSelector((state: RootState) => state.OrgState);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
