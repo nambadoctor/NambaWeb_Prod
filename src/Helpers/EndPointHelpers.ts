@@ -7,3 +7,7 @@ export function GetServiceProviderProfileEndPoint(serviceProviderId: string, org
 export function GetServiceProviderAppointmentsInOrganisation(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
 }
+
+export function GetServiceProviderCustomersInOrganisation(organisationId: string, serviceProviderIds: string[]) {
+    return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
+}

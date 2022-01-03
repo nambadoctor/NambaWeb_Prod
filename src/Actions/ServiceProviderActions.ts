@@ -9,6 +9,7 @@ import IServiceProvider from "../Types/ClientDataModels/ServiceProvider";
 import { CurrentServiceProviderState, Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
 import { GetAllAppointments } from "./AppointmentActions";
 import { GetServiceProviderProfileEndPoint } from "../Helpers/EndPointHelpers";
+import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
 
 function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
     return {
@@ -32,6 +33,7 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
         .then(response => {
             dispatch(SetCurrentServiceProvider(response.data))
             dispatch(GetAllAppointments());
+            dispatch(GetAllCustomersForServiceProviderInOrg());
         })
         .catch(err => {
             //TODO: HANDLE ERROR [IN CLIENT AND LOGGING]

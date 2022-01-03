@@ -48,15 +48,9 @@ const usePatientTableStyles = makeStyles(() => ({
 export default function PatientsTableView() {
   const classes = usePatientTableStyles();
 
-  const dispatch = useDispatch();
-
   const customerState = useSelector(
     (state: RootState) => state.CustomersState
   );
-
-  useEffect(() => {
-    dispatch(GetAllCustomersForServiceProviderInOrg());
-  }, []);
 
   return (
     <TableContainer component={Paper} style={{ borderRadius: 15 }}>
@@ -81,16 +75,16 @@ export default function PatientsTableView() {
           {customerState.customers.length !== 0 &&
             customerState.customers.map(
               (customer: ICustomerData, index: number) => (
-                <TableRow key={customer.id}>
+                <TableRow key={customer.customerId}>
                   <TableCell align="left">
                     {customer.firstName + " " + customer.lastName}
                   </TableCell>
                   <TableCell align="left">
-                    {customer.gender}/{customer.age}
+                    {customer.gender}/{customer.dateOfBirth}
                   </TableCell>
-                  <TableCell>{customer.phoneNumbers[0].number}</TableCell>
+                  <TableCell>{customer.phoneNumber}</TableCell>
                   <TableCell align="left">
-                    {getReadableDateString(customer.createdDate)}
+                    GET CREATED DATE{/* {getReadableDateString(customer.createdDate)} */}
                   </TableCell>
                 </TableRow>
               )
