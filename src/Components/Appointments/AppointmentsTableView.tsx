@@ -5,7 +5,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import IDeNormalisedAppointmentData from "../../Types/DeNormalisedAppointment";
 import { convertDaysIntoNearestUnit, getReadableDateString } from "../../Utils/GeneralUtils";
 import { PeopleAltRounded, VideoCameraFront } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
@@ -13,6 +12,7 @@ import { Typography } from "@mui/material";
 import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
+import IAppointmentData from "../../Types/ClientDataModels/Appointment";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -55,9 +55,9 @@ export default function AppointmentsTable() {
   function getLastVisitForCustomer(customerId: string) {
     var lastVisitedDate = new Date();
     appointmentState.appointments.forEach((element) => {
-      if (element.appointment.customerId === customerId) {
+      if (element.customerId === customerId) {
         var currentAppointmentDate = new Date(
-          element.appointment.scheduledAppointmentStartTime
+          element.scheduledAppointmentStartTime
         );
         if (currentAppointmentDate < lastVisitedDate) {
           lastVisitedDate = currentAppointmentDate;
@@ -136,11 +136,12 @@ export default function AppointmentsTable() {
           {appointmentState.appointments.length !== 0 &&
             appointmentState.appointments
               .map(
-                (appointment: IDeNormalisedAppointmentData, index: number) => (
-                  <TableRow key={appointment.appointment.id}>
+                (appointment: IAppointmentData, index: number) => (
+                  <TableRow key={appointment.appointmentId}>
                     <TableCell align="left">
                       <span className="appointmentTableName">
-                        {appointment.appointment.isInPersonAppointment ? (
+                        {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
+                        {appointment.appointmentType == "In Person" ? (
                           <PeopleAltRounded
                             style={{ color: "#149c4a" }}
                           ></PeopleAltRounded>
@@ -156,7 +157,7 @@ export default function AppointmentsTable() {
                     </TableCell>
                     <TableCell align="left">
                       {getLastVisitForCustomer(
-                        appointment.appointment.customerId
+                        appointment.customerId
                       )}
                     </TableCell>
                     <TableCell>
@@ -165,21 +166,21 @@ export default function AppointmentsTable() {
                         style={{
                           backgroundColor:
                             getBackgroundColorForAppointmentState(
-                              appointment.appointment.status
+                              appointment.status
                             )[0],
                           color: getBackgroundColorForAppointmentState(
-                            appointment.appointment.status
+                            appointment.status
                           )[1],
                         }}
                       >
                         {getDisplayNameForAppointmentState(
-                          appointment.appointment.status
+                          appointment.status
                         )}
                       </Typography>
                     </TableCell>
                     <TableCell align="left">
                       {getReadableDateString(
-                        appointment.appointment.scheduledAppointmentStartTime
+                        appointment.scheduledAppointmentStartTime
                       )}
                     </TableCell>
                   </TableRow>

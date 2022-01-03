@@ -9,6 +9,7 @@ import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
 import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 import { customerReducer } from "./Reducers/CustomersReducer";
 import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
+import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProviderReducer";
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     SelectedDatesState: selectedDateReducer,
     SelectedUserTabState: selectedUserTabReducer,
     CustomersState: customerReducer,
-    UITriggerState: uiTriggerReducer
+    UITriggerState: uiTriggerReducer,
+    CurrentServiceProviderState: currentServiceProviderReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

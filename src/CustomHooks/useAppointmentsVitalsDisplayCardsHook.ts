@@ -13,8 +13,8 @@ export default function useAppointmentsVitalsDisplayCardsHook() {
 
   function getNumOfAppointmentsByStatus(status: String): number {
     var count = 0;
-    appointmentState.filteredAppointments.forEach((element) => {
-      if (element.appointment.status == status) {
+    appointmentState.filteredAppointments.forEach((appointment) => {
+      if (appointment.status == status) {
         count += 1;
       }
     });

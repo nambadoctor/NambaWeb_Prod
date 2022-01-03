@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setFilteredAppointments } from '../../Actions/AppointmentActions';
 import { SetOrgPickerModalToggle } from '../../Actions/Common/UIControlActions';
 import { SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
-import useServiceProviderBasicHook from '../../CustomHooks/useGetUserTypeHook';
 import { RootState } from '../../store';
 import IOrganisationBasic from '../../Types/ClientDataModels/OrganisationBasic';
 

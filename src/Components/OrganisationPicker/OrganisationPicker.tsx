@@ -4,8 +4,11 @@ import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import IOrganisationData from "../../Types/Organisation";
 import "../../Styles/organisation_picker.css";
-import useOrganisationPickerHook from "../../CustomHooks/useOrganisationPickerHook";
 import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { RootState } from "../../store";
+import { SetLocallySelectedOrg } from "../../Actions/OrganisationActions";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -51,14 +54,27 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 export default function OrganisationPicker() {
-  const {
-    handleClick,
-    organisationState,
-    anchorEl,
-    open,
-    handleClose,
-    getSelectedOption,
-  } = useOrganisationPickerHook();
+
+  const dispatch = useDispatch();
+
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const organisationState = useSelector((state: RootState) => state.OrgState);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  function getSelectedOption(organisation?: IOrganisationBasic) {
+    dispatch(SetLocallySelectedOrg(organisation));
+    handleClose();
+  }
+
   return (
     <div>
       <div className="orgSwitcherButtonContainer">

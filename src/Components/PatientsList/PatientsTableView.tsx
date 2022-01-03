@@ -8,7 +8,10 @@ import Paper from "@mui/material/Paper";
 import { getReadableDateString } from "../../Utils/GeneralUtils";
 import { makeStyles } from "@mui/styles";
 import ICustomerData from "../../Types/Customer";
-import usePatientsTableViewHook from "../../CustomHooks/usePatientsTableViewHook";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useEffect } from "react";
+import { GetAllCustomersForServiceProviderInOrg } from "../../Actions/CustomerActions";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -44,7 +47,16 @@ const usePatientTableStyles = makeStyles(() => ({
 
 export default function PatientsTableView() {
   const classes = usePatientTableStyles();
-  const { customerState } = usePatientsTableViewHook();
+
+  const dispatch = useDispatch();
+
+  const customerState = useSelector(
+    (state: RootState) => state.CustomersState
+  );
+
+  useEffect(() => {
+    dispatch(GetAllCustomersForServiceProviderInOrg());
+  }, []);
 
   return (
     <TableContainer component={Paper} style={{ borderRadius: 15 }}>

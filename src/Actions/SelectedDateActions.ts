@@ -1,6 +1,6 @@
 import { Action } from "../Types/ActionType";
 import { SelectedDateReducer } from "../Reducers/SelectedDateReducer";
-import IDeNormalisedAppointmentData from "../Types/DeNormalisedAppointment";
+import IAppointmentData from "../Types/ClientDataModels/Appointment";
 
 function setAppointmentCategoryHelper(dates: Date[]) {
     return {
@@ -9,11 +9,11 @@ function setAppointmentCategoryHelper(dates: Date[]) {
     };
 }
 
-function setDatesWithAppointmentsRangeHelper(appointments: IDeNormalisedAppointmentData[]) {
+function setDatesWithAppointmentsRangeHelper(appointments: IAppointmentData[]) {
     var datesToSet:Date[] = [];
 
     appointments.forEach(appointment => {
-        var appointmentDate = new Date(appointment.appointment.scheduledAppointmentStartTime)
+        var appointmentDate = new Date(appointment.scheduledAppointmentStartTime)
         if (!datesToSet.includes(appointmentDate)) {
             datesToSet.push(appointmentDate)
         }
@@ -26,4 +26,4 @@ function setDatesWithAppointmentsRangeHelper(appointments: IDeNormalisedAppointm
 }
 
 export const SetSelectedDateRange = (dates: Date[]): Action => (setAppointmentCategoryHelper(dates));
-export const SetDatesWithAppointmentsRange = (appointments: IDeNormalisedAppointmentData[]): Action => (setDatesWithAppointmentsRangeHelper(appointments));
+export const SetDatesWithAppointmentsRange = (appointments: IAppointmentData[]): Action => (setDatesWithAppointmentsRangeHelper(appointments));

@@ -5,12 +5,23 @@ import PatientsTableView from "../PatientsList/PatientsTableView";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
 import { Container, Row, Col } from "react-bootstrap";
 import "../../App.css"
-import useServiceProviderBasicHook from "../../CustomHooks/useGetUserTypeHook";
 import OrganisationInitialModalPickerComponent from "../OrganisationPicker/OrganisationInitialModalPickerComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { useEffect } from "react";
+import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
 
 function Dashboard() {
 
-  const { serviceProviderBasicState } = useServiceProviderBasicHook();
+  const dispatch = useDispatch();
+
+  const serviceProviderBasicState = useSelector((state: RootState) => state.ServiceProviderBasicState)
+
+  //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
+  useEffect(() => {
+    dispatch(GetServiceProviderBasic());
+  }, [])
+  //END
 
   function AppointmentsAndCalendarView() {
     return (
@@ -64,7 +75,7 @@ function Dashboard() {
     <>
       <div>
         {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <div>TODO: Handle Non Existent User</div>}
-        <OrganisationInitialModalPickerComponent/>
+        <OrganisationInitialModalPickerComponent />
       </div>
     </>
   );

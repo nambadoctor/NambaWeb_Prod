@@ -1,5 +1,5 @@
 import { Action } from "../Types/ActionType"
-import IDenormalisedAppointmentData from "../Types/DeNormalisedAppointment";
+import IAppointmentData from "../Types/ClientDataModels/Appointment";
 
 export enum Appointment_Types {
   SET_LOCAL_APPOINTMENTS = "SET_LOCAL_APPOINTMENTS",
@@ -7,8 +7,8 @@ export enum Appointment_Types {
 }
 
 export interface AppointmentState {
-  appointments: IDenormalisedAppointmentData[],
-  filteredAppointments: IDenormalisedAppointmentData[]
+  appointments: IAppointmentData[],
+  filteredAppointments: IAppointmentData[]
 }
 
 const initialState: AppointmentState = {
