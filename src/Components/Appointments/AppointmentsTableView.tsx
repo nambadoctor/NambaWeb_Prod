@@ -50,7 +50,7 @@ export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
 
   const appointmentState = useSelector((state: RootState) => state.AppointmentState);
-
+  
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {
     var lastVisitedDate = new Date();

@@ -7,14 +7,14 @@ import IServiceProviderBasic from "../../Types/ClientDataModels/ServiceProviderB
 import { CheckForDefaultOrg } from "../OrganisationActions";
 import { RootState } from "../../store";
 
-function setServiceProviderBasicAction(serviceProviderBasic: IServiceProviderBasic) {
+function getActionToSetServiceProviderBasic(serviceProviderBasic: IServiceProviderBasic) {
     return {
         type: GetUserType_Types.SET_LOCAL_USER_TYPES,
         payload: serviceProviderBasic
     };
 }
 
-export const SetServiceProviderBasic = (serviceProviderBasic: IServiceProviderBasic): Action => (setServiceProviderBasicAction(serviceProviderBasic));
+export const SetServiceProviderBasic = (serviceProviderBasic: IServiceProviderBasic): Action => (getActionToSetServiceProviderBasic(serviceProviderBasic));
 
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
     let headersVals = await GetAuthHeader();
@@ -22,13 +22,21 @@ export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Ac
     http
         .get<IServiceProviderBasic>("/serviceprovider", { headers: headersVals })
         .then(response => {
-            //TODO: ADD NULL CHECK FOR RESPONSE [SPID and ORGs]
-            //ADD NULL CHECKS FOR ALL SERVICE CALLS! SEE IF IT IS POSSIBLE TO DO IN AXIOS LAYER
-            dispatch(SetServiceProviderBasic(response.data));
-            dispatch(CheckForDefaultOrg())
+            if (response.data != null) {
+                if (!response.data.serviceProviderId) {
+                    //LOG: SPBasic response has no SP_ID {SpID}
+                }
+
+                if (!response.data.organisations) {
+                    //LOG: SPBasic response has no organisations {Orgs.length}
+                }
+
+                dispatch(SetServiceProviderBasic(response.data));
+            } else {
+                //LOG: Data response is null
+            }
         })
         .catch(err => {
-            //TODO: HANDLE ERROR [IN CLIENT AND LOGGING]
-            console.log(err)
+            //TODO: SEND TO CENTRALIZED ERROR HANDLING CLASS
         });
 };

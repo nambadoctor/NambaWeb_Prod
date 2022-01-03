@@ -35,21 +35,28 @@ export const SetSelectOrgModal = (): ThunkAction<void, OrganisationState, null, 
 export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
   const serviceProviderBasicState = getState().ServiceProviderBasicState
 
-  if (serviceProviderBasicState.serviceProvider != undefined || serviceProviderBasicState.serviceProvider != null) {
-    //TODO: handle empty or null organisations
+  //LOG: Log service provider state retrieved from store (log sPId and Orgs in object)
 
+  if (serviceProviderBasicState.serviceProvider != undefined || serviceProviderBasicState.serviceProvider != null) {
+
+    if (serviceProviderBasicState.serviceProvider.organisations == null || serviceProviderBasicState.serviceProvider.organisations.length == 0) {
+      //LOG: service provider object from store has empty organisation list
+    }
+
+    //LOG: Getting default org
     const defaultOrg = checkForDefaultOrgHelpers(serviceProviderBasicState.serviceProvider.organisations)
 
     if (defaultOrg != null) {
       dispatch(SetLocallySelectedOrg(defaultOrg))
       dispatch(GetCurrentServiceProvider())
     } else {
+      //LOG: Default Org Does not exist
       dispatch(SetOrgPickerModalToggle(true))
     }
 
     dispatch(SetOrgs(serviceProviderBasicState.serviceProvider!.organisations))
 
   } else {
-    //TODO: Handle empty value in client
+    //TODO: LOG "Service Provider From Store is Null | Undefined"
   }
 };
