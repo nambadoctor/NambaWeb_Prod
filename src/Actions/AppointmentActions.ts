@@ -27,12 +27,10 @@ function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
 
 export const SetAppointments = (appointments: Array<IAppointmentData>): Action => (setAppointmentsAction(appointments));
 
-
 export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  var selectedOrg = getState().OrgState.selectedOrganisation
   var appointments = getState().AppointmentState.appointments
   var selectedDates = getState().SelectedDatesState.selectedDateRage
-  var filteredAppointments = filterAppointments(selectedDates, appointments, selectedOrg)
+  var filteredAppointments = filterAppointments(selectedDates, appointments)
 
   dispatch(setFilteredAppointmentsAction(filteredAppointments));
 };
@@ -49,5 +47,6 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   dispatch(SetAppointments(response.data));
   dispatch(SetDatesWithAppointmentsRange(response.data));
   //TODO: Check if this is proper design to set filtered appointments
+  console.log("GETTING ALL FILTERED APPOINTMENTSBRUH")
   dispatch(setFilteredAppointments());
 };

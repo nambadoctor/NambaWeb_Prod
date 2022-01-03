@@ -19,6 +19,7 @@ export const SetServiceProviderBasic = (serviceProviderBasic: IServiceProviderBa
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
     let headersVals = await GetAuthHeader();
 
+    console.log("TRYING MAN")
     http
         .get<IServiceProviderBasic>("/serviceprovider", { headers: headersVals })
         .then(response => {

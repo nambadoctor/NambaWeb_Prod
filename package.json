@@ -8,6 +8,7 @@
         "@microsoft/applicationinsights-react-js": "^3.2.2",
         "@microsoft/applicationinsights-web": "^2.7.2",
         "@mui/icons-material": "^5.2.4",
+        "@mui/lab": "^5.0.0-alpha.63",
         "@mui/material": "^5.2.4",
         "@mui/styles": "^5.2.3",
         "@syncfusion/ej2-react-calendars": "^19.4.38",

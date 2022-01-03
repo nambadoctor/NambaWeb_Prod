@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
+import AddPatientForm from "../AddPatient/AddPatientForm";
 
 function Dashboard() {
 
@@ -20,7 +21,7 @@ function Dashboard() {
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
     dispatch(GetServiceProviderBasic());
-  })
+  }, [])
   //END
 
   function AppointmentsAndCalendarView() {
@@ -35,7 +36,7 @@ function Dashboard() {
             </Col>
             <Col md="3">
               <Row><DatePickerComponent /></Row>
-              {/* <Row><PhoneNumberEntryView /></Row> */}
+              <AddPatientForm></AddPatientForm>
             </Col>
           </Row>
         </Container>

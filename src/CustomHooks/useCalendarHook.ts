@@ -17,7 +17,7 @@ export default function useCalendarHook() {
 
   useEffect(() => {
     setDates(new Date());
-  });
+  }, []);
 
   function setDates(date: Date) {
     dispatch(SetSelectedDateRange([date, date]));

@@ -1,11 +1,9 @@
 import IAppointmentData from "../Types/ClientDataModels/Appointment";
-import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import { isDatesEqual } from "../Utils/GeneralUtils";
 
 export default function filterAppointments(
     dates: Date[],
-    appointments: IAppointmentData[],
-    selectedOrganisation?: IOrganisationBasic) {
+    appointments: IAppointmentData[]) {
 
     var filteredAppointments: Array<IAppointmentData> = new Array<IAppointmentData>();
 
