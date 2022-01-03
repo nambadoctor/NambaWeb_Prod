@@ -35,7 +35,6 @@ export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Ac
   var filteredAppointments = filterAppointments(selectedDates, appointments, selectedOrg)
 
   dispatch(setFilteredAppointmentsAction(filteredAppointments));
-  dispatch(SetDatesWithAppointmentsRange(filteredAppointments));
 };
 
 //Get all appointments for currently logged in doctor.
@@ -48,7 +47,7 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   let response = await http.get<Array<IAppointmentData>>(GetServiceProviderAppointmentsInOrganisation(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), { headers: headersContent });
 
   dispatch(SetAppointments(response.data));
-
+  dispatch(SetDatesWithAppointmentsRange(response.data));
   //TODO: Check if this is proper design to set filtered appointments
   dispatch(setFilteredAppointments());
 };

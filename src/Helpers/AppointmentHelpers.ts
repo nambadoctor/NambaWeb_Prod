@@ -23,5 +23,7 @@ export default function filterAppointments(
         }
     });
 
+    console.log("FILTERED APPOINTMENTS: " + filteredAppointments.length)
+
     return filteredAppointments;
 }

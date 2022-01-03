@@ -18,7 +18,7 @@ function setDatesWithAppointmentsRangeHelper(appointments: IAppointmentData[]) {
             datesToSet.push(appointmentDate)
         }
     });
-
+    
     return {
         type: SelectedDateReducer.SET_LOCAL_DATES_WITH_APPOINTMENTS,
         payload: datesToSet

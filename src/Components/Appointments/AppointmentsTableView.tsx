@@ -133,8 +133,8 @@ export default function AppointmentsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointmentState.appointments.length !== 0 &&
-            appointmentState.appointments
+          {appointmentState.filteredAppointments.length !== 0 &&
+            appointmentState.filteredAppointments
               .map(
                 (appointment: IAppointmentData, index: number) => (
                   <TableRow key={appointment.appointmentId}>
