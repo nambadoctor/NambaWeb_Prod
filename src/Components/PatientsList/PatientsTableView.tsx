@@ -5,13 +5,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { getReadableDateString } from "../../Utils/GeneralUtils";
 import { makeStyles } from "@mui/styles";
-import ICustomerData from "../../Types/Customer";
-import { useDispatch, useSelector } from "react-redux";
+import ICustomerData from "../../Types/ClientDataModels/Customer";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { useEffect } from "react";
-import { GetAllCustomersForServiceProviderInOrg } from "../../Actions/CustomerActions";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {

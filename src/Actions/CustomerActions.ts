@@ -1,11 +1,11 @@
-import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import http from "../http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
-import ICustomerData from "../Types/Customer";
-import { CustomerState, Customer_Types } from "../Reducers/CustomersReducer";
+import { Customer_Types } from "../Reducers/CustomersReducer";
 import { GetServiceProviderCustomersInOrganisation } from "../Helpers/EndPointHelpers";
 import { RootState } from "../store";
+import { Action } from "../Types/ActionType";
+import ICustomerData from "../Types/ClientDataModels/Customer";
 
 function setCustomersHelper(customers: ICustomerData[]) {
     return {

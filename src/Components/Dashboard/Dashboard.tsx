@@ -20,7 +20,7 @@ function Dashboard() {
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
     dispatch(GetServiceProviderBasic());
-  }, [])
+  })
   //END
 
   function AppointmentsAndCalendarView() {

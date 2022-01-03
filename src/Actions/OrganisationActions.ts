@@ -1,5 +1,3 @@
-import { Action } from "../Types/ActionType";
-import IOrganisationData from "../Types/Organisation";
 import { ThunkAction } from "redux-thunk";
 import { OrganisationState, Org_Types } from "../Reducers/OrganisationsReducer";
 import http from "../http-common";
@@ -8,8 +6,8 @@ import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import { RootState } from "../store";
 import { SetOrgPickerModalToggle } from "./Common/UIControlActions";
 import { checkForDefaultOrgHelpers } from "../Helpers/OrganisationHelpers";
-import { GetAllAppointments } from "./AppointmentActions";
 import { GetCurrentServiceProvider } from "./ServiceProviderActions";
+import { Action } from "../Types/ActionType";
 
 function setOrgsTypeHelper(organisations: Array<IOrganisationBasic>) {
   return {

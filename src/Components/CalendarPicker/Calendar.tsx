@@ -4,7 +4,7 @@ import "../../Styles/CalendarStyling.css";
 import { CalendarTheme } from "../../Styles/CalendarTheme";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ICustomDateData from "../../Types/CustomDate";
+import ICustomDateData from "../../Types/MatrixDateObj";
 import CircleIcon from "@mui/icons-material/Circle";
 import useCalendarHook from "../../CustomHooks/useCalendarHook";
 import { checkIfDateExists } from "../../Utils/GeneralUtils";

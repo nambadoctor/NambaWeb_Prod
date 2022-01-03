@@ -1,5 +1,5 @@
 import { Action } from "../Types/ActionType"
-import ICustomerData from "../Types/Customer";
+import ICustomerData from "../Types/ClientDataModels/Customer";
 
 export enum Customer_Types {
     SET_LOCAL_CUSTOMER_LIST = "SET_LOCAL_CUSTOMER_LIST",

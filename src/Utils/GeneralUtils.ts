@@ -1,4 +1,4 @@
-import IMatrixDateObj from "../Types/CustomDate";
+import IMatrixDateObj from "../Types/MatrixDateObj";
 
 export const getReadableDateString = (date: string) =>
     new Date(date).toLocaleDateString("default", {

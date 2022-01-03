@@ -1,4 +1,4 @@
-import IMatrixDateObj from "../Types/CustomDate";
+import IMatrixDateObj from "../Types/MatrixDateObj";
 
 export const months = ["January", "February", "March", "April", 
 "May", "June", "July", "August", "September", "October", 

@@ -1,5 +1,3 @@
-import querystring from 'querystring'
-
 export function GetServiceProviderProfileEndPoint(serviceProviderId: string, organisationId: String): string {
     return "/serviceprovider/" + serviceProviderId + "/organisation/" + organisationId;
 }

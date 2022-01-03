@@ -2,11 +2,10 @@ import { styled, alpha } from "@mui/material/styles";
 import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import IOrganisationData from "../../Types/Organisation";
 import "../../Styles/organisation_picker.css";
 import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { RootState } from "../../store";
 import { SetLocallySelectedOrg } from "../../Actions/OrganisationActions";
 

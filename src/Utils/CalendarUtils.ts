@@ -1,6 +1,6 @@
 import { weekDays, daysInEachMonth } from "./CalendarConst";
 import { checkDatesWithOnlyMonthAndDay } from "../Utils/GeneralUtils";
-import ICustomDateData from "../Types/CustomDate";
+import ICustomDateData from "../Types/MatrixDateObj";
 import { v4 as uuidv4 } from "uuid";
 
 export function generateMatrix(currentDate: Date, datesToMark: Date[]) {

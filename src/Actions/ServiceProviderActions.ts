@@ -1,12 +1,10 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import http from "../http-common";
-import { GetUserType_Types, ServiceProviderBasicState } from "../Reducers/Common/ServiceProviderBasicReducer";
 import GetAuthHeader from "../Actions/Common/GetHeaderHelper";
-import IServiceProviderBasic from "../Types/ClientDataModels/ServiceProviderBasic";
 import { RootState } from "../store";
 import IServiceProvider from "../Types/ClientDataModels/ServiceProvider";
-import { CurrentServiceProviderState, Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
+import { Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
 import { GetAllAppointments } from "./AppointmentActions";
 import { GetServiceProviderProfileEndPoint } from "../Helpers/EndPointHelpers";
 import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";

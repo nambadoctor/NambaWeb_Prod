@@ -4,8 +4,8 @@ import { SetSelectedDateRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
 import { generateMatrix } from "../Utils/CalendarUtils";
 import { checkIfDateExists } from "../Utils/GeneralUtils";
-import IMatrixDateObj from "../Types/CustomDate";
-import ICustomDateData from "../Types/CustomDate";
+import IMatrixDateObj from "../Types/MatrixDateObj";
+import ICustomDateData from "../Types/MatrixDateObj";
 import { setFilteredAppointments } from "../Actions/AppointmentActions";
 
 export default function useCalendarHook() {
@@ -17,7 +17,7 @@ export default function useCalendarHook() {
 
   useEffect(() => {
     setDates(new Date());
-  }, []);
+  });
 
   function setDates(date: Date) {
     dispatch(SetSelectedDateRange([date, date]));
