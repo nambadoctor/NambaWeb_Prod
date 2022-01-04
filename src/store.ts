@@ -1,6 +1,7 @@
-import { createStore, applyMiddleware, combineReducers } from "redux"; 
+import { createStore, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { loginReducer } from "./Reducers/Common/LoginReducer";
 import { orgReducer } from "./Reducers/OrganisationsReducer";
 import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBasicReducer";
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
@@ -11,18 +12,22 @@ import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 import { customerReducer } from "./Reducers/CustomersReducer";
 
 const rootReducer = combineReducers({
-    OrgReducer: orgReducer,
-    ServiceProviderBasicReducer: serviceProviderBasicReducer,
-    AppointmentReducer: appointmentReducer,
-    AppointmentCategoryReducer: appointmentCategoryReducer,
-    SelectedDatesReducer: selectedDateReducer,
-    LoggedInUserStateReducer: loggedInUserStateReducer,
-    SelectedUserTabStateReducer: selectedUserTabReducer,
-    CustomersReducer: customerReducer
+  LoginReducer: loginReducer,
+  OrgReducer: orgReducer,
+  ServiceProviderBasicReducer: serviceProviderBasicReducer,
+  AppointmentReducer: appointmentReducer,
+  AppointmentCategoryReducer: appointmentCategoryReducer,
+  SelectedDatesReducer: selectedDateReducer,
+  LoggedInUserStateReducer: loggedInUserStateReducer,
+  SelectedUserTabStateReducer: selectedUserTabReducer,
+  CustomersReducer: customerReducer,
 });
 
-const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+const Store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
 
-export type RootStore = ReturnType<typeof rootReducer>
+export default Store;
 
-export default Store
+export type RootStore = ReturnType<typeof rootReducer>;
