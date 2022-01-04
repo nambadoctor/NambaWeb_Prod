@@ -11,6 +11,7 @@ import { RootState } from "../../store";
 import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
 import AddPatientForm from "../AddPatient/AddPatientForm";
+import { Divider } from '@mui/material';
 
 function Dashboard() {
 
@@ -36,7 +37,8 @@ function Dashboard() {
             </Col>
             <Col md="3">
               <Row><DatePickerComponent /></Row>
-              <AddPatientForm></AddPatientForm>
+              <Row><Divider style={{marginTop: 20}}></Divider></Row>
+              <Row><AddPatientForm></AddPatientForm></Row>
             </Col>
           </Row>
         </Container>

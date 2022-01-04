@@ -19,7 +19,7 @@ export default function AddPatientForm() {
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
 
-    const [value, setValue] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const genderOptions = ["Male", "Female", "Other"]
 
@@ -53,8 +53,13 @@ export default function AddPatientForm() {
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
 
+    const done = () => {
+        
+    }
+
     return (
-        <div style={{ marginTop: 20}}>
+        <div style={{ marginTop: 20 }}>
+            <h5 style={{ marginBottom: 20 }}>Add Patient / Book Appointment</h5>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TextField
                     fullWidth
@@ -126,20 +131,20 @@ export default function AddPatientForm() {
                 </Col>
             </Row>
 
-            <Row style={{ marginTop: 10, marginBottom: 10 }}>
+            <Row style={{ marginTop: 10, marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
                         label="Appointment Date (If Needed)"
-                        value={value}
+                        value={selectedDate}
                         onChange={(newValue) => {
-                            setValue(newValue);
+                            setSelectedDate(newValue);
                         }}
                     />
                 </LocalizationProvider>
             </Row>
 
-            <Row>
+            <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
                 <Button type="submit"
                     color="primary">
                     Done
