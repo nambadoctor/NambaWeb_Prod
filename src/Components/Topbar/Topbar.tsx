@@ -2,6 +2,7 @@ import "../../Styles/topbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 import { Navbar, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
@@ -30,30 +31,28 @@ export default function Topbar() {
           style={{ marginRight: 20, alignItems: "center" }}
         >
           <OrganisationPicker></OrganisationPicker>
-          <Nav.Link
-            href="Appointments"
-            style={{
-              color: "white",
-              fontSize: 18,
-              fontWeight: "600",
-              marginLeft: 20,
-              marginRight: 30,
-            }}
-          >
-            Appointments
-          </Nav.Link>
-          <Nav.Link
-            href="Patients"
+          <Link
+            to='/Appointments'
             style={{
               color: "white",
               fontSize: 18,
               fontWeight: "600",
               marginLeft: 20,
               marginRight: 40,
-            }}
-          >
-            Patients
-          </Nav.Link>
+              textDecoration: 'none'
+            }}>Appointments
+          </Link>
+          <Link
+            to='/Patients'
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "600",
+              marginLeft: 20,
+              marginRight: 40,
+              textDecoration: 'none'
+            }}>Patients
+          </Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

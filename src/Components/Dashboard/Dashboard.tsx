@@ -37,7 +37,7 @@ function Dashboard() {
             </Col>
             <Col md="3">
               <Row><DatePickerComponent /></Row>
-              <Row><Divider style={{marginTop: 20}}></Divider></Row>
+              <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
               <Row><AddPatientForm></AddPatientForm></Row>
             </Col>
           </Row>

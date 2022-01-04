@@ -33,6 +33,7 @@ export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Ac
                 }
 
                 dispatch(SetServiceProviderBasic(response.data));
+                dispatch(CheckForDefaultOrg());
             } else {
                 //LOG: Data response is null
             }

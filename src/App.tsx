@@ -15,8 +15,7 @@ function App() {
         <LoginPage />
       ) : (
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/Dashboard/*" element={<Dashboard />} />
+          <Route path="/*" element={<Dashboard />} />
         </Routes>
       )}
     </div>
