@@ -19,7 +19,7 @@ export default function AddPatientForm() {
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
     const genderOptions = ["Male", "Female", "Other"]
 
@@ -54,7 +54,7 @@ export default function AddPatientForm() {
     }
 
     const done = () => {
-        
+
     }
 
     return (
@@ -135,7 +135,7 @@ export default function AddPatientForm() {
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
-                        label="Appointment Date"
+                        label="Appointment Date (If Needed)"
                         value={selectedDate}
                         onChange={(newValue) => {
                             setSelectedDate(newValue);
