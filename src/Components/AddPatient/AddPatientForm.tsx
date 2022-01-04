@@ -84,6 +84,7 @@ export default function AddPatientForm() {
             {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
 
             <TextField
+                disabled={addPatientState.isCustomerExists}
                 fullWidth
                 variant="outlined"
                 margin="normal"
@@ -99,6 +100,7 @@ export default function AddPatientForm() {
             <Row className="align-items-center">
                 <Col>
                     <TextField
+                        disabled={addPatientState.isCustomerExists}
                         variant="outlined"
                         margin="dense"
                         size="small"
@@ -115,6 +117,7 @@ export default function AddPatientForm() {
                     <ButtonGroup style={{ marginTop: 3 }}>
                         {genderOptions.map((genderOption, idx) => (
                             <ToggleButton
+                                disabled={addPatientState.isCustomerExists}
                                 key={idx}
                                 id={`gender-${idx}`}
                                 type="radio"
@@ -131,7 +134,7 @@ export default function AddPatientForm() {
                 </Col>
             </Row>
 
-            <Row style={{ marginTop: 10, marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
+            <Row style={{ marginTop: 10, marginBottom: 15, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
                         renderInput={(props) => <TextField {...props} />}
@@ -145,7 +148,9 @@ export default function AddPatientForm() {
             </Row>
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
-                <Button type="submit"
+                <Button
+                    style={{ padding: 10 }}
+                    type="submit"
                     color="primary">
                     Done
                 </Button>

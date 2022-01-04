@@ -8,7 +8,7 @@ declare global {
 
 let FB = window.FB; // ok now
 
-function getAppVerifier () {
+function getAppVerifier() {
     return new RecaptchaVerifier('sign-in-button', {
         'size': 'invisible',
         'callback': (response: any) => {
