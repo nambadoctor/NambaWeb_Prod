@@ -6,7 +6,7 @@ import { GetServiceProviderCustomersInOrganisation } from "../Helpers/EndPointHe
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerData from "../Types/ClientDataModels/Customer";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer } from "./AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "./AddPatientActions";
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
         type: Customer_Types.SET_LOCAL_CUSTOMER_LIST,
@@ -30,7 +30,7 @@ export const CheckIfCustomerExists = (): ThunkAction<void, RootState, null, Acti
 
     const timer = setTimeout(() => {
         const tempCustomer = {
-            customerId: "",
+            customerId: "123",
             phoneNumber: "1234567890",
             lastName: "Manivannan",
             firstName: "Surya",
@@ -41,6 +41,11 @@ export const CheckIfCustomerExists = (): ThunkAction<void, RootState, null, Acti
 
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientCustomerProfile(tempCustomer))
+        
+        //IF GETTING EXISTING CUSTOMER BACK FROM DB
+        if (tempCustomer.customerId) {
+            dispatch(SetAddPatientIsCustomerExists(true))
+        }
     }, 1000);
     return () => clearTimeout(timer);
 };
