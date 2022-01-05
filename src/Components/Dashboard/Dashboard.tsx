@@ -13,6 +13,7 @@ import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBas
 import AddPatientForm from "../AddPatient/AddPatientForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
+import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function Dashboard() {
 
@@ -22,8 +23,8 @@ function Dashboard() {
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
 
-    SetTrackTrace("Loading Service Provider Basic", "Dashboard Render Component");
-    
+    SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
+
     dispatch(GetServiceProviderBasic());
   }, [])
   //END

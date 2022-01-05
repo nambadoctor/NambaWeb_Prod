@@ -8,6 +8,8 @@ import { Action } from "../Types/ActionType";
 import ICustomerData from "../Types/ClientDataModels/Customer";
 import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "./AddPatientActions";
 import getCall from "../Http/http-helpers";
+import SetTrackTrace from "../Telemetry/SetTrackTrace";
+import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
@@ -19,13 +21,19 @@ function setCustomersHelper(customers: ICustomerData[]) {
 export const SetCustomers = (customers: Array<ICustomerData>): Action => (setCustomersHelper(customers));
 
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Customers For Service Provider In Org Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
+
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
-    let response = await getCall({} as Array<ICustomerData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]))
+    SetTrackTrace("Current Service Provider: " + currentServiceProvider, "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
 
+    let response = await getCall({} as Array<ICustomerData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
+
+    SetTrackTrace("Dispatch Set Customers List Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
     dispatch(SetCustomers(response.data));
 };
 
+//NEED TO INTEGRATE WITH SERVICE CALL
 export const CheckIfCustomerExists = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(SetAddPatientIsCheckingForCustomer(true))
 
