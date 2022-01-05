@@ -7,6 +7,8 @@ import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerData from "../Types/ClientDataModels/Customer";
 import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "./AddPatientActions";
+import getCall from "../Http/http-helpers";
+
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
         type: Customer_Types.SET_LOCAL_CUSTOMER_LIST,
@@ -19,8 +21,7 @@ export const SetCustomers = (customers: Array<ICustomerData>): Action => (setCus
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
-    let headersContent = await GetHeadersHelper();
-    let response = await http.get<Array<ICustomerData>>(GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), { headers: headersContent });
+    let response = await getCall({} as Array<ICustomerData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]))
 
     dispatch(SetCustomers(response.data));
 };
@@ -41,7 +42,7 @@ export const CheckIfCustomerExists = (): ThunkAction<void, RootState, null, Acti
 
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientCustomerProfile(tempCustomer))
-        
+
         //IF GETTING EXISTING CUSTOMER BACK FROM DB
         if (tempCustomer.customerId) {
             dispatch(SetAddPatientIsCustomerExists(true))
