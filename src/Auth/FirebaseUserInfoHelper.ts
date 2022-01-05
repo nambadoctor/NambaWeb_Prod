@@ -1,7 +1,7 @@
 import { getAuth } from 'firebase/auth'
 import jwt_decode from "jwt-decode";
 
-var authToken: string = ""
+var idToken: string = ""
 
 const GetIDTokenExpiryDate = (idToken: string) => {
   var decoded = jwt_decode(String(idToken)) as {};
@@ -17,26 +17,10 @@ const GetIDTokenExpiryDate = (idToken: string) => {
   return expiryDate;
 }
 
-async function GetFirebaseAuthToken() {
-  if (authToken) {
-    const currentDateTime = new Date();
-    const tokenExpiryTime = GetIDTokenExpiryDate(authToken)
-
-    if (tokenExpiryTime < currentDateTime) {
-      authToken = await FirebaseAuthTokenHelper();
-    }
-  } else {
-    authToken = await FirebaseAuthTokenHelper();
-  }
-
-  return authToken
-}
-
-const FirebaseAuthTokenHelper = async (): Promise<string> => {
+const RefreshAuthToken = async (): Promise<string> => {
   return new Promise<string>((resolve) => {
     getAuth().currentUser!.getIdToken(/* forceRefresh */ true).then(function (idToken) {
-      authToken = String(idToken);
-      GetIDTokenExpiryDate(String(idToken))
+      idToken = String(idToken);
       resolve(String(idToken))
     }).catch(function (error) {
       console.log(error);
@@ -45,4 +29,20 @@ const FirebaseAuthTokenHelper = async (): Promise<string> => {
   });
 };
 
-export default FirebaseAuthTokenHelper
+async function GetFirebaseAuthToken() {
+  if (idToken) {
+    const currentDateTime = new Date();
+    const tokenExpiryTime = GetIDTokenExpiryDate(idToken)
+
+    if (tokenExpiryTime < currentDateTime) {
+      idToken = await RefreshAuthToken();
+    }
+    
+  } else {
+    idToken = await RefreshAuthToken();
+  }
+
+  return idToken
+}
+
+export default GetFirebaseAuthToken;

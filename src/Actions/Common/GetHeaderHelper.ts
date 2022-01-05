@@ -1,13 +1,14 @@
-import FirebaseAuthTokenHelper from '../../Auth/FirebaseUserInfoHelper';
+import GetFirebaseAuthToken from '../../Auth/FirebaseUserInfoHelper';
 
-const GetAuthHeader = async (): Promise<{
+async function GetAuthHeader(): Promise<{
   "Content-type": string;
   Authorization: string;
-}> => {
-  const userToken = await FirebaseAuthTokenHelper();
+}> {
+  var userToken = await GetFirebaseAuthToken();
+
   return {
     "Content-type": "application/json",
-    "Authorization": "Bearer " + userToken //userState.authToken,
+    "Authorization": "Bearer " + userToken,
   }
 }
 

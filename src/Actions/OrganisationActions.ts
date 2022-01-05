@@ -24,13 +24,7 @@ function setSelectedOrgTypeHelper(organisation?: IOrganisationBasic) {
 }
 
 export const SetOrgs = (organisations: Array<IOrganisationBasic>): Action => (setOrgsTypeHelper(organisations));
-export const SetLocallySelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation))
-
-export const SetSelectOrgModal = (): ThunkAction<void, OrganisationState, null, Action> => async dispatch => {
-  let headersContent = await GetHeadersHelper();
-  let response = await http.get<Array<IOrganisationBasic>>("/Organisation", { headers: headersContent });
-  dispatch(SetOrgs(response.data));
-};
+export const SetLocallySelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation));
 
 export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
   const serviceProviderBasicState = getState().ServiceProviderBasicState

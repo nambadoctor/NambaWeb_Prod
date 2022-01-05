@@ -6,6 +6,8 @@ import GetAuthHeader from "./GetHeaderHelper";
 import IServiceProviderBasic from "../../Types/ClientDataModels/ServiceProviderBasic";
 import { CheckForDefaultOrg } from "../OrganisationActions";
 import { RootState } from "../../store";
+import getCall from "../../Http/http-helpers";
+import { GetServiceProviderBasicEndPoint } from "../../Helpers/EndPointHelpers";
 
 function getActionToSetServiceProviderBasic(serviceProviderBasic: IServiceProviderBasic) {
     return {
@@ -17,27 +19,8 @@ function getActionToSetServiceProviderBasic(serviceProviderBasic: IServiceProvid
 export const SetServiceProviderBasic = (serviceProviderBasic: IServiceProviderBasic): Action => (getActionToSetServiceProviderBasic(serviceProviderBasic));
 
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
-    let headersVals = await GetAuthHeader();
+    const response = await getCall({} as IServiceProviderBasic, GetServiceProviderBasicEndPoint());
 
-    http
-        .get<IServiceProviderBasic>("/serviceprovider", { headers: headersVals })
-        .then(response => {
-            if (response.data != null) {
-                if (!response.data.serviceProviderId) {
-                    //LOG: SPBasic response has no SP_ID {SpID}
-                }
-
-                if (!response.data.organisations) {
-                    //LOG: SPBasic response has no organisations {Orgs.length}
-                }
-
-                dispatch(SetServiceProviderBasic(response.data));
-                dispatch(CheckForDefaultOrg());
-            } else {
-                //LOG: Data response is null
-            }
-        })
-        .catch(err => {
-            //TODO: SEND TO CENTRALIZED ERROR HANDLING CLASS
-        });
+    dispatch(SetServiceProviderBasic(response.data));
+    dispatch(CheckForDefaultOrg());
 };

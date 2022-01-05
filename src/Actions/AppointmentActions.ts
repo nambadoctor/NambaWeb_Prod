@@ -41,7 +41,7 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
   //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-  let response = await getCall(typeof Array<IAppointmentData>(), GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]));
+  let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]));
 
   dispatch(SetAppointments(response.data));
   dispatch(SetDatesWithAppointmentsRange(response.data));

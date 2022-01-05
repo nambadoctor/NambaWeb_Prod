@@ -1,13 +1,12 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import http from "../Http/http-common";
-import GetAuthHeader from "../Actions/Common/GetHeaderHelper";
 import { RootState } from "../store";
 import IServiceProvider from "../Types/ClientDataModels/ServiceProvider";
 import { Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
 import { GetAllAppointments } from "./AppointmentActions";
 import { GetServiceProviderProfileEndPoint } from "../Helpers/EndPointHelpers";
 import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
+import getCall from "../Http/http-helpers";
 
 function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
     return {
@@ -24,17 +23,9 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
 
     //TODO: Handle empty service providerId or empty selected organsiation
 
-    let headersVals = await GetAuthHeader();
+    let response = await getCall({} as IServiceProvider, GetServiceProviderProfileEndPoint(serviceProviderBasicId!, selectedOrganisationId!))
 
-    http
-        .get<IServiceProvider>(GetServiceProviderProfileEndPoint(serviceProviderBasicId!, selectedOrganisationId!), { headers: headersVals })
-        .then(response => {
-            dispatch(SetCurrentServiceProvider(response.data))
-            dispatch(GetAllAppointments());
-            dispatch(GetAllCustomersForServiceProviderInOrg());
-        })
-        .catch(err => {
-            //TODO: HANDLE ERROR [IN CLIENT AND LOGGING]
-            console.log("ERROR GETTING SERVICE PROVIDER PROFILE: " + err)
-        });
+    dispatch(SetCurrentServiceProvider(response.data))
+    dispatch(GetAllAppointments());
+    dispatch(GetAllCustomersForServiceProviderInOrg());
 };

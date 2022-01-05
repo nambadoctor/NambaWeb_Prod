@@ -26,7 +26,6 @@ export async function SignInWithPhoneNumberHelper(phoneNumber: string) {
 
             var confirmationResultTemp = confirmationResult.confirm(verificationCode!).then((result) => {
                 // User signed in successfully.
-                const user = result.user;
                 // ...
             }).catch((error) => {
                 // User couldn't sign in (bad verification code?)
