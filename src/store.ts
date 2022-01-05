@@ -6,7 +6,6 @@ import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBa
 import { appointmentReducer } from "./Reducers/AppointmentsReducer";
 import { appointmentCategoryReducer } from "./Reducers/AppointmentCategoryReducer";
 import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
-import { selectedUserTabReducer } from "./Reducers/SelectedTabReducer";
 import { customerReducer } from "./Reducers/CustomersReducer";
 import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
 import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProviderReducer";
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
     AppointmentState: appointmentReducer,
     AppointmentCategoryState: appointmentCategoryReducer,
     SelectedDatesState: selectedDateReducer,
-    SelectedUserTabState: selectedUserTabReducer,
     CustomersState: customerReducer,
     UITriggerState: uiTriggerReducer,
     CurrentServiceProviderState: currentServiceProviderReducer,
