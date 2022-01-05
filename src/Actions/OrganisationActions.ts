@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { OrganisationState, Org_Types } from "../Reducers/OrganisationsReducer";
-import http from "../http-common";
+import http from "../Http/http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
 import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
 import { RootState } from "../store";

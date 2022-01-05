@@ -1,6 +1,6 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import http from "../http-common";
+import http from "../Http/http-common";
 import GetAuthHeader from "../Actions/Common/GetHeaderHelper";
 import { RootState } from "../store";
 import IServiceProvider from "../Types/ClientDataModels/ServiceProvider";

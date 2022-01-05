@@ -1,8 +1,8 @@
 import { ThunkAction } from "redux-thunk";
-import http from "../http-common";
+import http from "../Http/http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { Customer_Types } from "../Reducers/CustomersReducer";
-import { GetServiceProviderCustomersInOrganisation } from "../Helpers/EndPointHelpers";
+import { GetServiceProviderCustomersInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerData from "../Types/ClientDataModels/Customer";
@@ -20,7 +20,7 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
     let headersContent = await GetHeadersHelper();
-    let response = await http.get<Array<ICustomerData>>(GetServiceProviderCustomersInOrganisation(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), { headers: headersContent });
+    let response = await http.get<Array<ICustomerData>>(GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), { headers: headersContent });
 
     dispatch(SetCustomers(response.data));
 };

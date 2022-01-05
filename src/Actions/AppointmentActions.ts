@@ -1,13 +1,14 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import http from "../http-common";
+import http from "../Http/http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 import { RootState } from "../store";
 import filterAppointments from "../Helpers/AppointmentHelpers";
-import { GetServiceProviderAppointmentsInOrganisation } from "../Helpers/EndPointHelpers";
+import { GetServiceProviderAppointmentsInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import getCall from "../Http/http-helpers";
 
 //RETURN APPOINTMENT ACTION TYPES
 function setAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -40,9 +41,7 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
   //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-
-  let headersContent = await GetHeadersHelper();
-  let response = await http.get<Array<IAppointmentData>>(GetServiceProviderAppointmentsInOrganisation(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), { headers: headersContent });
+  let response = await getCall(typeof Array<IAppointmentData>(), GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]));
 
   dispatch(SetAppointments(response.data));
   dispatch(SetDatesWithAppointmentsRange(response.data));

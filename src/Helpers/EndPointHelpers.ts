@@ -2,10 +2,10 @@ export function GetServiceProviderProfileEndPoint(serviceProviderId: string, org
     return "/serviceprovider/" + serviceProviderId + "/organisation/" + organisationId;
 }
 
-export function GetServiceProviderAppointmentsInOrganisation(organisationId: string, serviceProviderIds: string[]) {
+export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
 }
 
-export function GetServiceProviderCustomersInOrganisation(organisationId: string, serviceProviderIds: string[]) {
+export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
 }

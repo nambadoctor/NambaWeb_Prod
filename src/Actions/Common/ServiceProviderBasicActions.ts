@@ -1,6 +1,6 @@
 import { Action } from "../../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import http from "../../http-common";
+import http from "../../Http/http-common";
 import { GetUserType_Types } from "../../Reducers/Common/ServiceProviderBasicReducer";
 import GetAuthHeader from "./GetHeaderHelper";
 import IServiceProviderBasic from "../../Types/ClientDataModels/ServiceProviderBasic";
@@ -19,7 +19,6 @@ export const SetServiceProviderBasic = (serviceProviderBasic: IServiceProviderBa
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
     let headersVals = await GetAuthHeader();
 
-    console.log("TRYING MAN")
     http
         .get<IServiceProviderBasic>("/serviceprovider", { headers: headersVals })
         .then(response => {
