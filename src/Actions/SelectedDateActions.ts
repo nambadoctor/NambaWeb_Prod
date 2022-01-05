@@ -1,6 +1,8 @@
 import { Action } from "../Types/ActionType";
 import { SelectedDateReducer } from "../Reducers/SelectedDateReducer";
 import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import SetTrackTrace from "../Telemetry/SetTrackTrace";
+import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function setAppointmentCategoryHelper(dates: Date[]) {
     return {
@@ -10,6 +12,9 @@ function setAppointmentCategoryHelper(dates: Date[]) {
 }
 
 function setDatesWithAppointmentsRangeHelper(appointments: IAppointmentData[]) {
+
+    SetTrackTrace("Entered Set Dates With Appointments Helper", "SetDatesWithAppointmentsRangeHelper", SeverityLevel.Information)
+
     var datesToSet:Date[] = [];
 
     appointments.forEach(appointment => {
@@ -18,6 +23,8 @@ function setDatesWithAppointmentsRangeHelper(appointments: IAppointmentData[]) {
             datesToSet.push(appointmentDate)
         }
     });
+
+    SetTrackTrace("Populated DatesWithAppointmentsArr: " + datesToSet.length, "SetDatesWithAppointmentsRangeHelper", SeverityLevel.Information)
     
     return {
         type: SelectedDateReducer.SET_LOCAL_DATES_WITH_APPOINTMENTS,

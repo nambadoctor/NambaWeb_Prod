@@ -8,6 +8,8 @@ import { SetOrgPickerModalToggle } from "./Common/UIControlActions";
 import { checkForDefaultOrgHelpers } from "../Helpers/OrganisationHelpers";
 import { GetCurrentServiceProvider } from "./ServiceProviderActions";
 import { Action } from "../Types/ActionType";
+import SetTrackTrace from "../Telemetry/SetTrackTrace";
+import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function setOrgsTypeHelper(organisations: Array<IOrganisationBasic>) {
   return {
@@ -27,30 +29,33 @@ export const SetOrgs = (organisations: Array<IOrganisationBasic>): Action => (se
 export const SetLocallySelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation));
 
 export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  const serviceProviderBasicState = getState().ServiceProviderBasicState
 
-  //LOG: Log service provider state retrieved from store (log sPId and Orgs in object)
+  SetTrackTrace("Enter Check For Default Org Action", "CheckForDefaultOrg", SeverityLevel.Information)
 
-  if (serviceProviderBasicState.serviceProvider != undefined || serviceProviderBasicState.serviceProvider != null) {
+  const currentServiceProvider = getState().ServiceProviderBasicState.serviceProvider
 
-    if (serviceProviderBasicState.serviceProvider.organisations == null || serviceProviderBasicState.serviceProvider.organisations.length == 0) {
-      //LOG: service provider object from store has empty organisation list
-    }
+  if (currentServiceProvider) {
+
+    SetTrackTrace("Retrieved Current Service Provider Basic From Store {SPID: " + currentServiceProvider!.serviceProviderId + "} and {OrgListLength: " + currentServiceProvider!.organisations.length + "}", "CheckForDefaultOrg", SeverityLevel.Information)
 
     //LOG: Getting default org
-    const defaultOrg = checkForDefaultOrgHelpers(serviceProviderBasicState.serviceProvider.organisations)
+    const defaultOrg = checkForDefaultOrgHelpers(currentServiceProvider.organisations)
 
     if (defaultOrg != null) {
+
+      SetTrackTrace("Setting Locally Selected Org as Default Org: " + defaultOrg, "CheckForDefaultOrg", SeverityLevel.Information)
+
       dispatch(SetLocallySelectedOrg(defaultOrg))
       dispatch(GetCurrentServiceProvider())
     } else {
-      //LOG: Default Org Does not exist
+      SetTrackTrace("DEFAULT ORG DOES NOT EXIST. ASKING USER TO SELECT", "CheckForDefaultOrg", SeverityLevel.Warning)
       dispatch(SetOrgPickerModalToggle(true))
     }
 
-    dispatch(SetOrgs(serviceProviderBasicState.serviceProvider!.organisations))
+    SetTrackTrace("Setting Locally Org List: " + currentServiceProvider!.organisations.length, "CheckForDefaultOrg", SeverityLevel.Information)
+    dispatch(SetOrgs(currentServiceProvider!.organisations))
 
   } else {
-    //TODO: LOG "Service Provider From Store is Null | Undefined"
+    SetTrackTrace("Current Service Provider Does Not Exist!", "CheckForDefaultOrg", SeverityLevel.Error)
   }
 };

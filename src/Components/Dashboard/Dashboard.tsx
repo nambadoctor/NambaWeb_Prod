@@ -12,18 +12,19 @@ import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
 import AddPatientForm from "../AddPatient/AddPatientForm";
 import { Divider } from '@mui/material';
-
-import { useAppInsightsContext, useTrackEvent } from "@microsoft/applicationinsights-react-js";
+import SetTrackTrace from "../../Telemetry/SetTrackTrace";
+import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function Dashboard() {
 
   const dispatch = useDispatch();
-  const appInsights = useAppInsightsContext();
   const serviceProviderBasicState = useSelector((state: RootState) => state.ServiceProviderBasicState)
 
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
-    appInsights.trackTrace({message: "Getting Service Provider Basic"})
+
+    SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
+
     dispatch(GetServiceProviderBasic());
   }, [])
   //END

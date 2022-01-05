@@ -1,10 +1,16 @@
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { getAuth } from 'firebase/auth'
 import jwt_decode from "jwt-decode";
+import SetTrackTrace from '../Telemetry/SetTrackTrace';
 
 var idToken: string = ""
 
 const GetIDTokenExpiryDate = (idToken: string) => {
+  SetTrackTrace("Start Get Expiry date from ID token", "GetIDTokenExpiryDate", SeverityLevel.Information)
   var decoded = jwt_decode(String(idToken)) as {};
+
+  SetTrackTrace("Recieved decoded dictionary from id token: " + decoded, "GetIDTokenExpiryDate", SeverityLevel.Information)
+
   var expiryTimeStamp = 0;
   Object.keys(decoded).map((key) => {
     if (key == "exp") {
@@ -12,37 +18,46 @@ const GetIDTokenExpiryDate = (idToken: string) => {
     }
   })
 
+  SetTrackTrace("Get expiry timestamp from id token response: " + expiryTimeStamp, "GetIDTokenExpiryDate", SeverityLevel.Information)
+
   const expiryDate = new Date(expiryTimeStamp * 1000);
 
   return expiryDate;
 }
 
-const RefreshAuthToken = async (): Promise<string> => {
+const RefreshIdToken = async (): Promise<string> => {
+  SetTrackTrace("Start Id Token Refresh", "RefreshIdToken", SeverityLevel.Information)
   return new Promise<string>((resolve) => {
     getAuth().currentUser!.getIdToken(/* forceRefresh */ true).then(function (idToken) {
+      SetTrackTrace("Id Token Refresh SUCCESS", "RefreshIdToken", SeverityLevel.Information)
       idToken = String(idToken);
       resolve(String(idToken))
     }).catch(function (error) {
+      SetTrackTrace("Id Token Refresh FAIL: " + error, "RefreshIdToken", SeverityLevel.Error)
       console.log(error);
       resolve(String(error))
     });
   });
 };
 
-async function GetFirebaseAuthToken() {
+async function GetFirebaseIdToken() {
   if (idToken) {
+    SetTrackTrace("Id Token Exists", "GetFirebaseIdToken", SeverityLevel.Information)
     const currentDateTime = new Date();
     const tokenExpiryTime = GetIDTokenExpiryDate(idToken)
 
     if (tokenExpiryTime < currentDateTime) {
-      idToken = await RefreshAuthToken();
+      SetTrackTrace("Id Token Expired, refreshing token", "GetFirebaseIdToken", SeverityLevel.Warning)
+      idToken = await RefreshIdToken();
     }
-    
+
   } else {
-    idToken = await RefreshAuthToken();
+    SetTrackTrace("Id Token Empty, refreshing token", "GetFirebaseIdToken", SeverityLevel.Warning)
+    idToken = await RefreshIdToken();
   }
 
+  SetTrackTrace("Returning Id Token", "GetFirebaseIdToken", SeverityLevel.Information)
   return idToken
 }
 
-export default GetFirebaseAuthToken;
+export default GetFirebaseIdToken;
