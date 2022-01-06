@@ -1,6 +1,6 @@
 import { Action } from "../Types/ActionType";
 import { SelectedDateReducer } from "../Reducers/SelectedDateReducer";
-import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 

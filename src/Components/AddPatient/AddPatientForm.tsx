@@ -7,19 +7,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
+import { CheckIfCustomerExists, SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "../../Actions/AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import IPatientCreationAndAppointmentBookData from "../../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
+import IDateOfBirthData from "../../Types/OutgoingDataModels/DateOfBirth";
 
 export default function AddPatientForm() {
 
     const dispatch = useDispatch()
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
+    const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
     const genderOptions = ["Male", "Female", "Other"]
 
@@ -28,6 +32,7 @@ export default function AddPatientForm() {
             dispatch(CheckIfCustomerExists())
             //TODO: Check if phone number exists for organisation
         } else {
+            dispatch(SetAddPatientPhoneNumber(event.target.value));
             dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsCustomerExists(false))
         }
@@ -36,25 +41,52 @@ export default function AddPatientForm() {
     //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.firstName = event.target.value
+        tempCustomerProfile.FirstName = event.target.value
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     };
 
     const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.age = event.target.value
+        //tempCustomerProfile.age = event.target.value
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     };
 
     const genderOptionChange = (gender: string) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.gender = gender
+        tempCustomerProfile.Gender = gender
         console.log(gender)
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
 
-    const done = () => {
+    //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
+    const makeCustomerAndAppointmentRequest = () => {
+        const currentCustomerRequestObj = addPatientState.customerProfile
+        const phoneNumberObj = { PhoneNumberId: "", CountryCode: "+91", Number: addPatientState.phoneNumber, Type: "" } as IPhoneNumberData
 
+        return {
+            AppointmentType: "InPerson",
+            AddressId: "",
+            Status: "",
+            ScheduledAppointmentStartTime: new Date(),
+            ScheduledAppointmentEndTime: null,
+            ActualAppointmentStartTime: null,
+            ActualAppointmentEndTime: null,
+            CustomerId: currentCustomerRequestObj.CustomerId,
+            FirstName: currentCustomerRequestObj.FirstName,
+            LastName: currentCustomerRequestObj.LastName,
+            PhoneNumbers: [phoneNumberObj],
+            Gender: currentCustomerRequestObj.Gender,
+            DateOfBirth: {} as IDateOfBirthData,
+            EmailAddress: currentCustomerRequestObj.EmailAddress,
+            ProfilePicURL: currentCustomerRequestObj.ProfilePicURL,
+            OrganisationId: currentServiceProvider?.organisationId,
+            ServiceProviderId: currentServiceProvider?.serviceProviderId
+        } as IPatientCreationAndAppointmentBookData
+    }
+    //END
+    const done = () => {
+        const appointmentRequest = makeCustomerAndAppointmentRequest();
+        dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
 
     return (
@@ -90,7 +122,7 @@ export default function AddPatientForm() {
                 margin="normal"
                 size="small"
                 required
-                value={addPatientState.customerProfile.firstName}
+                value={addPatientState.customerProfile.FirstName}
                 id="name"
                 label="Name"
                 name="name"
@@ -106,7 +138,7 @@ export default function AddPatientForm() {
                         size="small"
                         name="age"
                         label="Age"
-                        value={addPatientState.customerProfile.age}
+                        //value={addPatientState.customerProfile.age}
                         type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}
@@ -123,8 +155,8 @@ export default function AddPatientForm() {
                                 type="radio"
                                 variant='outline-primary'
                                 name="gender"
-                                value={addPatientState.customerProfile.gender}
-                                checked={addPatientState.customerProfile.gender === genderOption}
+                                value={addPatientState.customerProfile.Gender}
+                                checked={addPatientState.customerProfile.Gender === genderOption}
                                 onChange={(e) => genderOptionChange(genderOption)}
                             >
                                 {genderOption}
@@ -151,7 +183,8 @@ export default function AddPatientForm() {
                 <Button
                     style={{ padding: 10 }}
                     type="submit"
-                    color="primary">
+                    color="primary"
+                    onClick={() => done()}>
                     Done
                 </Button>
             </Row>

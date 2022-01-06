@@ -12,7 +12,7 @@ import { Typography } from "@mui/material";
 import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import IAppointmentData from "../../Types/ClientDataModels/Appointment";
+import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {

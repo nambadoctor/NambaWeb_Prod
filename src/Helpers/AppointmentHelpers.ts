@@ -1,6 +1,6 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
-import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { isDatesEqual } from "../Utils/GeneralUtils";
 
 export default function filterAppointments(

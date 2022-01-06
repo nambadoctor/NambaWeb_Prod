@@ -1,5 +1,6 @@
 import { Action } from "../Types/ActionType"
-import ICustomerData, { MakeEmptyCustomerData } from "../Types/ClientDataModels/Customer";
+import ICustomerData from "../Types/IncomingDataModels/Customer";
+import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
 
 export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_PHONE_NUMBER = "SET_LOCAL_PHONE_NUMBER",
@@ -10,14 +11,14 @@ export enum AddPatientReducer_Types {
 
 export interface AddPatientState {
     phoneNumber: string,
-    customerProfile: ICustomerData,
+    customerProfile: ICustomerSetRequestData,
     isCheckingNumber: boolean,
     isCustomerExists: boolean
 }
 
 const initialState: AddPatientState = {
     phoneNumber: "",
-    customerProfile: MakeEmptyCustomerData(),
+    customerProfile: {} as ICustomerSetRequestData,
     isCheckingNumber: false,
     isCustomerExists: false
 }

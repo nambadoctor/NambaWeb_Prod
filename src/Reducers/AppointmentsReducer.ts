@@ -1,7 +1,7 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
-import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 
 export enum Appointment_Types {
   SET_LOCAL_APPOINTMENTS = "SET_LOCAL_APPOINTMENTS",

@@ -5,7 +5,7 @@ import { setFilteredAppointments } from '../../Actions/AppointmentActions';
 import { SetOrgPickerModalToggle } from '../../Actions/Common/UIControlActions';
 import { SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
 import { RootState } from '../../store';
-import IOrganisationBasic from '../../Types/ClientDataModels/OrganisationBasic';
+import IOrganisationBasic from '../../Types/IncomingDataModels/OrganisationBasic';
 
 export default function OrganisationInitialModalPickerComponent() {
 

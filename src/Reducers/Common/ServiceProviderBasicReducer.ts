@@ -1,7 +1,7 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { Action } from "../../Types/ActionType"
-import IServiceProviderBasic from "../../Types/ClientDataModels/ServiceProviderBasic";
+import IServiceProviderBasic from "../../Types/IncomingDataModels/ServiceProviderBasic";
 
 export enum GetUserType_Types {
   SET_LOCAL_USER_TYPES = "SET_LOCAL_USER_TYPES"

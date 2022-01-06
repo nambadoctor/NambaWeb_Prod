@@ -1,5 +1,5 @@
 export function GetServiceProviderProfileEndPoint(serviceProviderId: string, organisationId: String): string {
-    return "/serviceprovider/" + serviceProviderId + "/organisation/" + organisationId;
+    return "serviceprovider/" + serviceProviderId + "/organisation/" + organisationId;
 }
 
 export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
@@ -10,6 +10,10 @@ export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
 }
 
+export function SetCustomerWithAppointment () {
+    return "customer/appointment"
+}
+
 export function GetServiceProviderBasicEndPoint () {
-    return "/serviceprovider";
+    return "serviceprovider";
 }

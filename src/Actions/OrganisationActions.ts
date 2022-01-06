@@ -2,7 +2,7 @@ import { ThunkAction } from "redux-thunk";
 import { OrganisationState, Org_Types } from "../Reducers/OrganisationsReducer";
 import http from "../Http/http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
-import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
+import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 import { RootState } from "../store";
 import { SetOrgPickerModalToggle } from "./Common/UIControlActions";
 import { checkForDefaultOrgHelpers } from "../Helpers/OrganisationHelpers";
@@ -35,7 +35,7 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
   const currentServiceProvider = getState().ServiceProviderBasicState.serviceProvider
 
   if (currentServiceProvider) {
-
+    
     SetTrackTrace("Retrieved Current Service Provider Basic From Store {SPID: " + currentServiceProvider!.serviceProviderId + "} and {OrgListLength: " + currentServiceProvider!.organisations.length + "}", "CheckForDefaultOrg", SeverityLevel.Information)
 
     //LOG: Getting default org

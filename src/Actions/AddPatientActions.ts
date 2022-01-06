@@ -1,6 +1,7 @@
 import { Action } from "../Types/ActionType";
-import ICustomerData from "../Types/ClientDataModels/Customer";
+import ICustomerData from "../Types/IncomingDataModels/Customer";
 import { AddPatientReducer_Types } from "../Reducers/AddPatientReducer";
+import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
 
 function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     return {
@@ -9,7 +10,7 @@ function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     };
 }
 
-function SetAddPatientCustomerProfileAction(customerProfile: ICustomerData) {
+function SetAddPatientCustomerProfileAction(customerProfile: ICustomerSetRequestData) {
     return {
         type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE,
         payload: customerProfile
@@ -32,7 +33,7 @@ function SetAddPatientIsCustomerAction(isCustomerExists: boolean) {
 
 export const SetAddPatientPhoneNumber = (phoneNumber: string): Action => (SetAddPatientPhoneNumberAction(phoneNumber));
 
-export const SetAddPatientCustomerProfile = (customerProfile: ICustomerData): Action => (SetAddPatientCustomerProfileAction(customerProfile));
+export const SetAddPatientCustomerProfile = (customerProfile: ICustomerSetRequestData): Action => (SetAddPatientCustomerProfileAction(customerProfile));
 
 export const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
 

@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
-import ICustomerData from "../../Types/ClientDataModels/Customer";
+import ICustomerData from "../../Types/IncomingDataModels/Customer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
