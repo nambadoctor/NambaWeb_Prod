@@ -17,3 +17,11 @@ export function SetCustomerWithAppointment () {
 export function GetServiceProviderBasicEndPoint () {
     return "serviceprovider";
 }
+
+export function GetAppointmentForServiceProvider(appointmentId:string, serviceProviderId:string) {
+    return  "appointment/" + appointmentId + "/" + serviceProviderId;
+}
+
+export function GetCustomerForServiceProvider(customerId:string, organisationId:string) {
+    return  "customer/" + customerId + "/" + organisationId;
+}
