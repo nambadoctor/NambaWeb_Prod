@@ -11,6 +11,7 @@ import {getCall, putCall} from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IPatientCreationAndAppointmentBookData from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import { GetAllAppointments } from "./AppointmentActions";
 
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
@@ -46,4 +47,9 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: IPatientCreati
 
     
     let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+
+    if (response) {
+        dispatch(GetAllAppointments())
+        dispatch(GetAllCustomersForServiceProviderInOrg())
+    }
 };

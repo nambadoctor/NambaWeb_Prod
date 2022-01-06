@@ -74,10 +74,10 @@ export default function PatientsTableView() {
               (customer: ICustomerData, index: number) => (
                 <TableRow key={customer.customerId}>
                   <TableCell align="left">
-                    {customer.firstName + " " + customer.lastName}
+                    {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
                   </TableCell>
                   <TableCell align="left">
-                    {customer.gender}/{customer.dateOfBirth}
+                    {customer.gender}/{customer.age}
                   </TableCell>
                   <TableCell>{customer.phoneNumber}</TableCell>
                   <TableCell align="left">

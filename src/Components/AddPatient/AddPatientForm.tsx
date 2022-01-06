@@ -67,7 +67,7 @@ export default function AddPatientForm() {
             AppointmentType: "InPerson",
             AddressId: "",
             Status: "",
-            ScheduledAppointmentStartTime: new Date(),
+            ScheduledAppointmentStartTime: selectedDate,
             ScheduledAppointmentEndTime: null,
             ActualAppointmentStartTime: null,
             ActualAppointmentEndTime: null,
@@ -84,6 +84,7 @@ export default function AddPatientForm() {
         } as IPatientCreationAndAppointmentBookData
     }
     //END
+    
     const done = () => {
         const appointmentRequest = makeCustomerAndAppointmentRequest();
         dispatch(SetCustomerAndBookAppointment(appointmentRequest))
