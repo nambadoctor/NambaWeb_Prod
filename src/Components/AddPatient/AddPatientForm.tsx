@@ -1,5 +1,5 @@
-import { TextField, Container } from "@mui/material";
-import { useState } from "react";
+import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { ButtonGroup, Col, Row, Button, ToggleButton } from "react-bootstrap";
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -10,8 +10,7 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 import { CheckIfCustomerExists, SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 import IPatientCreationAndAppointmentBookData from "../../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
 import IDateOfBirthData from "../../Types/OutgoingDataModels/DateOfBirth";
@@ -29,7 +28,8 @@ export default function AddPatientForm() {
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length == 10) {
-            dispatch(CheckIfCustomerExists())
+            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.organisationId))
+            dispatch(SetAddPatientIsCheckingForCustomer(true))
             //TODO: Check if phone number exists for organisation
         } else {
             dispatch(SetAddPatientPhoneNumber(event.target.value));
@@ -41,7 +41,7 @@ export default function AddPatientForm() {
     //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.FirstName = event.target.value
+        tempCustomerProfile.firstName = event.target.value
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     };
 
@@ -53,7 +53,7 @@ export default function AddPatientForm() {
 
     const genderOptionChange = (gender: string) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.Gender = gender
+        tempCustomerProfile.gender = gender
         console.log(gender)
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
@@ -71,21 +71,22 @@ export default function AddPatientForm() {
             ScheduledAppointmentEndTime: null,
             ActualAppointmentStartTime: null,
             ActualAppointmentEndTime: null,
-            CustomerId: currentCustomerRequestObj.CustomerId,
-            FirstName: currentCustomerRequestObj.FirstName,
-            LastName: currentCustomerRequestObj.LastName,
+            CustomerId: currentCustomerRequestObj.customerId,
+            FirstName: currentCustomerRequestObj.firstName,
+            LastName: currentCustomerRequestObj.lastName,
             PhoneNumbers: [phoneNumberObj],
-            Gender: currentCustomerRequestObj.Gender,
+            Gender: currentCustomerRequestObj.gender,
             DateOfBirth: {} as IDateOfBirthData,
-            EmailAddress: currentCustomerRequestObj.EmailAddress,
-            ProfilePicURL: currentCustomerRequestObj.ProfilePicURL,
+            EmailAddress: currentCustomerRequestObj.emailAddress,
+            ProfilePicURL: currentCustomerRequestObj.profilePicURL,
             OrganisationId: currentServiceProvider?.organisationId,
             ServiceProviderId: currentServiceProvider?.serviceProviderId
         } as IPatientCreationAndAppointmentBookData
     }
     //END
-    
+
     const done = () => {
+        dispatch(SetAddPatientIsMakingDoneCall(true))
         const appointmentRequest = makeCustomerAndAppointmentRequest();
         dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
@@ -123,7 +124,7 @@ export default function AddPatientForm() {
                 margin="normal"
                 size="small"
                 required
-                value={addPatientState.customerProfile.FirstName}
+                value={addPatientState.customerProfile.firstName}
                 id="name"
                 label="Name"
                 name="name"
@@ -156,8 +157,8 @@ export default function AddPatientForm() {
                                 type="radio"
                                 variant='outline-primary'
                                 name="gender"
-                                value={addPatientState.customerProfile.Gender}
-                                checked={addPatientState.customerProfile.Gender === genderOption}
+                                value={addPatientState.customerProfile.gender}
+                                checked={addPatientState.customerProfile.gender === genderOption}
                                 onChange={(e) => genderOptionChange(genderOption)}
                             >
                                 {genderOption}
@@ -181,13 +182,20 @@ export default function AddPatientForm() {
             </Row>
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
-                <Button
-                    style={{ padding: 10 }}
-                    type="submit"
-                    color="primary"
-                    onClick={() => done()}>
-                    Done
-                </Button>
+
+
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <Button
+                        style={{ padding: 10, width: '100%' }}
+                        type="submit"
+                        color="primary"
+                        onClick={() => done()}>
+                        Done
+                    </Button>
+
+                    {addPatientState.isMakingDoneCall ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
+                </div>
+
             </Row>
         </div>
     );

@@ -25,3 +25,7 @@ export function GetAppointmentForServiceProvider(appointmentId:string, servicePr
 export function GetCustomerForServiceProvider(customerId:string, organisationId:string) {
     return  "customer/" + customerId + "/" + organisationId;
 }
+
+export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:string) {
+    return "customer/CheckByPhoneNumber/+91" + phoneNumber + "/" + organisationId;
+}

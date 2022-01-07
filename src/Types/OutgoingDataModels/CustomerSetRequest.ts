@@ -2,16 +2,16 @@ import IDateOfBirthData from "./DateOfBirth";
 import IPhoneNumberData from "./PhoneNumber";
 
 export default interface ICustomerSetRequestData {
-    CustomerId: string,
-    CustomerProfileId: string,
+    customerId: string,
+    customerProfileId: string,
     phoneNumber: string,
-    FirstName: string,
-    LastName: string,
-    Gender: string,
-    EmailAddress: string,
-    ProfilePicURL: string,
-    OrganisationId: string,
-    ServiceProviderId: string,
-    PhoneNumbers: IPhoneNumberData[],
-    DateOfBirth: IDateOfBirthData;
+    firstName: string,
+    lastName: string,
+    gender: string,
+    emailAddress: string,
+    profilePicURL: string,
+    organisationId: string,
+    serviceProviderId: string,
+    phoneNumbers: IPhoneNumberData[],
+    dateOfBirth: IDateOfBirthData;
 }

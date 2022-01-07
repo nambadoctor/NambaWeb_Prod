@@ -31,6 +31,20 @@ function SetAddPatientIsCustomerAction(isCustomerExists: boolean) {
     };
 }
 
+function SetAddPatientIsMakingDoneCallAction(isMakingDoneCall: boolean) {
+    return {
+        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL,
+        payload: isMakingDoneCall
+    };
+}
+
+function SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess: boolean) {
+    return {
+        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS,
+        payload: isDoneCallSuccess
+    };
+}
+
 export const SetAddPatientPhoneNumber = (phoneNumber: string): Action => (SetAddPatientPhoneNumberAction(phoneNumber));
 
 export const SetAddPatientCustomerProfile = (customerProfile: ICustomerSetRequestData): Action => (SetAddPatientCustomerProfileAction(customerProfile));
@@ -38,3 +52,7 @@ export const SetAddPatientCustomerProfile = (customerProfile: ICustomerSetReques
 export const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
 
 export const SetAddPatientIsCustomerExists = (isCustomerExists: boolean): Action => (SetAddPatientIsCustomerAction(isCustomerExists));
+
+export const SetAddPatientIsMakingDoneCall = (isMakingDoneCall: boolean): Action => (SetAddPatientIsMakingDoneCallAction(isMakingDoneCall));
+
+export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Action => (SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess));
