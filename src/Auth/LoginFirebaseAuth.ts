@@ -30,7 +30,7 @@ export const VerifyPhoneNumber = async (phoneNumber: string) => {
       confirmationR = confirmationResult;
     }
   );
-  return confirmationR;
+  return confirmationR?.verificationId;
 };
 
 export const VerifyOtp = (otp: string) => {

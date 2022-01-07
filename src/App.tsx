@@ -1,7 +1,7 @@
 import "./App.css";
 import { AuthContext } from "../src/Auth/Context/AuthContext";
 import { useContext } from "react";
-import Login from "./Components/Login/Login";
+import PhonePage from "./Components/Login/PhonePage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
@@ -16,7 +16,7 @@ function App() {
     <AppInsightsContext.Provider value={reactPlugin}>
       <div>
         {!user ? (
-          <Login />
+          <PhonePage />
         ) : (
           <Routes>
             <Route path="/*" element={<Dashboard />} />

@@ -1,13 +1,11 @@
 import { useState, ChangeEvent, MouseEvent } from "react";
 import { VerifyPhoneNumber, VerifyOtp } from "../Auth/LoginFirebaseAuth";
-import { ConfirmationResult, UserCredential } from "@firebase/auth";
+import { UserCredential } from "@firebase/auth";
 
-export default function useTestLoginHook() {
+export default function useLoginHook() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
-  const [confirmation, setConfirmation] = useState<ConfirmationResult | null>(
-    null
-  );
+  const [confirmation, setConfirmation] = useState<string>();
   const [credential, setCredential] = useState<UserCredential | null>(null);
 
   const onPhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {

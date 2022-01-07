@@ -1,8 +1,8 @@
 import "../../Styles/login.css";
-import useLoginPageHook from "../../CustomHooks/useLoginHook";
+import useLoginHook from "../../CustomHooks/useLoginHook";
 
 export default function OtpPage() {
-  const { onOtpChange, verifyOtp } = useLoginPageHook();
+  const { onOtpChange, verifyOtp } = useLoginHook();
 
   return (
     <form className="form">
