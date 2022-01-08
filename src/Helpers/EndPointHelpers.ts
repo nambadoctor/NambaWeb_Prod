@@ -29,3 +29,19 @@ export function GetCustomerForServiceProvider(customerId:string, organisationId:
 export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:string) {
     return "customer/CheckByPhoneNumber/+91" + phoneNumber + "/" + organisationId;
 }
+
+export function SetCustomerReportEndPoint(customerId:string) {
+    return "customer/" + customerId + "/report"
+}
+
+export function SetCustomerPrescriptionEndPoint(customerId:string) {
+    return "customer/" + customerId + "/prescription"
+}
+
+export function GetCustomerReportEndPoint(customerId:string, appointmentId:string) {
+    return "customer/" + customerId + "/report/" + appointmentId
+}
+
+export function GetCustomerPrescriptionEndPoint(customerId:string, appointmentId:string) {
+    return "customer/" + customerId + "/prescription/" + appointmentId
+}

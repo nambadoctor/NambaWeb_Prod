@@ -14,7 +14,8 @@ import { RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 import { Link } from "react-router-dom";
-import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../../Actions/ConsultationActions";
+import { GetAppointmentForConsultation, GetCustomerForConsultation, SetSelectedAppointmentForConsultation } from "../../Actions/ConsultationActions";
+import { GetReports } from "../../Actions/ReportActions";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -113,8 +114,11 @@ export default function AppointmentsTable() {
   }
 
   function setSelectedAppointment (appointment: IAppointmentData) {
+    dispatch(SetSelectedAppointmentForConsultation(appointment))
     dispatch(GetAppointmentForConsultation(appointment.appointmentId));
     dispatch(GetCustomerForConsultation(appointment.customerId));
+
+    dispatch(GetReports());
   }
 
   return (

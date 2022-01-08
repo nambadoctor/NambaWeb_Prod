@@ -1,13 +1,15 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { GetAppointmentForServiceProvider, GetCustomerForServiceProvider } from "../Helpers/EndPointHelpers";
 import { getCall } from "../Http/http-helpers";
 import { ConsultationTypes_Types } from "../Reducers/ConsultationReducer";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
+import { Action } from "../Types/ActionType";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerData from "../Types/IncomingDataModels/Customer";
+import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
+import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 
 function setSelectedAppointmentAction(appointment: IAppointmentData) {
     return {
@@ -23,8 +25,24 @@ function setSelectedCustomerAction(customer: ICustomerData) {
     };
 }
 
+function setReportsAction(reports: IReportIncomingData) {
+    return {
+        type: ConsultationTypes_Types.SET_CURRENT_CUSTOMER_REPORTS,
+        payload: reports
+    };
+}
+
+function setPrescriptionsAction(prescriptions: IPrescriptionIncomingData) {
+    return {
+        type: ConsultationTypes_Types.SET_CURRENT_CUSTOMER_PRESCRIPTIONS,
+        payload: prescriptions
+    };
+}
+
 export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentData): Action => (setSelectedAppointmentAction(appointment));
 export const SetSelectedCustomerForConsultation = (customer: ICustomerData): Action => (setSelectedCustomerAction(customer));
+export const SetReportsForConsultation = (reports: IReportIncomingData): Action => (setReportsAction(reports));
+export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData): Action => (setPrescriptionsAction(prescriptions));
 
 //Get consultation appointment
 export const GetAppointmentForConsultation = (appointmentId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

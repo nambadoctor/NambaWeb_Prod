@@ -43,7 +43,7 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
 
     if (defaultOrg != null) {
 
-      SetTrackTrace("Setting Locally Selected Org as Default Org: " + defaultOrg, "CheckForDefaultOrg", SeverityLevel.Information)
+      SetTrackTrace("Setting Locally Selected Org as Default Org: " + defaultOrg, "CheckForDefaultOrg", SeverityLevel.Information) 
 
       dispatch(SetLocallySelectedOrg(defaultOrg))
       dispatch(GetCurrentServiceProvider())
