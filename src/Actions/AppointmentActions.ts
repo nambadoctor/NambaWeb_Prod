@@ -7,8 +7,8 @@ import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 import { RootState } from "../store";
 import filterAppointments from "../Helpers/AppointmentHelpers";
 import { GetServiceProviderAppointmentsInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
-import IAppointmentData from "../Types/ClientDataModels/Appointment";
-import getCall from "../Http/http-helpers";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
+import {getCall} from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 

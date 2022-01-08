@@ -1,6 +1,6 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
-import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
+import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 
 export function checkForDefaultOrgHelpers(organisations:IOrganisationBasic[]) : IOrganisationBasic | null {
     SetTrackTrace("Start Check For Default Org: " + organisations.length, "checkForDefaultOrgHelpers", SeverityLevel.Information);

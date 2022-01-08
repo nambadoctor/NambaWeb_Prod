@@ -6,7 +6,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
-import ICustomerData from "../../Types/ClientDataModels/Customer";
+import ICustomerData from "../../Types/IncomingDataModels/Customer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
@@ -74,10 +74,10 @@ export default function PatientsTableView() {
               (customer: ICustomerData, index: number) => (
                 <TableRow key={customer.customerId}>
                   <TableCell align="left">
-                    {customer.firstName + " " + customer.lastName}
+                    {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
                   </TableCell>
                   <TableCell align="left">
-                    {customer.gender}/{customer.dateOfBirth}
+                    {customer.gender}/{customer.age}
                   </TableCell>
                   <TableCell>{customer.phoneNumber}</TableCell>
                   <TableCell align="left">

@@ -3,7 +3,7 @@ import Menu, { MenuProps } from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import "../../Styles/organisation_picker.css";
-import IOrganisationBasic from "../../Types/ClientDataModels/OrganisationBasic";
+import IOrganisationBasic from "../../Types/IncomingDataModels/OrganisationBasic";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../store";

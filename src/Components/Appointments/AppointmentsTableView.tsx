@@ -11,8 +11,11 @@ import { makeStyles } from "@mui/styles";
 import { Typography } from "@mui/material";
 import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
 import { RootState } from "../../store";
-import { useSelector } from "react-redux";
-import IAppointmentData from "../../Types/ClientDataModels/Appointment";
+import { useDispatch, useSelector } from "react-redux";
+import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
+import { Link } from "react-router-dom";
+import { GetAppointmentForConsultation, GetCustomerForConsultation, SetSelectedAppointmentForConsultation } from "../../Actions/ConsultationActions";
+import { GetReports } from "../../Actions/ReportActions";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -48,9 +51,10 @@ const useAppointmentTableStyles = makeStyles(() => ({
 
 export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
-
-  const appointmentState = useSelector((state: RootState) => state.AppointmentState);
+  const dispatch = useDispatch();
   
+  const appointmentState = useSelector((state: RootState) => state.AppointmentState);
+
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {
     var lastVisitedDate = new Date();
@@ -109,6 +113,14 @@ export default function AppointmentsTable() {
     return colorCodesToReturn;
   }
 
+  function setSelectedAppointment (appointment: IAppointmentData) {
+    dispatch(SetSelectedAppointmentForConsultation(appointment))
+    dispatch(GetAppointmentForConsultation(appointment.appointmentId));
+    dispatch(GetCustomerForConsultation(appointment.customerId));
+
+    dispatch(GetReports());
+  }
+
   return (
     <TableContainer component={Paper} style={{ borderRadius: 15, marginBottom: 10 }}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -137,7 +149,7 @@ export default function AppointmentsTable() {
             appointmentState.filteredAppointments
               .map(
                 (appointment: IAppointmentData, index: number) => (
-                  <TableRow key={appointment.appointmentId}>
+                  <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
                     <TableCell align="left">
                       <span className="appointmentTableName">
                         {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
@@ -153,7 +165,7 @@ export default function AppointmentsTable() {
                       </span>
                     </TableCell>
                     <TableCell align="left">
-                      {appointment.customerName}
+                      <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.customerName}>{appointment.customerName}</Link>
                     </TableCell>
                     <TableCell align="left">
                       {getLastVisitForCustomer(

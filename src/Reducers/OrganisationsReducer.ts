@@ -1,7 +1,7 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
-import IOrganisationBasic from "../Types/ClientDataModels/OrganisationBasic";
+import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 
 export enum Org_Types {
   SET_LOCAL_ORGS = "SET_LOCAL_ORGS",

@@ -2,14 +2,18 @@ import { ThunkAction } from "redux-thunk";
 import http from "../Http/http-common";
 import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { Customer_Types } from "../Reducers/CustomersReducer";
-import { GetServiceProviderCustomersInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
+import { GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEndPoint, SetCustomerWithAppointment } from "../Helpers/EndPointHelpers";
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
-import ICustomerData from "../Types/ClientDataModels/Customer";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "./AddPatientActions";
-import getCall from "../Http/http-helpers";
+import ICustomerData from "../Types/IncomingDataModels/Customer";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import IPatientCreationAndAppointmentBookData from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import { GetAllAppointments } from "./AppointmentActions";
+import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
+import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
@@ -34,27 +38,38 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
 };
 
 //NEED TO INTEGRATE WITH SERVICE CALL
-export const CheckIfCustomerExists = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-    dispatch(SetAddPatientIsCheckingForCustomer(true))
+export const CheckIfCustomerExists = (phoneNumber: string, organisationId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-    const timer = setTimeout(() => {
-        const tempCustomer = {
-            customerId: "123",
-            phoneNumber: "1234567890",
-            lastName: "Manivannan",
-            firstName: "Surya",
-            gender: "Male",
-            dateOfBirth: "",
-            age: "12"
-        } as ICustomerData
+    SetTrackTrace("Enter Check If Customer Exists with Phone Number Action PhNumber:" + phoneNumber + "OrgId: " + organisationId, "CheckIfCustomerExists", SeverityLevel.Information);
 
+    let response = await getCall({} as ICustomerSetRequestData, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
+
+    if (response.data) {
         dispatch(SetAddPatientIsCheckingForCustomer(false))
-        dispatch(SetAddPatientCustomerProfile(tempCustomer))
+        dispatch(SetAddPatientIsCustomerExists(true))
+        dispatch(SetAddPatientCustomerProfile(response.data))
+    } else {
+        dispatch(SetAddPatientIsCheckingForCustomer(false))
+        dispatch(SetAddPatientIsCustomerExists(false))
+        dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+    }
+};
 
-        //IF GETTING EXISTING CUSTOMER BACK FROM DB
-        if (tempCustomer.customerId) {
-            dispatch(SetAddPatientIsCustomerExists(true))
-        }
-    }, 1000);
-    return () => clearTimeout(timer);
+export const SetCustomerAndBookAppointment = (appointmentRequest: IPatientCreationAndAppointmentBookData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Set Customer and Book Appointment Action", "SetCustomerAndBookAppointment", SeverityLevel.Information);
+
+    SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
+
+
+    let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+
+    if (response) {
+        dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+        dispatch(SetAddPatientIsMakingDoneCall(false))
+        dispatch(SetAddPatientIsDoneCallSuccess(false))
+        dispatch(GetAllAppointments())
+        dispatch(GetAllCustomersForServiceProviderInOrg())
+    } else {
+        dispatch(SetAddPatientIsDoneCallSuccess(false))
+    }
 };

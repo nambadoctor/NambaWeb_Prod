@@ -1,7 +1,7 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
-import ICustomerData from "../Types/ClientDataModels/Customer";
+import ICustomerData from "../Types/IncomingDataModels/Customer";
 
 export enum Customer_Types {
     SET_LOCAL_CUSTOMER_LIST = "SET_LOCAL_CUSTOMER_LIST",

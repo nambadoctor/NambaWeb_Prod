@@ -1,5 +1,7 @@
 export default interface IAppointmentData {
     appointmentId:string,
+    organisationId:string,
+    serviceRequestId:string,
     serviceProviderId:string,
     serviceProviderName:string,
     customerId:string,

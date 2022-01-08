@@ -1,12 +1,12 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
-import IServiceProvider from "../Types/ClientDataModels/ServiceProvider";
+import IServiceProvider from "../Types/IncomingDataModels/ServiceProvider";
 import { Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
 import { GetAllAppointments } from "./AppointmentActions";
 import { GetServiceProviderProfileEndPoint } from "../Helpers/EndPointHelpers";
 import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
-import getCall from "../Http/http-helpers";
+import {getCall} from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 

@@ -1,11 +1,11 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
-import IAppointmentData from "../Types/ClientDataModels/Appointment";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 
 export enum Appointment_Types {
   SET_LOCAL_APPOINTMENTS = "SET_LOCAL_APPOINTMENTS",
-  SET_LOCAL_FILTERED_APPOINTMENTS = "SET_LOCAL_FILTERED_APPOINTMENTS"
+  SET_LOCAL_FILTERED_APPOINTMENTS = "SET_LOCAL_FILTERED_APPOINTMENTS",
 }
 
 export interface AppointmentState {
@@ -15,7 +15,7 @@ export interface AppointmentState {
 
 const initialState: AppointmentState = {
   appointments: [],
-  filteredAppointments: []
+  filteredAppointments: [],
 }
 
 export const appointmentReducer = (state: AppointmentState = initialState, action: Action): AppointmentState => {

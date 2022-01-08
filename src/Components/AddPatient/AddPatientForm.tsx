@@ -1,5 +1,5 @@
-import { TextField, Container } from "@mui/material";
-import { useState } from "react";
+import { TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { ButtonGroup, Col, Row, Button, ToggleButton } from "react-bootstrap";
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -7,27 +7,32 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
+import { CheckIfCustomerExists, SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists } from "../../Actions/AddPatientActions";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
+import IPatientCreationAndAppointmentBookData from "../../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
+import IDateOfBirthData from "../../Types/OutgoingDataModels/DateOfBirth";
 
 export default function AddPatientForm() {
 
     const dispatch = useDispatch()
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
+    const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
     const genderOptions = ["Male", "Female", "Other"]
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length == 10) {
-            dispatch(CheckIfCustomerExists())
+            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.organisationId))
+            dispatch(SetAddPatientIsCheckingForCustomer(true))
             //TODO: Check if phone number exists for organisation
         } else {
+            dispatch(SetAddPatientPhoneNumber(event.target.value));
             dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsCustomerExists(false))
         }
@@ -42,7 +47,7 @@ export default function AddPatientForm() {
 
     const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.age = event.target.value
+        //tempCustomerProfile.age = event.target.value
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     };
 
@@ -53,8 +58,37 @@ export default function AddPatientForm() {
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
 
-    const done = () => {
+    //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
+    const makeCustomerAndAppointmentRequest = () => {
+        const currentCustomerRequestObj = addPatientState.customerProfile
+        const phoneNumberObj = { PhoneNumberId: "", CountryCode: "+91", Number: addPatientState.phoneNumber, Type: "" } as IPhoneNumberData
 
+        return {
+            AppointmentType: "InPerson",
+            AddressId: "",
+            Status: "",
+            ScheduledAppointmentStartTime: selectedDate,
+            ScheduledAppointmentEndTime: null,
+            ActualAppointmentStartTime: null,
+            ActualAppointmentEndTime: null,
+            CustomerId: currentCustomerRequestObj.customerId,
+            FirstName: currentCustomerRequestObj.firstName,
+            LastName: currentCustomerRequestObj.lastName,
+            PhoneNumbers: [phoneNumberObj],
+            Gender: currentCustomerRequestObj.gender,
+            DateOfBirth: {} as IDateOfBirthData,
+            EmailAddress: currentCustomerRequestObj.emailAddress,
+            ProfilePicURL: currentCustomerRequestObj.profilePicURL,
+            OrganisationId: currentServiceProvider?.organisationId,
+            ServiceProviderId: currentServiceProvider?.serviceProviderId
+        } as IPatientCreationAndAppointmentBookData
+    }
+    //END
+
+    const done = () => {
+        dispatch(SetAddPatientIsMakingDoneCall(true))
+        const appointmentRequest = makeCustomerAndAppointmentRequest();
+        dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
 
     return (
@@ -106,7 +140,7 @@ export default function AddPatientForm() {
                         size="small"
                         name="age"
                         label="Age"
-                        value={addPatientState.customerProfile.age}
+                        //value={addPatientState.customerProfile.age}
                         type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}
@@ -148,12 +182,20 @@ export default function AddPatientForm() {
             </Row>
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
-                <Button
-                    style={{ padding: 10 }}
-                    type="submit"
-                    color="primary">
-                    Done
-                </Button>
+
+
+                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <Button
+                        style={{ padding: 10, width: '100%' }}
+                        type="submit"
+                        color="primary"
+                        onClick={() => done()}>
+                        Done
+                    </Button>
+
+                    {addPatientState.isMakingDoneCall ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
+                </div>
+
             </Row>
         </div>
     );

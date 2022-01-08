@@ -14,6 +14,8 @@ import AddPatientForm from "../AddPatient/AddPatientForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import ReportUploadPicker from "../ReportUpload/ReportUploadPicker";
+import ConsultationView from "../Consultation/ConsultationView";
 
 function Dashboard() {
 
@@ -71,6 +73,7 @@ function Dashboard() {
               element={AppointmentsAndCalendarView()}
             />
             <Route path="/Patients" element={PatientsView()} />
+            <Route path="/Consultation/*" element={<ConsultationView></ConsultationView>} />
           </Routes>
         </div>
       </div>
