@@ -15,11 +15,14 @@
 .horiztontalContainer {
     display: flex;
     flex-direction: row;
-    padding: 20px;
-    background: #e5f0fe;
-    margin-left: 20px;
-    margin-right: 20px;
-    border-radius: 15px;
+    margin: 30px;
+    border: solid 1px;
+    border-radius: 15px 15px 15px 15px;
+    border-color: #d0dbf5;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 5px;
 }
 
 .fullWidthContainer {
@@ -52,6 +55,10 @@
     margin-top: 6;
     color: white;
     padding: 13px;
+}
+
+.right_border_only_divider {
+    border-right: 2px solid gray;
 }
 
 @import url("https://cdn.syncfusion.com/ej2/material.css");

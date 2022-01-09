@@ -23,7 +23,7 @@ export default function ConsultationView() {
         <div>
             <ConsultationHeader></ConsultationHeader>
             <Row style={{ margin: 20 }}>
-                <Col>
+                <Col md="6">
                     <div className="blue_filled_rounded_box_top">
                         <h3 className="blue_filled_rounded_box_top_title_item">Reports</h3>
                     </div>
@@ -33,7 +33,7 @@ export default function ConsultationView() {
                     </div>
                 </Col>
 
-                <Col>
+                <Col md="6">
                     <div className="blue_filled_rounded_box_top">
                         <h3 className="blue_filled_rounded_box_top_title_item">Prescriptions</h3>
                     </div>
