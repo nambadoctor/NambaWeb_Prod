@@ -15,6 +15,15 @@ export const getReadableTimeString = (date: string) =>
         hour12: true,
     });
 
+export const getReadableDateAndTimeString = (date: string) =>
+    new Date(date).toLocaleTimeString("default", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+        day: "2-digit",
+        month: "short",
+    });
+
 export const convertDaysIntoNearestUnit = (days: number): string => {
     if (days < 7) {
         return String(days + " days ago");
@@ -61,9 +70,9 @@ export const checkIfDateExists = (item: IMatrixDateObj) => {
 
 
 export const fileToBase64 = async (file: File) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = (e) => reject(e)
-  })
+    new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = (e) => reject(e)
+    })

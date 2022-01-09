@@ -10,21 +10,30 @@ export enum ConsultationTypes_Types {
     SET_CURRENT_APPOINTMENT = "SET_CURRENT_APPOINTMENT",
     SET_CURRENT_CUSTOMER = "SET_CURRENT_CUSTOMER",
     SET_CURRENT_CUSTOMER_REPORTS = "SET_CURRENT_CUSTOMER_REPORTS",
-    SET_CURRENT_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_CUSTOMER_PRESCRIPTIONS"
+    SET_CURRENT_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_CUSTOMER_PRESCRIPTIONS",
+
+    SET_PREVIOUS_APPOINTMENT = "SET_PREVIOUS_APPOINTMENT",
+    SET_NEXT_APPOINTMENT = "SET_NEXT_APPOINTMENT",
 }
 
 export interface ConsultationState {
     currentAppointment: IAppointmentData | null,
     currentCustomer: ICustomerData | null,
     currentCustomerReports: IReportIncomingData[] | null,
-    currentCustomerPrescriptions: IPrescriptionIncomingData[] | null
+    currentCustomerPrescriptions: IPrescriptionIncomingData[] | null,
+
+    previousAppointment: IAppointmentData | null,
+    nextAppointment: IAppointmentData | null
 }
 
 const initialState: ConsultationState = {
     currentAppointment: null,
     currentCustomer: null,
     currentCustomerReports: null,
-    currentCustomerPrescriptions: null
+    currentCustomerPrescriptions: null,
+
+    previousAppointment: null,
+    nextAppointment: null
 }
 
 export const ConsultationReducer = (state: ConsultationState = initialState, action: Action): ConsultationState => {
@@ -53,6 +62,18 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
             return {
                 ...state,
                 currentCustomerPrescriptions: action.payload
+            }
+        case ConsultationTypes_Types.SET_PREVIOUS_APPOINTMENT:
+            SetTrackTrace("Consultation Reducer Set Previous Appointment in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                previousAppointment: action.payload
+            }
+        case ConsultationTypes_Types.SET_NEXT_APPOINTMENT:
+            SetTrackTrace("Consultation Reducer Set Previous Appointment in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                nextAppointment: action.payload
             }
         default:
             SetTrackTrace("Consultation Reducer Hits default switch: Returns original state", "ConsultationReducer", SeverityLevel.Information)
