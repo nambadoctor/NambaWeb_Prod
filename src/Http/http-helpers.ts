@@ -2,9 +2,6 @@ import http from "./http-common";
 import GetHeadersHelper from "../Actions/Common/GetHeaderHelper";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import axios from "axios";
-
-const baseURL: string = "https://localhost:5001/api/provider/"
 
 async function getCall(returnType: any, endPoint: string, caller: string) {
 

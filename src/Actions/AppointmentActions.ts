@@ -5,7 +5,7 @@ import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 import { RootState } from "../store";
-import filterAppointments from "../Helpers/AppointmentHelpers";
+import {filterAppointments} from "../Helpers/AppointmentHelpers";
 import { GetServiceProviderAppointmentsInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import {getCall} from "../Http/http-helpers";

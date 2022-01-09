@@ -1,5 +1,6 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { ThunkAction } from "redux-thunk";
+import { getIndexOfAppointment } from "../Helpers/AppointmentHelpers";
 import { GetAppointmentForServiceProvider, GetCustomerForServiceProvider } from "../Helpers/EndPointHelpers";
 import { getCall } from "../Http/http-helpers";
 import { ConsultationTypes_Types } from "../Reducers/ConsultationReducer";
@@ -10,6 +11,8 @@ import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerData from "../Types/IncomingDataModels/Customer";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
+import { GetPrescriptions } from "./PrescriptionActions";
+import { GetReports } from "./ReportActions";
 
 function setSelectedAppointmentAction(appointment: IAppointmentData) {
     return {
@@ -39,10 +42,27 @@ function setPrescriptionsAction(prescriptions: IPrescriptionIncomingData) {
     };
 }
 
+function setPreviousAppointmentAction(appointment: IAppointmentData) {
+    return {
+        type: ConsultationTypes_Types.SET_PREVIOUS_APPOINTMENT,
+        payload: appointment
+    };
+}
+
+function setNextAppointmentAction(appointment: IAppointmentData) {
+    return {
+        type: ConsultationTypes_Types.SET_NEXT_APPOINTMENT,
+        payload: appointment
+    };
+}
+
 export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentData): Action => (setSelectedAppointmentAction(appointment));
 export const SetSelectedCustomerForConsultation = (customer: ICustomerData): Action => (setSelectedCustomerAction(customer));
 export const SetReportsForConsultation = (reports: IReportIncomingData): Action => (setReportsAction(reports));
 export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData): Action => (setPrescriptionsAction(prescriptions));
+export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData): Action => (setPreviousAppointmentAction(appointment));
+export const SetNextAppointmentForConsultation = (appointment: IAppointmentData): Action => (setNextAppointmentAction(appointment));
+
 
 //Get consultation appointment
 export const GetAppointmentForConsultation = (appointmentId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -60,6 +80,9 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
 
     SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
     dispatch(SetSelectedAppointmentForConsultation(response.data));
+    dispatch(GetNextAndPreviousAppointmentForConsultation())
+    dispatch(GetReports())
+    dispatch(GetPrescriptions())
 };
 
 //Get consultation customer
@@ -79,3 +102,13 @@ export const GetCustomerForConsultation = (customerId: string): ThunkAction<void
     SetTrackTrace("Dispatch Set Selected Customer" + response.data, "GetCustomerForConsultation", SeverityLevel.Information);
     dispatch(SetSelectedCustomerForConsultation(response.data));
 };
+
+export const GetNextAndPreviousAppointmentForConsultation = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    const allAppointments = getState().AppointmentState.appointments;
+    const currentAppointment = getState().ConsultationState.currentAppointment;
+    const currentAppointmentIndex = getIndexOfAppointment(allAppointments, currentAppointment);
+
+    //ADD ALL NULL CHECKS FOR INDEX AND OUT OF BOUNDS EXCEPTION
+    dispatch(SetPreviousAppointmentConsultation(allAppointments[currentAppointmentIndex! - 1]))
+    dispatch(SetNextAppointmentForConsultation(allAppointments[currentAppointmentIndex! + 1]))
+}

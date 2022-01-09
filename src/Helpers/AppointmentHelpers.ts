@@ -3,7 +3,7 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { isDatesEqual } from "../Utils/GeneralUtils";
 
-export default function filterAppointments(
+export function filterAppointments(
     dates: Date[],
     appointments: IAppointmentData[]) {
 
@@ -29,4 +29,12 @@ export default function filterAppointments(
     SetTrackTrace("Done Filtering Appointments: " + filteredAppointments.length, "FilterAppointments", SeverityLevel.Information);
 
     return filteredAppointments;
+}
+
+export function getIndexOfAppointment (appointments:Array<IAppointmentData>, appointment:IAppointmentData|null) {
+    if (appointments && appointment) {
+        return appointments.findIndex(x => x.appointmentId === appointment.appointmentId);
+    } else {
+        return null;
+    }
 }

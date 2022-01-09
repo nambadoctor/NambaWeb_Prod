@@ -45,9 +45,9 @@ export default function ReportImageView() {
                 <img
                     src={src.sasUrl}
                     onClick={() => openImageViewer(index)}
-                    width="300"
+                    width="200"
                     key={index}
-                    style={{ margin: '2px' }}
+                    style={{ margin: '5px' }}
                     alt=""
                 />
             ))}
