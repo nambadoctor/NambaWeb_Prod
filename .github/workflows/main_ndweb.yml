@@ -26,7 +26,7 @@ jobs:
           npm install --save @react-native-community/masked-view
           npm install react-native-safe-area-context
           npm install
-          npm run build --if-present
+          CI=false npm run build --if-present
           npm run test --if-present
 
       - name: Upload artifact for deployment job
