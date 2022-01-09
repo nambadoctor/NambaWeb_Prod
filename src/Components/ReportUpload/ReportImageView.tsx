@@ -2,15 +2,17 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { render } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
-import { GetReports } from '../../Actions/ReportActions';
+import { DeleteReport, GetReports } from '../../Actions/ReportActions';
 import { RootState } from '../../store';
 import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export default function ReportImageView() {
 
+    const dispatch = useDispatch();
     const [currentImage, setCurrentImage] = useState(0);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
-    var images: string[] = [];
+    const [images, setImages] = useState([""]);
     let displayImageObjs = useSelector((state: RootState) => state.ConsultationState.currentCustomerReports);
 
     const openImageViewer = useCallback((index) => {
@@ -36,31 +38,55 @@ export default function ReportImageView() {
             });
         }
 
-        return stringList;
+        setImages(stringList);
+    }
+
+    function imageViewDisplay() {
+        return (
+            <div style={{ overflow: 'auto' }}>
+                <div>
+                    {displayImageObjs && displayImageObjs.map((src, index) => (
+                        <div style={{ position: 'relative', width: 200, marginTop: 10 }}>
+                            <img
+                                src={src.sasUrl}
+                                onClick={() => openImageViewer(index)}
+                                width="200"
+                                key={index}
+                                style={{ margin: '5px' }}
+                                alt=""
+                            />
+
+                            <div onClick={() => dispatch(DeleteReport(src))} style={{ position: 'absolute', top: -10, right: -15 }}>
+                                {<CancelIcon></CancelIcon>}
+                            </div>
+                        </div>
+                    ))}
+
+                    {isViewerOpen &&
+                        (<ImageViewer
+                            src={images}
+                            currentIndex={currentImage}
+                            disableScroll={false}
+                            closeOnClickOutside={true}
+                            onClose={closeImageViewer}
+                        />
+                        )}
+                </div>
+            </div>
+        );
+    }
+
+    function noReportsDisplay() {
+        return (
+            <div style={{ margin: 20, marginTop: 50, marginBottom: 50, textAlign: 'center' }}>
+                Oops, no reports yet! Click "Choose File" to upload!
+            </div>
+        );
     }
 
     return (
         <div>
-            {displayImageObjs && displayImageObjs.map((src, index) => (
-                <img
-                    src={src.sasUrl}
-                    onClick={() => openImageViewer(index)}
-                    width="200"
-                    key={index}
-                    style={{ margin: '5px' }}
-                    alt=""
-                />
-            ))}
-
-            {isViewerOpen && (
-                <ImageViewer
-                    src={images}
-                    currentIndex={currentImage}
-                    disableScroll={false}
-                    closeOnClickOutside={true}
-                    onClose={closeImageViewer}
-                />
-            )}
+            {(displayImageObjs && displayImageObjs.length > 0) ? imageViewDisplay() : noReportsDisplay()}
         </div>
     );
 }

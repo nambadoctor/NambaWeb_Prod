@@ -41,4 +41,21 @@ async function putCall(returnType: any, endPoint: string, payload: any, caller: 
     return response;
 }
 
-export { getCall, putCall }
+async function deleteCall(returnType: any, endPoint: string, caller: string) {
+
+    SetTrackTrace("Entered HTTP Delete call method" + caller, "HTTPDeleteCall", SeverityLevel.Information);
+
+    let headersContent = await GetHeadersHelper();
+
+    SetTrackTrace("Recieved Header Token: " + headersContent, "HTTPDeleteCall", SeverityLevel.Information);
+
+    let response = await http.delete<typeof returnType>(endPoint, { headers: headersContent });
+
+    SetTrackTrace("Recieved HTTP DELETE Response" + response, "HTTPDeleteCall", SeverityLevel.Information);
+
+    //TODO: Add handling and logging for invalid response
+
+    return response;
+}
+
+export { getCall, putCall, deleteCall }

@@ -45,3 +45,11 @@ export function GetCustomerReportEndPoint(customerId:string, appointmentId:strin
 export function GetCustomerPrescriptionEndPoint(customerId:string, appointmentId:string) {
     return "customer/" + customerId + "/prescription/" + appointmentId
 }
+
+export function DeleteCustomerReportEndPoint (customerId:string, appointmentId:string, reportId:string) {
+    return "customer/" + customerId + "/report/" + appointmentId + "/" + reportId
+}
+
+export function DeleteCustomerPrescriptionEndPoint (customerId:string, appointmentId:string, prescriptionid:string) {
+    return "customer/" + customerId + "/prescription/" + appointmentId + "/" + prescriptionid
+}

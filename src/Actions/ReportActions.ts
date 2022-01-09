@@ -3,8 +3,8 @@ import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { getCall, putCall } from "../Http/http-helpers";
-import { GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
+import { deleteCall, getCall, putCall } from "../Http/http-helpers";
+import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "./ConsultationActions";
@@ -43,3 +43,18 @@ export const UploadReport = (report: File): ThunkAction<void, RootState, null, A
     dispatch(GetReports());
   }
 };
+
+
+export const DeleteReport = (reportToDelete:IReportIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  let currentAppointment = getState().ConsultationState.currentAppointment
+
+  SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
+
+  let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.customerId, currentAppointment!.appointmentId, reportToDelete.reportId), "DeleteReport")
+
+  if (response) {
+    dispatch(GetReports());
+  }
+};
+
