@@ -59,7 +59,7 @@
     },
     "scripts": {
         "start": "react-scripts start",
-        "build": "set CI=false && react-scripts build && sh proto/build.sh",
+        "build": "set process.env.CI=false && react-scripts build && sh proto/build.sh",
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
