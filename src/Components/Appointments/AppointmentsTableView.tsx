@@ -114,7 +114,6 @@ export default function AppointmentsTable() {
   }
 
   function setSelectedAppointment (appointment: IAppointmentData) {
-    dispatch(SetSelectedAppointmentForConsultation(appointment))
     dispatch(GetAppointmentForConsultation(appointment.appointmentId));
     dispatch(GetCustomerForConsultation(appointment.customerId));
 
@@ -165,7 +164,7 @@ export default function AppointmentsTable() {
                       </span>
                     </TableCell>
                     <TableCell align="left">
-                      <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.customerName}>{appointment.customerName}</Link>
+                      <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
                     </TableCell>
                     <TableCell align="left">
                       {getLastVisitForCustomer(

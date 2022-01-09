@@ -73,7 +73,7 @@ function Dashboard() {
               element={AppointmentsAndCalendarView()}
             />
             <Route path="/Patients" element={PatientsView()} />
-            <Route path="/Consultation/*" element={<ConsultationView></ConsultationView>} />
+            <Route path="/Consultation/:id" element={<ConsultationView></ConsultationView>} />
           </Routes>
         </div>
       </div>
