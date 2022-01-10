@@ -1,6 +1,5 @@
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux';
-import ImageViewer from 'react-simple-image-viewer';
 import { UploadPrescription } from '../../Actions/PrescriptionActions';
 
 export default function PrescriptionUploadPicker() {

@@ -61,7 +61,7 @@ export const checkIfNumber = (o: any) => {
 }
 
 export const checkIfDateExists = (item: IMatrixDateObj) => {
-    if (item.title == "" && !item.emptyDate) {
+    if (item.title === "" && !item.emptyDate) {
         return true
     } else {
         return false

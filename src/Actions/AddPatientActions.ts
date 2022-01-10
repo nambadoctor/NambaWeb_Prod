@@ -1,7 +1,6 @@
 import { Action } from "../Types/ActionType";
-import ICustomerData from "../Types/IncomingDataModels/Customer";
 import { AddPatientReducer_Types } from "../Reducers/AddPatientReducer";
-import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 
 function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     return {
@@ -10,7 +9,7 @@ function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     };
 }
 
-function SetAddPatientCustomerProfileAction(customerProfile: ICustomerSetRequestData) {
+function SetAddPatientCustomerProfileAction(customerProfile: ICustomerProfileOutgoing) {
     return {
         type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE,
         payload: customerProfile
@@ -45,9 +44,16 @@ function SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess: boolean) {
     };
 }
 
+function SetAddPatientIsInvalidNumberAction (isInvalidNumber: boolean) {
+    return {
+        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS,
+        payload: isInvalidNumber
+    };
+}
+
 export const SetAddPatientPhoneNumber = (phoneNumber: string): Action => (SetAddPatientPhoneNumberAction(phoneNumber));
 
-export const SetAddPatientCustomerProfile = (customerProfile: ICustomerSetRequestData): Action => (SetAddPatientCustomerProfileAction(customerProfile));
+export const SetAddPatientCustomerProfile = (customerProfile: ICustomerProfileOutgoing): Action => (SetAddPatientCustomerProfileAction(customerProfile));
 
 export const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
 
@@ -56,3 +62,5 @@ export const SetAddPatientIsCustomerExists = (isCustomerExists: boolean): Action
 export const SetAddPatientIsMakingDoneCall = (isMakingDoneCall: boolean): Action => (SetAddPatientIsMakingDoneCallAction(isMakingDoneCall));
 
 export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Action => (SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess));
+
+export const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));

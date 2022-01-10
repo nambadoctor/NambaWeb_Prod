@@ -1,11 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { render } from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import  { useState, useCallback, useEffect } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
-import { DeleteReport, GetReports } from '../../Actions/ReportActions';
+import { DeleteReport } from '../../Actions/ReportActions';
 import { RootState } from '../../store';
-import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function ReportImageView() {
 

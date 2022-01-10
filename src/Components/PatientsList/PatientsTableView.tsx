@@ -6,9 +6,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
-import ICustomerData from "../../Types/IncomingDataModels/Customer";
-import { useSelector } from "react-redux";
+import ICustomerIncomingData from "../../Types/IncomingDataModels/CustomerIncoming";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { CheckIfCustomerExists, SetCustomer } from "../../Actions/CustomerActions";
+import { SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -43,11 +45,17 @@ const usePatientTableStyles = makeStyles(() => ({
 }));
 
 export default function PatientsTableView() {
+  const dispatch = useDispatch();
   const classes = usePatientTableStyles();
 
   const customerState = useSelector(
     (state: RootState) => state.CustomersState
   );
+
+  function handleCustomerSelect(customer: ICustomerIncomingData) {
+    dispatch(CheckIfCustomerExists(customer.phoneNumbers[0].number, customer.organisationId))
+    dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number))
+  }
 
   return (
     <TableContainer component={Paper} style={{ borderRadius: 15 }}>
@@ -71,15 +79,15 @@ export default function PatientsTableView() {
         <TableBody>
           {customerState.customers.length !== 0 &&
             customerState.customers.map(
-              (customer: ICustomerData, index: number) => (
+              (customer: ICustomerIncomingData, index: number) => (
                 <TableRow key={customer.customerId}>
                   <TableCell align="left">
                     {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
                   </TableCell>
                   <TableCell align="left">
-                    {customer.gender}/{customer.age}
+                    {customer.gender}/age
                   </TableCell>
-                  <TableCell>{customer.phoneNumber}</TableCell>
+                  <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
                   <TableCell align="left">
                     GET CREATED DATE{/* {getReadableDateString(customer.createdDate)} */}
                   </TableCell>

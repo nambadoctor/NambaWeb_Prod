@@ -1,6 +1,5 @@
 import { Action } from "../Types/ActionType"
-import ICustomerData from "../Types/IncomingDataModels/Customer";
-import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 
 export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_PHONE_NUMBER = "SET_LOCAL_PHONE_NUMBER",
@@ -8,25 +7,28 @@ export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER = "SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER",
     SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS = "SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS",
     SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL = "SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL",
-    SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS = "SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL"
+    SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS = "SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS",
+    SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS = "SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS"
 }
 
 export interface AddPatientState {
     phoneNumber: string,
-    customerProfile: ICustomerSetRequestData,
+    customerProfile: ICustomerProfileOutgoing,
     isCheckingNumber: boolean,
     isCustomerExists: boolean,
     isMakingDoneCall: boolean,
-    isDoneCallSuccess: boolean
+    isDoneCallSuccess: boolean,
+    isInvalidNumber: boolean
 }
 
 const initialState: AddPatientState = {
     phoneNumber: "",
-    customerProfile: {} as ICustomerSetRequestData,
+    customerProfile: {} as ICustomerProfileOutgoing,
     isCheckingNumber: false,
     isCustomerExists: false,
     isMakingDoneCall: false,
-    isDoneCallSuccess: false
+    isDoneCallSuccess: false,
+    isInvalidNumber: false
 }
 
 export const addPatientReducer = (state: AddPatientState = initialState, action: Action): AddPatientState => {
@@ -60,6 +62,11 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
             return {
                 ...state,
                 isDoneCallSuccess: action.payload,
+            }
+        case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS:
+            return {
+                ...state,
+                isInvalidNumber: action.payload,
             }
         default:
             return state

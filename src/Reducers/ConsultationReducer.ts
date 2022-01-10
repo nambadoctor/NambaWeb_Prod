@@ -2,7 +2,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
-import ICustomerData from "../Types/IncomingDataModels/Customer";
+import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 
@@ -18,7 +18,7 @@ export enum ConsultationTypes_Types {
 
 export interface ConsultationState {
     currentAppointment: IAppointmentData | null,
-    currentCustomer: ICustomerData | null,
+    currentCustomer: ICustomerIncomingData | null,
     currentCustomerReports: IReportIncomingData[] | null,
     currentCustomerPrescriptions: IPrescriptionIncomingData[] | null,
 

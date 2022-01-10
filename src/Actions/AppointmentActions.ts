@@ -1,16 +1,15 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import http from "../Http/http-common";
-import GetHeadersHelper from "./Common/GetHeaderHelper";
 import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 import { RootState } from "../store";
-import {filterAppointments} from "../Helpers/AppointmentHelpers";
-import { GetServiceProviderAppointmentsInOrganisationEndPoint } from "../Helpers/EndPointHelpers";
+import { filterAppointments } from "../Helpers/AppointmentHelpers";
+import { GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
-import {getCall} from "../Http/http-helpers";
+import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 
 //RETURN APPOINTMENT ACTION TYPES
 function setAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -76,4 +75,16 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   //TODO: Check if this is proper design to set filtered appointments
   SetTrackTrace("Dispatch Set Filtered Appointments Helper", "GetAllAppointments", SeverityLevel.Information);
   dispatch(setFilteredAppointments());
+};
+
+export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  SetTrackTrace("Enter Set New Appointments Action", "GetAllAppointments", SeverityLevel.Information);
+
+  //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+  let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "GetAllAppointments")
+
+  if (response) {
+    dispatch(GetAllAppointments())
+  }
+
 };

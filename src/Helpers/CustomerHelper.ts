@@ -1,5 +1,5 @@
-import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
 import IDateOfBirthData from "../Types/OutgoingDataModels/DateOfBirth";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
 
 export default function makeEmptyValueCustomerSetRequestData() {
@@ -15,11 +15,11 @@ export default function makeEmptyValueCustomerSetRequestData() {
         organisationId: "",
         serviceProviderId: "",
         phoneNumbers: [{
-            PhoneNumberId: "",
-            CountryCode: "",
-            Number: "",
-            Type: ""
+            phoneNumberId: "",
+            countryCode: "",
+            number: "",
+            type: ""
         } as IPhoneNumberData],
         dateOfBirth: {} as IDateOfBirthData
-    } as ICustomerSetRequestData
+    } as ICustomerProfileOutgoing
 }
