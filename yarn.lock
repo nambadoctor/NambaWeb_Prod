@@ -5907,10 +5907,10 @@
   "resolved" "https://registry.npmjs.org/dataloader/-/dataloader-1.4.0.tgz"
   "version" "1.4.0"
 
-"date-fns@^2.0.0", "date-fns@^2.10.0", "date-fns@^2.25.0":
-  "integrity" "sha512-sj+J0Mo2p2X1e306MHq282WS4/A8Pz/95GIFcsPNMPMZVI3EUrAdSv90al1k+p74WGLCruMXk23bfEDZa71X9Q=="
-  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.27.0.tgz"
-  "version" "2.27.0"
+"date-fns@^2.0.0", "date-fns@^2.10.0", "date-fns@^2.25.0", "date-fns@^2.28.0":
+  "integrity" "sha512-8d35hViGYx/QH0icHYCeLmsLmMUheMmTyV9Fcm6gvNwdw31yXXH+O85sOBJ+OLnLQMKZowvpKb6FgMIQjcpvQw=="
+  "resolved" "https://registry.npmjs.org/date-fns/-/date-fns-2.28.0.tgz"
+  "version" "2.28.0"
 
 "dayjs@^1.10.7", "dayjs@^1.8.15", "dayjs@^1.8.17":
   "integrity" "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
@@ -11720,7 +11720,7 @@
     "jscodeshift" "^0.11.0"
     "nullthrows" "^1.1.1"
 
-"react-native-safe-area-context@*":
+"react-native-safe-area-context@*", "react-native-safe-area-context@^3.3.2":
   "integrity" "sha512-yOwiiPJ1rk+/nfK13eafbpW6sKW0jOnsRem2C1LPJjM3tfTof6hlvV5eWHATye3XOpu2cJ7N+HdkUvUDGwFD2Q=="
   "resolved" "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.3.2.tgz"
   "version" "3.3.2"

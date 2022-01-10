@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
+import { SignOut } from "../../Actions/Common/LoginActions";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
@@ -53,6 +55,9 @@ export default function Topbar() {
               textDecoration: 'none'
             }}>Patients
           </Link>
+          <div onClick={SignOut} style={{ background: "#1054c4", padding:10, borderRadius: 30, marginLeft: 10, marginRight: 20 }}>
+            <LogoutIcon style={{ color: 'white' }}> </LogoutIcon>
+          </div>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

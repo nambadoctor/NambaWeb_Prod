@@ -30,3 +30,7 @@ export async function SignInWithPhoneNumberHelper(phoneNumber: string) {
             // Handle Errors here.
         });
 }
+
+export function SignOut () {
+    getAuth().signOut();
+}
