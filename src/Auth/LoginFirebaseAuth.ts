@@ -23,8 +23,9 @@ function getAppVerifier() {
   );
 }
 
-export const VerifyPhoneNumber = async (phoneNumber: string) => {
-  await signInWithPhoneNumber(getAuth(), phoneNumber, getAppVerifier()).then(
+export const VerifyPhoneNumber = async (code: string, phoneNumber: string) => {
+  let phone = "+" + code + phoneNumber;
+  await signInWithPhoneNumber(getAuth(), phone, getAppVerifier()).then(
     function (confirmationResult) {
       console.log("confirmationResult from auth", confirmationResult);
       confirmationR = confirmationResult;
