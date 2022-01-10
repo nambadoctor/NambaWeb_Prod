@@ -1,7 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { OrganisationState, Org_Types } from "../Reducers/OrganisationsReducer";
-import http from "../Http/http-common";
-import GetHeadersHelper from "./Common/GetHeaderHelper";
+import { Org_Types } from "../Reducers/OrganisationsReducer";
 import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 import { RootState } from "../store";
 import { SetOrgPickerModalToggle } from "./Common/UIControlActions";

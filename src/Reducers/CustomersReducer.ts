@@ -1,14 +1,14 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
-import ICustomerData from "../Types/IncomingDataModels/Customer";
+import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 
 export enum Customer_Types {
     SET_LOCAL_CUSTOMER_LIST = "SET_LOCAL_CUSTOMER_LIST",
 }
 
 export interface CustomerState {
-    customers: ICustomerData[];
+    customers: ICustomerIncomingData[];
 }
 
 const initialState: CustomerState = {

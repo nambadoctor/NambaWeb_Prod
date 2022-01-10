@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
-import AddPatientForm from "../AddPatient/AddPatientForm";
+import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import ReportUploadPicker from "../ReportUpload/ReportUploadPicker";
 import ConsultationView from "../Consultation/ConsultationView";
+import PatientsTabMainView from "../PatientsList/PatientsTabMainView";
 
 function Dashboard() {
 
@@ -56,7 +56,7 @@ function Dashboard() {
     return (
       <div style={{ margin: 20 }}>
         <Container fluid>
-          <PatientsTableView />
+          <PatientsTabMainView />
         </Container>
       </div>
     );

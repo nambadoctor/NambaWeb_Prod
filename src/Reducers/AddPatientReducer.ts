@@ -1,5 +1,4 @@
 import { Action } from "../Types/ActionType"
-import ICustomerData from "../Types/IncomingDataModels/Customer";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 
 export enum AddPatientReducer_Types {

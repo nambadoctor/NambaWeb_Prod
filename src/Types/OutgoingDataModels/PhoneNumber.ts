@@ -1,6 +1,6 @@
 export default interface IPhoneNumberData {
-    PhoneNumberId:string,
-    CountryCode:string,
-    Number:string,
-    Type:string
+    phoneNumberId:string,
+    countryCode:string,
+    number:string,
+    type:string
 }

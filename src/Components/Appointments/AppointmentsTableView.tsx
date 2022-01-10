@@ -14,7 +14,7 @@ import { RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 import { Link } from "react-router-dom";
-import { GetAppointmentForConsultation, GetCustomerForConsultation, SetSelectedAppointmentForConsultation } from "../../Actions/ConsultationActions";
+import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../../Actions/ConsultationActions";
 import { GetReports } from "../../Actions/ReportActions";
 
 const useAppointmentTableStyles = makeStyles(() => ({
@@ -152,7 +152,7 @@ export default function AppointmentsTable() {
                     <TableCell align="left">
                       <span className="appointmentTableName">
                         {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
-                        {appointment.appointmentType == "In Person" ? (
+                        {appointment.appointmentType === "In Person" ? (
                           <PeopleAltRounded
                             style={{ color: "#149c4a" }}
                           ></PeopleAltRounded>

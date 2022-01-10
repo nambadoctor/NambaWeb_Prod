@@ -8,7 +8,7 @@ import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
-import ICustomerData from "../Types/IncomingDataModels/Customer";
+import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { GetPrescriptions } from "./PrescriptionActions";
@@ -21,7 +21,7 @@ function setSelectedAppointmentAction(appointment: IAppointmentData) {
     };
 }
 
-function setSelectedCustomerAction(customer: ICustomerData) {
+function setSelectedCustomerAction(customer: ICustomerIncomingData) {
     return {
         type: ConsultationTypes_Types.SET_CURRENT_CUSTOMER,
         payload: customer
@@ -57,7 +57,7 @@ function setNextAppointmentAction(appointment: IAppointmentData) {
 }
 
 export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentData): Action => (setSelectedAppointmentAction(appointment));
-export const SetSelectedCustomerForConsultation = (customer: ICustomerData): Action => (setSelectedCustomerAction(customer));
+export const SetSelectedCustomerForConsultation = (customer: ICustomerIncomingData): Action => (setSelectedCustomerAction(customer));
 export const SetReportsForConsultation = (reports: IReportIncomingData): Action => (setReportsAction(reports));
 export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData): Action => (setPrescriptionsAction(prescriptions));
 export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData): Action => (setPreviousAppointmentAction(appointment));

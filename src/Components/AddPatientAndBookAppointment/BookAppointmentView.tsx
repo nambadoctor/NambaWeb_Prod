@@ -1,23 +1,21 @@
 import { TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import { ButtonGroup, Col, Row, Button, ToggleButton } from "react-bootstrap";
+import { useState } from "react";
+import { Row, Button } from "react-bootstrap";
 import CircularProgress from '@mui/material/CircularProgress';
 
 // or @mui/lab/Adapter{Dayjs,Luxon,Moment} or any valid date-io adapter
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { CheckIfCustomerExists, SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
+import { SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
+import { SetAddPatientIsMakingDoneCall } from "../../Actions/AddPatientActions";
 import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
-import IDateOfBirthData from "../../Types/OutgoingDataModels/DateOfBirth";
 import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
-import AddEditPatientView from "./AddEditPatientView";
 
-export default function AddPatientForm() {
+export default function BookAppointmentView() {
 
     const dispatch = useDispatch()
 
@@ -31,7 +29,7 @@ export default function AddPatientForm() {
         var currentCustomerRequestObj = addPatientState.customerProfile
         currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
         currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
-        currentCustomerRequestObj.phoneNumbers = [{ PhoneNumberId: "", CountryCode: "+91", Number: addPatientState.phoneNumber, Type: "" } as IPhoneNumberData]
+        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
 
         var aptObj = {
             appointmentId: "string",
@@ -56,18 +54,13 @@ export default function AddPatientForm() {
     //END
 
     const done = () => {
-        var x = addPatientState.phoneNumber
         dispatch(SetAddPatientIsMakingDoneCall(true))
         const appointmentRequest = makeCustomerAndAppointmentRequest();
-        //dispatch(SetCustomerAndBookAppointment(appointmentRequest))
+        dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
-
+    
     return (
-        <div style={{ marginTop: 20 }}>
-            <h5 style={{ marginBottom: 20 }}>Add Patient / Book Appointment</h5>
-
-            <AddEditPatientView></AddEditPatientView>
-
+        <div>
             <Row style={{ marginTop: 10, marginBottom: 15, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
@@ -83,7 +76,6 @@ export default function AddPatientForm() {
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
 
-
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Button
                         style={{ padding: 10, width: '100%' }}
@@ -98,5 +90,9 @@ export default function AddPatientForm() {
 
             </Row>
         </div>
-    );
+    )
 }
+function setSelectedDate(newValue: any) {
+    throw new Error('Function not implemented.');
+}
+

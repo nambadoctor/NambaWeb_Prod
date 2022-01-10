@@ -1,5 +1,4 @@
 import { Action } from "../Types/ActionType";
-import ICustomerData from "../Types/IncomingDataModels/Customer";
 import { AddPatientReducer_Types } from "../Reducers/AddPatientReducer";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 

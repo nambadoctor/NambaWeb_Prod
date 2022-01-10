@@ -1,9 +1,8 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeleteReport } from '../../Actions/ReportActions';
 import { DeletePrescription } from '../../Actions/PrescriptionActions';
 
 export default function PrescriptionImageView() {

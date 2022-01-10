@@ -15,10 +15,10 @@ export default function makeEmptyValueCustomerSetRequestData() {
         organisationId: "",
         serviceProviderId: "",
         phoneNumbers: [{
-            PhoneNumberId: "",
-            CountryCode: "",
-            Number: "",
-            Type: ""
+            phoneNumberId: "",
+            countryCode: "",
+            number: "",
+            type: ""
         } as IPhoneNumberData],
         dateOfBirth: {} as IDateOfBirthData
     } as ICustomerProfileOutgoing

@@ -1,55 +1,18 @@
 import { CircularProgress, TextField } from '@mui/material';
-import React from 'react'
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber } from '../../Actions/AddPatientActions';
-import { CheckIfCustomerExists } from '../../Actions/CustomerActions';
-import { RootState } from '../../store';
+import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+export default function AddPatientView() {
+    const {
+        addPatientState,
+        genderOptions,
+        handleNumberChange,
+        handleNameChange,
+        handleAgeChange,
+        genderOptionChange
+    } = usePatientInputHook();
 
-export default function AddEditPatientView() {
-    const dispatch = useDispatch()
-
-    const addPatientState = useSelector((state: RootState) => state.AddPatientState)
-    const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
-
-    const genderOptions = ["Male", "Female", "Other"]
-
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length >= 10) {
-            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.organisationId))
-            dispatch(SetAddPatientIsCheckingForCustomer(true))
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-        } else {
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-            dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientIsCheckingForCustomer(false))    
-            dispatch(SetAddPatientIsInvalidNumber(false))        
-        }
-    };
-
-    //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.firstName = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        //tempCustomerProfile.age = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const genderOptionChange = (gender: string) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.gender = gender
-        console.log(gender)
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    }
-    
     return (
         <div>
-            <h5 style={{ marginBottom: 20 }}>Add Patient / Book Appointment</h5>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TextField
                     fullWidth

@@ -1,5 +1,3 @@
-import React from "react";
-
 enum AppointmentStatusEnum {
     Confirmed = "Confirmed",
     StartedConsultation = "StartedConsultation",

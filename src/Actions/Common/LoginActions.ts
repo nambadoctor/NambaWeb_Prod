@@ -1,13 +1,5 @@
 import { signInWithPhoneNumber, getAuth, RecaptchaVerifier } from "@firebase/auth";
 
-declare global {
-    interface Window {
-        FB: any;
-    }
-}
-
-let FB = window.FB; // ok now
-
 function getAppVerifier() {
     return new RecaptchaVerifier('sign-in-button', {
         'size': 'invisible',

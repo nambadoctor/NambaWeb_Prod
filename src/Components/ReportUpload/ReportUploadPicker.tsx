@@ -1,7 +1,6 @@
-import React, { ChangeEvent, ChangeEventHandler, useEffect, useState } from 'react'
+import { ChangeEvent } from 'react'
 import { useDispatch } from 'react-redux';
-import { GetReports, UploadReport } from '../../Actions/ReportActions';
-import ImageViewer from 'react-simple-image-viewer';
+import { UploadReport } from '../../Actions/ReportActions';
 
 export default function ReportUploadPicker() {
 

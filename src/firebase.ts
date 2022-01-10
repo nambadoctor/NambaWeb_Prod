@@ -12,6 +12,6 @@ const firebaseConfig = {
   measurementId: 'G-16LSMFQG9F',
 }; //this is where your firebase app values you copied will go
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 export const auth = getAuth()

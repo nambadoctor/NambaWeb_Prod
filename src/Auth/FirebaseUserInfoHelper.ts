@@ -13,7 +13,7 @@ const GetIDTokenExpiryDate = (idToken: string) => {
 
   var expiryTimeStamp = 0;
   Object.keys(decoded).map((key) => {
-    if (key == "exp") {
+    if (key === "exp") {
       expiryTimeStamp = (decoded as any)[key] //type exposed with "any" type
     }
   })

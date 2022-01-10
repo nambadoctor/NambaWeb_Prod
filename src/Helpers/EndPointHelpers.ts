@@ -3,15 +3,23 @@ export function GetServiceProviderProfileEndPoint(serviceProviderId: string, org
 }
 
 export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
-    return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
+    return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
 
 export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
-    return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + serviceProviderIds.join(",");
+    return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
+}
+
+export function SetNewAppointmentEndPoint () {
+    return "appointment"
 }
 
 export function SetCustomerWithAppointment () {
     return "customer/appointment"
+}
+
+export function SetCustomerEndPoint () {
+    return "customer"
 }
 
 export function GetServiceProviderBasicEndPoint () {
