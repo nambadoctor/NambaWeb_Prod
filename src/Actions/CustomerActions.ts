@@ -6,14 +6,14 @@ import { GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEn
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerData from "../Types/IncomingDataModels/Customer";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
 import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import IPatientCreationAndAppointmentBookData from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import { GetAllAppointments } from "./AppointmentActions";
-import ICustomerSetRequestData from "../Types/OutgoingDataModels/CustomerSetRequest";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 
 function setCustomersHelper(customers: ICustomerData[]) {
     return {
@@ -42,24 +42,27 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 
     SetTrackTrace("Enter Check If Customer Exists with Phone Number Action PhNumber:" + phoneNumber + "OrgId: " + organisationId, "CheckIfCustomerExists", SeverityLevel.Information);
 
-    let response = await getCall({} as ICustomerSetRequestData, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
+    let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
 
     if (response.data) {
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientIsCustomerExists(true))
         dispatch(SetAddPatientCustomerProfile(response.data))
+    } else if (response.status == 204) {
+        dispatch(SetAddPatientIsCheckingForCustomer(false))
+        dispatch(SetAddPatientIsInvalidNumber(true))
     } else {
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientIsCustomerExists(false))
+        dispatch(SetAddPatientIsInvalidNumber(false))
         dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
     }
 };
 
-export const SetCustomerAndBookAppointment = (appointmentRequest: IPatientCreationAndAppointmentBookData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfileWithAppointmentOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Set Customer and Book Appointment Action", "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
-
 
     let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
 

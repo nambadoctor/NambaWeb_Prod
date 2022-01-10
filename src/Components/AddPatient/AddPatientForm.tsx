@@ -11,9 +11,11 @@ import { CheckIfCustomerExists, SetCustomerAndBookAppointment } from "../../Acti
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
-import IPatientCreationAndAppointmentBookData from "../../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
 import IDateOfBirthData from "../../Types/OutgoingDataModels/DateOfBirth";
+import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
+import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
+import AddEditPatientView from "./AddEditPatientView";
 
 export default function AddPatientForm() {
 
@@ -24,149 +26,47 @@ export default function AddPatientForm() {
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
-    const genderOptions = ["Male", "Female", "Other"]
-
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length == 10) {
-            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.organisationId))
-            dispatch(SetAddPatientIsCheckingForCustomer(true))
-            //TODO: Check if phone number exists for organisation
-        } else {
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-            dispatch(SetAddPatientIsCheckingForCustomer(false))
-            dispatch(SetAddPatientIsCustomerExists(false))
-        }
-    };
-
-    //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.firstName = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        //tempCustomerProfile.age = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const genderOptionChange = (gender: string) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.gender = gender
-        console.log(gender)
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    }
-
     //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
     const makeCustomerAndAppointmentRequest = () => {
-        const currentCustomerRequestObj = addPatientState.customerProfile
-        const phoneNumberObj = { PhoneNumberId: "", CountryCode: "+91", Number: addPatientState.phoneNumber, Type: "" } as IPhoneNumberData
+        var currentCustomerRequestObj = addPatientState.customerProfile
+        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
+        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
+        currentCustomerRequestObj.phoneNumbers = [{ PhoneNumberId: "", CountryCode: "+91", Number: addPatientState.phoneNumber, Type: "" } as IPhoneNumberData]
+
+        var aptObj = {
+            appointmentId: "string",
+            organisationId: currentServiceProvider?.organisationId,
+            serviceRequestId: "",
+            serviceProviderId: currentServiceProvider?.serviceProviderId,
+            customerId: currentCustomerRequestObj.customerId,
+            appointmentType: "InPerson",
+            addressId: "",
+            status: "",
+            scheduledAppointmentStartTime: selectedDate,
+            scheduledAppointmentEndTime: null,
+            actualAppointmentStartTime: null,
+            actualAppointmentEndTime: null
+        } as IAppointmentOutgoing
 
         return {
-            AppointmentType: "InPerson",
-            AddressId: "",
-            Status: "",
-            ScheduledAppointmentStartTime: selectedDate,
-            ScheduledAppointmentEndTime: null,
-            ActualAppointmentStartTime: null,
-            ActualAppointmentEndTime: null,
-            CustomerId: currentCustomerRequestObj.customerId,
-            FirstName: currentCustomerRequestObj.firstName,
-            LastName: currentCustomerRequestObj.lastName,
-            PhoneNumbers: [phoneNumberObj],
-            Gender: currentCustomerRequestObj.gender,
-            DateOfBirth: {} as IDateOfBirthData,
-            EmailAddress: currentCustomerRequestObj.emailAddress,
-            ProfilePicURL: currentCustomerRequestObj.profilePicURL,
-            OrganisationId: currentServiceProvider?.organisationId,
-            ServiceProviderId: currentServiceProvider?.serviceProviderId
-        } as IPatientCreationAndAppointmentBookData
+            customerProfileIncoming: currentCustomerRequestObj,
+            appointmentIncoming: aptObj
+        } as ICustomerProfileWithAppointmentOutgoingData
     }
     //END
 
     const done = () => {
+        var x = addPatientState.phoneNumber
         dispatch(SetAddPatientIsMakingDoneCall(true))
         const appointmentRequest = makeCustomerAndAppointmentRequest();
-        dispatch(SetCustomerAndBookAppointment(appointmentRequest))
+        //dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
 
     return (
         <div style={{ marginTop: 20 }}>
             <h5 style={{ marginBottom: 20 }}>Add Patient / Book Appointment</h5>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                <TextField
-                    fullWidth
-                    variant="outlined"
-                    size="small"
-                    required
-                    id="number"
-                    label="Phone Number"
-                    name="number"
-                    onChange={handleNumberChange}
-                    inputProps={{ maxLength: 10 }}
-                />
 
-                {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
-
-                {/* Indicator to display once customer exists check is complete
-                {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
-            </div>
-
-            {addPatientState.isCustomerExists ? <div style={{ fontSize: 12, color: "#1672f9", fontWeight: 'bold' }}>this patient exists</div> : <div />}
-
-            {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
-
-            <TextField
-                disabled={addPatientState.isCustomerExists}
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                size="small"
-                required
-                value={addPatientState.customerProfile.firstName}
-                id="name"
-                label="Name"
-                name="name"
-                onChange={handleNameChange}
-            />
-
-            <Row className="align-items-center">
-                <Col>
-                    <TextField
-                        disabled={addPatientState.isCustomerExists}
-                        variant="outlined"
-                        margin="dense"
-                        size="small"
-                        name="age"
-                        label="Age"
-                        //value={addPatientState.customerProfile.age}
-                        type="age"
-                        id="age"
-                        inputProps={{ maxLength: 3 }}
-                        onChange={handleAgeChange}
-                    />
-                </Col>
-                <Col>
-                    <ButtonGroup style={{ marginTop: 3 }}>
-                        {genderOptions.map((genderOption, idx) => (
-                            <ToggleButton
-                                disabled={addPatientState.isCustomerExists}
-                                key={idx}
-                                id={`gender-${idx}`}
-                                type="radio"
-                                variant='outline-primary'
-                                name="gender"
-                                value={addPatientState.customerProfile.gender}
-                                checked={addPatientState.customerProfile.gender === genderOption}
-                                onChange={(e) => genderOptionChange(genderOption)}
-                            >
-                                {genderOption}
-                            </ToggleButton>
-                        ))}
-                    </ButtonGroup>
-                </Col>
-            </Row>
+            <AddEditPatientView></AddEditPatientView>
 
             <Row style={{ marginTop: 10, marginBottom: 15, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
