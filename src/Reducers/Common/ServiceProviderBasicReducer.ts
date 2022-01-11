@@ -3,8 +3,8 @@ import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { Action } from "../../Types/ActionType"
 import IServiceProviderBasic from "../../Types/IncomingDataModels/ServiceProviderBasic";
 
-export enum GetUserType_Types {
-  SET_LOCAL_USER_TYPES = "SET_LOCAL_USER_TYPES"
+export enum ServiceProviderBasicReducer_Types {
+  SET_SERVICE_PROVIDER_BASIC = "SET_SERVICE_PROVIDER_BASIC"
 }
 
 export interface ServiceProviderBasicState {
@@ -18,7 +18,7 @@ const initialState: ServiceProviderBasicState = {
 export const serviceProviderBasicReducer = (state: ServiceProviderBasicState = initialState, action: Action): ServiceProviderBasicState => {
   SetTrackTrace("Entered Service Provider Basic Reducer: " + action.type, "ServiceProviderBasicReducer", SeverityLevel.Information)
   switch (action.type) {
-    case GetUserType_Types.SET_LOCAL_USER_TYPES:
+    case ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC:
       SetTrackTrace("Service Provider Basic Reducer Set Local User Types SUCCESS", "ServiceProviderBasicReducer", SeverityLevel.Information)
       return { serviceProvider: action.payload }
     default:

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 import { Link } from "react-router-dom";
 import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../../Actions/ConsultationActions";
-import { GetReports } from "../../Actions/ReportActions";
+import NoAppointmentsView from "./NoAppointmentsView";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -52,7 +52,7 @@ const useAppointmentTableStyles = makeStyles(() => ({
 export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
   const dispatch = useDispatch();
-  
+
   const appointmentState = useSelector((state: RootState) => state.AppointmentState);
 
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
@@ -96,7 +96,7 @@ export default function AppointmentsTable() {
     switch (appointmentState) {
       case AppointmentStatusEnum.Confirmed:
         colorCodesToReturn = ["#e5faf2", "#3bb077"];
-        break;
+        break;  
       case AppointmentStatusEnum.StartedConsultation:
         colorCodesToReturn = ["#ebf1fe", "#2a7ade"];
         break;
@@ -113,11 +113,63 @@ export default function AppointmentsTable() {
     return colorCodesToReturn;
   }
 
-  function setSelectedAppointment (appointment: IAppointmentData) {
+  function GetAppointmentList() {
+    return appointmentState.filteredAppointments.map(
+      (appointment: IAppointmentData, index: number) => (
+        <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
+          <TableCell align="left">
+            <span className="appointmentTableName">
+              {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
+              {appointment.appointmentType === "In Person" ? (
+                <PeopleAltRounded
+                  style={{ color: "#149c4a" }}
+                ></PeopleAltRounded>
+              ) : (
+                <VideoCameraFront
+                  style={{ color: "#0863e4" }}
+                ></VideoCameraFront>
+              )}
+            </span>
+          </TableCell>
+          <TableCell align="left">
+            <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
+          </TableCell>
+          <TableCell align="left">
+            {getLastVisitForCustomer(
+              appointment.customerId
+            )}
+          </TableCell>
+          <TableCell>
+            <Typography
+              className={classes.status}
+              style={{
+                backgroundColor:
+                  getBackgroundColorForAppointmentState(
+                    appointment.status
+                  )[0],
+                color: getBackgroundColorForAppointmentState(
+                  appointment.status
+                )[1],
+              }}
+            >
+              {getDisplayNameForAppointmentState(
+                appointment.status
+              )}
+            </Typography>
+          </TableCell>
+          <TableCell align="left">
+            {getReadableDateString(
+              appointment.scheduledAppointmentStartTime
+            )}
+          </TableCell>
+        </TableRow>
+      )
+    )
+  }
+
+  function setSelectedAppointment(appointment: IAppointmentData) {
     dispatch(GetAppointmentForConsultation(appointment.appointmentId));
     dispatch(GetCustomerForConsultation(appointment.customerId));
-
-    dispatch(GetReports());
   }
 
   return (
@@ -144,59 +196,10 @@ export default function AppointmentsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointmentState.filteredAppointments.length !== 0 &&
-            appointmentState.filteredAppointments
-              .map(
-                (appointment: IAppointmentData, index: number) => (
-                  <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
-                    <TableCell align="left">
-                      <span className="appointmentTableName">
-                        {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
-                        {appointment.appointmentType === "In Person" ? (
-                          <PeopleAltRounded
-                            style={{ color: "#149c4a" }}
-                          ></PeopleAltRounded>
-                        ) : (
-                          <VideoCameraFront
-                            style={{ color: "#0863e4" }}
-                          ></VideoCameraFront>
-                        )}
-                      </span>
-                    </TableCell>
-                    <TableCell align="left">
-                      <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
-                    </TableCell>
-                    <TableCell align="left">
-                      {getLastVisitForCustomer(
-                        appointment.customerId
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <Typography
-                        className={classes.status}
-                        style={{
-                          backgroundColor:
-                            getBackgroundColorForAppointmentState(
-                              appointment.status
-                            )[0],
-                          color: getBackgroundColorForAppointmentState(
-                            appointment.status
-                          )[1],
-                        }}
-                      >
-                        {getDisplayNameForAppointmentState(
-                          appointment.status
-                        )}
-                      </Typography>
-                    </TableCell>
-                    <TableCell align="left">
-                      {getReadableDateString(
-                        appointment.scheduledAppointmentStartTime
-                      )}
-                    </TableCell>
-                  </TableRow>
-                )
-              )}
+          {appointmentState.filteredAppointments && appointmentState.filteredAppointments.length !== 0 ?
+            GetAppointmentList() :
+            <TableCell colSpan={6}><NoAppointmentsView /></TableCell>
+          }
         </TableBody>
       </Table>
     </TableContainer>

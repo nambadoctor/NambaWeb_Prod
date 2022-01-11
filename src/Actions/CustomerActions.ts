@@ -15,7 +15,7 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
-        type: Customer_Types.SET_LOCAL_CUSTOMER_LIST,
+        type: Customer_Types.SET_CUSTOMER_LIST,
         payload: customers
     };
 }

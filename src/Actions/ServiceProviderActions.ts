@@ -36,7 +36,7 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
         SetTrackTrace("Retrieved Selected Organisation Id DOES NOT EXIST: " + selectedOrganisationId, "GetCurrentServiceProvider", SeverityLevel.Error);
     }
 
-    let response = await getCall({} as IServiceProvider, GetServiceProviderProfileEndPoint(serviceProviderBasicId!, selectedOrganisationId!), "GetCurrentServiceProvider")
+    let {response, error} = await getCall({} as IServiceProvider, GetServiceProviderProfileEndPoint(serviceProviderBasicId!, selectedOrganisationId!), "GetCurrentServiceProvider")
 
     SetTrackTrace("Dispatch Set Current Service Provider" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
     dispatch(SetCurrentServiceProvider(response.data))

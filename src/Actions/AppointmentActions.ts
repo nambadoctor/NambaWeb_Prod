@@ -11,23 +11,19 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 
-//RETURN APPOINTMENT ACTION TYPES
-function setAppointmentsAction(appointments: Array<IAppointmentData>) {
-  return {
-    type: Appointment_Types.SET_LOCAL_APPOINTMENTS,
-    payload: appointments
-  };
-}
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
   return {
-    type: Appointment_Types.SET_LOCAL_FILTERED_APPOINTMENTS,
+    type: Appointment_Types.SET_APPOINTMENT_STATE_FILTERED_APPOINTMENTS,
     payload: appointments
   };
 }
-//END RETURN APPOINTMENT ACTION TYPES
 
-export const SetAppointments = (appointments: Array<IAppointmentData>): Action => (setAppointmentsAction(appointments));
+
+export const SetAppointments = (appointments: Array<IAppointmentData>): Action => ({
+  type: Appointment_Types.SET_APPOINTMENT_STATE_APPOINTMENTS,
+  payload: appointments
+});
 
 export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
   SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
