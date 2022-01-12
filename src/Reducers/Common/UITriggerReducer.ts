@@ -3,15 +3,18 @@ import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { Action } from "../../Types/ActionType"
 
 export enum UITrigger_Types {
-  SET_ORG_PICKER_MODAL_TOGGLE = "SET_ORG_PICKER_MODAL_TOGGLE"
+  SET_ORG_PICKER_MODAL_TOGGLE = "SET_ORG_PICKER_MODAL_TOGGLE",
+  SET_SHOW_LINEAR_LOADING_BAR_TOGGLE = "SET_SHOW_LINEAR_LOADING_BAR_TOGGLE"
 }
 
 export interface UITriggerState {
-  showOrgPickerModalToggle: boolean
+  showOrgPickerModalToggle: boolean,
+  showLinearLoadingBarToggle: boolean
 }
 
 const initialState: UITriggerState = {
-  showOrgPickerModalToggle: false
+  showOrgPickerModalToggle: false,
+  showLinearLoadingBarToggle: false
 }
 
 export const uiTriggerReducer = (state: UITriggerState = initialState, action: Action): UITriggerState => {
@@ -19,7 +22,16 @@ export const uiTriggerReducer = (state: UITriggerState = initialState, action: A
   switch (action.type) {
     case UITrigger_Types.SET_ORG_PICKER_MODAL_TOGGLE:
       SetTrackTrace("UI Trigger Reducer SET_ORG_PICKER_MODAL_TOGGLE SUCCESS" + action.payload, "UiTriggerReducer", SeverityLevel.Information)
-      return { showOrgPickerModalToggle: action.payload }
+      return {
+        ...state,
+        showOrgPickerModalToggle: action.payload
+      }
+    case UITrigger_Types.SET_SHOW_LINEAR_LOADING_BAR_TOGGLE:
+      SetTrackTrace("UI Trigger Reducer SET_SHOW_LINEAR_LOADING_BAR_TOGGLE SUCCESS" + action.payload, "UiTriggerReducer", SeverityLevel.Information)
+      return {
+        ...state,
+        showLinearLoadingBarToggle: action.payload
+      }
     default:
       SetTrackTrace("UI Trigger Reducer Hits default switch: Returns original state", "UiTriggerReducer", SeverityLevel.Error)
       return state

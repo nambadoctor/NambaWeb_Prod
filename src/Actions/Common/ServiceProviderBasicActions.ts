@@ -8,6 +8,7 @@ import { getCall } from "../../Http/http-helpers";
 import { GetServiceProviderBasicEndPoint } from "../../Helpers/EndPointHelpers";
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import { SetLinearLoadingBarToggle } from "./UIControlActions";
 
 export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProviderBasic): Action => ({
     type: ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC,
@@ -16,15 +17,28 @@ export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProv
 
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
 
+    dispatch(SetLinearLoadingBarToggle(true))
+
     SetTrackTrace("Get Service Provider Basic Start", "GetServiceProviderBasic", SeverityLevel.Information);
 
-    const response = await getCall({} as IServiceProviderBasic, GetServiceProviderBasicEndPoint(), "Action-GetServiceProviderBasic");
+    try {
+        const response = await getCall({} as IServiceProviderBasic, GetServiceProviderBasicEndPoint(), "Action-GetServiceProviderBasic");
 
-    SetTrackTrace("Get Service Provider Basic Response" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);
+        if (response) {
+            dispatch(SetLinearLoadingBarToggle(false))
 
-    SetTrackTrace("Dispatch Set Service Provider Basic" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);
-    dispatch(SetServiceProviderBasicAction(response.data));
+            SetTrackTrace("Get Service Provider Basic Response" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);
 
-    SetTrackTrace("Dispatch Check For Default Orgs", "GetServiceProviderBasic", SeverityLevel.Information);
-    dispatch(CheckForDefaultOrg());
+            SetTrackTrace("Dispatch Set Service Provider Basic" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);
+            dispatch(SetServiceProviderBasicAction(response.data));
+
+            SetTrackTrace("Dispatch Check For Default Orgs", "GetServiceProviderBasic", SeverityLevel.Information);
+            dispatch(CheckForDefaultOrg());
+        }
+
+    } catch (error) {
+        //TODO: HANDLE ERROR
+        throw error;
+    }
+
 };

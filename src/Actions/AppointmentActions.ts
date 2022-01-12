@@ -82,5 +82,4 @@ export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkActio
   if (response) {
     dispatch(GetAllAppointments())
   }
-
 };

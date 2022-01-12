@@ -15,6 +15,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import ConsultationView from "../Consultation/ConsultationView";
 import PatientsTabMainView from "../PatientsList/PatientsTabMainView";
 import Calendar from "../CalendarPicker/Calendar";
+import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay";
 
 function Dashboard() {
 
@@ -85,6 +86,7 @@ function Dashboard() {
       <div>
         {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <div>TODO: Handle Non Existent User</div>}
         <OrganisationInitialModalPickerComponent />
+        <FullPageLoadingDisplay />
       </div>
     </>
   );

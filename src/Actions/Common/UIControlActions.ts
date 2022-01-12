@@ -10,3 +10,5 @@ function setBooleanPayload(payload: boolean, actionType: string) {
 }
 
 export const SetOrgPickerModalToggle = (showOrgPickerModalToggle: boolean): Action => (setBooleanPayload(showOrgPickerModalToggle, UITrigger_Types.SET_ORG_PICKER_MODAL_TOGGLE));
+
+export const SetLinearLoadingBarToggle = (showOrgPickerModalToggle: boolean): Action => (setBooleanPayload(showOrgPickerModalToggle, UITrigger_Types.SET_SHOW_LINEAR_LOADING_BAR_TOGGLE));
