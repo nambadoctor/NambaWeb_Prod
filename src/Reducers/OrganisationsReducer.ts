@@ -4,8 +4,8 @@ import { Action } from "../Types/ActionType"
 import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 
 export enum Org_Types {
-  SET_LOCAL_ORGS = "SET_LOCAL_ORGS",
-  SET_LOCAL_SELECTED_ORG = "SET_LOCAL_SELECTED_ORG"
+  SET_ORGANISATIONS = "SET_LOCAL_ORGS",
+  SET_SELECTED_ORGANISATION = "SET_SELECTED_ORGANISATION"
 }
 
 export interface OrganisationState {
@@ -20,13 +20,13 @@ const initialState: OrganisationState = {
 export const orgReducer = (state: OrganisationState = initialState, action: Action): OrganisationState => {
   SetTrackTrace("Entered Organisation Reducer: " + action.type, "OrganisationReducer", SeverityLevel.Information)
   switch (action.type) {
-    case Org_Types.SET_LOCAL_ORGS:
+    case Org_Types.SET_ORGANISATIONS:
       SetTrackTrace("Entered Organisation Reducer SET_LOCAL_ORGS SUCCESS", "OrganisationReducer", SeverityLevel.Information)
       return {
         ...state,
         organisations: action.payload,
       }
-    case Org_Types.SET_LOCAL_SELECTED_ORG:
+    case Org_Types.SET_SELECTED_ORGANISATION:
       SetTrackTrace("Entered Organisation Reducer SET_LOCAL_SELECTED_ORG SUCCESS", "OrganisationReducer", SeverityLevel.Information)
       return {
         ...state,

@@ -32,13 +32,13 @@ export default function AddPatientView() {
                 {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
             </div>
 
-            {addPatientState.isCustomerExists ? <div style={{ fontSize: 12, color: "#1672f9", fontWeight: 'bold' }}>this patient exists</div> : <div />}
-            {addPatientState.isInvalidNumber ? <div style={{ fontSize: 12, color: "#ff6c6c", fontWeight: 'bold' }}>sorry, you cannot add this number</div> : <div />}
+            {addPatientState.isCustomerExists ? <div style={{ fontSize: 12, color: "#1672f9", fontWeight: 'bold' }}>This patient exists</div> : <div />}
+            {addPatientState.isInvalidNumber ? <div style={{ fontSize: 12, color: "#ff6c6c", fontWeight: 'bold' }}>Sorry, cannot add this number</div> : <div />}
 
             {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
 
             <TextField
-                disabled={addPatientState.isCustomerExists}
+                disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                 fullWidth
                 variant="outlined"
                 margin="normal"
@@ -54,7 +54,7 @@ export default function AddPatientView() {
             <Row className="align-items-center">
                 <Col>
                     <TextField
-                        disabled={addPatientState.isCustomerExists}
+                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                         variant="outlined"
                         margin="dense"
                         size="small"
@@ -71,7 +71,7 @@ export default function AddPatientView() {
                     <ButtonGroup style={{ marginTop: 3 }}>
                         {genderOptions.map((genderOption, idx) => (
                             <ToggleButton
-                                disabled={addPatientState.isCustomerExists}
+                                disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                                 key={idx}
                                 id={`gender-${idx}`}
                                 type="radio"

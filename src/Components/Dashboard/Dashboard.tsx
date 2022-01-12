@@ -1,7 +1,5 @@
-import DatePickerComponent from "../../Components/CalendarPicker/DatePickerComponent";
 import Topbar from "../Topbar/Topbar";
 import { Routes, Route } from "react-router-dom";
-import PatientsTableView from "../PatientsList/PatientsTableView";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
 import { Container, Row, Col } from "react-bootstrap";
 import "../../App.css"
@@ -10,12 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
-import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientForm";
+import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import ConsultationView from "../Consultation/ConsultationView";
 import PatientsTabMainView from "../PatientsList/PatientsTabMainView";
+import Calendar from "../CalendarPicker/Calendar";
+import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay";
 
 function Dashboard() {
 
@@ -42,7 +42,7 @@ function Dashboard() {
               <AppointmentsTableView />
             </Col>
             <Col md="3">
-              <Row><DatePickerComponent /></Row>
+              <Row><Calendar /></Row>
               <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
               <Row><AddPatientForm></AddPatientForm></Row>
             </Col>
@@ -86,6 +86,7 @@ function Dashboard() {
       <div>
         {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <div>TODO: Handle Non Existent User</div>}
         <OrganisationInitialModalPickerComponent />
+        <FullPageLoadingDisplay />
       </div>
     </>
   );

@@ -11,14 +11,14 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function setOrgsTypeHelper(organisations: Array<IOrganisationBasic>) {
   return {
-    type: Org_Types.SET_LOCAL_ORGS,
+    type: Org_Types.SET_ORGANISATIONS,
     payload: organisations
   };
 }
 
 function setSelectedOrgTypeHelper(organisation?: IOrganisationBasic) {
   return {
-    type: Org_Types.SET_LOCAL_SELECTED_ORG,
+    type: Org_Types.SET_SELECTED_ORGANISATION,
     payload: organisation
   };
 }
@@ -40,9 +40,7 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
     const defaultOrg = checkForDefaultOrgHelpers(currentServiceProvider.organisations)
 
     if (defaultOrg != null) {
-
       SetTrackTrace("Setting Locally Selected Org as Default Org: " + defaultOrg, "CheckForDefaultOrg", SeverityLevel.Information) 
-
       dispatch(SetLocallySelectedOrg(defaultOrg))
       dispatch(GetCurrentServiceProvider())
     } else {

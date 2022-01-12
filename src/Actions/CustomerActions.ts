@@ -15,7 +15,7 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
-        type: Customer_Types.SET_LOCAL_CUSTOMER_LIST,
+        type: Customer_Types.SET_CUSTOMER_LIST,
         payload: customers
     };
 }
@@ -40,20 +40,25 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 
     SetTrackTrace("Enter Check If Customer Exists with Phone Number Action PhNumber:" + phoneNumber + "OrgId: " + organisationId, "CheckIfCustomerExists", SeverityLevel.Information);
 
-    let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
+    try {
 
-    if (response.data) {
-        dispatch(SetAddPatientIsCheckingForCustomer(false))
-        dispatch(SetAddPatientIsCustomerExists(true))
-        dispatch(SetAddPatientCustomerProfile(response.data))
-    } else if (response.status === 204) {
+        let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
+
+        if (response.data) {
+            dispatch(SetAddPatientIsCheckingForCustomer(false))
+            dispatch(SetAddPatientIsCustomerExists(true))
+            dispatch(SetAddPatientCustomerProfile(response.data))
+        } else {
+            dispatch(SetAddPatientIsCheckingForCustomer(false))
+            dispatch(SetAddPatientIsCustomerExists(false))
+            dispatch(SetAddPatientIsInvalidNumber(false))
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+        }
+
+    } catch (error) {
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientIsInvalidNumber(true))
-    } else {
-        dispatch(SetAddPatientIsCheckingForCustomer(false))
-        dispatch(SetAddPatientIsCustomerExists(false))
-        dispatch(SetAddPatientIsInvalidNumber(false))
-        dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+        throw error;
     }
 };
 

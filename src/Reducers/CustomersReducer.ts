@@ -4,7 +4,7 @@ import { Action } from "../Types/ActionType"
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 
 export enum Customer_Types {
-    SET_LOCAL_CUSTOMER_LIST = "SET_LOCAL_CUSTOMER_LIST",
+    SET_CUSTOMER_LIST = "SET_CUSTOMER_LIST",
 }
 
 export interface CustomerState {
@@ -15,11 +15,10 @@ const initialState: CustomerState = {
     customers: []
 }
 
-
 export const customerReducer = (state: CustomerState = initialState, action: Action): CustomerState => {
     SetTrackTrace("Entered Customer Reducer: " + action.type, "CustomerReducer", SeverityLevel.Information)
     switch (action.type) {
-        case Customer_Types.SET_LOCAL_CUSTOMER_LIST:
+        case Customer_Types.SET_CUSTOMER_LIST:
             SetTrackTrace("Customer Reducer SET_LOCAL_CUSTOMER_LIST SUCCESS", "CustomerReducer", SeverityLevel.Information)
             return {
                 customers: action.payload,

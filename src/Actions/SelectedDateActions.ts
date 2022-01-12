@@ -6,7 +6,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 function setAppointmentCategoryHelper(dates: Date[]) {
     return {
-        type: SelectedDateReducer.SET_LOCAL_SELECTED_DATES,
+        type: SelectedDateReducer.SET_SELECTED_DATES,
         payload: dates
     };
 }
@@ -27,7 +27,7 @@ function setDatesWithAppointmentsRangeHelper(appointments: IAppointmentData[]) {
     SetTrackTrace("Populated DatesWithAppointmentsArr: " + datesToSet.length, "SetDatesWithAppointmentsRangeHelper", SeverityLevel.Information)
     
     return {
-        type: SelectedDateReducer.SET_LOCAL_DATES_WITH_APPOINTMENTS,
+        type: SelectedDateReducer.SET_DATES_WITH_APPOINTMENTS,
         payload: datesToSet
     };
 }
