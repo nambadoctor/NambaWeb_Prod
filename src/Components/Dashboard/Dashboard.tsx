@@ -7,7 +7,7 @@ import OrganisationInitialModalPickerComponent from "../OrganisationPicker/Organ
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
-import { GetServiceProviderBasic } from "../../Actions/Common/ServiceProviderBasicActions";
+import { GetServiceProviderBasic } from "../../Actions/ServiceProviderBasicActions";
 import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
@@ -16,6 +16,7 @@ import ConsultationView from "../Consultation/ConsultationView";
 import PatientsTabMainView from "../PatientsList/PatientsTabMainView";
 import Calendar from "../CalendarPicker/Calendar";
 import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay";
+import NonExistentUserDisplayComponent from "../UIHelperComponents/NonExistentUserDisplayComponent";
 
 function Dashboard() {
 
@@ -84,7 +85,7 @@ function Dashboard() {
   return (
     <>
       <div>
-        {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <div>TODO: Handle Non Existent User</div>}
+        {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <NonExistentUserDisplayComponent />}
         <OrganisationInitialModalPickerComponent />
         <FullPageLoadingDisplay />
       </div>

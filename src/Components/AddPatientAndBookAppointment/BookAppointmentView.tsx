@@ -58,12 +58,13 @@ export default function BookAppointmentView() {
         const appointmentRequest = makeCustomerAndAppointmentRequest();
         dispatch(SetCustomerAndBookAppointment(appointmentRequest))
     }
-    
+
     return (
         <div>
             <Row style={{ marginTop: 10, marginBottom: 15, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
+                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                         renderInput={(props) => <TextField {...props} />}
                         label="Appointment Date (If Needed)"
                         value={selectedDate}
@@ -78,6 +79,7 @@ export default function BookAppointmentView() {
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Button
+                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                         style={{ padding: 10, width: '100%' }}
                         type="submit"
                         color="primary"

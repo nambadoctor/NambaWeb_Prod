@@ -1,14 +1,14 @@
-import { Action } from "../../Types/ActionType";
+import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import { ServiceProviderBasicReducer_Types } from "../../Reducers/Common/ServiceProviderBasicReducer";
-import IServiceProviderBasic from "../../Types/IncomingDataModels/ServiceProviderBasic";
-import { CheckForDefaultOrg } from "../OrganisationActions";
-import { RootState } from "../../store";
-import { getCall } from "../../Http/http-helpers";
-import { GetServiceProviderBasicEndPoint } from "../../Helpers/EndPointHelpers";
-import SetTrackTrace from "../../Telemetry/SetTrackTrace";
+import { ServiceProviderBasicReducer_Types } from "../Reducers/Common/ServiceProviderBasicReducer";
+import IServiceProviderBasic from "../Types/IncomingDataModels/ServiceProviderBasic";
+import { CheckForDefaultOrg } from "./OrganisationActions";
+import { RootState } from "../store";
+import { getCall } from "../Http/http-helpers";
+import { GetServiceProviderBasicEndPoint } from "../Helpers/EndPointHelpers";
+import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { SetLinearLoadingBarToggle } from "./UIControlActions";
+import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProviderBasic): Action => ({
     type: ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC,
