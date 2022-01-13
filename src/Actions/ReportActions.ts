@@ -21,7 +21,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
   }
 }
 
-export const UploadReport = (report: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadReportFromFile = (report: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
@@ -44,8 +44,31 @@ export const UploadReport = (report: File): ThunkAction<void, RootState, null, A
   }
 };
 
+export const UploadReportFromBase64String = (base64Report: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-export const DeleteReport = (reportToDelete:IReportIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+
+  var reportRequest = {
+    AppointmentId: currentConsultationAppointment!.appointmentId,
+    ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
+    File: base64Report,
+    FileName: "",
+    FileType: "",
+    Details: "",
+    DetailsType: ""
+  } as IReportUploadData
+
+  SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
+
+  let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
+
+  if (response) {
+    dispatch(GetReports());
+  }
+};
+
+
+export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   let currentAppointment = getState().ConsultationState.currentAppointment
 

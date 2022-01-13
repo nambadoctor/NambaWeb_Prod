@@ -11,6 +11,7 @@ import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
+import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 
@@ -66,6 +67,8 @@ export const SetNextAppointmentForConsultation = (appointment: IAppointmentData)
 
 //Get consultation appointment
 export const GetAppointmentForConsultation = (appointmentId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetLinearLoadingBarToggle(true))
+
     SetTrackTrace("Enter Get Appointment Action", "GetAppointmentForConsultation", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
@@ -77,6 +80,8 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
 
     //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
     let response = await getCall({} as Array<IAppointmentData>, GetAppointmentForServiceProvider(appointmentId, currentServiceProvider.serviceProviderId), "GetAllAppointments");
+
+    dispatch(SetLinearLoadingBarToggle(false))
 
     SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
     dispatch(SetSelectedAppointmentForConsultation(response.data));

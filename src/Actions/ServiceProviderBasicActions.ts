@@ -25,8 +25,6 @@ export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Ac
         const response = await getCall({} as IServiceProviderBasic, GetServiceProviderBasicEndPoint(), "Action-GetServiceProviderBasic");
 
         if (response) {
-            dispatch(SetLinearLoadingBarToggle(false))
-
             SetTrackTrace("Get Service Provider Basic Response" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);
 
             SetTrackTrace("Dispatch Set Service Provider Basic" + response.data, "GetServiceProviderBasic", SeverityLevel.Information);

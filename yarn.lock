@@ -3760,6 +3760,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-html5-camera-photo@^1.5.1":
+  "integrity" "sha512-5kJwACiD+fIErQiS6bVD7+d4b9lnECbfWqbDTTAcDyBDRAXDoBEqRCfRjlTYnhNIkkWJA1Ow3s8xCuLKvC1IkQ=="
+  "resolved" "https://registry.npmjs.org/@types/react-html5-camera-photo/-/react-html5-camera-photo-1.5.1.tgz"
+  "version" "1.5.1"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-is@^16.7.1 || ^17.0.0":
   "integrity" "sha512-aBTIWg1emtu95bLTLx0cpkxwGW3ueZv71nE2YFBpL8k/z5czEW8yYpOo8Dp+UUAFAtKwNaOsh/ioSeQnWlZcfw=="
   "resolved" "https://registry.npmjs.org/@types/react-is/-/react-is-17.0.3.tgz"
@@ -9028,6 +9035,11 @@
   "resolved" "https://registry.npmjs.org/jsesc/-/jsesc-0.5.0.tgz"
   "version" "0.5.0"
 
+"jslib-html5-camera-photo@3.1.8":
+  "integrity" "sha512-7vBcVyLUnnP37vKzOxzIFtpaS8I8z+XMtyOlNFm+BGW089/Yw1hROsH2MdbIjCDRWfD+DnMC/WCNmW3LO2chrQ=="
+  "resolved" "https://registry.npmjs.org/jslib-html5-camera-photo/-/jslib-html5-camera-photo-3.1.8.tgz"
+  "version" "3.1.8"
+
 "json-parse-better-errors@^1.0.1", "json-parse-better-errors@^1.0.2":
   "integrity" "sha512-mrqyZKfX5EhL7hvqcV6WG1yYjnjeuYDzDhhcAAUrq8Po85NBQBJP+ZDUT75qZQ98IkUoBqdkExkukOU7Ts2wrw=="
   "resolved" "https://registry.npmjs.org/json-parse-better-errors/-/json-parse-better-errors-1.0.2.tgz"
@@ -11679,6 +11691,13 @@
     "detect-element-overflow" "^1.2.0"
     "prop-types" "^15.6.0"
 
+"react-html5-camera-photo@^1.5.5":
+  "integrity" "sha512-e6vw0FJjyoxR1nJgV2hXfLKJYBmpg8+GG5KgwPQEsr8IJFgFKUM2xHMEQYorTPchsKvwxzUXJEoOiroxWw9bwA=="
+  "resolved" "https://registry.npmjs.org/react-html5-camera-photo/-/react-html5-camera-photo-1.5.5.tgz"
+  "version" "1.5.5"
+  dependencies:
+    "jslib-html5-camera-photo" "3.1.8"
+
 "react-is@^16.3.2":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -11747,9 +11766,9 @@
     "prop-types" "^15.6.0"
 
 "react-native@*", "react-native@>=0.50.0":
-  "integrity" "sha512-9vx5dlSfQlKbbDtr8+xMon6qsmSu7jvjdXWZpEKh3XVKpUidbbODv7048gwVKX8YAel1egeR7hN8vzSeI6ssTw=="
-  "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.66.4.tgz"
-  "version" "0.66.4"
+  "integrity" "sha512-m26TKwzsfHVdZ1hDG+7mZ4M4ftxFFZrhtiT0OXuwfBzmNtB3xhsJtYszPeizw33c9YNp8rvehKT3c4ldDCW6kA=="
+  "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.66.0.tgz"
+  "version" "0.66.0"
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"

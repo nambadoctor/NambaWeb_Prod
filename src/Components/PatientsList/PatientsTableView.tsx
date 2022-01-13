@@ -9,8 +9,8 @@ import { makeStyles } from "@mui/styles";
 import ICustomerIncomingData from "../../Types/IncomingDataModels/CustomerIncoming";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { CheckIfCustomerExists, SetCustomer } from "../../Actions/CustomerActions";
-import { SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
+import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
+import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -53,6 +53,7 @@ export default function PatientsTableView() {
   );
 
   function handleCustomerSelect(customer: ICustomerIncomingData) {
+    dispatch(SetAddPatientIsCheckingForCustomer(true))
     dispatch(CheckIfCustomerExists(customer.phoneNumbers[0].number, customer.organisationId))
     dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number))
   }

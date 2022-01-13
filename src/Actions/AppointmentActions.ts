@@ -10,6 +10,7 @@ import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
+import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -74,12 +75,16 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
 };
 
 export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  SetTrackTrace("Enter Set New Appointments Action", "GetAllAppointments", SeverityLevel.Information);
+
+  dispatch(SetLinearLoadingBarToggle(true))
+
+  SetTrackTrace("Enter Set New Appointments Action", "SetNewAppointment", SeverityLevel.Information);
 
   //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-  let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "GetAllAppointments")
+  let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
 
   if (response) {
+    dispatch(SetLinearLoadingBarToggle(false))
     dispatch(GetAllAppointments())
   }
 };

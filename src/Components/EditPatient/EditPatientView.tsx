@@ -103,7 +103,6 @@ export default function EditPatientView() {
                         variant="outlined"
                     />
 
-
                 </Col>
                 <Col>
                     <ButtonGroup style={{ marginTop: 3 }}>

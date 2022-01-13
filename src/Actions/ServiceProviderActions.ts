@@ -9,6 +9,7 @@ import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
 import {getCall} from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
     return {
@@ -37,6 +38,8 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
     }
 
     let response = await getCall({} as IServiceProvider, GetServiceProviderProfileEndPoint(serviceProviderBasicId!, selectedOrganisationId!), "GetCurrentServiceProvider")
+
+    dispatch(SetLinearLoadingBarToggle(false))
 
     SetTrackTrace("Dispatch Set Current Service Provider" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
     dispatch(SetCurrentServiceProvider(response.data))

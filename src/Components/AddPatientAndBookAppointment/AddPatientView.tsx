@@ -1,6 +1,12 @@
 import { CircularProgress, TextField } from '@mui/material';
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+
+
 export default function AddPatientView() {
     const {
         addPatientState,
@@ -14,16 +20,26 @@ export default function AddPatientView() {
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+
+
                 <TextField
                     fullWidth
-                    variant="outlined"
+                    label="Phone Number"
+                    placeholder="Phone Number"
+                    margin="normal"
                     size="small"
                     required
-                    id="number"
-                    label="Phone Number"
-                    name="number"
-                    onChange={handleNumberChange}
+                    value={addPatientState.phoneNumber}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LocalPhoneIcon style={{ width: 22, height: 22 }}></LocalPhoneIcon>
+                            </InputAdornment>
+                        ),
+                    }}
                     inputProps={{ maxLength: 10 }}
+                    variant="outlined"
+                    onChange={handleNumberChange}
                 />
 
                 {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
@@ -40,14 +56,20 @@ export default function AddPatientView() {
             <TextField
                 disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
                 fullWidth
-                variant="outlined"
+                label="Name"
+                placeholder="Name"
                 margin="normal"
                 size="small"
                 required
                 value={addPatientState.customerProfile.firstName}
-                id="name"
-                label="Name"
-                name="name"
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <AccountCircle />
+                        </InputAdornment>
+                    ),
+                }}
+                variant="outlined"
                 onChange={handleNameChange}
             />
 
@@ -55,17 +77,26 @@ export default function AddPatientView() {
                 <Col>
                     <TextField
                         disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
-                        variant="outlined"
                         margin="dense"
                         size="small"
                         name="age"
                         label="Age"
+                        placeholder="Age"
                         //value={addPatientState.customerProfile.age}
                         type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}
                         onChange={handleAgeChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccessTimeFilledIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        variant="outlined"
                     />
+
                 </Col>
                 <Col>
                     <ButtonGroup style={{ marginTop: 3 }}>

@@ -12,6 +12,7 @@ import { GetAllAppointments } from "./AppointmentActions";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
+import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
@@ -44,12 +45,12 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 
         let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
 
+        dispatch(SetAddPatientIsCheckingForCustomer(false))
+
         if (response.data) {
-            dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsCustomerExists(true))
             dispatch(SetAddPatientCustomerProfile(response.data))
         } else {
-            dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsInvalidNumber(false))
             dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
@@ -63,11 +64,15 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 };
 
 export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfileWithAppointmentOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetLinearLoadingBarToggle(true))
+
     SetTrackTrace("Enter Set Customer and Book Appointment Action", "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+
+    dispatch(SetLinearLoadingBarToggle(false))
 
     if (response) {
         dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
@@ -81,11 +86,16 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
 };
 
 export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+    dispatch(SetLinearLoadingBarToggle(true))
+
     SetTrackTrace("Enter Set Customer Action", "SetCustomer", SeverityLevel.Information);
 
     SetTrackTrace("Current customer request: " + customerRequest, "SetCustomer", SeverityLevel.Information);
 
     let response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+
+    dispatch(SetLinearLoadingBarToggle(false))
 
     if (response) {
         dispatch(SetAddPatientCustomerProfile(response.data))
