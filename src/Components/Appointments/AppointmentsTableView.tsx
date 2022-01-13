@@ -96,7 +96,7 @@ export default function AppointmentsTable() {
     switch (appointmentState) {
       case AppointmentStatusEnum.Confirmed:
         colorCodesToReturn = ["#e5faf2", "#3bb077"];
-        break;  
+        break;
       case AppointmentStatusEnum.StartedConsultation:
         colorCodesToReturn = ["#ebf1fe", "#2a7ade"];
         break;
