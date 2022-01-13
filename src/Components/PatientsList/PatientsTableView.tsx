@@ -53,8 +53,6 @@ export default function PatientsTableView() {
   );
 
   function handleCustomerSelect(customer: ICustomerIncomingData) {
-    console.log("CUSTOMERID: " + customer.customerId)
-
     dispatch(CheckIfCustomerExists(customer.phoneNumbers[0].number, customer.organisationId))
     dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number))
   }

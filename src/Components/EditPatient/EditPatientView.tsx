@@ -3,6 +3,10 @@ import { Button, ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { SetCustomer } from '../../Actions/CustomerActions';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+import InputAdornment from '@mui/material/InputAdornment';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 
 export default function EditPatientView() {
 
@@ -17,24 +21,32 @@ export default function EditPatientView() {
         genderOptionChange
     } = usePatientInputHook();
 
-    function savePatient () {
+    function savePatient() {
         dispatch(SetCustomer(addPatientState.customerProfile))
     }
 
     return (
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+
                 <TextField
                     fullWidth
-                    variant="outlined"
+                    label="Phone Number"
+                    placeholder="Phone Number"
+                    margin="normal"
                     size="small"
                     required
-                    id="number"
-                    label="Phone Number"
-                    name="number"
                     value={addPatientState.phoneNumber}
-                    onChange={handleNumberChange}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <LocalPhoneIcon style={{ width: 22, height: 22 }}></LocalPhoneIcon>
+                            </InputAdornment>
+                        ),
+                    }}
                     inputProps={{ maxLength: 10 }}
+                    variant="outlined"
+                    onChange={handleNumberChange}
                 />
 
                 {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
@@ -50,31 +62,48 @@ export default function EditPatientView() {
 
             <TextField
                 fullWidth
-                variant="outlined"
+                label="Name"
+                placeholder="Name"
                 margin="normal"
                 size="small"
                 required
                 value={addPatientState.customerProfile.firstName}
-                id="name"
-                label="Name"
-                name="name"
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <AccountCircle />
+                        </InputAdornment>
+                    ),
+                }}
+                variant="outlined"
                 onChange={handleNameChange}
             />
 
             <Row className="align-items-center">
                 <Col>
+
                     <TextField
-                        variant="outlined"
                         margin="dense"
                         size="small"
                         name="age"
                         label="Age"
+                        placeholder="Age"
                         //value={addPatientState.customerProfile.age}
                         type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}
                         onChange={handleAgeChange}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccessTimeFilledIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        variant="outlined"
                     />
+
+
                 </Col>
                 <Col>
                     <ButtonGroup style={{ marginTop: 3 }}>

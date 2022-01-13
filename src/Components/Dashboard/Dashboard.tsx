@@ -69,10 +69,8 @@ function Dashboard() {
         <Topbar />
         <div style={{ marginTop: 110 }}>
           <Routes>
-            <Route
-              path="/Appointments"
-              element={AppointmentsAndCalendarView()}
-            />
+            <Route path="/Appointments" element={AppointmentsAndCalendarView()} />
+            <Route path="/" element={AppointmentsAndCalendarView()} />
             <Route path="/Patients" element={PatientsView()} />
             <Route path="/Consultation/:id" element={<ConsultationView></ConsultationView>} />
           </Routes>

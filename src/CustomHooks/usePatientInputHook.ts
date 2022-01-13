@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
 import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
 import { CheckIfCustomerExists } from "../Actions/CustomerActions";
+import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";
 
 export default function usePatientInputHook() {
@@ -19,6 +20,7 @@ export default function usePatientInputHook() {
             dispatch(SetAddPatientIsCheckingForCustomer(true))
             dispatch(SetAddPatientPhoneNumber(event.target.value));
         } else {
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientPhoneNumber(event.target.value));
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsCheckingForCustomer(false))
