@@ -24,6 +24,7 @@ const ImageCaptureComponent: React.FC<ImageCaptureProps> = (props: ImageCaptureP
         <h2 onClick={() => {props.setShowCameraToggle(false)}}>Close Camera</h2>
         <Camera
           onTakePhoto={(dataUri) => { props.handleTakePhoto(dataUri) }}
+          idealFacingMode="environment"
         />
       </div>
 
