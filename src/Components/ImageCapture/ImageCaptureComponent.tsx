@@ -2,8 +2,7 @@ import React from 'react';
 import Camera from 'react-html5-camera-photo';
 import 'react-html5-camera-photo/build/css/index.css';
 import { Modal } from 'react-bootstrap'
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface ImageCaptureProps {
   //here you can declare the return type (here is void)
@@ -21,7 +20,7 @@ const ImageCaptureComponent: React.FC<ImageCaptureProps> = (props: ImageCaptureP
       centered>
 
       <div>
-        <h2 onClick={() => {props.setShowCameraToggle(false)}}>Close Camera</h2>
+        <h2 onClick={() => {props.setShowCameraToggle(false)}}><CloseIcon /></h2>
         <Camera
           onTakePhoto={(dataUri) => { props.handleTakePhoto(dataUri) }}
           idealFacingMode="environment"

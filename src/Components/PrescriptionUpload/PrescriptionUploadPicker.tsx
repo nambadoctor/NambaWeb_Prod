@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { UploadPrescriptionFromBase64String, UploadPrescriptionFromFile } from '../../Actions/PrescriptionActions';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Row, Col } from 'react-bootstrap';
 
 export default function PrescriptionUploadPicker() {
 
@@ -20,10 +22,21 @@ export default function PrescriptionUploadPicker() {
     }
 
     return (
-        <div>
-            <div onClick={() => setShowCameraToggle(true)}><CameraAltIcon ></CameraAltIcon></div>
+        <div >
+            <input
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="contained-button-file"
+                onChange={handleChange}
+            />
+            <Row>
+                <Col><label htmlFor="contained-button-file"><CloudUploadIcon style={{ color: 'white' }} /></label></Col>
+                <Col><div onClick={() => setShowCameraToggle(true)}><CameraAltIcon style={{ color: 'white' }} ></CameraAltIcon></div></Col>
+            </Row>
+            
+            
             {showCameraToggle && <ImageCaptureComponent setShowCameraToggle={setShowCameraToggle} handleTakePhoto={handleTakePhoto}></ImageCaptureComponent>}
-            <input type="file" accept="image/*" onChange={handleChange}></input>
         </div>
     )
 }

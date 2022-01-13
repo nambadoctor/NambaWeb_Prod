@@ -26,9 +26,9 @@ export default function ConsultationView() {
                 <Col md="6">
                     <div className="blue_filled_rounded_box_top">
                         <h3 className="blue_filled_rounded_box_top_title_item">Reports</h3>
+                        <ReportUploadPicker></ReportUploadPicker>
                     </div>
                     <div className="blue_border_rounded_white_box">
-                        <ReportUploadPicker></ReportUploadPicker>
                         <ReportImageView></ReportImageView>
                     </div>
                 </Col>
@@ -36,9 +36,9 @@ export default function ConsultationView() {
                 <Col md="6">
                     <div className="blue_filled_rounded_box_top">
                         <h3 className="blue_filled_rounded_box_top_title_item">Prescriptions</h3>
+                        <PrescriptionUploadPicker></PrescriptionUploadPicker>
                     </div>
                     <div className="blue_border_rounded_white_box">
-                        <PrescriptionUploadPicker></PrescriptionUploadPicker>
                         <PrescriptionImageView></PrescriptionImageView>
                     </div>
                 </Col>
