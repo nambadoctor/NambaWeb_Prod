@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://localhost:5001/api/provider/"
+  baseURL: "https://ndapi.azurewebsites.net/api/provider/"
 });
 
 //local: https://localhost:5001/api/provider/
