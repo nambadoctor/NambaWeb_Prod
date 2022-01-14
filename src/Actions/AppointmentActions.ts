@@ -10,7 +10,7 @@ import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
-import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
+import { SetFatalError, SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -60,18 +60,22 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
     SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAllAppointments", SeverityLevel.Error);
   }
 
-  //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-  let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
+  try {
+    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+    let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
 
-  SetTrackTrace("Dispatch Set All Appointments" + response.data, "GetAllAppointments", SeverityLevel.Information);
-  dispatch(SetAppointments(response.data));
+    SetTrackTrace("Dispatch Set All Appointments" + response.data, "GetAllAppointments", SeverityLevel.Information);
+    dispatch(SetAppointments(response.data));
 
-  SetTrackTrace("Dispatch Set Dates With Appointments Range Helper", "GetAllAppointments", SeverityLevel.Information);
-  dispatch(SetDatesWithAppointmentsRange(response.data));
+    SetTrackTrace("Dispatch Set Dates With Appointments Range Helper", "GetAllAppointments", SeverityLevel.Information);
+    dispatch(SetDatesWithAppointmentsRange(response.data));
 
-  //TODO: Check if this is proper design to set filtered appointments
-  SetTrackTrace("Dispatch Set Filtered Appointments Helper", "GetAllAppointments", SeverityLevel.Information);
-  dispatch(setFilteredAppointments());
+    //TODO: Check if this is proper design to set filtered appointments
+    SetTrackTrace("Dispatch Set Filtered Appointments Helper", "GetAllAppointments", SeverityLevel.Information);
+    dispatch(setFilteredAppointments());
+  } catch (error) {
+    dispatch(SetFatalError("Could not retrieve your appointments!"))
+  }
 };
 
 export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

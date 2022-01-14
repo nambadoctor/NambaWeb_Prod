@@ -9,6 +9,20 @@ function setBooleanPayload(payload: boolean, actionType: string) {
     };
 }
 
+function setFatalErrorPayload (toggle: boolean, payload: string|null, actionType: string) {
+    return {
+        type: actionType,
+        payload: {
+            toggle: true,
+            message: payload 
+        }
+    }
+}
+
 export const SetOrgPickerModalToggle = (showOrgPickerModalToggle: boolean): Action => (setBooleanPayload(showOrgPickerModalToggle, UITrigger_Types.SET_ORG_PICKER_MODAL_TOGGLE));
 
 export const SetLinearLoadingBarToggle = (showOrgPickerModalToggle: boolean): Action => (setBooleanPayload(showOrgPickerModalToggle, UITrigger_Types.SET_SHOW_LINEAR_LOADING_BAR_TOGGLE));
+
+export const SetFatalError = (errorMessage: string): Action => (setFatalErrorPayload(true, errorMessage, UITrigger_Types.SET_FATAL_ERROR));
+
+export const NullifyFatalError = (): Action => (setFatalErrorPayload(false, null, UITrigger_Types.SET_FATAL_ERROR));

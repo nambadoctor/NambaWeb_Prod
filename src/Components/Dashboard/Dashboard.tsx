@@ -17,6 +17,7 @@ import PatientsTabMainView from "../PatientsList/PatientsTabMainView";
 import Calendar from "../CalendarPicker/Calendar";
 import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay";
 import NonExistentUserDisplayComponent from "../UIHelperComponents/NonExistentUserDisplayComponent";
+import CriticalAlertDisplay from "../UIHelperComponents/CriticalAlertDisplay";
 
 function Dashboard() {
 
@@ -86,6 +87,7 @@ function Dashboard() {
         {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <NonExistentUserDisplayComponent />}
         <OrganisationInitialModalPickerComponent />
         <FullPageLoadingDisplay />
+        <CriticalAlertDisplay />
       </div>
     </>
   );
