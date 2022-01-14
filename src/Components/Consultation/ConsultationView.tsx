@@ -16,8 +16,8 @@ export default function ConsultationView() {
     const { id } = useParams()
 
     useEffect(() => {
-        if (id) { dispatch(GetAppointmentForConsultation(id)) }
-    }, [])
+        dispatch(GetAppointmentForConsultation(id as string))
+    }, [id])
 
     return (
         <div>
