@@ -5,19 +5,23 @@ import PrescriptionUploadPicker from '../PrescriptionUpload/PrescriptionUploadPi
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { GetAppointmentForConsultation } from '../../Actions/ConsultationActions'
 import { Col, Row } from 'react-bootstrap'
 import "../../../src/App.css"
+import { RootState } from '../../store'
 
 export default function ConsultationView() {
 
     const dispatch = useDispatch()
+    const currentServiceProvider = useSelector((state:RootState) => state.CurrentServiceProviderState)
     const { id } = useParams()
 
     useEffect(() => {
-        dispatch(GetAppointmentForConsultation(id as string))
-    }, [id])
+        if (currentServiceProvider) {
+            dispatch(GetAppointmentForConsultation(id as string))
+        }
+    }, [currentServiceProvider])
 
     return (
         <div>
