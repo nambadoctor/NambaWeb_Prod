@@ -31,6 +31,8 @@ export async function SignInWithPhoneNumberHelper(phoneNumber: string) {
         });
 }
 
-export function SignOut () {
-    getAuth().signOut();
+export function SignOut() {
+    if (window.confirm("Are you sure you want to logout?")) {
+        getAuth().signOut();
+    }
 }
