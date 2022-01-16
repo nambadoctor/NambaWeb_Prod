@@ -14,6 +14,7 @@ import { SetAddPatientIsMakingDoneCall } from "../../Actions/AddPatientActions";
 import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
 import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
+import { SetAppointment } from "../../Actions/AppointmentActions";
 
 export default function BookAppointmentView() {
 
@@ -24,15 +25,10 @@ export default function BookAppointmentView() {
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
-    //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
-    const makeCustomerAndAppointmentRequest = () => {
+    const makeAppointmentObject = () => {
         var currentCustomerRequestObj = addPatientState.customerProfile
-        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
-        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
-        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
-
-        var aptObj = {
-            appointmentId: "string",
+        return {
+            appointmentId: "",
             organisationId: currentServiceProvider?.organisationId,
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
@@ -46,6 +42,17 @@ export default function BookAppointmentView() {
             actualAppointmentEndTime: null
         } as IAppointmentOutgoing
 
+    }
+
+    //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
+    const makeCustomerAndAppointmentRequest = () => {
+        var currentCustomerRequestObj = addPatientState.customerProfile
+        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
+        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
+        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
+
+        var aptObj = makeAppointmentObject()
+
         return {
             customerProfileIncoming: currentCustomerRequestObj,
             appointmentIncoming: aptObj
@@ -55,8 +62,15 @@ export default function BookAppointmentView() {
 
     const done = () => {
         dispatch(SetAddPatientIsMakingDoneCall(true))
-        const appointmentRequest = makeCustomerAndAppointmentRequest();
-        dispatch(SetCustomerAndBookAppointment(appointmentRequest))
+
+        if (addPatientState.isCustomerExists) {
+            const appointmentRequest = makeAppointmentObject();
+            dispatch(SetAppointment(appointmentRequest))
+        } else {
+            const customerAndAPpointmentRequest = makeCustomerAndAppointmentRequest();
+            dispatch(SetCustomerAndBookAppointment(customerAndAPpointmentRequest))
+        }
+
     }
 
     return (
@@ -64,7 +78,7 @@ export default function BookAppointmentView() {
             <Row style={{ marginTop: 10, marginBottom: 15, marginLeft: 0, marginRight: 0 }}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <DateTimePicker
-                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                        disabled={addPatientState.isInvalidNumber}
                         renderInput={(props) => <TextField {...props} />}
                         label="Appointment Date (If Needed)"
                         value={selectedDate}
@@ -79,7 +93,7 @@ export default function BookAppointmentView() {
 
                 <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Button
-                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                        disabled={addPatientState.isInvalidNumber}
                         style={{ padding: 10, width: '100%' }}
                         type="submit"
                         color="primary"
@@ -93,8 +107,5 @@ export default function BookAppointmentView() {
             </Row>
         </div>
     )
-}
-function setSelectedDate(newValue: any) {
-    throw new Error('Function not implemented.');
 }
 

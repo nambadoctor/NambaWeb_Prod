@@ -81,7 +81,7 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   }
 };
 
-export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 

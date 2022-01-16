@@ -5,7 +5,7 @@ import { Divider, TextField } from "@mui/material";
 import { useState } from 'react';
 import { Button, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { SetNewAppointment } from '../../Actions/AppointmentActions';
+import { SetAppointment } from '../../Actions/AppointmentActions';
 import { RootState } from '../../store';
 import IAppointmentOutgoing from '../../Types/OutgoingDataModels/AppointmentOutgoing';
 import EditPatientView from '../EditPatient/EditPatientView'
@@ -33,7 +33,7 @@ export default function PatientInfoColumnView() {
             actualAppointmentEndTime: null
         } as IAppointmentOutgoing
 
-        dispatch(SetNewAppointment(aptObj))
+        dispatch(SetAppointment(aptObj))
     }
 
     return (
