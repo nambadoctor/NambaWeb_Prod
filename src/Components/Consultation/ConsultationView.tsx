@@ -14,7 +14,7 @@ import { RootState } from '../../store'
 export default function ConsultationView() {
 
     const dispatch = useDispatch()
-    const currentServiceProvider = useSelector((state:RootState) => state.CurrentServiceProviderState)
+    const currentServiceProvider = useSelector((state:RootState) => state.CurrentServiceProviderState.serviceProvider)
     const { id } = useParams()
 
     useEffect(() => {

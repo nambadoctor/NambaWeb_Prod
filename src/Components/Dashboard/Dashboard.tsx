@@ -18,7 +18,6 @@ import Calendar from "../CalendarPicker/Calendar";
 import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay";
 import NonExistentUserDisplayComponent from "../UIHelperComponents/NonExistentUserDisplayComponent";
 import CriticalAlertDisplay from "../UIHelperComponents/CriticalAlertDisplay";
-import { SetNonFatalError } from "../../Actions/Common/UIControlActions";
 import { SetInitialLoadingStartTime } from "../../Actions/LoadedStatesActions";
 
 function Dashboard() {
