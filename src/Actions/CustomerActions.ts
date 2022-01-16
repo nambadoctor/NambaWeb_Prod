@@ -12,7 +12,7 @@ import { GetAllAppointments } from "./AppointmentActions";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
-import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
+import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
@@ -30,10 +30,14 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
 
     SetTrackTrace("Current Service Provider: " + currentServiceProvider, "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
 
-    let response = await getCall({} as Array<ICustomerIncomingData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
+    try {
+        let response = await getCall({} as Array<ICustomerIncomingData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
 
-    SetTrackTrace("Dispatch Set Customers List Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
-    dispatch(SetCustomers(response.data));
+        SetTrackTrace("Dispatch Set Customers List Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
+        dispatch(SetCustomers(response.data));
+    } catch (error) {
+        dispatch(SetNonFatalError("Could not retrieve patients list"))
+    }
 };
 
 //NEED TO INTEGRATE WITH SERVICE CALL
@@ -70,18 +74,22 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
 
     SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
-    let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+    try {
+        let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
 
-    dispatch(SetLinearLoadingBarToggle(false))
+        dispatch(SetLinearLoadingBarToggle(false))
 
-    if (response) {
-        dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
-        dispatch(SetAddPatientIsMakingDoneCall(false))
-        dispatch(SetAddPatientIsDoneCallSuccess(false))
-        dispatch(GetAllAppointments())
-        dispatch(GetAllCustomersForServiceProviderInOrg())
-    } else {
-        dispatch(SetAddPatientIsDoneCallSuccess(false))
+        if (response) {
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetAddPatientIsMakingDoneCall(false))
+            dispatch(SetAddPatientIsDoneCallSuccess(false))
+            dispatch(GetAllAppointments())
+            dispatch(GetAllCustomersForServiceProviderInOrg())
+        } else {
+            dispatch(SetAddPatientIsDoneCallSuccess(false))
+        }
+    } catch (error) {
+        dispatch(SetNonFatalError("Could not set customer and book appointment"))
     }
 };
 
@@ -93,16 +101,20 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
 
     SetTrackTrace("Current customer request: " + customerRequest, "SetCustomer", SeverityLevel.Information);
 
-    let response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+    try {
+        let response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
 
-    dispatch(SetLinearLoadingBarToggle(false))
+        dispatch(SetLinearLoadingBarToggle(false))
 
-    if (response) {
-        dispatch(SetAddPatientCustomerProfile(response.data))
-        dispatch(SetAddPatientIsMakingDoneCall(false))
-        dispatch(GetAllCustomersForServiceProviderInOrg())
-    } else {
-        dispatch(SetAddPatientIsDoneCallSuccess(false))
+        if (response) {
+            dispatch(SetAddPatientCustomerProfile(response.data))
+            dispatch(SetAddPatientIsMakingDoneCall(false))
+            dispatch(GetAllCustomersForServiceProviderInOrg())
+        } else {
+            dispatch(SetAddPatientIsDoneCallSuccess(false))
+        }
+    } catch (error) {
+        dispatch(SetNonFatalError("Could not set customer"))
     }
 };
 

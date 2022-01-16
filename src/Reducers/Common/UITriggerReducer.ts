@@ -5,19 +5,22 @@ import { Action } from "../../Types/ActionType"
 export enum UITrigger_Types {
   SET_ORG_PICKER_MODAL_TOGGLE = "SET_ORG_PICKER_MODAL_TOGGLE",
   SET_SHOW_LINEAR_LOADING_BAR_TOGGLE = "SET_SHOW_LINEAR_LOADING_BAR_TOGGLE",
-  SET_FATAL_ERROR = "SET_FATAL_ERROR"
+  SET_FATAL_ERROR = "SET_FATAL_ERROR",
+  SET_NON_FATAL_ERROR = "SET_NON_FATAL_ERROR"
 }
 
 export interface UITriggerState {
   showOrgPickerModalToggle: boolean,
   showLinearLoadingBarToggle: boolean,
   FatalError: { toggle: boolean, message: string | null }
+  NonFatalError: { toggle: boolean, message: string | null }
 }
 
 const initialState: UITriggerState = {
   showOrgPickerModalToggle: false,
   showLinearLoadingBarToggle: false,
-  FatalError: { toggle: false, message: null }
+  FatalError: { toggle: false, message: null },
+  NonFatalError: { toggle: false, message: null }
 }
 
 export const uiTriggerReducer = (state: UITriggerState = initialState, action: Action): UITriggerState => {
@@ -40,6 +43,12 @@ export const uiTriggerReducer = (state: UITriggerState = initialState, action: A
       return {
         ...state,
         FatalError: action.payload
+      }
+    case UITrigger_Types.SET_NON_FATAL_ERROR:
+      SetTrackTrace("UI Trigger Reducer SET_NON_FATAL_ERROR SUCCESS" + action.payload, "UiTriggerReducer", SeverityLevel.Information)
+      return {
+        ...state,
+        NonFatalError: action.payload
       }
     default:
       SetTrackTrace("UI Trigger Reducer Hits default switch: Returns original state", "UiTriggerReducer", SeverityLevel.Error)

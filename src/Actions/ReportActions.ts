@@ -9,15 +9,20 @@ import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "./ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
+import { SetNonFatalError } from "./Common/UIControlActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
-  let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.customerId, currentConsultationAppointment!.appointmentId), "GetReports");
+  try {
+    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.customerId, currentConsultationAppointment!.appointmentId), "GetReports");
 
-  if (response) {
-    dispatch(SetReportsForConsultation(response.data))
+    if (response) {
+      dispatch(SetReportsForConsultation(response.data))
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not get reports for this appointment"))
   }
 }
 
@@ -37,10 +42,14 @@ export const UploadReportFromFile = (report: File): ThunkAction<void, RootState,
 
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
-  let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
+  try {
+    let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
 
-  if (response) {
-    dispatch(GetReports());
+    if (response) {
+      dispatch(GetReports());
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not upload report image"))
   }
 };
 
@@ -60,11 +69,17 @@ export const UploadReportFromBase64String = (base64Report: string): ThunkAction<
 
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
-  let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
+  try {
+    let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
 
-  if (response) {
-    dispatch(GetReports());
+    if (response) {
+      dispatch(GetReports());
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not upload report image"))
   }
+
+
 };
 
 
@@ -74,10 +89,14 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
-  let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.customerId, currentAppointment!.appointmentId, reportToDelete.reportId), "DeleteReport")
+  try {
+    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.customerId, currentAppointment!.appointmentId, reportToDelete.reportId), "DeleteReport")
 
-  if (response) {
-    dispatch(GetReports());
+    if (response) {
+      dispatch(GetReports());
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not delete report image"))
   }
 };
 

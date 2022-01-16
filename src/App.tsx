@@ -8,6 +8,11 @@ import { Routes, Route } from "react-router-dom";
 
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../src/Telemetry/AppInsights";
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+toast.configure()
 
 function App() {
   const user = useContext(AuthContext);

@@ -11,7 +11,7 @@ import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
+import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 
@@ -78,16 +78,20 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
         SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAppointmentForConsultation", SeverityLevel.Error);
     }
 
-    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-    let response = await getCall({} as Array<IAppointmentData>, GetAppointmentForServiceProvider(appointmentId, currentServiceProvider.serviceProviderId), "GetAllAppointments");
+    try {
+        //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+        let response = await getCall({} as Array<IAppointmentData>, GetAppointmentForServiceProvider(appointmentId, currentServiceProvider.serviceProviderId), "GetAllAppointments");
 
-    dispatch(SetLinearLoadingBarToggle(false))
+        dispatch(SetLinearLoadingBarToggle(false))
 
-    SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
-    dispatch(SetSelectedAppointmentForConsultation(response.data));
-    dispatch(GetNextAndPreviousAppointmentForConsultation())
-    dispatch(GetReports())
-    dispatch(GetPrescriptions())
+        SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
+        dispatch(SetSelectedAppointmentForConsultation(response.data));
+        dispatch(GetNextAndPreviousAppointmentForConsultation())
+        dispatch(GetReports())
+        dispatch(GetPrescriptions())
+    } catch (error) {
+        dispatch(SetFatalError("Appointment Not Found"))
+    }
 };
 
 //Get consultation customer
@@ -101,11 +105,15 @@ export const GetCustomerForConsultation = (customerId: string): ThunkAction<void
         SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetCustomerForConsultation", SeverityLevel.Error);
     }
 
-    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-    let response = await getCall({} as Array<IAppointmentData>, GetCustomerForServiceProvider(customerId, currentServiceProvider.organisationId), "GetCustomerForConsultation");
+    try {
+        //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+        let response = await getCall({} as Array<IAppointmentData>, GetCustomerForServiceProvider(customerId, currentServiceProvider.organisationId), "GetCustomerForConsultation");
 
-    SetTrackTrace("Dispatch Set Selected Customer" + response.data, "GetCustomerForConsultation", SeverityLevel.Information);
-    dispatch(SetSelectedCustomerForConsultation(response.data));
+        SetTrackTrace("Dispatch Set Selected Customer" + response.data, "GetCustomerForConsultation", SeverityLevel.Information);
+        dispatch(SetSelectedCustomerForConsultation(response.data));
+    } catch (error) {
+        dispatch(SetNonFatalError("Could not find customer for this appointment"))
+    }
 };
 
 export const GetNextAndPreviousAppointmentForConsultation = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

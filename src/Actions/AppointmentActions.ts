@@ -10,7 +10,7 @@ import { getCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
-import { SetFatalError, SetLinearLoadingBarToggle } from "./Common/UIControlActions";
+import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -84,11 +84,15 @@ export const SetNewAppointment = (appointment: IAppointmentOutgoing): ThunkActio
 
   SetTrackTrace("Enter Set New Appointments Action", "SetNewAppointment", SeverityLevel.Information);
 
-  //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-  let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
+  try {
+    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+    let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
 
-  if (response) {
-    dispatch(SetLinearLoadingBarToggle(false))
-    dispatch(GetAllAppointments())
+    if (response) {
+      dispatch(SetLinearLoadingBarToggle(false))
+      dispatch(GetAllAppointments())
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not create appointment"))
   }
 };

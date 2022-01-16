@@ -8,7 +8,7 @@ import { getCall } from "../Http/http-helpers";
 import { GetServiceProviderBasicEndPoint } from "../Helpers/EndPointHelpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { SetLinearLoadingBarToggle } from "./Common/UIControlActions";
+import { SetFatalError, SetLinearLoadingBarToggle } from "./Common/UIControlActions";
 
 export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProviderBasic): Action => ({
     type: ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC,
@@ -35,8 +35,7 @@ export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Ac
         }
 
     } catch (error) {
-        //TODO: HANDLE ERROR
+        dispatch(SetFatalError("CANNOT GET SERVICE PROVIDER BASIC"))
         throw error;
     }
-
 };
