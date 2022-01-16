@@ -13,6 +13,7 @@ import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { SetCustomersLoadedState } from "./LoadedStatesActions";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
@@ -32,6 +33,8 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
 
     try {
         let response = await getCall({} as Array<ICustomerIncomingData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
+
+        dispatch(SetCustomersLoadedState(true))
 
         SetTrackTrace("Dispatch Set Customers List Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
         dispatch(SetCustomers(response.data));

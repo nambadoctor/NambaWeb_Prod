@@ -19,6 +19,7 @@ import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay
 import NonExistentUserDisplayComponent from "../UIHelperComponents/NonExistentUserDisplayComponent";
 import CriticalAlertDisplay from "../UIHelperComponents/CriticalAlertDisplay";
 import { SetNonFatalError } from "../../Actions/Common/UIControlActions";
+import { SetInitialLoadingStartTime } from "../../Actions/LoadedStatesActions";
 
 function Dashboard() {
 
@@ -29,7 +30,7 @@ function Dashboard() {
   useEffect(() => {
 
     SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
-    
+    dispatch(SetInitialLoadingStartTime())
     dispatch(GetServiceProviderBasic());
   }, [])
   //END

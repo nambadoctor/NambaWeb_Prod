@@ -10,6 +10,7 @@ import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
 import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProviderReducer";
 import { addPatientReducer } from "./Reducers/AddPatientReducer";
 import { ConsultationReducer } from "./Reducers/ConsultationReducer";
+import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     UITriggerState: uiTriggerReducer,
     CurrentServiceProviderState: currentServiceProviderReducer,
     AddPatientState: addPatientReducer,
-    ConsultationState: ConsultationReducer
+    ConsultationState: ConsultationReducer,
+    LoadedState: LoadedStatesReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

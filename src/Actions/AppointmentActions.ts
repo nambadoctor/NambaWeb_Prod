@@ -11,6 +11,7 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -63,6 +64,8 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   try {
     //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
     let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
+
+    dispatch(SetAppointmentsLoadedState(true))
 
     SetTrackTrace("Dispatch Set All Appointments" + response.data, "GetAllAppointments", SeverityLevel.Information);
     dispatch(SetAppointments(response.data));
