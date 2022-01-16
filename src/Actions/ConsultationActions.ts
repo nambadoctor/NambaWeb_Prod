@@ -90,7 +90,7 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
         dispatch(GetReports())
         dispatch(GetPrescriptions())
     } catch (error) {
-        dispatch(SetFatalError("Appointment Not Found"))
+        dispatch(SetFatalError("Appointment Not Found" + error))
     }
 };
 
