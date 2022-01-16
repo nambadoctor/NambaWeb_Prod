@@ -18,11 +18,12 @@ export default function EditPatientView() {
         handleNumberChange,
         handleNameChange,
         handleAgeChange,
-        genderOptionChange
+        genderOptionChange,
+        makeCustomerObject
     } = usePatientInputHook();
 
     function savePatient() {
-        dispatch(SetCustomer(addPatientState.customerProfile))
+        dispatch(SetCustomer(makeCustomerObject()))
     }
 
     return (

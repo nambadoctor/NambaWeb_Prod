@@ -15,13 +15,18 @@ import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
 import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetAppointment } from "../../Actions/AppointmentActions";
+import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
 
 export default function BookAppointmentView() {
 
     const dispatch = useDispatch()
 
-    const addPatientState = useSelector((state: RootState) => state.AddPatientState)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
+    
+    const {
+        addPatientState,
+        makeCustomerObject
+    } = usePatientInputHook();
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
 
@@ -41,16 +46,11 @@ export default function BookAppointmentView() {
             actualAppointmentStartTime: null,
             actualAppointmentEndTime: null
         } as IAppointmentOutgoing
-
     }
 
     //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
     const makeCustomerAndAppointmentRequest = () => {
-        var currentCustomerRequestObj = addPatientState.customerProfile
-        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
-        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
-        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
-
+        var currentCustomerRequestObj = makeCustomerObject();
         var aptObj = makeAppointmentObject()
 
         return {

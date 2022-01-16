@@ -5,6 +5,7 @@ import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
 import { CheckIfCustomerExists } from "../Actions/CustomerActions";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";
+import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
 
 export default function usePatientInputHook() {
     const dispatch = useDispatch()
@@ -48,12 +49,22 @@ export default function usePatientInputHook() {
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
 
+    const makeCustomerObject = () => {
+        var currentCustomerRequestObj = addPatientState.customerProfile
+        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
+        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
+        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
+
+        return currentCustomerRequestObj;
+    }
+
     return {
         addPatientState,
         genderOptions,
         handleNumberChange,
         handleNameChange,
         handleAgeChange,
-        genderOptionChange
+        genderOptionChange,
+        makeCustomerObject
     };
 }
