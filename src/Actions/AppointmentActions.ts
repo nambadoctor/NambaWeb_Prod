@@ -12,6 +12,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
+import { SetAddPatientIsDoneCallSuccess, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -92,6 +93,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
 
     if (response) {
+      dispatch(SetAddPatientIsMakingDoneCall(false))
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
     }
