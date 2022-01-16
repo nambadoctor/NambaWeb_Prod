@@ -34,7 +34,6 @@ export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Ac
 
             SetTrackTrace("Dispatch Check For Default Orgs", "GetServiceProviderBasic", SeverityLevel.Information);
             dispatch(CheckForDefaultOrg());
-
         }
 
     } catch (error) {

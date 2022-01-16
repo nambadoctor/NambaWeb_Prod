@@ -9,7 +9,8 @@ import { SetPrescriptionsForConsultation } from "./ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
-import { SetNonFatalError } from "./Common/UIControlActions";
+import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { toast } from "react-toastify";
 
 export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -27,6 +28,8 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
 }
 
 export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
@@ -47,6 +50,9 @@ export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void
 
     if (response) {
       dispatch(GetPrescriptions());
+      
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload prescription image"))
@@ -54,6 +60,8 @@ export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void
 };
 
 export const UploadPrescriptionFromBase64String = (base64Prescription: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
@@ -75,6 +83,9 @@ export const UploadPrescriptionFromBase64String = (base64Prescription: string): 
 
     if (response) {
       dispatch(GetPrescriptions());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload prescription image"))
@@ -82,6 +93,7 @@ export const UploadPrescriptionFromBase64String = (base64Prescription: string): 
 };
 
 export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  dispatch(SetLinearLoadingBarToggle(true))
 
   let currentAppointment = getState().ConsultationState.currentAppointment
 
@@ -92,6 +104,9 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
 
     if (response) {
       dispatch(GetPrescriptions());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Prescription Image Deleted")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not delete this prescription image"))

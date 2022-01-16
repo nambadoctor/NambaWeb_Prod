@@ -9,7 +9,8 @@ import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "./ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
-import { SetNonFatalError } from "./Common/UIControlActions";
+import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { toast } from "react-toastify";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -27,6 +28,8 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
 }
 
 export const UploadReportFromFile = (report: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
@@ -47,6 +50,9 @@ export const UploadReportFromFile = (report: File): ThunkAction<void, RootState,
 
     if (response) {
       dispatch(GetReports());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Report Image Uploaded")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload report image"))
@@ -54,6 +60,8 @@ export const UploadReportFromFile = (report: File): ThunkAction<void, RootState,
 };
 
 export const UploadReportFromBase64String = (base64Report: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
 
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
@@ -74,6 +82,9 @@ export const UploadReportFromBase64String = (base64Report: string): ThunkAction<
 
     if (response) {
       dispatch(GetReports());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Report Image Uploaded")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload report image"))
@@ -85,6 +96,8 @@ export const UploadReportFromBase64String = (base64Report: string): ThunkAction<
 
 export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
+  dispatch(SetLinearLoadingBarToggle(true))
+
   let currentAppointment = getState().ConsultationState.currentAppointment
 
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
@@ -94,6 +107,9 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
     if (response) {
       dispatch(GetReports());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Report Image Deleted")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not delete report image"))

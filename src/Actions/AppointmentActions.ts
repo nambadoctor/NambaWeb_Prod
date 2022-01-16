@@ -13,6 +13,7 @@ import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoin
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
 import { SetAddPatientIsDoneCallSuccess, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { toast } from "react-toastify";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
@@ -96,6 +97,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
       dispatch(SetAddPatientIsMakingDoneCall(false))
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
+      toast.success("Appointment Set Successfully")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not create appointment"))

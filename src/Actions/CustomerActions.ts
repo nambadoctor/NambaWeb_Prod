@@ -14,6 +14,7 @@ import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCre
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { SetCustomersLoadedState } from "./LoadedStatesActions";
+import { toast } from "react-toastify";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
     return {
@@ -88,6 +89,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
             dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
             dispatch(GetAllCustomersForServiceProviderInOrg())
+            toast.success("Customer and Appointment Set Successfully")
         } else {
             dispatch(SetAddPatientIsDoneCallSuccess(false))
         }
@@ -113,6 +115,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
             dispatch(SetAddPatientCustomerProfile(response.data))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(GetAllCustomersForServiceProviderInOrg())
+            toast.success("Customer Set Successfully")
         } else {
             dispatch(SetAddPatientIsDoneCallSuccess(false))
         }
