@@ -1,14 +1,14 @@
 import "./App.css";
 import { AuthContext } from "../src/Auth/Context/AuthContext";
 import { useContext } from "react";
-import LoginPage from "./Components/Login/LoginPage";
+import IndexPage from "./Components/Index/Index";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
 
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../src/Telemetry/AppInsights";
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -21,7 +21,7 @@ function App() {
     <AppInsightsContext.Provider value={reactPlugin}>
       <div>
         {!user ? (
-          <LoginPage />
+          <IndexPage />
         ) : (
           <Routes>
             <Route path="/*" element={<Dashboard />} />
