@@ -39,7 +39,7 @@ function SetAddPatientIsMakingDoneCallAction(isMakingDoneCall: boolean) {
 
 function SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess: boolean) {
     return {
-        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS,
+        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS,
         payload: isDoneCallSuccess
     };
 }
