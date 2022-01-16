@@ -1,11 +1,10 @@
-.form {
-  padding: 5% 35%;
+.container {
+  position: relative;
 }
 
-#sign-in-button {
-  margin: 1em 0 1em 9em;
-  padding: 0.25em 0.5em;
-  border: 1px solid;
-  background-color: blue;
-  color: white;
+.vertical-center {
+  align-items: center;
+  margin: 0;
+  position:relative;
+  top: 50%;
 }

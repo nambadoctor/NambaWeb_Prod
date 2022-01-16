@@ -34,6 +34,6 @@ export const NullifyNonFatalError = (): Action => (setFatalErrorPayload(false, n
 
 
 export const SetNonFatalError = (errorMessage: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-    toast(errorMessage, {position: toast.POSITION.BOTTOM_LEFT})
+    toast.error(errorMessage, {position: toast.POSITION.BOTTOM_CENTER})
     setFatalErrorPayload(true, errorMessage, UITrigger_Types.SET_NON_FATAL_ERROR)
 }
