@@ -12,5 +12,5 @@ export interface ICustomerProfileOutgoing {
     emailAddress:string,
     profilePicURL:string,
     organisationId:string,
-    serviceProviderId:string,
+    serviceProviderId:string
 }

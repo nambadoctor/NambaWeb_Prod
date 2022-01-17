@@ -107,7 +107,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
     SetTrackTrace("Current customer request: " + customerRequest, "SetCustomer", SeverityLevel.Information);
 
     try {
-        let response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+        let response = await postCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
 
         dispatch(SetLinearLoadingBarToggle(false))
 
