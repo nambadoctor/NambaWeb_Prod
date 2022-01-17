@@ -5,7 +5,7 @@ import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
-import { getCall, putCall } from "../Http/http-helpers";
+import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { GetAllAppointments } from "./AppointmentActions";
@@ -58,12 +58,13 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
         if (response.data) {
             dispatch(SetAddPatientIsCustomerExists(true))
             dispatch(SetAddPatientCustomerProfile(response.data))
+        } else {
+            dispatch(SetAddPatientIsCustomerExists(false))
+            dispatch(SetAddPatientIsInvalidNumber(false))
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
         }
 
     } catch (error) {
-
-        console.log(error == "Error: Request failed with status code 404")
-
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientIsInvalidNumber(true))
         throw error;
@@ -78,7 +79,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
     SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     try {
-        let response = await putCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+        let response = await postCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
 
         dispatch(SetLinearLoadingBarToggle(false))
 
