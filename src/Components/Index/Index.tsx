@@ -29,14 +29,24 @@ export default function IndexPage() {
                                             <div className="col-md-6 col-xs-12 col-sm-12 zero_padd">
                                                 <div className="story_leader">
                                                     <div className="center_head">
-                                                        <img src="../../Assets/NDLogo.png" className="logo" alt="Namba Doctor" />
+                                                        <img src="https://nbigdatatest.blob.core.windows.net/ndtest/NDLogoBanner.png?sp=r&st=2022-01-17T19:57:19Z&se=2023-01-05T03:57:19Z&sv=2020-08-04&sr=b&sig=CExNZ7iAjY4Y50udWpgFmFjQchQgwjvBfbzSkK9AC88%3D" className="logo" alt="Namba Doctor" />
                                                     </div>
                                                 </div>
+
+                                                <div>
+
+                                                    <LoginPage />
+                                                </div>
+
                                             </div>
 
                                             <div className="col-md-6 col-xs-12 col-sm-12 zero_padd">
+                                                <br />
+                                                <br />
+                                                <br />
+                                                
                                                 <div className="story_view">
-                                                    <img src="../../Assets/NDLogo.png" className="banner_img" alt="Namba Doctor" />
+                                                    <img src="https://www.doctor2u.my/wp-content/uploads/2018/01/Live-Chat_Ask-a-Question-Demo_250x484px.png" className="banner_img" alt="Namba Doctor" />
                                                 </div>
                                             </div>
 
@@ -53,10 +63,7 @@ export default function IndexPage() {
                 </div>
             </Fragment>
 
-            <div>
 
-                <LoginPage />
-            </div>
 
         </div>
 
