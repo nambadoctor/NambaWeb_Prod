@@ -107,7 +107,7 @@ export const GetCustomerForConsultation = (customerId: string): ThunkAction<void
 
     try {
         //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-        let response = await getCall({} as Array<IAppointmentData>, GetCustomerForServiceProvider(customerId, currentServiceProvider.organisationId), "GetCustomerForConsultation");
+        let response = await getCall({} as Array<IAppointmentData>, GetCustomerForServiceProvider(customerId, currentServiceProvider.serviceProviderProfile.organisationId), "GetCustomerForConsultation");
 
         SetTrackTrace("Dispatch Set Selected Customer" + response.data, "GetCustomerForConsultation", SeverityLevel.Information);
         dispatch(SetSelectedCustomerForConsultation(response.data));

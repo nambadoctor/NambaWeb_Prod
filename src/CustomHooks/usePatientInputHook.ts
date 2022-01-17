@@ -17,7 +17,7 @@ export default function usePatientInputHook() {
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value.length >= 10) {
-            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.organisationId))
+            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.serviceProviderProfile.organisationId))
             dispatch(SetAddPatientIsCheckingForCustomer(true))
             dispatch(SetAddPatientPhoneNumber(event.target.value));
         } else {
@@ -52,7 +52,7 @@ export default function usePatientInputHook() {
     const makeCustomerObject = () => {
         var currentCustomerRequestObj = addPatientState.customerProfile
         currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
-        currentCustomerRequestObj.organisationId = currentServiceProvider?.organisationId ?? ""
+        currentCustomerRequestObj.organisationId = currentServiceProvider?.serviceProviderProfile.organisationId ?? ""
         currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
 
         return currentCustomerRequestObj;

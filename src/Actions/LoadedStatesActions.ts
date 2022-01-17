@@ -56,6 +56,6 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
         let currentDate = new Date()
         let initialDate = loadedState.initialLoadStartTime!;
 
-        SetTrackTrace("Elapsed Time In Milliseconds: " + (currentDate.getTime() - initialDate.getTime()), "All Initial Calls Being Set", SeverityLevel.Information)
+        SetTrackTrace("Dashboard Loading Time: " + (currentDate.getTime() - initialDate.getTime()), "All Initial Calls Being Set", SeverityLevel.Information)
     }
 }

@@ -20,7 +20,7 @@ export default function PatientInfoColumnView() {
     function bookAppointment() {
         var aptObj = {
             appointmentId: "",
-            organisationId: currentServiceProvider?.organisationId,
+            organisationId: currentServiceProvider?.serviceProviderProfile.organisationId,
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentPatient.customerId,

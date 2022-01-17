@@ -12,7 +12,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
-import { SetAddPatientIsDoneCallSuccess, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
 import { toast } from "react-toastify";
 
 
@@ -65,7 +65,7 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
 
   try {
     //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-    let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
+    let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
 
     dispatch(SetAppointmentsLoadedState(true))
 

@@ -33,7 +33,7 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
     SetTrackTrace("Current Service Provider: " + currentServiceProvider, "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
 
     try {
-        let response = await getCall({} as Array<ICustomerIncomingData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
+        let response = await getCall({} as Array<ICustomerIncomingData>, GetServiceProviderCustomersInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllCustomersForServiceProviderInOrg")
 
         dispatch(SetCustomersLoadedState(true))
 

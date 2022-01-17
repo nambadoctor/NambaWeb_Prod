@@ -34,7 +34,7 @@ export default function BookAppointmentView() {
         var currentCustomerRequestObj = addPatientState.customerProfile
         return {
             appointmentId: "",
-            organisationId: currentServiceProvider?.organisationId,
+            organisationId: currentServiceProvider?.serviceProviderProfile.organisationId,
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentCustomerRequestObj.customerId,

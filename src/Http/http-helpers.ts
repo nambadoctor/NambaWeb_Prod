@@ -5,7 +5,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 
 async function getCall(returnType: any, endPoint: string, caller: string) {
 
-    SetTrackTrace("Entered HTTP Get call method" + caller, "HTTPGetCall", SeverityLevel.Information);
+    SetTrackTrace("Entered HTTP Get call method: " + caller, "HTTPGetCall", SeverityLevel.Information);
 
     let headersContent = await GetHeadersHelper();
 
