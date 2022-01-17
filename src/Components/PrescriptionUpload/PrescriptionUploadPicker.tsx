@@ -27,11 +27,11 @@ export default function PrescriptionUploadPicker() {
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
-                id="contained-button-file"
+                id="prescription_upload_picker"
                 onChange={handleChange}
             />
             <Row>
-                <Col><label htmlFor="contained-button-file"><CloudUploadIcon style={{ color: 'white' }} /></label></Col>
+                <Col><label htmlFor="prescription_upload_picker"><CloudUploadIcon style={{ color: 'white' }} /></label></Col>
                 <Col><div onClick={() => setShowCameraToggle(true)}><CameraAltIcon style={{ color: 'white' }} ></CameraAltIcon></div></Col>
             </Row>
             
