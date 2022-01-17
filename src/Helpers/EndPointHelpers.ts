@@ -35,7 +35,7 @@ export function GetCustomerForServiceProvider(customerId:string, organisationId:
 }
 
 export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:string) {
-    return "customer/CheckByPhoneNumber/+91" + phoneNumber + "/" + organisationId;
+    return "customer/phonenumber/+91" + phoneNumber + "/" + organisationId;
 }
 
 export function SetCustomerReportEndPoint(customerId:string) {

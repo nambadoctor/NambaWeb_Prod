@@ -6,7 +6,7 @@ import { RootState } from "../store";
 import { filterAppointments } from "../Helpers/AppointmentHelpers";
 import { GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
-import { getCall, putCall } from "../Http/http-helpers";
+import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
@@ -91,7 +91,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
 
   try {
     //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-    let response = await putCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
+    let response = await postCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
 
     if (response) {
       dispatch(SetAddPatientIsMakingDoneCall(false))

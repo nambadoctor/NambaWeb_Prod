@@ -41,6 +41,27 @@ async function putCall(returnType: any, endPoint: string, payload: any, caller: 
     return response;
 }
 
+async function postCall(returnType: any, endPoint: string, payload: any, caller: string) {
+
+    SetTrackTrace("Entered HTTP Post call method" + caller, "HTTPPostCall", SeverityLevel.Information);
+
+    let headersContent = await GetHeadersHelper();
+
+    SetTrackTrace("Recieved Header Token: " + headersContent, "", SeverityLevel.Information);
+
+    var jsonPayload = JSON.stringify(payload)
+
+    console.log("PAYLOAD: " + jsonPayload)
+
+    let response = await http.post<typeof returnType>(endPoint, jsonPayload, { headers: headersContent });
+
+    SetTrackTrace("Recieved HTTP Post Response" + response, "HTTPPostCall", SeverityLevel.Information);
+
+    //TODO: Add handling and logging for invalid response
+
+    return response;
+}
+
 async function deleteCall(returnType: any, endPoint: string, caller: string) {
 
     SetTrackTrace("Entered HTTP Delete call method" + caller, "HTTPDeleteCall", SeverityLevel.Information);
@@ -58,4 +79,4 @@ async function deleteCall(returnType: any, endPoint: string, caller: string) {
     return response;
 }
 
-export { getCall, putCall, deleteCall }
+export { getCall, putCall, deleteCall, postCall }

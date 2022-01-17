@@ -58,13 +58,12 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
         if (response.data) {
             dispatch(SetAddPatientIsCustomerExists(true))
             dispatch(SetAddPatientCustomerProfile(response.data))
-        } else {
-            dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientIsInvalidNumber(false))
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
         }
 
     } catch (error) {
+
+        console.log(error == "Error: Request failed with status code 404")
+
         dispatch(SetAddPatientIsCheckingForCustomer(false))
         dispatch(SetAddPatientIsInvalidNumber(true))
         throw error;
