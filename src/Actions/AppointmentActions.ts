@@ -12,8 +12,9 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
 import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
-import { SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
 import { toast } from "react-toastify";
+import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 
 
 function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {

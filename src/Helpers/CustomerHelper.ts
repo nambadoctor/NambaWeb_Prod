@@ -20,6 +20,13 @@ export default function makeEmptyValueCustomerSetRequestData() {
             number: "",
             type: ""
         } as IPhoneNumberData],
-        dateOfBirth: {} as IDateOfBirthData
+        dateOfBirth: {
+            dateOfBirthId: "",
+            day: 0,
+            month: 0,
+            year: 0,
+            age: "",
+            createdDate: new Date()
+        } as IDateOfBirthData
     } as ICustomerProfileOutgoing
 }

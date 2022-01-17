@@ -82,7 +82,7 @@ export default function AddPatientView() {
                         name="age"
                         label="Age"
                         placeholder="Age"
-                        //value={addPatientState.customerProfile.age}
+                        value={addPatientState.customerProfile.dateOfBirth.age}
                         type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}

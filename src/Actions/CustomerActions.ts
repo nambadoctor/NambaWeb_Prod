@@ -84,7 +84,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            //dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
@@ -112,7 +112,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            dispatch(SetAddPatientCustomerProfile(response.data))
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(GetAllCustomersForServiceProviderInOrg())
             toast.success("Customer Set Successfully")

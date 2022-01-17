@@ -38,7 +38,8 @@ export default function usePatientInputHook() {
 
     const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         var tempCustomerProfile = addPatientState.customerProfile
-        //tempCustomerProfile.age = event.target.value
+        tempCustomerProfile.dateOfBirth.age = event.target.value
+        tempCustomerProfile.dateOfBirth.createdDate = new Date();
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     };
 

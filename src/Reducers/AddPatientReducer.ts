@@ -1,3 +1,4 @@
+import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { Action } from "../Types/ActionType"
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 
@@ -23,7 +24,7 @@ export interface AddPatientState {
 
 const initialState: AddPatientState = {
     phoneNumber: "",
-    customerProfile: {} as ICustomerProfileOutgoing,
+    customerProfile: makeEmptyValueCustomerSetRequestData(),
     isCheckingNumber: false,
     isCustomerExists: false,
     isMakingDoneCall: false,

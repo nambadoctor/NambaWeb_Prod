@@ -86,7 +86,7 @@ export default function PatientsTableView() {
                     {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
                   </TableCell>
                   <TableCell align="left">
-                    {customer.gender}/age
+                    {customer.gender}/{customer.dateOfBirth.age}
                   </TableCell>
                   <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
                   <TableCell align="left">
