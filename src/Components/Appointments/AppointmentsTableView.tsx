@@ -135,9 +135,10 @@ export default function AppointmentsTable() {
             <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
           </TableCell>
           <TableCell align="left">
-            {getLastVisitForCustomer(
+            <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{getLastVisitForCustomer(appointment.customerId)}</Link>
+            {/* {getLastVisitForCustomer(
               appointment.customerId
-            )}
+            )} */}
           </TableCell>
           <TableCell>
             <Typography

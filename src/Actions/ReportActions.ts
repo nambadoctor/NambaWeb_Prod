@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { deleteCall, getCall, putCall } from "../Http/http-helpers";
+import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
@@ -17,7 +17,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
   try {
-    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.customerId, currentConsultationAppointment!.appointmentId), "GetReports");
+    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.serviceRequestId), "GetReports");
 
     if (response) {
       dispatch(SetReportsForConsultation(response.data))
@@ -46,7 +46,7 @@ export const UploadReportFromFile = (report: File): ThunkAction<void, RootState,
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
+    let response = await postCall({} as any, SetCustomerReportEndPoint(), reportRequest, "UploadReport")
 
     if (response) {
       dispatch(GetReports());
@@ -78,7 +78,7 @@ export const UploadReportFromBase64String = (base64Report: string): ThunkAction<
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await putCall({} as any, SetCustomerReportEndPoint(currentConsultationAppointment!.customerId), reportRequest, "UploadReport")
+    let response = await postCall({} as any, SetCustomerReportEndPoint(), reportRequest, "UploadReport")
 
     if (response) {
       dispatch(GetReports());
@@ -103,7 +103,7 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.customerId, currentAppointment!.appointmentId, reportToDelete.reportId), "DeleteReport")
+    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.serviceRequestId, reportToDelete.reportId), "DeleteReport")
 
     if (response) {
       dispatch(GetReports());

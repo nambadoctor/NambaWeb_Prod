@@ -3,7 +3,7 @@ import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { deleteCall, getCall, putCall } from "../Http/http-helpers";
+import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerPrescriptionEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
 import { SetPrescriptionsForConsultation } from "./ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
@@ -17,7 +17,7 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
   let currentConsultationAppointment = getState().ConsultationState.currentAppointment
 
   try {
-    let response = await getCall({} as Array<IPrescriptionIncomingData>, GetCustomerPrescriptionEndPoint(currentConsultationAppointment!.customerId, currentConsultationAppointment!.appointmentId), "GetPrescriptions");
+    let response = await getCall({} as Array<IPrescriptionIncomingData>, GetCustomerPrescriptionEndPoint(currentConsultationAppointment!.serviceRequestId), "GetPrescriptions");
 
     if (response) {
       dispatch(SetPrescriptionsForConsultation(response.data))
@@ -46,7 +46,7 @@ export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void
   SetTrackTrace("Enter Upload Prescription Action", "UploadPrescription", SeverityLevel.Information)
 
   try {
-    let response = await putCall({} as any, SetCustomerPrescriptionEndPoint(currentConsultationAppointment!.customerId), prescriptionRequest, "UploadPrescription")
+    let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
 
     if (response) {
       dispatch(GetPrescriptions());
@@ -79,7 +79,7 @@ export const UploadPrescriptionFromBase64String = (base64Prescription: string): 
 
 
   try {
-    let response = await putCall({} as any, SetCustomerPrescriptionEndPoint(currentConsultationAppointment!.customerId), prescriptionRequest, "UploadPrescription")
+    let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
 
     if (response) {
       dispatch(GetPrescriptions());
@@ -100,7 +100,7 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
   SetTrackTrace("Enter Upload Prescription Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(currentAppointment!.customerId, currentAppointment!.appointmentId, prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
+    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(currentAppointment!.serviceRequestId, prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
 
     if (response) {
       dispatch(GetPrescriptions());

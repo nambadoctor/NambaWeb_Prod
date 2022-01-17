@@ -38,26 +38,28 @@ export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:st
     return "customer/phonenumber/+91" + phoneNumber + "/" + organisationId;
 }
 
-export function SetCustomerReportEndPoint(customerId:string) {
-    return "customer/" + customerId + "/report"
+
+
+export function SetCustomerReportEndPoint() {
+    return "report"
 }
 
-export function SetCustomerPrescriptionEndPoint(customerId:string) {
-    return "customer/" + customerId + "/prescription"
+export function SetCustomerPrescriptionEndPoint() {
+    return "prescription"
 }
 
-export function GetCustomerReportEndPoint(customerId:string, appointmentId:string) {
-    return "customer/" + customerId + "/report/" + appointmentId
+export function GetCustomerReportEndPoint(serviceRequestId:string) {
+    return "report/" + serviceRequestId
 }
 
-export function GetCustomerPrescriptionEndPoint(customerId:string, appointmentId:string) {
-    return "customer/" + customerId + "/prescription/" + appointmentId
+export function GetCustomerPrescriptionEndPoint(serviceRequestId:string) {
+    return "prescription/" + serviceRequestId
 }
 
-export function DeleteCustomerReportEndPoint (customerId:string, appointmentId:string, reportId:string) {
-    return "customer/" + customerId + "/report/" + appointmentId + "/" + reportId
+export function DeleteCustomerReportEndPoint (serviceRequestId:string, reportId:string) {
+    return "report/" + serviceRequestId + "/" + reportId
 }
 
-export function DeleteCustomerPrescriptionEndPoint (customerId:string, appointmentId:string, prescriptionid:string) {
-    return "customer/" + customerId + "/prescription/" + appointmentId + "/" + prescriptionid
+export function DeleteCustomerPrescriptionEndPoint (serviceRequestId:string, prescriptionid:string) {
+    return "prescription/" + serviceRequestId + "/" + prescriptionid
 }
