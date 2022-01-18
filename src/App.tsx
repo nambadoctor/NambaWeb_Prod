@@ -23,9 +23,7 @@ function App() {
         {!user ? (
           <IndexPage />
         ) : (
-          <Routes>
-            <Route path="/*" element={<Dashboard />} />
-          </Routes>
+          <Dashboard />
         )}
       </div>
     </AppInsightsContext.Provider>
