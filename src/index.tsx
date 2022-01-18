@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -14,7 +14,12 @@ ReactDOM.render(
     <Provider store={store}>
       <NativeBaseProvider>
         <AuthProvider>
-          <App />
+          <Routes>
+            <Route path="/Appointments" element={<div>Appointments</div>} />
+            <Route path="/" element={<div>All</div>} />
+            <Route path="/Patients" element={<div>Patients</div>} />
+            <Route path="/Consultation/:id" element={<div>Consultation</div>} />
+          </Routes>
         </AuthProvider>
       </NativeBaseProvider>
     </Provider>
