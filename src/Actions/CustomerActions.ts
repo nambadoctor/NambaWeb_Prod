@@ -4,7 +4,7 @@ import { GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEn
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "./AddPatientActions";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
@@ -84,7 +84,8 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            //dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetAddPatientPhoneNumber(""))
+            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
@@ -117,6 +118,9 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
+            //TODO: Make calls in here and SetCustomerAndBookAppointment in common action
+            dispatch(SetAddPatientPhoneNumber(""))
+            dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(GetAllCustomersForServiceProviderInOrg())
@@ -128,4 +132,6 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         dispatch(SetNonFatalError("Could not set customer"))
     }
 };
+
+
 

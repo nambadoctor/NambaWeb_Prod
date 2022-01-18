@@ -26,7 +26,7 @@ export default function EditPatientView() {
 
     function savePatient() {
         if (validateEntryFields()) {
-            //dispatch(SetCustomer(makeCustomerObject()))
+            dispatch(SetCustomer(makeCustomerObject()))
         } else {
             toast.error("Invalid Data")
         }
