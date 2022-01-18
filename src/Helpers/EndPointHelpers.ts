@@ -10,6 +10,10 @@ export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
 
+export function CancelAppointmentEndPoint () {
+    return "appointment/cancel"
+}
+
 export function SetNewAppointmentEndPoint () {
     return "appointment"
 }
