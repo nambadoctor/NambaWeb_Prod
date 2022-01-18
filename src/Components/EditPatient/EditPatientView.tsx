@@ -130,7 +130,7 @@ export default function EditPatientView() {
                         type="submit"
                         color="primary"
                         onClick={() => savePatient()}>
-                        Done
+                        Save
                     </Button>
                 </div>
 

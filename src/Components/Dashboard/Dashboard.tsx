@@ -36,15 +36,15 @@ function Dashboard() {
 
   function AppointmentsAndCalendarView() {
     return (
-      <div
-        style={{ margin: 20, display: "flex", flexDirection: "row", gap: 20 }}
-      >
+      <div style={{ margin: 20, display: "flex", flexDirection: "row", gap: 20 }}>
         <Container fluid>
           <Row>
             <Col md="9">
+              <h5 style={{ marginBottom: 20 }}>Appointments</h5>
               <AppointmentsTableView />
             </Col>
             <Col md="3">
+              <h5 style={{ marginBottom: 20 }}>Calendar</h5>
               <Row><Calendar /></Row>
               <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
               <Row><AddPatientForm></AddPatientForm></Row>

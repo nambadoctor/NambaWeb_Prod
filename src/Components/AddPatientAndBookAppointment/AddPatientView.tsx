@@ -21,7 +21,6 @@ export default function AddPatientView() {
         <div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
 
-
                 <TextField
                     fullWidth
                     label="Phone Number"
@@ -40,6 +39,8 @@ export default function AddPatientView() {
                     inputProps={{ maxLength: 10 }}
                     variant="outlined"
                     onChange={handleNumberChange}
+                    error={Boolean(addPatientState.validationErrors.phoneNumber)}
+                    helperText={addPatientState.validationErrors.phoneNumber}
                 />
 
                 {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
@@ -59,6 +60,7 @@ export default function AddPatientView() {
                 label="Name"
                 placeholder="Name"
                 margin="normal"
+                type="text"
                 size="small"
                 required
                 value={addPatientState.customerProfile.firstName}
@@ -77,13 +79,13 @@ export default function AddPatientView() {
                 <Col>
                     <TextField
                         disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                        type="number"
                         margin="dense"
                         size="small"
                         name="age"
                         label="Age"
                         placeholder="Age"
                         value={addPatientState.customerProfile.dateOfBirth.age}
-                        type="age"
                         id="age"
                         inputProps={{ maxLength: 3 }}
                         onChange={handleAgeChange}
@@ -95,6 +97,8 @@ export default function AddPatientView() {
                             ),
                         }}
                         variant="outlined"
+                        error={Boolean(addPatientState.validationErrors.age)}
+                        helperText={addPatientState.validationErrors.age}
                     />
 
                 </Col>

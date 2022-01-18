@@ -9,7 +9,13 @@ export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS = "SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS",
     SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL = "SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL",
     SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS = "SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS",
-    SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS = "SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS"
+    SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS = "SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS",
+    SET_ADD_PATIENT_STATE_ERRORS = "SET_ADD_PATIENT_STATE_ERRORS"
+}
+
+export interface IAddPatientError {
+    phoneNumber:string
+    age:string
 }
 
 export interface AddPatientState {
@@ -19,7 +25,8 @@ export interface AddPatientState {
     isCustomerExists: boolean,
     isMakingDoneCall: boolean,
     isDoneCallSuccess: boolean,
-    isInvalidNumber: boolean
+    isInvalidNumber: boolean,
+    validationErrors: IAddPatientError
 }
 
 const initialState: AddPatientState = {
@@ -29,7 +36,8 @@ const initialState: AddPatientState = {
     isCustomerExists: false,
     isMakingDoneCall: false,
     isDoneCallSuccess: false,
-    isInvalidNumber: false
+    isInvalidNumber: false,
+    validationErrors: {} as IAddPatientError
 }
 
 export const addPatientReducer = (state: AddPatientState = initialState, action: Action): AddPatientState => {
@@ -68,6 +76,11 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
             return {
                 ...state,
                 isInvalidNumber: action.payload,
+            }
+        case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_ERRORS:
+            return {
+                ...state,
+                validationErrors: action.payload,
             }
         default:
             return state

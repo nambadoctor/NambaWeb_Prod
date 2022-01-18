@@ -16,16 +16,18 @@ import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDat
 import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetAppointment } from "../../Actions/AppointmentActions";
 import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
+import { toast } from "react-toastify";
 
 export default function BookAppointmentView() {
 
     const dispatch = useDispatch()
 
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
-    
+
     const {
         addPatientState,
-        makeCustomerObject
+        makeCustomerObject,
+        validateEntryFields
     } = usePatientInputHook();
 
     const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
@@ -61,16 +63,19 @@ export default function BookAppointmentView() {
     //END
 
     const done = () => {
-        dispatch(SetAddPatientIsMakingDoneCall(true))
+        if (validateEntryFields() && !isNaN(selectedDate!.getTime())) {
+            dispatch(SetAddPatientIsMakingDoneCall(true))
 
-        if (addPatientState.isCustomerExists) {
-            const appointmentRequest = makeAppointmentObject();
-            dispatch(SetAppointment(appointmentRequest))
+            if (addPatientState.isCustomerExists) {
+                const appointmentRequest = makeAppointmentObject();
+                dispatch(SetAppointment(appointmentRequest))
+            } else {
+                const customerAndAPpointmentRequest = makeCustomerAndAppointmentRequest();
+                dispatch(SetCustomerAndBookAppointment(customerAndAPpointmentRequest))
+            }
         } else {
-            const customerAndAPpointmentRequest = makeCustomerAndAppointmentRequest();
-            dispatch(SetCustomerAndBookAppointment(customerAndAPpointmentRequest))
+            toast.error("Invalid Data")
         }
-
     }
 
     return (
@@ -98,7 +103,7 @@ export default function BookAppointmentView() {
                         type="submit"
                         color="primary"
                         onClick={() => done()}>
-                        Done
+                        Save
                     </Button>
 
                     {addPatientState.isMakingDoneCall ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}

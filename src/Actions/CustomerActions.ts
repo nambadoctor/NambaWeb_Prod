@@ -23,7 +23,7 @@ function setCustomersHelper(customers: ICustomerIncomingData[]) {
     };
 }
 
-export const SetCustomers = (customers: Array<ICustomerIncomingData>): Action => (setCustomersHelper(customers));
+export const SetCustomers = (customers: Array<ICustomerIncomingData>): Action => (setCustomersHelper(customers.reverse()));
 
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Customers For Service Provider In Org Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
@@ -107,7 +107,12 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
     SetTrackTrace("Current customer request: " + customerRequest, "SetCustomer", SeverityLevel.Information);
 
     try {
-        let response = await postCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+        var response;
+        if (customerRequest.customerId) {
+            response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+        } else {
+            response = await postCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+        }
 
         dispatch(SetLinearLoadingBarToggle(false))
 

@@ -6,9 +6,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { convertDaysIntoNearestUnit, getReadableDateString } from "../../Utils/GeneralUtils";
-import { PeopleAltRounded, VideoCameraFront } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
-import { Typography } from "@mui/material";
+import { Box, TableFooter, TablePagination, Typography } from "@mui/material";
 import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
 import { RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +15,8 @@ import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 import { Link } from "react-router-dom";
 import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../../Actions/ConsultationActions";
 import NoAppointmentsView from "./NoAppointmentsView";
+import TablePaginationActions from "../Pagination/PaginationActions";
+import usePaginationHook from "../../CustomHooks/usePaginationHook";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -52,8 +53,10 @@ const useAppointmentTableStyles = makeStyles(() => ({
 export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
   const dispatch = useDispatch();
-
+  
   const appointmentState = useSelector((state: RootState) => state.AppointmentState);
+
+  const {page, rowsPerPage, handleChangePage, handleChangeRowsPerPage} = usePaginationHook()
 
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {
@@ -114,31 +117,20 @@ export default function AppointmentsTable() {
   }
 
   function GetAppointmentList() {
-    return appointmentState.filteredAppointments.map(
+
+    return (rowsPerPage > 0
+      ? appointmentState.filteredAppointments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      : appointmentState.filteredAppointments
+    ).map(
       (appointment: IAppointmentData, index: number) => (
         <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
-          <TableCell align="left">
-            <span className="appointmentTableName">
-              {/* TODO: CHECK WHAT THE RETURN TYPE FOR THIS IS */}
-              {appointment.appointmentType === "In Person" ? (
-                <PeopleAltRounded
-                  style={{ color: "#149c4a" }}
-                ></PeopleAltRounded>
-              ) : (
-                <VideoCameraFront
-                  style={{ color: "#0863e4" }}
-                ></VideoCameraFront>
-              )}
-            </span>
-          </TableCell>
           <TableCell align="left">
             <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
           </TableCell>
           <TableCell align="left">
-            <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{getLastVisitForCustomer(appointment.customerId)}</Link>
-            {/* {getLastVisitForCustomer(
+            {getLastVisitForCustomer(
               appointment.customerId
-            )} */}
+            )}
           </TableCell>
           <TableCell>
             <Typography
@@ -178,10 +170,6 @@ export default function AppointmentsTable() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow style={{ height: 10 }}>
-            <TableCell
-              className={classes.tableHeaderCell}
-              align="left"
-            ></TableCell>
             <TableCell className={classes.tableHeaderCell} align="left">
               Name
             </TableCell>
@@ -202,6 +190,27 @@ export default function AppointmentsTable() {
             <TableCell colSpan={6}><NoAppointmentsView /></TableCell>
           }
         </TableBody>
+
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={appointmentState.filteredAppointments.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );

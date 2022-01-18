@@ -1,8 +1,9 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
+import { SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
 import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
 import { CheckIfCustomerExists } from "../Actions/CustomerActions";
+import { format } from "../Helpers/Constants";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";
 import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
@@ -16,6 +17,14 @@ export default function usePatientInputHook() {
     const genderOptions = ["Male", "Female", "Other"]
 
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        if (event.target.value.includes("+91") || format.test(event.target.value)) {
+            dispatch(SetAddPatientPhoneNumber(event.target.value));
+            dispatch(SetAddPatientPhoneNumberValidationError("Cannot have special characters"))
+        } else {
+            dispatch(SetAddPatientPhoneNumberValidationError(""))
+        }
+
         if (event.target.value.length >= 10) {
             dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.serviceProviderProfile.organisationId))
             dispatch(SetAddPatientIsCheckingForCustomer(true))
@@ -37,6 +46,13 @@ export default function usePatientInputHook() {
     };
 
     const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+        if (Number(event.target.value) > 120 || Number(event.target.value) < 0) {
+            dispatch(SetAddPatientAgeValidationError("Age must be between 0 and 120"))
+        } else{
+            dispatch(SetAddPatientAgeValidationError(""))
+        }
+
         var tempCustomerProfile = addPatientState.customerProfile
         tempCustomerProfile.dateOfBirth.age = event.target.value
         tempCustomerProfile.dateOfBirth.createdDate = new Date();
@@ -46,7 +62,6 @@ export default function usePatientInputHook() {
     const genderOptionChange = (gender: string) => {
         var tempCustomerProfile = addPatientState.customerProfile
         tempCustomerProfile.gender = gender
-        console.log(gender)
         dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
     }
 
@@ -59,6 +74,20 @@ export default function usePatientInputHook() {
         return currentCustomerRequestObj;
     }
 
+    const validateEntryFields = () => {
+        if (
+            addPatientState.validationErrors.age ||
+            addPatientState.validationErrors.phoneNumber ||
+            addPatientState.phoneNumber.length == 0 || 
+            addPatientState.phoneNumber.length < 10 ||
+            addPatientState.customerProfile.dateOfBirth.age.length == 0
+        ) {
+            return false
+        } else {
+            return true
+        }
+    }
+
     return {
         addPatientState,
         genderOptions,
@@ -66,6 +95,7 @@ export default function usePatientInputHook() {
         handleNameChange,
         handleAgeChange,
         genderOptionChange,
-        makeCustomerObject
+        makeCustomerObject,
+        validateEntryFields
     };
 }

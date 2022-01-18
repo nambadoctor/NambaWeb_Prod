@@ -11,6 +11,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
 import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
+import { TableFooter, TablePagination } from "@mui/material";
+import TablePaginationActions from "../Pagination/PaginationActions";
+import usePaginationHook from "../../CustomHooks/usePaginationHook";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -48,6 +51,8 @@ export default function PatientsTableView() {
   const dispatch = useDispatch();
   const classes = usePatientTableStyles();
 
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook()
+
   const customerState = useSelector(
     (state: RootState) => state.CustomersState
   );
@@ -56,6 +61,32 @@ export default function PatientsTableView() {
     dispatch(SetAddPatientIsCheckingForCustomer(true))
     dispatch(CheckIfCustomerExists(customer.phoneNumbers[0].number, customer.organisationId))
     dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number))
+  }
+
+  function makeCustomerListDisplay() {
+    return (rowsPerPage > 0
+      ? customerState.customers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      : customerState.customers
+    ).map(
+      (customer: ICustomerIncomingData, index: number) => (
+        <TableRow key={customer.customerId}>
+          <TableCell align="left">
+            {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
+          </TableCell>
+          <TableCell align="left">
+            {customer.gender}
+          </TableCell>
+          <TableCell align="left">
+            {customer.dateOfBirth.age}
+          </TableCell>
+          <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
+          <TableCell align="left">
+            GET CREATED DATE{/* {getReadableDateString(customer.createdDate)} */}
+          </TableCell>
+        </TableRow>
+      )
+    )
+
   }
 
   return (
@@ -67,7 +98,10 @@ export default function PatientsTableView() {
               Name
             </TableCell>
             <TableCell className={classes.tableHeaderCell} align="left">
-              Age/Gender
+              Gender
+            </TableCell>
+            <TableCell className={classes.tableHeaderCell} align="left">
+              Age
             </TableCell>
             <TableCell className={classes.tableHeaderCell} align="left">
               Phone Number
@@ -78,24 +112,29 @@ export default function PatientsTableView() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {customerState.customers.length !== 0 &&
-            customerState.customers.map(
-              (customer: ICustomerIncomingData, index: number) => (
-                <TableRow key={customer.customerId}>
-                  <TableCell align="left">
-                    {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
-                  </TableCell>
-                  <TableCell align="left">
-                    {customer.gender}/{customer.dateOfBirth.age}
-                  </TableCell>
-                  <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
-                  <TableCell align="left">
-                    GET CREATED DATE{/* {getReadableDateString(customer.createdDate)} */}
-                  </TableCell>
-                </TableRow>
-              )
-            )}
+          {customerState.customers.length !== 0 && makeCustomerListDisplay()}
         </TableBody>
+
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
+              count={customerState.customers.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              SelectProps={{
+                inputProps: {
+                  'aria-label': 'rows per page',
+                },
+                native: true,
+              }}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
+            />
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );

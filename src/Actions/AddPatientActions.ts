@@ -1,6 +1,8 @@
 import { Action } from "../Types/ActionType";
-import { AddPatientReducer_Types } from "../Reducers/AddPatientReducer";
+import { AddPatientReducer_Types, IAddPatientError } from "../Reducers/AddPatientReducer";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "../store";
 
 function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     return {
@@ -51,6 +53,13 @@ function SetAddPatientIsInvalidNumberAction (isInvalidNumber: boolean) {
     };
 }
 
+function SetAddPatientErrorsAction (error:IAddPatientError) {
+    return {
+        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_ERRORS,
+        payload: error
+    }
+}
+
 export const SetAddPatientPhoneNumber = (phoneNumber: string): Action => (SetAddPatientPhoneNumberAction(phoneNumber));
 
 export const SetAddPatientCustomerProfile = (customerProfile: ICustomerProfileOutgoing): Action => (SetAddPatientCustomerProfileAction(customerProfile));
@@ -64,3 +73,19 @@ export const SetAddPatientIsMakingDoneCall = (isMakingDoneCall: boolean): Action
 export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Action => (SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess));
 
 export const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));
+
+export const SetAddPatientPhoneNumberValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    const addPatientStateErrors = getState().AddPatientState.validationErrors;
+
+    addPatientStateErrors.phoneNumber = errorMessage
+    dispatch(SetAddPatientErrorsAction(addPatientStateErrors))
+}
+
+export const SetAddPatientAgeValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    const addPatientStateErrors = getState().AddPatientState.validationErrors;
+
+    addPatientStateErrors.age = errorMessage
+    dispatch(SetAddPatientErrorsAction(addPatientStateErrors))
+}
+
+export const ClearAddPatientValidationErrors = (): Action => (SetAddPatientErrorsAction({} as IAddPatientError));
