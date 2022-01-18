@@ -7,6 +7,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import { toast } from 'react-toastify';
 
 export default function EditPatientView() {
 
@@ -19,11 +20,16 @@ export default function EditPatientView() {
         handleNameChange,
         handleAgeChange,
         genderOptionChange,
-        makeCustomerObject
+        makeCustomerObject,
+        validateEntryFields
     } = usePatientInputHook();
 
     function savePatient() {
-        dispatch(SetCustomer(makeCustomerObject()))
+        if (validateEntryFields()) {
+            //dispatch(SetCustomer(makeCustomerObject()))
+        } else {
+            toast.error("Invalid Data")
+        }
     }
 
     return (

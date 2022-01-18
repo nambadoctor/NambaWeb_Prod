@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
+import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
 import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
 import { CheckIfCustomerExists } from "../Actions/CustomerActions";
 import { format } from "../Helpers/Constants";
@@ -84,6 +84,7 @@ export default function usePatientInputHook() {
         ) {
             return false
         } else {
+            dispatch(ClearAddPatientValidationErrors())
             return true
         }
     }
