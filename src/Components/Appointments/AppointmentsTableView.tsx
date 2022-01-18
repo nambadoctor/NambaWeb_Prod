@@ -17,6 +17,8 @@ import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../..
 import NoAppointmentsView from "./NoAppointmentsView";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
+import { CancelAppointment } from "../../Actions/AppointmentActions";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -53,10 +55,10 @@ const useAppointmentTableStyles = makeStyles(() => ({
 export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
   const dispatch = useDispatch();
-  
+
   const appointmentState = useSelector((state: RootState) => state.AppointmentState);
 
-  const {page, rowsPerPage, handleChangePage, handleChangeRowsPerPage} = usePaginationHook()
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook()
 
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {
@@ -155,6 +157,9 @@ export default function AppointmentsTable() {
               appointment.scheduledAppointmentStartTime
             )}
           </TableCell>
+          <TableCell align="left">
+            <div onClick={() => cancelAppointment(appointment)}><CancelIcon /></div>
+          </TableCell>
         </TableRow>
       )
     )
@@ -163,6 +168,12 @@ export default function AppointmentsTable() {
   function setSelectedAppointment(appointment: IAppointmentData) {
     dispatch(GetAppointmentForConsultation(appointment.appointmentId));
     dispatch(GetCustomerForConsultation(appointment.customerId));
+  }
+
+  function cancelAppointment(appointment: IAppointmentData) {
+    if (window.confirm("Do you want to delete this appointment?")) {
+      dispatch(CancelAppointment(appointment))
+    }
   }
 
   return (
@@ -182,6 +193,7 @@ export default function AppointmentsTable() {
             <TableCell className={classes.tableHeaderCell} align="left">
               Appointment Time
             </TableCell>
+            <TableCell className={classes.tableHeaderCell} align="left"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

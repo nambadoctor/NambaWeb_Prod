@@ -11,4 +11,4 @@ export default interface IAppointmentOutgoing {
     scheduledAppointmentEndTime:Date|null,
     actualAppointmentStartTime:Date|null,
     actualAppointmentEndTime:Date|null
-}
+} 

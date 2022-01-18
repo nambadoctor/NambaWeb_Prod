@@ -4,7 +4,7 @@ import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
 import { RootState } from "../store";
 import { filterAppointments } from "../Helpers/AppointmentHelpers";
-import { GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -102,5 +102,28 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not create appointment"))
+  }
+};
+
+
+//TODO: CHANGE IAPPOINTMENTDATA TO IAPPOINTMENTOUTGOINGDATA. Need to write converter for this!
+export const CancelAppointment = (appointment: IAppointmentData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
+
+  SetTrackTrace("Enter Cancel Appointments Action", "CancelAppointment", SeverityLevel.Information);
+
+  try {
+    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+    let response = await putCall({} as any, CancelAppointmentEndPoint(), appointment, "CancelAppointment")
+
+    if (response) {
+      dispatch(SetAddPatientIsMakingDoneCall(false))
+      dispatch(SetLinearLoadingBarToggle(false))
+      dispatch(GetAllAppointments())
+      toast.success("Appointment Cancelled Successfully")
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not CancelAppointment"))
   }
 };

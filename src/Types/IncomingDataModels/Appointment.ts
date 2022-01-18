@@ -12,4 +12,4 @@ export default interface IAppointmentData {
     scheduledAppointmentEndTime:string,
     actualAppointmentStartTime:string,
     actualAppointmentEndTime:string
-}
+} 
