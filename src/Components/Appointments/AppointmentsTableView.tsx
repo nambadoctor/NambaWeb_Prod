@@ -127,7 +127,7 @@ export default function AppointmentsTable() {
       (appointment: IAppointmentData, index: number) => (
         <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
           <TableCell align="left">
-            <Link onClick={() => setSelectedAppointment(appointment)} to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
+            <Link to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
           </TableCell>
           <TableCell align="left">
             {getLastVisitForCustomer(
@@ -163,13 +163,6 @@ export default function AppointmentsTable() {
         </TableRow>
       )
     )
-  }
-
-  function setSelectedAppointment(appointment: IAppointmentData) {
-    dispatch(GetAppointmentForConsultation(appointment.appointmentId));
-
-    //TODO: CHANGE BACK TO CUSTOMERID. CUSTOMER NAME IS A TEMPORARY FIX
-    dispatch(GetCustomerForConsultation(appointment.customerName));
   }
 
   function cancelAppointment(appointment: IAppointmentData) {

@@ -85,6 +85,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
 
         if (response) {
             dispatch(SetAddPatientPhoneNumber(""))
+            dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(SetAddPatientIsDoneCallSuccess(false))
