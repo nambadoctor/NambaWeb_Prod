@@ -48,15 +48,19 @@ export default function ConsultationHeader() {
                             </Col>
                             <Col className="col-md-2">
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Patient Name</Typography>
-                                <Typography style={{ fontSize: 25 }}>{currentConsultationState.currentAppointment?.customerName}</Typography>
+                                <Typography style={{ fontSize: 17 }}>{currentConsultationState.currentAppointment?.customerName}</Typography>
                             </Col>
                             <Col className="col-md-2">
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Phone Number</Typography>
-                                <Typography style={{ fontSize: 17 }}>+917530043008</Typography>
+                                <Typography style={{ fontSize: 17 }}>+91{currentConsultationState.currentCustomer?.phoneNumbers[0].number ?? ""}</Typography>
                             </Col>
                             <Col className="col-md-2">
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Age / Gender</Typography>
-                                <Col><Typography style={{ fontSize: 17 }}>25 / Male</Typography></Col>
+                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Age</Typography>
+                                <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.dateOfBirth.age ?? ""}</Typography></Col>
+                            </Col>
+                            <Col className="col-md-2">
+                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Gender</Typography>
+                                <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.gender ?? ""}</Typography></Col>
                             </Col>
                             <Col className="col-md-2">
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Appointment Time</Typography>
