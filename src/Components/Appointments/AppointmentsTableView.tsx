@@ -167,7 +167,9 @@ export default function AppointmentsTable() {
 
   function setSelectedAppointment(appointment: IAppointmentData) {
     dispatch(GetAppointmentForConsultation(appointment.appointmentId));
-    dispatch(GetCustomerForConsultation(appointment.customerId));
+
+    //TODO: CHANGE BACK TO CUSTOMERID. CUSTOMER NAME IS A TEMPORARY FIX
+    dispatch(GetCustomerForConsultation(appointment.customerName));
   }
 
   function cancelAppointment(appointment: IAppointmentData) {
