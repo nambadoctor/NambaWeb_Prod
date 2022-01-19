@@ -80,9 +80,6 @@ export default function PatientsTableView() {
             {customer.dateOfBirth.age}
           </TableCell>
           <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
-          <TableCell align="left">
-            GET CREATED DATE{/* {getReadableDateString(customer.createdDate)} */}
-          </TableCell>
         </TableRow>
       )
     )
@@ -105,9 +102,6 @@ export default function PatientsTableView() {
             </TableCell>
             <TableCell className={classes.tableHeaderCell} align="left">
               Phone Number
-            </TableCell>
-            <TableCell className={classes.tableHeaderCell} align="left">
-              Added On
             </TableCell>
           </TableRow>
         </TableHead>

@@ -14,12 +14,7 @@ ReactDOM.render(
     <Provider store={store}>
       <NativeBaseProvider>
         <AuthProvider>
-          <Routes>
-            <Route path="/Appointments" element={<div>Appointments</div>} />
-            <Route path="/" element={<div>All</div>} />
-            <Route path="/Patients" element={<div>Patients</div>} />
-            <Route path="/Consultation/:id" element={<div>Consultation</div>} />
-          </Routes>
+          <App></App>
         </AuthProvider>
       </NativeBaseProvider>
     </Provider>
