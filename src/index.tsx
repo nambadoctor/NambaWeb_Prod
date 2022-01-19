@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes } from "react-router-dom";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -10,7 +10,7 @@ import store from './store'
 import { NativeBaseProvider } from 'native-base'; //extendTheme
 
 ReactDOM.render(
-  <BrowserRouter>
+  <HashRouter>
     <Provider store={store}>
       <NativeBaseProvider>
         <AuthProvider>
@@ -18,7 +18,7 @@ ReactDOM.render(
         </AuthProvider>
       </NativeBaseProvider>
     </Provider>
-  </BrowserRouter>,
+  </HashRouter>,
   document.getElementById('root')
 );
 
