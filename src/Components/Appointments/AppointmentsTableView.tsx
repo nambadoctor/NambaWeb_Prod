@@ -125,7 +125,7 @@ export default function AppointmentsTable() {
       : appointmentState.filteredAppointments
     ).map(
       (appointment: IAppointmentData, index: number) => (
-        <TableRow key={appointment.appointmentId} onClick={() => console.log("BROO" + appointment.customerName)}>
+        <TableRow key={appointment.appointmentId}>
           <TableCell align="left">
             <Link to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
           </TableCell>

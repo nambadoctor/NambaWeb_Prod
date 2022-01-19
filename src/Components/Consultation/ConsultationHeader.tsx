@@ -8,6 +8,8 @@ import { Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { GetAppointmentForConsultation } from "../../Actions/ConsultationActions";
+import { Link } from "react-router-dom";
+
 
 export default function ConsultationHeader() {
 
@@ -18,21 +20,25 @@ export default function ConsultationHeader() {
 
     function getPreviousAppointmentUI() {
         return (
-            <div onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.previousAppointment?.appointmentId ?? ""))}>
+            <Link
+                to={"/Consultation/" + currentConsultationState.previousAppointment?.appointmentId}
+                onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.previousAppointment?.appointmentId ?? ""))}>
                 <ArrowBackIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowBackIcon>
                 <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{currentConsultationState.previousAppointment?.customerName}</Typography>
                 <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.previousAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
-            </div>
+            </Link>
         );
     }
 
     function getNextAppointmentUI() {
         return (
-            <div onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.nextAppointment?.appointmentId ?? ""))}>
-                <ArrowForwardIcon style={{ height: 22, width: 22, color:'blue' }}></ArrowForwardIcon>
+            <Link
+                to={"/Consultation/" + currentConsultationState.nextAppointment?.appointmentId}
+                onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.nextAppointment?.appointmentId ?? ""))}>
+                <ArrowForwardIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowForwardIcon>
                 <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{currentConsultationState.nextAppointment?.customerName}</Typography>
                 <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.nextAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
-            </div>
+            </Link>
         );
     }
 
@@ -42,32 +48,33 @@ export default function ConsultationHeader() {
                 <Row style={{ alignItems: "flex-end" }}>
                     <Col className="col-md-1">{currentConsultationState.previousAppointment && getPreviousAppointmentUI()}</Col>
                     <Col className="col-md-10">
-                        <Row style={{ marginRight: 20, alignItems: "flex-end" }}>
-                            <Col>
-                                <Spacer grow='1' />
-                            </Col>
-                            <Col className="col-md-auto" style={{marginLeft: 15}}>
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Patient Name</Typography>
-                                <Typography style={{ fontSize: 17 }}>{currentConsultationState.currentAppointment?.customerName}</Typography>
-                            </Col>
-                            <Col className="col-md-auto" style={{marginLeft: 15}}>
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Phone Number</Typography>
-                                <Typography style={{ fontSize: 17 }}>+91{currentConsultationState.currentCustomer?.phoneNumbers[0].number ?? ""}</Typography>
-                            </Col>
-                            <Col className="col-md-auto" style={{marginLeft: 15}}>
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Age</Typography>
-                                <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.dateOfBirth.age ?? ""}</Typography></Col>
-                            </Col>
-                            <Col className="col-md-auto" style={{marginLeft: 15}}>
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Gender</Typography>
-                                <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.gender ?? ""}</Typography></Col>
-                            </Col>
-                            <Col className="col-md-auto" style={{marginLeft: 15}}>
-                                <Typography style={{ fontSize: 10, opacity: 0.5 }}>Appointment Time</Typography>
-                                <Col><Typography style={{ fontSize: 17 }}>{getReadableDateAndTimeString(currentConsultationState.currentAppointment?.scheduledAppointmentStartTime ?? "")} </Typography></Col>
-                            </Col>
-                            <Col><Spacer grow='1' /></Col>
-                        </Row>
+                        {currentConsultationState.currentCustomer &&
+                            <Row style={{ marginRight: 20, alignItems: "flex-end" }}>
+                                <Col>
+                                    <Spacer grow='1' />
+                                </Col>
+                                <Col className="col-md-auto" style={{ marginLeft: 15 }}>
+                                    <Typography style={{ fontSize: 10, opacity: 0.5 }}>Patient Name</Typography>
+                                    <Typography style={{ fontSize: 17 }}>{currentConsultationState.currentAppointment!.customerName}</Typography>
+                                </Col>
+                                <Col className="col-md-auto" style={{ marginLeft: 15 }}>
+                                    <Typography style={{ fontSize: 10, opacity: 0.5 }}>Phone Number</Typography>
+                                    <Typography style={{ fontSize: 17 }}>+91{currentConsultationState.currentCustomer!.phoneNumbers[0].number ?? ""}</Typography>
+                                </Col>
+                                <Col className="col-md-auto" style={{ marginLeft: 15 }}>
+                                    <Typography style={{ fontSize: 10, opacity: 0.5 }}>Age</Typography>
+                                    <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer!.dateOfBirth.age ?? ""}</Typography></Col>
+                                </Col>
+                                <Col className="col-md-auto" style={{ marginLeft: 15 }}>
+                                    <Typography style={{ fontSize: 10, opacity: 0.5 }}>Gender</Typography>
+                                    <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer!.gender ?? ""}</Typography></Col>
+                                </Col>
+                                <Col className="col-md-auto" style={{ marginLeft: 15 }}>
+                                    <Typography style={{ fontSize: 10, opacity: 0.5 }}>Appointment Time</Typography>
+                                    <Col><Typography style={{ fontSize: 17 }}>{getReadableDateAndTimeString(currentConsultationState.currentAppointment?.scheduledAppointmentStartTime ?? "")} </Typography></Col>
+                                </Col>
+                                <Col><Spacer grow='1' /></Col>
+                            </Row>}
                     </Col>
                     <Col className="col-md-1">{currentConsultationState.nextAppointment && getNextAppointmentUI()}</Col>
                 </Row>
