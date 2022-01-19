@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
 import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
-import { TableFooter, TablePagination } from "@mui/material";
+import { Link, TableFooter, TablePagination } from "@mui/material";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
 
@@ -79,11 +79,10 @@ export default function PatientsTableView() {
           <TableCell align="left">
             {customer.dateOfBirth.age}
           </TableCell>
-          <TableCell onClick={() => handleCustomerSelect(customer)}>{customer.phoneNumbers[0].number}</TableCell>
+          <TableCell onClick={() => handleCustomerSelect(customer)}><Link>{customer.phoneNumbers[0].number}</Link></TableCell>
         </TableRow>
       )
     )
-
   }
 
   return (

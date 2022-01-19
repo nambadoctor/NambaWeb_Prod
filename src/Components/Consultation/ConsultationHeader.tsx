@@ -46,23 +46,23 @@ export default function ConsultationHeader() {
                             <Col>
                                 <Spacer grow='1' />
                             </Col>
-                            <Col className="col-md-2">
+                            <Col className="col-md-auto" style={{marginLeft: 15}}>
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Patient Name</Typography>
                                 <Typography style={{ fontSize: 17 }}>{currentConsultationState.currentAppointment?.customerName}</Typography>
                             </Col>
-                            <Col className="col-md-2">
+                            <Col className="col-md-auto" style={{marginLeft: 15}}>
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Phone Number</Typography>
                                 <Typography style={{ fontSize: 17 }}>+91{currentConsultationState.currentCustomer?.phoneNumbers[0].number ?? ""}</Typography>
                             </Col>
-                            <Col className="col-md-2">
+                            <Col className="col-md-auto" style={{marginLeft: 15}}>
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Age</Typography>
                                 <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.dateOfBirth.age ?? ""}</Typography></Col>
                             </Col>
-                            <Col className="col-md-2">
+                            <Col className="col-md-auto" style={{marginLeft: 15}}>
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Gender</Typography>
                                 <Col><Typography style={{ fontSize: 17 }}>{currentConsultationState.currentCustomer?.gender ?? ""}</Typography></Col>
                             </Col>
-                            <Col className="col-md-2">
+                            <Col className="col-md-auto" style={{marginLeft: 15}}>
                                 <Typography style={{ fontSize: 10, opacity: 0.5 }}>Appointment Time</Typography>
                                 <Col><Typography style={{ fontSize: 17 }}>{getReadableDateAndTimeString(currentConsultationState.currentAppointment?.scheduledAppointmentStartTime ?? "")} </Typography></Col>
                             </Col>

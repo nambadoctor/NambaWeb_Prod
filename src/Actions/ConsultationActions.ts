@@ -86,7 +86,7 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
 
         SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
         dispatch(SetSelectedAppointmentForConsultation(response.data));
-        dispatch(GetCustomerForConsultation(response.data.customerName));
+        dispatch(GetCustomerForConsultation(response.data.customerId));
         dispatch(GetNextAndPreviousAppointmentForConsultation())
         dispatch(GetReports())
         dispatch(GetPrescriptions())
