@@ -82,7 +82,7 @@ export default function PrescriptionImageView() {
     function noPrescriptionsDisplay() {
         return (
             <div style={{ margin: 20, marginTop: 50, marginBottom: 50, textAlign: 'center' }}>
-                Oops, no prescriptions yet! Click "Choose File" to upload!
+                No prescriptions yet. Upload image or Take Photo.
             </div>
         );
     }

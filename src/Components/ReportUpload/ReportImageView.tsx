@@ -84,7 +84,7 @@ export default function ReportImageView() {
     function noReportsDisplay() {
         return (
             <div style={{ margin: 20, marginTop: 50, marginBottom: 50, textAlign: 'center' }}>
-                Oops, no reports yet! Click "Choose File" to upload!
+                No reports yet. Upload image or Take Photo.
             </div>
         );
     }

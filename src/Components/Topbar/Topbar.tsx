@@ -11,6 +11,8 @@ import { ClearAddPatientState } from "../../Actions/AddPatientActions";
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
   const dispatch = useDispatch()
+
+  
   
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
