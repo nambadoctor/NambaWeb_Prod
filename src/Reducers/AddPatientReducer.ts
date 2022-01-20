@@ -15,6 +15,7 @@ export enum AddPatientReducer_Types {
 
 export interface IAddPatientError {
     phoneNumber:string
+    name:string
     age:string
 }
 

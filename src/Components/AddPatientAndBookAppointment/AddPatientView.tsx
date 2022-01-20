@@ -73,6 +73,8 @@ export default function AddPatientView() {
                 }}
                 variant="outlined"
                 onChange={handleNameChange}
+                error={Boolean(addPatientState.validationErrors.name)}
+                helperText={addPatientState.validationErrors.name}
             />
 
             <Row className="align-items-center">

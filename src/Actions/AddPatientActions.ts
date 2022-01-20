@@ -81,6 +81,13 @@ export const SetAddPatientPhoneNumberValidationError = (errorMessage:string): Th
     dispatch(SetAddPatientErrorsAction(addPatientStateErrors))
 }
 
+export const SetAddPatientNameValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    const addPatientStateErrors = getState().AddPatientState.validationErrors;
+
+    addPatientStateErrors.name = errorMessage
+    dispatch(SetAddPatientErrorsAction(addPatientStateErrors))
+}
+
 export const SetAddPatientAgeValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     const addPatientStateErrors = getState().AddPatientState.validationErrors;
 

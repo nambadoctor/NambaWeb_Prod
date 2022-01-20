@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
+import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
 import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
 import { CheckIfCustomerExists } from "../Actions/CustomerActions";
 import { format } from "../Helpers/Constants";
@@ -80,8 +80,28 @@ export default function usePatientInputHook() {
             addPatientState.validationErrors.phoneNumber ||
             addPatientState.phoneNumber.length == 0 || 
             addPatientState.phoneNumber.length < 10 ||
-            addPatientState.customerProfile.dateOfBirth.age.length == 0
+            addPatientState.customerProfile.dateOfBirth.age.length == 0 ||
+            addPatientState.customerProfile.firstName.length == 0
         ) {
+
+            if (addPatientState.phoneNumber.length == 0 || addPatientState.phoneNumber.length < 10) {
+                dispatch(SetAddPatientPhoneNumberValidationError("Please Enter A Valid Phone Number"))
+            } else {
+                dispatch(SetAddPatientPhoneNumberValidationError(""))
+            }
+
+            if (addPatientState.customerProfile.firstName.length == 0) {
+                dispatch(SetAddPatientNameValidationError("Please Enter Name"))
+            } else {
+                dispatch(SetAddPatientNameValidationError(""))
+            }
+
+            if (addPatientState.customerProfile.dateOfBirth.age.length == 0) {
+                dispatch(SetAddPatientAgeValidationError("Please Enter Age"))
+            } else {
+                dispatch(SetAddPatientAgeValidationError(""))
+            }
+
             return false
         } else {
             dispatch(ClearAddPatientValidationErrors())
