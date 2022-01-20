@@ -4,6 +4,7 @@ import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { DeletePrescription } from '../../Actions/PrescriptionActions';
+import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
 
 export default function PrescriptionImageView() {
     const dispatch = useDispatch();
@@ -38,6 +39,12 @@ export default function PrescriptionImageView() {
         setImages(stringList);
     }
 
+    function deletePrescription (prescription: IPrescriptionIncomingData) {
+        if (window.confirm("Are you sure you want to delete this prescription?")) {
+            dispatch(DeletePrescription(prescription))
+        }
+    }
+
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
@@ -53,7 +60,7 @@ export default function PrescriptionImageView() {
                             alt=""
                         />
 
-                        <div onClick={() => dispatch(DeletePrescription(src))} style={{ position: 'absolute', top: -10, right: -15 }}>
+                        <div onClick={() => dispatch(deletePrescription(src))} style={{ position: 'absolute', top: -10, right: -15 }}>
                             {<CancelIcon></CancelIcon>}
                         </div>
                     </div>

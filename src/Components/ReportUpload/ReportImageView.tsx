@@ -4,6 +4,7 @@ import { DeleteReport } from '../../Actions/ReportActions';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
+import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 
 export default function ReportImageView() {
 
@@ -39,6 +40,12 @@ export default function ReportImageView() {
         setImages(stringList);
     }
 
+    function deleteReport (report: IReportIncomingData) {
+        if (window.confirm("Are you sure you want to delete this prescription?")) {
+            dispatch(DeleteReport(report))
+        }
+    }
+
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
@@ -54,7 +61,7 @@ export default function ReportImageView() {
                                 alt=""
                             />
 
-                            <div onClick={() => dispatch(DeleteReport(src))} style={{ position: 'absolute', top: -10, right: -15 }}>
+                            <div onClick={() => dispatch(deleteReport(src))} style={{ position: 'absolute', top: -10, right: -15 }}>
                                 {<CancelIcon></CancelIcon>}
                             </div>
                         </div>

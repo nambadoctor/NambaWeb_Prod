@@ -5,10 +5,13 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 import { SignOut } from "../../Actions/Common/LoginActions";
+import { useDispatch } from "react-redux";
+import { ClearAddPatientState } from "../../Actions/AddPatientActions";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
-
+  const dispatch = useDispatch()
+  
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
       <Navbar.Brand>
@@ -35,6 +38,7 @@ export default function Topbar() {
           <OrganisationPicker></OrganisationPicker>
           <Link
             to='/Appointments'
+            onClick={() => {dispatch(ClearAddPatientState())}}
             style={{
               color: "white",
               fontSize: 18,
@@ -46,6 +50,7 @@ export default function Topbar() {
           </Link>
           <Link
             to='/Patients'
+            onClick={() => {dispatch(ClearAddPatientState())}}
             style={{
               color: "white",
               fontSize: 18,

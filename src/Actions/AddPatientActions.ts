@@ -11,6 +11,13 @@ function SetAddPatientPhoneNumberAction(phoneNumber: string) {
     };
 }
 
+function ClearPatientStateAction() {
+    return {
+        type: AddPatientReducer_Types.CLEAR_ADD_PATIENT_STATE,
+        payload: null
+    };
+}
+
 function SetAddPatientCustomerProfileAction(customerProfile: ICustomerProfileOutgoing) {
     return {
         type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE,
@@ -73,6 +80,9 @@ export const SetAddPatientIsMakingDoneCall = (isMakingDoneCall: boolean): Action
 export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Action => (SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess));
 
 export const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));
+
+export const ClearAddPatientState = (): Action => (ClearPatientStateAction());
+
 
 export const SetAddPatientPhoneNumberValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     const addPatientStateErrors = getState().AddPatientState.validationErrors;
