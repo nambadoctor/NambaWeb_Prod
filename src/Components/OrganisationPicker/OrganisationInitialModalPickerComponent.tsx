@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilteredAppointments } from '../../Actions/AppointmentActions';
+import { setFilteredAppointments } from '../../ServiceActions/AppointmentActions';
 import { SetOrgPickerModalToggle } from '../../Actions/Common/UIControlActions';
 import { SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
 import { RootState } from '../../store';

@@ -7,14 +7,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { SetCustomerAndBookAppointment } from "../../Actions/CustomerActions";
+import { SetCustomerAndBookAppointment } from "../../ServiceActions/CustomerActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { SetAddPatientIsMakingDoneCall } from "../../Actions/AddPatientActions";
 import IPhoneNumberData from "../../Types/OutgoingDataModels/PhoneNumber";
 import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
-import { SetAppointment } from "../../Actions/AppointmentActions";
+import { SetAppointment } from "../../ServiceActions/AppointmentActions";
 import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
 import { toast } from "react-toastify";
 

@@ -6,7 +6,7 @@ import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { GetAppointmentForConsultation } from '../../Actions/ConsultationActions'
+import { GetAppointmentForConsultation } from '../../ServiceActions/ConsultationActions'
 import { Col, Row } from 'react-bootstrap'
 import "../../../src/App.css"
 import { RootState } from '../../store'

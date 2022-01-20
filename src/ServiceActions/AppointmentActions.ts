@@ -1,7 +1,7 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { Appointment_Types } from "../Reducers/AppointmentsReducer";
-import { SetDatesWithAppointmentsRange } from "./SelectedDateActions";
+import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
 import { filterAppointments } from "../Helpers/AppointmentHelpers";
 import { CancelAppointmentEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
@@ -10,9 +10,9 @@ import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
-import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
-import { SetAppointmentsLoadedState } from "./LoadedStatesActions";
-import { SetAddPatientCustomerProfile, SetAddPatientIsMakingDoneCall } from "./AddPatientActions";
+import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
+import { SetAppointmentsLoadedState } from "../Actions/LoadedStatesActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 

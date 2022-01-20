@@ -4,7 +4,7 @@ import IOrganisationBasic from "../Types/IncomingDataModels/OrganisationBasic";
 import { RootState } from "../store";
 import { SetOrgPickerModalToggle } from "./Common/UIControlActions";
 import { checkForDefaultOrgHelpers } from "../Helpers/OrganisationHelpers";
-import { GetCurrentServiceProvider } from "./ServiceProviderActions";
+import { GetCurrentServiceProvider } from "../ServiceActions/ServiceProviderActions";
 import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";

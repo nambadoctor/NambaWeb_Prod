@@ -2,14 +2,14 @@ import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { ServiceProviderBasicReducer_Types } from "../Reducers/Common/ServiceProviderBasicReducer";
 import IServiceProviderBasic from "../Types/IncomingDataModels/ServiceProviderBasic";
-import { CheckForDefaultOrg } from "./OrganisationActions";
+import { CheckForDefaultOrg } from "../Actions/OrganisationActions";
 import { RootState } from "../store";
 import { getCall } from "../Http/http-helpers";
 import { GetServiceProviderBasicEndPoint } from "../Helpers/EndPointHelpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { SetFatalError, SetLinearLoadingBarToggle } from "./Common/UIControlActions";
-import { SetServiceProviderBasicLoadedState } from "./LoadedStatesActions";
+import { SetFatalError, SetLinearLoadingBarToggle } from "../Actions/Common/UIControlActions";
+import { SetServiceProviderBasicLoadedState } from "../Actions/LoadedStatesActions";
 
 export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProviderBasic): Action => ({
     type: ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC,

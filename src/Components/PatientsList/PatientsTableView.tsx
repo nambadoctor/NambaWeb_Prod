@@ -9,7 +9,7 @@ import { makeStyles } from "@mui/styles";
 import ICustomerIncomingData from "../../Types/IncomingDataModels/CustomerIncoming";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { CheckIfCustomerExists } from "../../Actions/CustomerActions";
+import { CheckIfCustomerExists } from "../../ServiceActions/CustomerActions";
 import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 import { Link, TableFooter, TablePagination } from "@mui/material";
 import TablePaginationActions from "../Pagination/PaginationActions";

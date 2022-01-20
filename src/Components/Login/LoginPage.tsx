@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { SignInWithPhoneNumberHelper } from "../../Actions/Common/LoginActions";
+import { SignInWithPhoneNumberHelper } from "../../ServiceActions/LoginActions";
 import "../../Styles/login.css";
 
 export default function LoginPage() {

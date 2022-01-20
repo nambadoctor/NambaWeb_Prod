@@ -1,8 +1,8 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
-import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
-import { CheckIfCustomerExists } from "../Actions/CustomerActions";
+import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
+import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
 import { format } from "../Helpers/Constants";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";

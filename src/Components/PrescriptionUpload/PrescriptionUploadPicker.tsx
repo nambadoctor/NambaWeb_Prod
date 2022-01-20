@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { UploadPrescriptionFromBase64String, UploadPrescriptionFromFile } from '../../Actions/PrescriptionActions';
+import { UploadPrescriptionFromBase64String, UploadPrescriptionFromFile } from '../../ServiceActions/PrescriptionActions';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';

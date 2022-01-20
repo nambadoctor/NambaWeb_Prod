@@ -4,7 +4,7 @@ import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
-import { SignOut } from "../../Actions/Common/LoginActions";
+import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
 import { ClearAddPatientState } from "../../Actions/AddPatientActions";
 

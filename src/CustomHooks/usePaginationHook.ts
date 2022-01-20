@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
-import { SignInWithPhoneNumberHelper } from "../Actions/Common/LoginActions";
+import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
 
 export default function usePaginationHook() {
 

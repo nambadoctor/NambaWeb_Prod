@@ -11,7 +11,7 @@ import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 

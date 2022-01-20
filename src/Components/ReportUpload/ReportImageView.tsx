@@ -1,6 +1,6 @@
 import  { useState, useCallback, useEffect } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
-import { DeleteReport } from '../../Actions/ReportActions';
+import { DeleteReport } from '../../ServiceActions/ReportActions';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';

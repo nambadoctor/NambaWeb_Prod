@@ -9,8 +9,8 @@ import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
 import { getCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { SetFatalError, SetLinearLoadingBarToggle } from "./Common/UIControlActions";
-import { SetCurrentServiceProviderLoadedState } from "./LoadedStatesActions";
+import { SetFatalError, SetLinearLoadingBarToggle } from "../Actions/Common/UIControlActions";
+import { SetCurrentServiceProviderLoadedState } from "../Actions/LoadedStatesActions";
 
 function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
     return {

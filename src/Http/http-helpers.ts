@@ -1,5 +1,5 @@
 import http from "./http-common";
-import GetHeadersHelper from "../Actions/Common/GetHeaderHelper";
+import GetHeadersHelper from "../Actions/Common/GetHeader";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 

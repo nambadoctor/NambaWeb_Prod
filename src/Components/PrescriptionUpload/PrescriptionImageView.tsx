@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
-import { DeletePrescription } from '../../Actions/PrescriptionActions';
+import { DeletePrescription } from '../../ServiceActions/PrescriptionActions';
 import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
 
 export default function PrescriptionImageView() {

@@ -4,7 +4,7 @@ import { GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEn
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "./AddPatientActions";
+import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
@@ -12,8 +12,8 @@ import { GetAllAppointments } from "./AppointmentActions";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
-import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
-import { SetCustomersLoadedState } from "./LoadedStatesActions";
+import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
+import { SetCustomersLoadedState } from "../Actions/LoadedStatesActions";
 import { toast } from "react-toastify";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {

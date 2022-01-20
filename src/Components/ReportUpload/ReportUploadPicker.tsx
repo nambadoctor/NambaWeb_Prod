@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { UploadReportFromBase64String, UploadReportFromFile } from '../../Actions/ReportActions';
+import { UploadReportFromBase64String, UploadReportFromFile } from '../../ServiceActions/ReportActions';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';

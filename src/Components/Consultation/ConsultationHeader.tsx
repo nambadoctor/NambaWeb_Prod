@@ -7,7 +7,7 @@ import { getReadableDateAndTimeString } from "../../Utils/GeneralUtils";
 import { Button, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { GetAppointmentForConsultation } from "../../Actions/ConsultationActions";
+import { GetAppointmentForConsultation } from "../../ServiceActions/ConsultationActions";
 import { Link } from "react-router-dom";
 
 

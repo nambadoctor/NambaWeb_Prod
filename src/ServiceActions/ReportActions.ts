@@ -9,7 +9,7 @@ import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "./ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
-import { SetLinearLoadingBarToggle, SetNonFatalError } from "./Common/UIControlActions";
+import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

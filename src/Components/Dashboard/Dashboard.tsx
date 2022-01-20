@@ -7,7 +7,7 @@ import OrganisationInitialModalPickerComponent from "../OrganisationPicker/Organ
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
-import { GetServiceProviderBasic } from "../../Actions/ServiceProviderBasicActions";
+import { GetServiceProviderBasic } from "../../ServiceActions/ServiceProviderBasicActions";
 import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm";
 import { Divider } from '@mui/material';
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";

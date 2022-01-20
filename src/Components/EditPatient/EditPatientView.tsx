@@ -1,7 +1,7 @@
 import { CircularProgress, TextField } from '@mui/material';
 import { Button, ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { SetCustomer } from '../../Actions/CustomerActions';
+import { SetCustomer } from '../../ServiceActions/CustomerActions';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
