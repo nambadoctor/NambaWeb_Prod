@@ -1,10 +1,11 @@
-.container {
-  position: relative;
-}
+@media all and (min-width: 480px) {
+  .Login {
+    padding: 60px 0;
+  }
 
-.vertical-center {
-  align-items: center;
-  margin: 0;
-  position:relative;
-  top: 50%;
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+    align-items: center;
+  }
 }

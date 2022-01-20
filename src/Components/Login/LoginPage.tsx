@@ -13,7 +13,7 @@ export default function LoginPage() {
   };
 
   const verifyPhoneNumber = () => {
-    dispatch(SignInWithPhoneNumberHelper(phoneNumber));
+    dispatch(SignInWithPhoneNumberHelper("+91" + phoneNumber));
   };
 
   return (

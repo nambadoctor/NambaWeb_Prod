@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { Col, Container, Row } from "react-bootstrap";
 import { getReadableDateAndTimeString } from "../../Utils/GeneralUtils";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { GetAppointmentForConsultation } from "../../Actions/ConsultationActions";
@@ -20,25 +20,31 @@ export default function ConsultationHeader() {
 
     function getPreviousAppointmentUI() {
         return (
-            <Link
-                to={"/Consultation/" + currentConsultationState.previousAppointment?.appointmentId}
-                onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.previousAppointment?.appointmentId ?? ""))}>
-                <ArrowBackIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowBackIcon>
-                <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{currentConsultationState.previousAppointment?.customerName}</Typography>
-                <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.previousAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
-            </Link>
+            <Button startIcon={<ArrowBackIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowBackIcon>}>
+                <Link
+                    to={"/Consultation/" + currentConsultationState.previousAppointment?.appointmentId}
+                    onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.previousAppointment?.appointmentId ?? ""))}>
+
+                    <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{currentConsultationState.previousAppointment?.customerName}</Typography>
+                    <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.previousAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
+                </Link>
+            </Button>
         );
     }
 
     function getNextAppointmentUI() {
         return (
-            <Link
-                to={"/Consultation/" + currentConsultationState.nextAppointment?.appointmentId}
-                onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.nextAppointment?.appointmentId ?? ""))}>
-                <ArrowForwardIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowForwardIcon>
-                <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{currentConsultationState.nextAppointment?.customerName}</Typography>
-                <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.nextAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
-            </Link>
+            <Button endIcon={<ArrowForwardIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowForwardIcon>}>
+                <Link
+                    to={"/Consultation/" + currentConsultationState.nextAppointment?.appointmentId}
+                    onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.nextAppointment?.appointmentId ?? ""))}>
+                    <div>
+
+                        <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{currentConsultationState.nextAppointment?.customerName}</Typography>
+                    </div>
+                    <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.nextAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
+                </Link>
+            </Button>
         );
     }
 
