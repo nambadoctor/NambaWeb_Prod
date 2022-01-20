@@ -70,9 +70,7 @@ export default function PatientsTableView() {
     ).map(
       (customer: ICustomerIncomingData, index: number) => (
         <TableRow key={customer.customerId}>
-          <TableCell align="left">
-            {customer.firstName + " " + (customer.lastName ? customer.lastName : "")}
-          </TableCell>
+          <TableCell align="left" onClick={() => handleCustomerSelect(customer)}><Link>{customer.firstName + " " + (customer.lastName ? customer.lastName : "")}</Link></TableCell>
           <TableCell align="left">
             {customer.gender}
           </TableCell>
@@ -86,49 +84,52 @@ export default function PatientsTableView() {
   }
 
   return (
-    <TableContainer component={Paper} style={{ borderRadius: 15 }}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow style={{ height: 10 }}>
-            <TableCell className={classes.tableHeaderCell} align="left">
-              Name
-            </TableCell>
-            <TableCell className={classes.tableHeaderCell} align="left">
-              Gender
-            </TableCell>
-            <TableCell className={classes.tableHeaderCell} align="left">
-              Age
-            </TableCell>
-            <TableCell className={classes.tableHeaderCell} align="left">
-              Phone Number
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {customerState.customers.length !== 0 && makeCustomerListDisplay()}
-        </TableBody>
+    <div>
+      <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
+      <TableContainer component={Paper} style={{ borderRadius: 15 }}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow style={{ height: 10 }}>
+              <TableCell className={classes.tableHeaderCell} align="left">
+                Name
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align="left">
+                Gender
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align="left">
+                Age
+              </TableCell>
+              <TableCell className={classes.tableHeaderCell} align="left">
+                Phone Number
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {customerState.customers.length !== 0 && makeCustomerListDisplay()}
+          </TableBody>
 
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={customerState.customers.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'rows per page',
-                },
-                native: true,
-              }}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
-            />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+                colSpan={3}
+                count={customerState.customers.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: {
+                    'aria-label': 'rows per page',
+                  },
+                  native: true,
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
