@@ -12,23 +12,9 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetAppointmentsLoadedState } from "../Actions/LoadedStatesActions";
-import { SetAddPatientCustomerProfile, SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
+import { SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
-import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
-
-
-function setFilteredAppointmentsAction(appointments: Array<IAppointmentData>) {
-  return {
-    type: Appointment_Types.SET_APPOINTMENT_STATE_FILTERED_APPOINTMENTS,
-    payload: appointments
-  };
-}
-
-
-export const SetAppointments = (appointments: Array<IAppointmentData>): Action => ({
-  type: Appointment_Types.SET_APPOINTMENT_STATE_APPOINTMENTS,
-  payload: appointments
-});
+import { SetAppointments, SetFilteredAppointmentsAction } from "../Payload/AppointmentPayloads";
 
 export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
   SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
@@ -50,7 +36,7 @@ export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Ac
   var filteredAppointments = filterAppointments(selectedDates, appointments)
 
   SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-  dispatch(setFilteredAppointmentsAction(filteredAppointments));
+  dispatch(SetFilteredAppointmentsAction(filteredAppointments));
 };
 
 //Get all appointments for currently logged in doctor.

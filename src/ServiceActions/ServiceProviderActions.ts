@@ -11,15 +11,8 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { SetFatalError, SetLinearLoadingBarToggle } from "../Actions/Common/UIControlActions";
 import { SetCurrentServiceProviderLoadedState } from "../Actions/LoadedStatesActions";
+import { SetCurrentServiceProvider } from "../Actions/ServiceProviderActions";
 
-function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
-    return {
-        type: Current_Service_Provider_State_Types.SET_CURRENT_SERVICE_PROVIDER,
-        payload: serviceProvider
-    };
-}
-
-export const SetCurrentServiceProvider = (serviceProvider: IServiceProvider): Action => (setCurrentServiceProviderAction(serviceProvider));
 
 export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get Service Provider", "GetCurrentServiceProvider", SeverityLevel.Information);

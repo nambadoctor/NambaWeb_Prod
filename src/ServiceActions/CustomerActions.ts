@@ -15,15 +15,8 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetCustomersLoadedState } from "../Actions/LoadedStatesActions";
 import { toast } from "react-toastify";
+import { SetCustomers } from "../Actions/CustomerActions";
 
-function setCustomersHelper(customers: ICustomerIncomingData[]) {
-    return {
-        type: Customer_Types.SET_CUSTOMER_LIST,
-        payload: customers
-    };
-}
-
-export const SetCustomers = (customers: Array<ICustomerIncomingData>): Action => (setCustomersHelper(customers.reverse()));
 
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Customers For Service Provider In Org Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);

@@ -7,7 +7,7 @@ import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetReportsForConsultation } from "./ConsultationActions";
+import { SetReportsForConsultation } from "../Actions/ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";

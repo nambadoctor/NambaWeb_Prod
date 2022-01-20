@@ -10,11 +10,7 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { SetFatalError, SetLinearLoadingBarToggle } from "../Actions/Common/UIControlActions";
 import { SetServiceProviderBasicLoadedState } from "../Actions/LoadedStatesActions";
-
-export const SetServiceProviderBasicAction = (serviceProviderBasic: IServiceProviderBasic): Action => ({
-    type: ServiceProviderBasicReducer_Types.SET_SERVICE_PROVIDER_BASIC,
-    payload: serviceProviderBasic
-});
+import { SetServiceProviderBasicAction } from "../Actions/ServiceProviderBasicActions";
 
 export const GetServiceProviderBasic = (): ThunkAction<void, RootState, null, Action> => async dispatch => {
 

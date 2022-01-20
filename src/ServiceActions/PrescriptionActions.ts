@@ -5,7 +5,7 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerPrescriptionEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
-import { SetPrescriptionsForConsultation } from "./ConsultationActions";
+import { SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
