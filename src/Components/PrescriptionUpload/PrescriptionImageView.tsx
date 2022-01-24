@@ -56,18 +56,16 @@ export default function PrescriptionImageView() {
               style={{
                 display: "inline-block",
                 position: "relative",
-                width: 200,
-                margin: "10px 10px 0 0",
+                width: 100,
+                marginTop: 10,
+                marginRight: 20
               }}
             >
               <img
                 src={src.sasUrl}
                 onClick={() => openImageViewer(index)}
-                width="200"
-                height="120"
                 key={index}
-                style={{ margin: "5px" }}
-                alt=""
+                style={{width: 100, height: 100}}
               />
 
               <div
