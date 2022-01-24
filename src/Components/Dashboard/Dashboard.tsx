@@ -27,7 +27,7 @@ function Dashboard() {
 
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
-
+    console.log("hello init");
     SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
     dispatch(SetInitialLoadingStartTime())
     dispatch(GetServiceProviderBasic());
