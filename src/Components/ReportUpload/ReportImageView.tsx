@@ -57,8 +57,9 @@ export default function ReportImageView() {
                 style={{
                   display: "inline-block",
                   position: "relative",
-                  width: 200,
-                  margin: "10px 10px 0 0",
+                  width: 100,
+                  marginTop: 10,
+                  marginRight: 20
                 }}
               >
                 <img
@@ -66,9 +67,8 @@ export default function ReportImageView() {
                   onClick={() => openImageViewer(index)}
                   width="200"
                   height="150"
+                  style={{width: 100, height: 100}}
                   key={index}
-                  style={{ margin: "5px" }}
-                  alt=""
                 />
 
                 <div
