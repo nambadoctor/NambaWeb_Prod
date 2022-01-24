@@ -8,6 +8,8 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - naren_prod
+env:
+  CI: false
 
 jobs:
   build_and_deploy_job:
