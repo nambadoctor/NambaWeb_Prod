@@ -5,14 +5,20 @@ import { RootState } from "../../store";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { DeletePrescription } from "../../ServiceActions/PrescriptionActions";
 import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
+import { Row } from "react-bootstrap";
+import { Divider } from "@mui/material";
 
 export default function PrescriptionImageView() {
   const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [images, setImages] = useState([""]);
-  let displayImageObjs = useSelector(
+  let currentCustomerPrescriptionImages = useSelector(
     (state: RootState) => state.ConsultationState.currentCustomerPrescriptions
+  );
+
+  let allCustomerPrescriptionImages = useSelector(
+    (state: RootState) => state.ConsultationState.allCustomerPrescriptions
   );
 
   const openImageViewer = useCallback((index) => {
@@ -27,13 +33,13 @@ export default function PrescriptionImageView() {
 
   useEffect(() => {
     getImageURLsFromPrescriptions();
-  }, [displayImageObjs]);
+  }, [currentCustomerPrescriptionImages]);
 
   function getImageURLsFromPrescriptions() {
     var stringList: string[] = [];
 
-    if (displayImageObjs) {
-      displayImageObjs.forEach((element) => {
+    if (currentCustomerPrescriptionImages) {
+      currentCustomerPrescriptionImages.forEach((element) => {
         stringList.push(element.sasUrl);
       });
     }
@@ -50,8 +56,8 @@ export default function PrescriptionImageView() {
   function imageViewDisplay() {
     return (
       <div style={{ overflow: "auto" }}>
-        {displayImageObjs &&
-          displayImageObjs.map((src, index) => (
+        {currentCustomerPrescriptionImages &&
+          currentCustomerPrescriptionImages.map((src, index) => (
             <div
               style={{
                 display: "inline-block",
@@ -65,7 +71,7 @@ export default function PrescriptionImageView() {
                 src={src.sasUrl}
                 onClick={() => openImageViewer(index)}
                 key={index}
-                style={{width: 100, height: 100}}
+                style={{ width: 100, height: 100 }}
               />
 
               <div
@@ -76,6 +82,31 @@ export default function PrescriptionImageView() {
               </div>
             </div>
           ))}
+
+        {allCustomerPrescriptionImages &&
+          <div>
+            <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
+            <h5>History Of Prescriptions</h5>
+
+            {allCustomerPrescriptionImages.map((src, index) => (
+              <div
+                style={{
+                  display: "inline-block",
+                  position: "relative",
+                  width: 100,
+                  marginTop: 10,
+                  marginRight: 20
+                }}
+              >
+                <img
+                  src={src.sasUrl}
+                  onClick={() => openImageViewer(index)}
+                  key={index}
+                  style={{ width: 100, height: 100 }}
+                />
+              </div>
+            ))}
+          </div>}
 
         {isViewerOpen && (
           <ImageViewer
@@ -107,7 +138,7 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {displayImageObjs && displayImageObjs.length > 0
+      {currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

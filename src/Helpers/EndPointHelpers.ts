@@ -73,5 +73,5 @@ export function GetCustomerAllReportsEndPoint (organisationId:string, customerId
 }
 
 export function GetCustomerAllPrescriptionsEndPoint (organisationId:string, customerId:string) {
-    return "report/GetAllPrescriptions/" + organisationId + "/" + customerId;
+    return "prescription/GetAllPrescriptions/" + organisationId + "/" + customerId;
 }

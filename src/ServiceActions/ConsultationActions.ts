@@ -10,7 +10,7 @@ import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../A
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
-import { SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
+import { SetAllPrescriptionsForConsultation, SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
 
 
 //Get consultation appointment
@@ -92,7 +92,7 @@ export const GetAllPrescriptionsForCustomer = (): ThunkAction<void, RootState, n
 
     if (response) {
         SetTrackTrace("Dispatch Set All Prescriptions For Customer" + response.data, "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
-        dispatch(SetAllReportsForConsultation(response.data));
+        dispatch(SetAllPrescriptionsForConsultation(response.data));
     } else {
         dispatch(SetNonFatalError("Could not get history of prescriptions"))
     }

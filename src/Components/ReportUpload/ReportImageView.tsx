@@ -5,15 +5,19 @@ import { RootState } from "../../store";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
+import { Divider } from "@mui/material";
+import { Row } from "react-bootstrap";
 
 export default function ReportImageView() {
   const dispatch = useDispatch();
   const [currentImage, setCurrentImage] = useState(0);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [images, setImages] = useState([""]);
-  let displayImageObjs = useSelector(
+  let currentCustomerReportsImages = useSelector(
     (state: RootState) => state.ConsultationState.currentCustomerReports
   );
+
+  let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
 
   const openImageViewer = useCallback((index) => {
     setCurrentImage(index);
@@ -27,13 +31,13 @@ export default function ReportImageView() {
 
   useEffect(() => {
     getImageURLsFromReports();
-  }, [displayImageObjs]);
+  }, [currentCustomerReportsImages]);
 
   function getImageURLsFromReports() {
     var stringList: string[] = [];
 
-    if (displayImageObjs) {
-      displayImageObjs.forEach((element) => {
+    if (currentCustomerReportsImages) {
+      currentCustomerReportsImages.forEach((element) => {
         stringList.push(element.sasUrl);
       });
     }
@@ -51,8 +55,8 @@ export default function ReportImageView() {
     return (
       <div style={{ overflow: "auto" }}>
         <div>
-          {displayImageObjs &&
-            displayImageObjs.map((src, index) => (
+          {currentCustomerReportsImages &&
+            currentCustomerReportsImages.map((src, index) => (
               <div
                 style={{
                   display: "inline-block",
@@ -67,7 +71,7 @@ export default function ReportImageView() {
                   onClick={() => openImageViewer(index)}
                   width="200"
                   height="150"
-                  style={{width: 100, height: 100}}
+                  style={{ width: 100, height: 100 }}
                   key={index}
                 />
 
@@ -79,6 +83,32 @@ export default function ReportImageView() {
                 </div>
               </div>
             ))}
+
+
+          {allCustomerReportsImages &&
+            <div>
+              <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
+              <h5>History Of Reports</h5>
+
+              {allCustomerReportsImages.map((src, index) => (
+                <div
+                  style={{
+                    display: "inline-block",
+                    position: "relative",
+                    width: 100,
+                    marginTop: 10,
+                    marginRight: 20
+                  }}
+                >
+                  <img
+                    src={src.sasUrl}
+                    onClick={() => openImageViewer(index)}
+                    key={index}
+                    style={{ width: 100, height: 100 }}
+                  />
+                </div>
+              ))}
+            </div>}
 
           {isViewerOpen && (
             <ImageViewer
@@ -111,7 +141,7 @@ export default function ReportImageView() {
 
   return (
     <div>
-      {displayImageObjs && displayImageObjs.length > 0
+      {currentCustomerReportsImages && currentCustomerReportsImages.length > 0
         ? imageViewDisplay()
         : noReportsDisplay()}
     </div>
