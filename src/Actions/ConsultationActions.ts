@@ -21,14 +21,28 @@ function setSelectedCustomerAction(customer: ICustomerIncomingData) {
 
 function setReportsAction(reports: IReportIncomingData) {
     return {
-        type: ConsultationTypes_Types.SET_CURRENT_CUSTOMER_REPORTS,
+        type: ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_REPORTS,
+        payload: reports
+    };
+}
+
+function setAllReportsAction(reports: IReportIncomingData) {
+    return {
+        type: ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS,
         payload: reports
     };
 }
 
 function setPrescriptionsAction(prescriptions: IPrescriptionIncomingData) {
     return {
-        type: ConsultationTypes_Types.SET_CURRENT_CUSTOMER_PRESCRIPTIONS,
+        type: ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_PRESCRIPTIONS,
+        payload: prescriptions
+    };
+}
+
+function setAllPrescriptionsAction(prescriptions: IPrescriptionIncomingData) {
+    return {
+        type: ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS,
         payload: prescriptions
     };
 }
@@ -53,5 +67,5 @@ export const SetReportsForConsultation = (reports: IReportIncomingData): Action 
 export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData): Action => (setPrescriptionsAction(prescriptions));
 export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData): Action => (setPreviousAppointmentAction(appointment));
 export const SetNextAppointmentForConsultation = (appointment: IAppointmentData): Action => (setNextAppointmentAction(appointment));
-
-
+export const SetAllReportsForConsultation = (reports: IReportIncomingData): Action => (setAllReportsAction(reports));
+export const SetAllPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData): Action => (setAllPrescriptionsAction(prescriptions));

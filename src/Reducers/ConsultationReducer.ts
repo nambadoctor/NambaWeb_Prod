@@ -9,8 +9,11 @@ import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 export enum ConsultationTypes_Types {
     SET_CURRENT_APPOINTMENT = "SET_CURRENT_APPOINTMENT",
     SET_CURRENT_CUSTOMER = "SET_CURRENT_CUSTOMER",
-    SET_CURRENT_CUSTOMER_REPORTS = "SET_CURRENT_CUSTOMER_REPORTS",
-    SET_CURRENT_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_CUSTOMER_PRESCRIPTIONS",
+
+    SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_REPORTS = "SET_CURRENT_CUSTOMER_REPORTS",
+    SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_CUSTOMER_PRESCRIPTIONS",
+    SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS = "SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS",
+    SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS",
 
     SET_PREVIOUS_APPOINTMENT = "SET_PREVIOUS_APPOINTMENT",
     SET_NEXT_APPOINTMENT = "SET_NEXT_APPOINTMENT",
@@ -19,8 +22,11 @@ export enum ConsultationTypes_Types {
 export interface ConsultationState {
     currentAppointment: IAppointmentData | null,
     currentCustomer: ICustomerIncomingData | null,
+
     currentCustomerReports: IReportIncomingData[] | null,
     currentCustomerPrescriptions: IPrescriptionIncomingData[] | null,
+    allCustomerReports: IReportIncomingData[] | null,
+    allCustomerPrescriptions: IPrescriptionIncomingData[] | null,
 
     previousAppointment: IAppointmentData | null,
     nextAppointment: IAppointmentData | null
@@ -29,8 +35,11 @@ export interface ConsultationState {
 const initialState: ConsultationState = {
     currentAppointment: null,
     currentCustomer: null,
+
     currentCustomerReports: null,
     currentCustomerPrescriptions: null,
+    allCustomerReports: null,
+    allCustomerPrescriptions: null,
 
     previousAppointment: null,
     nextAppointment: null
@@ -51,13 +60,13 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
                 ...state,
                 currentCustomer: action.payload
             }
-        case ConsultationTypes_Types.SET_CURRENT_CUSTOMER_REPORTS:
+        case ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_REPORTS:
             SetTrackTrace("Consultation Reducer Set Current Customer Reports in Store", "ConsultationReducer", SeverityLevel.Information)
             return {
                 ...state,
                 currentCustomerReports: action.payload
             }
-        case ConsultationTypes_Types.SET_CURRENT_CUSTOMER_PRESCRIPTIONS:
+        case ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_PRESCRIPTIONS:
             SetTrackTrace("Consultation Reducer Set Current Customer Presription in Store", "ConsultationReducer", SeverityLevel.Information)
             return {
                 ...state,
@@ -74,6 +83,18 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
             return {
                 ...state,
                 nextAppointment: action.payload
+            }
+        case ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS:
+            SetTrackTrace("Consultation Reducer Set All Reports in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                allCustomerReports: action.payload
+            }
+        case ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS:
+            SetTrackTrace("Consultation Reducer Set All Prescriptions in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                allCustomerPrescriptions: action.payload
             }
         default:
             SetTrackTrace("Consultation Reducer Hits default switch: Returns original state", "ConsultationReducer", SeverityLevel.Information)

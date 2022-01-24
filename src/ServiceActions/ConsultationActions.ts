@@ -1,6 +1,6 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { ThunkAction } from "redux-thunk";
-import { GetAppointmentForServiceProvider, GetCustomerForServiceProvider } from "../Helpers/EndPointHelpers";
+import { GetAppointmentForServiceProvider, GetCustomerAllPrescriptionsEndPoint, GetCustomerAllReportsEndPoint, GetCustomerForServiceProvider } from "../Helpers/EndPointHelpers";
 import { getCall } from "../Http/http-helpers";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -10,7 +10,7 @@ import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../A
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
-import { SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
+import { SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
 
 
 //Get consultation appointment
@@ -35,6 +35,8 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
         SetTrackTrace("Dispatch Set Selected Appointment" + response.data, "GetAppointmentForConsultation", SeverityLevel.Information);
         dispatch(SetSelectedAppointmentForConsultation(response.data));
         dispatch(GetCustomerForConsultation(response.data.customerId));
+        dispatch(GetAllReportsForCustomer())
+        dispatch(GetAllPrescriptionsForCustomer())
         dispatch(GetNextAndPreviousAppointmentForConsultation())
         dispatch(GetReports())
         dispatch(GetPrescriptions())
@@ -65,5 +67,33 @@ export const GetCustomerForConsultation = (customerId: string): ThunkAction<void
         }
     } catch (error) {
         dispatch(SetNonFatalError("Could not find customer for this appointment"))
+    }
+};
+
+export const GetAllReportsForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Reports For Customer Action", "GetAllReportsForCustomer", SeverityLevel.Information);
+    const currentAppointment = getState().ConsultationState.currentAppointment!
+
+    let response = await getCall({} as Array<IAppointmentData>, GetCustomerAllReportsEndPoint(currentAppointment.organisationId, currentAppointment.customerId), "GetAllReportsForCustomer");
+
+    if (response) {
+        SetTrackTrace("Dispatch Set All Reports For Customer" + response.data, "GetAllReportsForCustomer", SeverityLevel.Information);
+        dispatch(SetAllReportsForConsultation(response.data));
+    } else {
+        dispatch(SetNonFatalError("Could not get history of reports"))
+    }
+};
+
+export const GetAllPrescriptionsForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Prescriptions For Customer Action", "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
+    const currentAppointment = getState().ConsultationState.currentAppointment!
+
+    let response = await getCall({} as Array<IAppointmentData>, GetCustomerAllPrescriptionsEndPoint(currentAppointment.organisationId, currentAppointment.customerId), "GetAllPrescriptionsForCustomer");
+
+    if (response) {
+        SetTrackTrace("Dispatch Set All Prescriptions For Customer" + response.data, "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
+        dispatch(SetAllReportsForConsultation(response.data));
+    } else {
+        dispatch(SetNonFatalError("Could not get history of prescriptions"))
     }
 };

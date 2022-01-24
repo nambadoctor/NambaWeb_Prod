@@ -67,3 +67,11 @@ export function DeleteCustomerReportEndPoint (serviceRequestId:string, reportId:
 export function DeleteCustomerPrescriptionEndPoint (serviceRequestId:string, prescriptionid:string) {
     return "prescription/" + serviceRequestId + "/" + prescriptionid
 }
+
+export function GetCustomerAllReportsEndPoint (organisationId:string, customerId:string) {
+    return "report/GetAllReports/" + organisationId + "/" + customerId;
+}
+
+export function GetCustomerAllPrescriptionsEndPoint (organisationId:string, customerId:string) {
+    return "report/GetAllPrescriptions/" + organisationId + "/" + customerId;
+}
