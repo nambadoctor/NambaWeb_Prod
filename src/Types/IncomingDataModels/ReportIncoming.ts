@@ -1,8 +1,7 @@
 export default interface IReportIncomingData {
     reportId: string
-    name: string
+    fileName: string
     fileType: string
-    details: string
-    detailsType: string
     sasUrl: string
+    uploadedDateTime: string
 }
