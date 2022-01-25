@@ -11,6 +11,7 @@ import { SetReportsForConsultation } from "../Actions/ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
+import { GetAllReportsForCustomer } from "./ConsultationActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -21,6 +22,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
 
     if (response) {
       dispatch(SetReportsForConsultation(response.data))
+      dispatch(GetAllReportsForCustomer())
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get reports for this appointment"))
@@ -89,8 +91,7 @@ export const UploadReportFromBase64String = (base64Report: string): ThunkAction<
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload report image"))
   }
-
-
+  
 };
 
 
@@ -107,6 +108,7 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
     if (response) {
       dispatch(GetReports());
+      dispatch(GetAllReportsForCustomer());
 
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Report Image Deleted")

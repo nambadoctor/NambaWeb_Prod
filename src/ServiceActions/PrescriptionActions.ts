@@ -11,6 +11,7 @@ import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionI
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
+import { GetAllPrescriptionsForCustomer } from "./ConsultationActions";
 
 export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -21,6 +22,7 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
 
     if (response) {
       dispatch(SetPrescriptionsForConsultation(response.data))
+      dispatch(GetAllPrescriptionsForCustomer())
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get prescription for this appointment"))
@@ -104,7 +106,7 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
 
     if (response) {
       dispatch(GetPrescriptions());
-
+      dispatch(GetAllPrescriptionsForCustomer());
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Prescription Image Deleted")
     }
