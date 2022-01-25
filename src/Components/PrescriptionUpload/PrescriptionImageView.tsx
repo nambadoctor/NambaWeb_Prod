@@ -35,10 +35,6 @@ export default function PrescriptionImageView() {
     getImageURLsFromPrescriptions();
   }, [currentCustomerPrescriptionImages]);
 
-  useEffect(() => {
-    getImageURLsFromPrescriptions();
-  }, [allCustomerPrescriptionImages]);
-
   function getImageURLsFromPrescriptions() {
     var stringList: string[] = [];
 

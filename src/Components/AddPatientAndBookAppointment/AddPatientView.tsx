@@ -101,6 +101,7 @@ export default function AddPatientView() {
                         variant="outlined"
                         error={Boolean(addPatientState.validationErrors.age)}
                         helperText={addPatientState.validationErrors.age}
+                        style={{width: 158}}
                     />
 
                 </Col>

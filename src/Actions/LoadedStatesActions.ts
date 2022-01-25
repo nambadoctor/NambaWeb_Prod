@@ -26,25 +26,25 @@ export const SetInitialLoadingStartTime = (): ThunkAction<void, RootState, null,
 
 export const SetServiceProviderBasicLoadedState = (isLoaded: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(setBooleanPayload(isLoaded, LoadedStatesReducer_Types.SET_SERVICE_PROVIDER_BASIC_LOADED_STATE));
-    dispatch(CheckForDefaultOrg())
+    dispatch(CheckForAllStatesLoaded())
 }
 
 export const SetCurrentServiceProviderLoadedState = (isLoaded: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(setBooleanPayload(isLoaded, LoadedStatesReducer_Types.SET_CURRENT_SERVICE_PROVIDER_LOADED_STATE));
-    dispatch(CheckForDefaultOrg())
+    dispatch(CheckForAllStatesLoaded())
 }
 
 export const SetAppointmentsLoadedState = (isLoaded: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(setBooleanPayload(isLoaded, LoadedStatesReducer_Types.SET_APPOINTMENTS_LOADED_STATE))
-    dispatch(CheckForDefaultOrg())
+    dispatch(CheckForAllStatesLoaded())
 }
 
 export const SetCustomersLoadedState = (isLoaded: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(setBooleanPayload(isLoaded, LoadedStatesReducer_Types.SET_CUSTOMERS_LOADED_STATE))
-    dispatch(CheckForDefaultOrg())
+    dispatch(CheckForAllStatesLoaded())
 }
 
-export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const CheckForAllStatesLoaded = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     const loadedState = getState().LoadedState;
 
     if (

@@ -37,6 +37,7 @@ export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Ac
 
   SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
   dispatch(SetFilteredAppointmentsAction(filteredAppointments));
+  dispatch(SetAppointmentsLoadedState(true))
 };
 
 //Get all appointments for currently logged in doctor.
@@ -53,8 +54,6 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   try {
     //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
     let response = await getCall({} as Array<IAppointmentData>, GetServiceProviderAppointmentsInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, [currentServiceProvider.serviceProviderId]), "GetAllAppointments");
-
-    dispatch(SetAppointmentsLoadedState(true))
 
     SetTrackTrace("Dispatch Set All Appointments" + response.data, "GetAllAppointments", SeverityLevel.Information);
     dispatch(SetAppointments(response.data));
