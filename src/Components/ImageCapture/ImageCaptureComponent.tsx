@@ -25,6 +25,7 @@ const ImageCaptureComponent: React.FC<ImageCaptureProps> = (props: ImageCaptureP
         <Camera
           onTakePhoto={(dataUri) => { props.handleTakePhoto(dataUri) }}
           idealFacingMode="environment"
+          isImageMirror={true}
         />
       </Box>
 
