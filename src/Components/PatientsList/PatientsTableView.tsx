@@ -51,7 +51,7 @@ export default function PatientsTableView() {
   const dispatch = useDispatch();
   const classes = usePatientTableStyles();
 
-  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook()
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook(10)
 
   const customerState = useSelector(
     (state: RootState) => state.CustomersState

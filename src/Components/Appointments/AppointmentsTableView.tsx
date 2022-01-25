@@ -58,7 +58,7 @@ export default function AppointmentsTable() {
 
   const appointmentState = useSelector((state: RootState) => state.AppointmentState);
 
-  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook()
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook(-1)
 
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {

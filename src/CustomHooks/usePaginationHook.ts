@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export default function usePaginationHook() {
+export default function usePaginationHook(rows:number) {
 
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(rows);
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
