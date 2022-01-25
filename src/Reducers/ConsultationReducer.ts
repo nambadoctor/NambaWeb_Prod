@@ -94,7 +94,7 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
             SetTrackTrace("Consultation Reducer Set All Prescriptions in Store", "ConsultationReducer", SeverityLevel.Information)
             return {
                 ...state,
-                allCustomerPrescriptions: action.payload
+                allCustomerPrescriptions: action.payload as IPrescriptionIncomingData[]
             }
         default:
             SetTrackTrace("Consultation Reducer Hits default switch: Returns original state", "ConsultationReducer", SeverityLevel.Information)

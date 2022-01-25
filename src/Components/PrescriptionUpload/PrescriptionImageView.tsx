@@ -35,6 +35,10 @@ export default function PrescriptionImageView() {
     getImageURLsFromPrescriptions();
   }, [currentCustomerPrescriptionImages]);
 
+  useEffect(() => {
+    getImageURLsFromPrescriptions();
+  }, [allCustomerPrescriptionImages]);
+
   function getImageURLsFromPrescriptions() {
     var stringList: string[] = [];
 
@@ -83,7 +87,7 @@ export default function PrescriptionImageView() {
             </div>
           ))}
 
-        {allCustomerPrescriptionImages &&
+        {(allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0) &&
           <div>
             <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
             <h5>History Of Prescriptions</h5>
@@ -138,7 +142,7 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0
+      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0) || allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

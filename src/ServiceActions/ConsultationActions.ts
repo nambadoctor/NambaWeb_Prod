@@ -89,7 +89,7 @@ export const GetAllReportsForCustomer = (): ThunkAction<void, RootState, null, A
 export const GetAllPrescriptionsForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Prescriptions For Customer Action", "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
     const currentAppointment = getState().ConsultationState.currentAppointment!
-    const currentAppointmentPrescriptions = getState().ConsultationState.currentCustomerPrescriptions!;
+    const currentAppointmentPrescriptions = getState().ConsultationState.currentCustomerPrescriptions;
 
     let response = await getCall({} as Array<IAppointmentData>, GetCustomerAllPrescriptionsEndPoint(currentAppointment.organisationId, currentAppointment.customerId), "GetAllPrescriptionsForCustomer");
 

@@ -85,7 +85,7 @@ export default function ReportImageView() {
             ))}
 
 
-          {allCustomerReportsImages &&
+          {(allCustomerReportsImages && allCustomerReportsImages.length > 0) &&
             <div>
               <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
               <h5>History Of Reports</h5>
@@ -141,7 +141,7 @@ export default function ReportImageView() {
 
   return (
     <div>
-      {currentCustomerReportsImages && currentCustomerReportsImages.length > 0
+      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0) || allCustomerReportsImages && allCustomerReportsImages.length > 0
         ? imageViewDisplay()
         : noReportsDisplay()}
     </div>

@@ -1,19 +1,24 @@
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 
-export function FilterAllAndCurrentPrescriptions (currentAppointmentPrescriptions:IPrescriptionIncomingData[], allAppointmentPrescriptions:IPrescriptionIncomingData[]) {
-    var currentPrescriptionIds:string[] = {} as string[]
+export function FilterAllAndCurrentPrescriptions(currentAppointmentPrescriptions: IPrescriptionIncomingData[]|null, allAppointmentPrescriptions: IPrescriptionIncomingData[]) {
+    var prescriptionsToReturn:IPrescriptionIncomingData[] = [];
 
-    currentAppointmentPrescriptions.forEach(prescription => {
-        currentPrescriptionIds.push(prescription.prescriptionDocumentId);
-    });
+    if (currentAppointmentPrescriptions && currentAppointmentPrescriptions.length > 0) {
+        var currentPrescriptionIds: string[] = []
 
-    var prescriptionsToReturn = {} as IPrescriptionIncomingData[];
+        currentAppointmentPrescriptions.forEach(prescription => {
+            currentPrescriptionIds.push(prescription.prescriptionDocumentId);
+        });
 
-    allAppointmentPrescriptions.forEach(prescription => {
-        if (currentPrescriptionIds.includes(prescription.prescriptionDocumentId)) {
-            prescriptionsToReturn.push(prescription);
-        }
-    });
+        allAppointmentPrescriptions.forEach(prescription => {
+            if (!currentPrescriptionIds.includes(prescription.prescriptionDocumentId)) {
+                prescriptionsToReturn.push(prescription);
+            }
+        });
+
+    } else {
+        prescriptionsToReturn = allAppointmentPrescriptions
+    }
 
     return prescriptionsToReturn
-} 
+}
