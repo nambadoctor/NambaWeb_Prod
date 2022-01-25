@@ -61,6 +61,13 @@ function setNextAppointmentAction(appointment: IAppointmentData) {
     };
 }
 
+function clearAllValuesForConsultationAction () {
+    return {
+        type: ConsultationTypes_Types.CLEAR_ALL_CONSULTATION_STATES,
+        payload: null
+    };
+}
+
 export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentData): Action => (setSelectedAppointmentAction(appointment));
 export const SetSelectedCustomerForConsultation = (customer: ICustomerIncomingData): Action => (setSelectedCustomerAction(customer));
 export const SetReportsForConsultation = (reports: IReportIncomingData[]): Action => (setReportsAction(reports));
@@ -69,3 +76,4 @@ export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData
 export const SetNextAppointmentForConsultation = (appointment: IAppointmentData): Action => (setNextAppointmentAction(appointment));
 export const SetAllReportsForConsultation = (reports: IReportIncomingData[]): Action => (setAllReportsAction(reports));
 export const SetAllPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData[]): Action => (setAllPrescriptionsAction(prescriptions));
+export const ClearAllValuesForConsultation = (): Action => (clearAllValuesForConsultationAction());

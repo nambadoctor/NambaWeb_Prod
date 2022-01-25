@@ -10,6 +10,7 @@ import { GetAppointmentForConsultation } from "../../ServiceActions/Consultation
 import { Col, Row } from "react-bootstrap";
 import "../../../src/App.css";
 import { RootState } from "../../store";
+import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
 
 export default function ConsultationView() {
   const dispatch = useDispatch();

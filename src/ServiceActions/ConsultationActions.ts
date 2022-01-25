@@ -10,13 +10,14 @@ import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../A
 import { GetPrescriptions } from "./PrescriptionActions";
 import { GetReports } from "./ReportActions";
 import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
-import { SetAllPrescriptionsForConsultation, SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
+import { ClearAllValuesForConsultation, SetAllPrescriptionsForConsultation, SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
 import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 import { FilterAllAndCurrentPrescriptions } from "../Actions/PrescriptionActions";
 
 
 //Get consultation appointment
 export const GetAppointmentForConsultation = (appointmentId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(ClearAllValuesForConsultation())
     dispatch(SetLinearLoadingBarToggle(true))
 
     SetTrackTrace("Enter Get Appointment Action", "GetAppointmentForConsultation", SeverityLevel.Information);

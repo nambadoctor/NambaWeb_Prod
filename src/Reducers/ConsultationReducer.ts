@@ -17,6 +17,8 @@ export enum ConsultationTypes_Types {
 
     SET_PREVIOUS_APPOINTMENT = "SET_PREVIOUS_APPOINTMENT",
     SET_NEXT_APPOINTMENT = "SET_NEXT_APPOINTMENT",
+
+    CLEAR_ALL_CONSULTATION_STATES = "CLEAR_ALL_CONSULTATION_STATES",
 }
 
 export interface ConsultationState {
@@ -95,6 +97,18 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
             return {
                 ...state,
                 allCustomerPrescriptions: action.payload as IPrescriptionIncomingData[]
+            }
+        case ConsultationTypes_Types.CLEAR_ALL_CONSULTATION_STATES:
+            SetTrackTrace("Consultation Reducer Clear All Consultation States in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                currentAppointment: null,
+                currentCustomer: null,
+                currentCustomerReports: null,
+                currentCustomerPrescriptions: null,
+                allCustomerReports: null,
+                allCustomerPrescriptions: null,
+                previousAppointment: null,
+                nextAppointment: null
             }
         default:
             SetTrackTrace("Consultation Reducer Hits default switch: Returns original state", "ConsultationReducer", SeverityLevel.Information)
