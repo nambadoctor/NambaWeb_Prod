@@ -14,6 +14,8 @@ import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "..
 import { Link, TableFooter, TablePagination } from "@mui/material";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
+import { GetAllReportsForCustomer } from "../../ServiceActions/ReportActions";
+import { GetAllPrescriptionsForCustomer } from "../../ServiceActions/PrescriptionActions";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -61,6 +63,8 @@ export default function PatientsTableView() {
     dispatch(SetAddPatientIsCheckingForCustomer(true))
     dispatch(CheckIfCustomerExists(customer.phoneNumbers[0].number, customer.organisationId))
     dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number))
+    dispatch(GetAllReportsForCustomer(customer.customerId, customer.organisationId, null))
+    dispatch(GetAllPrescriptionsForCustomer(customer.customerId, customer.organisationId, null))
   }
 
   function makeCustomerListDisplay() {
