@@ -1,14 +1,15 @@
 import { Divider } from "@mui/material";
-import { Row } from 'react-bootstrap'
-import EditPatientView from '../EditPatient/EditPatientView'
+import EditPatientView from "../EditPatient/EditPatientView";
+import PrescriptionImageView from "../PrescriptionUpload/PrescriptionImageView";
+import ReportImageView from "../ReportUpload/ReportImageView";
 
 export default function PatientInfoColumnView() {
-    return (
-        <div>
-            <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
-            <EditPatientView></EditPatientView>
-
-            <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
-        </div>
-    )
+  return (
+    <div>
+      <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
+      <EditPatientView />
+      <ReportImageView />
+      <PrescriptionImageView />
+    </div>
+  );
 }
