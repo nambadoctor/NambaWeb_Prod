@@ -82,9 +82,9 @@ export const fileToBase64 = async (file: File) =>
     })
 
 export async function ConvertInputToFileOrBase64(input: any) {
-    if (input === typeof File) {
+    if (input instanceof File) {
         return await fileToBase64(input as File)
-    } else if (input === typeof String) {
+    } else if (typeof input == 'string') {
         return input;
     }
 }

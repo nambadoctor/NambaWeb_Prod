@@ -4,7 +4,7 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
+import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetStrayReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "../Actions/ConsultationActions";
@@ -29,7 +29,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
   }
 }
 
-export const UploadReport = (file:any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadReportForConsultation = (file: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -59,7 +59,47 @@ export const UploadReport = (file:any): ThunkAction<void, RootState, null, Actio
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload report image"))
   }
-  
+
+};
+
+export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
+
+  let selectedPatient = getState().AddPatientState.customerProfile
+  let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
+
+  var reportRequest = {
+    AppointmentId: "",
+    ServiceRequestId: "",
+    File: await ConvertInputToFileOrBase64(file),
+    FileName: "",
+    FileType: "",
+    Details: "",
+    DetailsType: ""
+  } as IReportUploadData
+
+  SetTrackTrace("Enter Upload Stray Report Action", "UploadReportAsStray", SeverityLevel.Information)
+
+  try {
+    let response = await postCall({} as any, SetStrayReportEndPoint(
+      currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
+      currentServiceProvider?.serviceProviderId ?? "",
+      "61769628911377a1b6e507e2"),
+      reportRequest,
+      "UploadReport"
+    )
+
+    if (response) {
+      dispatch(GetReports());
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Stray Report Image Uploaded")
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not upload stray report image"))
+  }
+
 };
 
 

@@ -46,8 +46,8 @@ export function SetCustomerReportEndPoint() {
     return "report"
 }
 
-export function SetStrayReportEndPoint(ServiceProviderId:string, CustomerId:string) {
-    return "report/Stray/" + ServiceProviderId + "/" + CustomerId;
+export function SetStrayReportEndPoint(OrganisationId:string, ServiceProviderId:string, CustomerId:string) {
+    return "report/Stray/" + OrganisationId + "/" + ServiceProviderId + "/" + CustomerId;
 }
 
 export function SetCustomerPrescriptionEndPoint() {
