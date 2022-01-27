@@ -4,14 +4,14 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
+import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetReportsForConsultation } from "../Actions/ConsultationActions";
+import { SetAllReportsForConsultation, SetReportsForConsultation } from "../Actions/ConsultationActions";
 import { fileToBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
-import { GetAllReportsForCustomer } from "./ConsultationActions";
+import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -22,12 +22,27 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
 
     if (response) {
       dispatch(SetReportsForConsultation(response.data))
-      dispatch(GetAllReportsForCustomer())
+      dispatch(GetAllReportsForCustomer(currentConsultationAppointment?.customerId ?? "", currentConsultationAppointment?.organisationId ?? "", response.data))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get reports for this appointment"))
   }
 }
+
+export const GetAllReportsForCustomer = (customerId:string, organisationId:string, currentConsultationReports:IReportIncomingData[]|null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  SetTrackTrace("Enter Get All Reports For Customer Action", "GetAllReportsForCustomer", SeverityLevel.Information);
+
+  let response = await getCall({} as Array<IReportIncomingData>, GetCustomerAllReportsEndPoint(organisationId, customerId), "GetAllReportsForCustomer");
+
+  if (response) {
+      SetTrackTrace("Dispatch Set All Reports For Customer" + response.data, "GetAllReportsForCustomer", SeverityLevel.Information);
+      var allReportsToSet = FilterAllAndCurrentReports(currentConsultationReports, response.data);
+      dispatch(SetAllReportsForConsultation(allReportsToSet));
+  } else {
+      dispatch(SetNonFatalError("Could not get history of reports"))
+  }
+};
+
 
 export const UploadReportFromFile = (report: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -108,7 +123,6 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
     if (response) {
       dispatch(GetReports());
-      dispatch(GetAllReportsForCustomer());
 
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Report Image Deleted")

@@ -21,19 +21,19 @@ export default function PrescriptionImageView() {
     closeImageViewer
   } = useImageViewHook();
 
-  let currentCustomerPrescriptionImages = useSelector(
-    (state: RootState) => state.ConsultationState.currentCustomerPrescriptions
+  let allCustomerPrescriptionImages = useSelector(
+    (state: RootState) => state.ConsultationState.allCustomerPrescriptions
   );
 
   useEffect(() => {
     getImageURLsFromPrescriptions();
-  }, [currentCustomerPrescriptionImages]);
+  }, [allCustomerPrescriptionImages]);
 
   function getImageURLsFromPrescriptions() {
     var stringList: string[] = [];
 
-    if (currentCustomerPrescriptionImages) {
-      currentCustomerPrescriptionImages.forEach((element) => {
+    if (allCustomerPrescriptionImages) {
+        allCustomerPrescriptionImages.forEach((element) => {
         stringList.push(element.sasUrl);
       });
     }
@@ -50,32 +50,30 @@ export default function PrescriptionImageView() {
   function imageViewDisplay() {
     return (
       <div style={{ overflow: "auto" }}>
-        {currentCustomerPrescriptionImages &&
-          currentCustomerPrescriptionImages.map((src, index) => (
-            <div
-              style={{
-                display: "inline-block",
-                position: "relative",
-                width: 100,
-                marginTop: 10,
-                marginRight: 20
-              }}
-            >
-              <img
-                src={src.sasUrl}
-                onClick={() => openImageViewer(index)}
-                key={index}
-                style={{ width: 100, height: 100 }}
-              />
+        {(allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0) &&
+          <div>
+            <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
+            <h5>History Of Prescriptions</h5>
 
+            {allCustomerPrescriptionImages.map((src, index) => (
               <div
-                onClick={() => dispatch(deletePrescription(src))}
-                style={{ position: "absolute", top: -10, right: -15 }}
+                style={{
+                  display: "inline-block",
+                  position: "relative",
+                  width: 100,
+                  marginTop: 10,
+                  marginRight: 20
+                }}
               >
-                <CancelIcon />
+                <img
+                  src={src.sasUrl}
+                  onClick={() => openImageViewer(index)}
+                  key={index}
+                  style={{ width: 100, height: 100 }}
+                />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>}
 
         {isViewerOpen && (
           <ImageViewer
@@ -107,7 +105,7 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0)
+      {allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

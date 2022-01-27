@@ -9,7 +9,7 @@ import { Divider } from "@mui/material";
 import { Row } from "react-bootstrap";
 import useImageViewHook from "../../CustomHooks/useImageViewHook";
 
-export default function ReportImageView() {
+export default function AllReportsImageView() {
   const dispatch = useDispatch();
 
   const {
@@ -21,19 +21,17 @@ export default function ReportImageView() {
     closeImageViewer
   } = useImageViewHook();
 
-  let currentCustomerReportsImages = useSelector(
-    (state: RootState) => state.ConsultationState.currentCustomerReports
-  );
+  let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
 
   useEffect(() => {
     getImageURLsFromReports();
-  }, [currentCustomerReportsImages]);
+  }, [allCustomerReportsImages]);
 
   function getImageURLsFromReports() {
     var stringList: string[] = [];
 
-    if (currentCustomerReportsImages) {
-      currentCustomerReportsImages.forEach((element) => {
+    if (allCustomerReportsImages) {
+        allCustomerReportsImages.forEach((element) => {
         stringList.push(element.sasUrl);
       });
     }
@@ -51,34 +49,30 @@ export default function ReportImageView() {
     return (
       <div style={{ overflow: "auto" }}>
         <div>
-          {currentCustomerReportsImages &&
-            currentCustomerReportsImages.map((src, index) => (
-              <div
-                style={{
-                  display: "inline-block",
-                  position: "relative",
-                  width: 100,
-                  marginTop: 10,
-                  marginRight: 20
-                }}
-              >
-                <img
-                  src={src.sasUrl}
-                  onClick={() => openImageViewer(index)}
-                  width="200"
-                  height="150"
-                  style={{ width: 100, height: 100 }}
-                  key={index}
-                />
+          {(allCustomerReportsImages && allCustomerReportsImages.length > 0) &&
+            <div>
+              <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
+              <h5>History Of Reports</h5>
 
+              {allCustomerReportsImages.map((src, index) => (
                 <div
-                  onClick={() => dispatch(deleteReport(src))}
-                  style={{ position: "absolute", top: -10, right: -15 }}
+                  style={{
+                    display: "inline-block",
+                    position: "relative",
+                    width: 100,
+                    marginTop: 10,
+                    marginRight: 20
+                  }}
                 >
-                  <CancelIcon />
+                  <img
+                    src={src.sasUrl}
+                    onClick={() => openImageViewer(index)}
+                    key={index}
+                    style={{ width: 100, height: 100 }}
+                  />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>}
 
           {isViewerOpen && (
             <ImageViewer
@@ -111,7 +105,7 @@ export default function ReportImageView() {
 
   return (
     <div>
-      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0)
+      {allCustomerReportsImages && allCustomerReportsImages.length > 0
         ? imageViewDisplay()
         : noReportsDisplay()}
     </div>
