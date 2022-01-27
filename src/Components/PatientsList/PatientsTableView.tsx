@@ -12,6 +12,7 @@ import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
 import usePatientsTableViewHook from "../../CustomHooks/usePatientsTableViewHook";
 
+
 const usePatientTableStyles = makeStyles(() => ({
   table: {
     minWidth: 650,
@@ -52,6 +53,7 @@ export default function PatientsTableView() {
 
   const { search, onSearch, handleCustomerSelect, filtered } =
     usePatientsTableViewHook();
+
 
   function makeCustomerListDisplay() {
     return (
