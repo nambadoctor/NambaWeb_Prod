@@ -8,7 +8,7 @@ import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerRep
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetReportsForConsultation } from "../Actions/ConsultationActions";
-import { fileToBase64 } from "../Utils/GeneralUtils";
+import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
 import { GetAllReportsForCustomer } from "./ConsultationActions";
@@ -29,7 +29,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
   }
 }
 
-export const UploadReportFromFile = (report: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadReport = (file:any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -38,39 +38,7 @@ export const UploadReportFromFile = (report: File): ThunkAction<void, RootState,
   var reportRequest = {
     AppointmentId: currentConsultationAppointment!.appointmentId,
     ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: await fileToBase64(report),
-    FileName: report.name,
-    FileType: report.type,
-    Details: "",
-    DetailsType: ""
-  } as IReportUploadData
-
-  SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
-
-  try {
-    let response = await postCall({} as any, SetCustomerReportEndPoint(), reportRequest, "UploadReport")
-
-    if (response) {
-      dispatch(GetReports());
-
-      dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Report Image Uploaded")
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not upload report image"))
-  }
-};
-
-export const UploadReportFromBase64String = (base64Report: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-
-  dispatch(SetLinearLoadingBarToggle(true))
-
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
-
-  var reportRequest = {
-    AppointmentId: currentConsultationAppointment!.appointmentId,
-    ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: base64Report,
+    File: await ConvertInputToFileOrBase64(file),
     FileName: "",
     FileType: "",
     Details: "",

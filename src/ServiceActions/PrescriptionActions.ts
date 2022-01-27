@@ -6,7 +6,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerPrescriptionEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
 import { SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
-import { fileToBase64 } from "../Utils/GeneralUtils";
+import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
@@ -29,7 +29,7 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
   }
 }
 
-export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadPrescription = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -38,7 +38,7 @@ export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void
   var prescriptionRequest = {
     AppointmentId: currentConsultationAppointment!.appointmentId,
     ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: await fileToBase64(prescription),
+    File: await ConvertInputToFileOrBase64(prescription),
     FileName: prescription.name,
     FileType: prescription.type,
     Details: "",
@@ -53,39 +53,6 @@ export const UploadPrescriptionFromFile = (prescription: File): ThunkAction<void
     if (response) {
       dispatch(GetPrescriptions());
       
-      dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Prescription Image Uploaded")
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not upload prescription image"))
-  }
-};
-
-export const UploadPrescriptionFromBase64String = (base64Prescription: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-
-  dispatch(SetLinearLoadingBarToggle(true))
-
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
-
-  var prescriptionRequest = {
-    AppointmentId: currentConsultationAppointment!.appointmentId,
-    ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: base64Prescription,
-    FileName: "",
-    FileType: "",
-    Details: "",
-    DetailsType: ""
-  } as IPrescriptionUploadData
-
-  SetTrackTrace("Enter Upload Prescription Action", "UploadPrescription", SeverityLevel.Information)
-
-
-  try {
-    let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
-
-    if (response) {
-      dispatch(GetPrescriptions());
-
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Prescription Image Uploaded")
     }

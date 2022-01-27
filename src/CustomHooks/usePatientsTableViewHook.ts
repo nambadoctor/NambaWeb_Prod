@@ -22,6 +22,8 @@ export default function usePatientsTableViewHook() {
 
   const onSearch = (value: any) => {
     setSearch(value);
+
+    var filteredCustomers:ICustomerIncomingData[]
     var filterWithNames = customerState.customers.filter((customer) =>
       customer.firstName.toLowerCase().includes(value.toLowerCase())
     );

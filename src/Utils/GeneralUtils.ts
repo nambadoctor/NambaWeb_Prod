@@ -80,3 +80,11 @@ export const fileToBase64 = async (file: File) =>
         reader.onload = () => resolve(reader.result)
         reader.onerror = (e) => reject(e)
     })
+
+export async function ConvertInputToFileOrBase64(input: any) {
+    if (input === typeof File) {
+        return await fileToBase64(input as File)
+    } else if (input === typeof String) {
+        return input;
+    }
+}

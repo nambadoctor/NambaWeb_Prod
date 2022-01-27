@@ -42,10 +42,12 @@ export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:st
     return "customer/phonenumber/+91" + phoneNumber + "/" + organisationId;
 }
 
-
-
 export function SetCustomerReportEndPoint() {
     return "report"
+}
+
+export function SetStrayReportEndPoint(ServiceProviderId:string, CustomerId:string) {
+    return "report/Stray/" + ServiceProviderId + "/" + CustomerId;
 }
 
 export function SetCustomerPrescriptionEndPoint() {
