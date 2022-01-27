@@ -1,25 +1,14 @@
-import { ChangeEvent, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { UploadReportForConsultation } from '../../ServiceActions/ReportActions';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Col, Row } from 'react-bootstrap';
+import useUploadOrCaptureImageHook from '../../CustomHooks/useCaptureOrUploadHook';
+import React from 'react';
+import { ImageUploadProps } from '../../Helpers/CommonProps';
 
-export default function ReportUploadPicker() {
+export const ReportUploadPicker: React.FC<ImageUploadProps> = (props) => {
 
-    const dispatch = useDispatch();
-
-    const [showCameraToggle, setShowCameraToggle] = useState(false);
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        dispatch(UploadReportForConsultation(event.target.files![0]))
-    }
-
-    const handleTakePhoto = (dataUri: any) => {
-        dispatch(UploadReportForConsultation(dataUri))
-        setShowCameraToggle(false)
-    }
+    const { showCameraToggle, setShowCameraToggle, handleChange, handleTakePhoto } = useUploadOrCaptureImageHook(props.handlePhotoCallBack)
 
     return (
         <div>
@@ -31,8 +20,8 @@ export default function ReportUploadPicker() {
                 onChange={handleChange}
             />
             <Row>
-                <Col><label htmlFor="report_upload_picker"><CloudUploadIcon style={{ color: 'white' }} /></label></Col>
-                <Col><div onClick={() => setShowCameraToggle(true)}><CameraAltIcon style={{ color: 'white' }} ></CameraAltIcon></div></Col>
+                <Col><label htmlFor="report_upload_picker"><CloudUploadIcon style={{ color: props.uploadButtonColor }} /></label></Col>
+                <Col><div onClick={() => setShowCameraToggle(true)}><CameraAltIcon style={{ color: props.uploadButtonColor }} ></CameraAltIcon></div></Col>
             </Row>
 
             {showCameraToggle && <ImageCaptureComponent setShowCameraToggle={setShowCameraToggle} handleTakePhoto={handleTakePhoto}></ImageCaptureComponent>}

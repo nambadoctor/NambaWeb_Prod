@@ -20,4 +20,4 @@ export function FilterAllAndCurrentReports (currentAppointmentReports:IReportInc
     }
 
     return reportsToReturn
-} 
+}

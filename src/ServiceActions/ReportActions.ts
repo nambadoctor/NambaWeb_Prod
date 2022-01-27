@@ -29,7 +29,7 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
   }
 }
 
-export const GetAllReportsForCustomer = (organisationId:string, customerId:string, currentReports:IReportIncomingData[]|null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const GetAllReportsForCustomer = (organisationId: string, customerId: string, currentReports: IReportIncomingData[] | null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   try {
     let response = await getCall({} as Array<IReportIncomingData>, GetCustomerAllReportsEndPoint(organisationId, customerId), "GetReports");
@@ -99,13 +99,17 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
     let response = await postCall({} as any, SetCustomerStrayReportEndPoint(
       currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
       currentServiceProvider?.serviceProviderId ?? "",
-      "61769628911377a1b6e507e2"),
+      selectedPatient.customerId),
       reportRequest,
       "UploadReport"
     )
 
     if (response) {
-      dispatch(GetReports());
+      dispatch(GetAllReportsForCustomer(
+        currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
+        selectedPatient.customerId,
+        null)
+      );
 
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Stray Report Image Uploaded")

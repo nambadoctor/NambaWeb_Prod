@@ -2,14 +2,15 @@ import { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "react-simple-image-viewer";
 import { RootState } from "../../store";
-import CancelIcon from "@mui/icons-material/Cancel";
-import { DeletePrescription } from "../../ServiceActions/PrescriptionActions";
+import { DeletePrescription, UploadPrescriptionForConsultation, UploadPrescriptionAsStray } from "../../ServiceActions/PrescriptionActions";
 import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Divider } from "@mui/material";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
+import { PrescriptionUploadPicker } from "./PrescriptionUploadPicker";
+import { AllImageDisplayProps } from "../../Helpers/CommonProps";
 
-export default function AllPrescriptionImagesView() {
+export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props) => {
     const dispatch = useDispatch();
 
     let allCustomerPrescriptionImages = useSelector(
@@ -49,7 +50,10 @@ export default function AllPrescriptionImagesView() {
                 {(allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0) &&
                     <div>
                         <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-                        <h5>History Of Prescriptions</h5>
+                        <Row>
+                            <Col md={8}><h5>History Of Prescriptions</h5></Col>
+                            {props.showUploadButton && <Col><PrescriptionUploadPicker handlePhotoCallBack={UploadPrescriptionAsStray} uploadButtonColor='#0863e4'></PrescriptionUploadPicker></Col>}
+                        </Row>
 
                         {allCustomerPrescriptionImages.map((src, index) => (
                             <div

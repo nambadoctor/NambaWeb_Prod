@@ -1,8 +1,8 @@
 import { Divider } from "@mui/material";
 import { Row } from 'react-bootstrap'
 import EditPatientView from '../EditPatient/EditPatientView'
-import AllPrescriptionImagesView from "../PrescriptionUpload/AllPrescriptionImagesView";
-import AllReportImagesView from "../ReportUpload/AllReportImagesView";
+import {AllPrescriptionImagesView} from "../PrescriptionUpload/AllPrescriptionImagesView";
+import {AllReportImagesView} from "../ReportUpload/AllReportImagesView";
 
 export default function PatientInfoColumnView() {
     return (
@@ -12,8 +12,8 @@ export default function PatientInfoColumnView() {
 
             <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
 
-            <AllPrescriptionImagesView></AllPrescriptionImagesView>
-            <AllReportImagesView></AllReportImagesView>
+            <AllPrescriptionImagesView showUploadButton={true} showCancelImageButton={true}></AllPrescriptionImagesView>
+            <AllReportImagesView showUploadButton={true} showCancelImageButton={true}></AllReportImagesView>
         </div>
     )
 }

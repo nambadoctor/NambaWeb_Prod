@@ -1,15 +1,18 @@
 import { useState, useCallback, useEffect } from "react";
 import ImageViewer from "react-simple-image-viewer";
-import { DeleteReport } from "../../ServiceActions/ReportActions";
+import { DeleteReport, UploadReportAsStray } from "../../ServiceActions/ReportActions";
 import { RootState } from "../../store";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
 import { Divider } from "@mui/material";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
+import { ReportUploadPicker } from "./ReportUploadPicker";
+import { AllImageDisplayProps } from "../../Helpers/CommonProps";
 
-export default function AllReportImagesView() {
+
+export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
     const dispatch = useDispatch();
 
     const {
@@ -47,7 +50,12 @@ export default function AllReportImagesView() {
                     {(allCustomerReportsImages && allCustomerReportsImages.length > 0) &&
                         <div>
                             <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-                            <h5>History Of Reports</h5>
+
+                            <Row>
+                                <Col md={8}><h5>History Of Reports</h5></Col>
+                                {props.showUploadButton && <Col><ReportUploadPicker handlePhotoCallBack={UploadReportAsStray} uploadButtonColor='#0863e4'></ReportUploadPicker></Col>}
+                            </Row>
+
 
                             {allCustomerReportsImages.map((src, index) => (
                                 <div

@@ -4,7 +4,7 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerPrescriptionEndPoint, GetCustomerAllPrescriptionsEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
+import { DeleteCustomerPrescriptionEndPoint, GetCustomerAllPrescriptionsEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint, SetCustomerStrayPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
 import { SetAllPrescriptionsForConsultation, SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
 import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
@@ -43,7 +43,7 @@ export const GetAllPrescriptionsForCustomer = (organisationId: string, customerI
   }
 }
 
-export const UploadPrescription = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadPrescriptionForConsultation = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -73,6 +73,50 @@ export const UploadPrescription = (prescription: File): ThunkAction<void, RootSt
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload prescription image"))
   }
+};
+
+export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
+
+  let selectedPatient = getState().AddPatientState.customerProfile
+  let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
+
+  var prescriptionRequest = {
+    AppointmentId: "",
+    ServiceRequestId: "",
+    File: await ConvertInputToFileOrBase64(file),
+    FileName: "",
+    FileType: "",
+    Details: "",
+    DetailsType: ""
+  } as IPrescriptionUploadData
+
+  SetTrackTrace("Enter Upload Stray Prescription Action", "UploadPrescriptionAsStray", SeverityLevel.Information)
+
+  try {
+    let response = await postCall({} as any, SetCustomerStrayPrescriptionEndPoint(
+      currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
+      currentServiceProvider?.serviceProviderId ?? "",
+      selectedPatient.customerId),
+      prescriptionRequest,
+      "UploadStrayPrescription"
+    )
+
+    if (response) {
+      dispatch(GetAllPrescriptionsForCustomer(
+        currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
+        selectedPatient.customerId,
+        null)
+      );
+
+      dispatch(SetLinearLoadingBarToggle(false))
+      toast.success("Stray Prescription Image Uploaded")
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not upload stray prescription image"))
+  }
+
 };
 
 export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

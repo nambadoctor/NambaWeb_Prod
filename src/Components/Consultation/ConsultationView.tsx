@@ -1,7 +1,7 @@
-import ReportUploadPicker from "../ReportUpload/ReportUploadPicker";
+import {ReportUploadPicker} from "../ReportUpload/ReportUploadPicker";
 import ReportImageView from "../ReportUpload/ReportImageView";
 import ConsultationHeader from "./ConsultationHeader";
-import PrescriptionUploadPicker from "../PrescriptionUpload/PrescriptionUploadPicker";
+import {PrescriptionUploadPicker} from "../PrescriptionUpload/PrescriptionUploadPicker";
 import PrescriptionImageView from "../PrescriptionUpload/PrescriptionImageView";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -10,8 +10,10 @@ import { GetAppointmentForConsultation } from "../../ServiceActions/Consultation
 import { Col, Row } from "react-bootstrap";
 import "../../../src/App.css";
 import { RootState } from "../../store";
-import AllReportImagesView from "../ReportUpload/AllReportImagesView";
-import AllPrescriptionImagesView from "../PrescriptionUpload/AllPrescriptionImagesView";
+import {AllReportImagesView} from "../ReportUpload/AllReportImagesView";
+import {AllPrescriptionImagesView} from "../PrescriptionUpload/AllPrescriptionImagesView";
+import { UploadReportForConsultation } from "../../ServiceActions/ReportActions";
+import { UploadPrescriptionForConsultation } from "../../ServiceActions/PrescriptionActions";
 
 export default function ConsultationView() {
   const dispatch = useDispatch();
@@ -33,11 +35,11 @@ export default function ConsultationView() {
         <Col md="6">
           <div className="blue_filled_rounded_box_top">
             <h3 className="blue_filled_rounded_box_top_title_item">Reports</h3>
-            <ReportUploadPicker />
+            <ReportUploadPicker handlePhotoCallBack={UploadReportForConsultation} uploadButtonColor='white'/>
           </div>
           <div className="blue_border_rounded_white_box">
             <ReportImageView />
-            <AllReportImagesView />
+            <AllReportImagesView showUploadButton={false} showCancelImageButton={false}/>
           </div>
         </Col>
 
@@ -46,11 +48,11 @@ export default function ConsultationView() {
             <h3 className="blue_filled_rounded_box_top_title_item">
               Prescriptions
             </h3>
-            <PrescriptionUploadPicker />
+            <PrescriptionUploadPicker handlePhotoCallBack={UploadPrescriptionForConsultation} uploadButtonColor='white'/>
           </div>
           <div className="blue_border_rounded_white_box">
             <PrescriptionImageView />
-            <AllPrescriptionImagesView />
+            <AllPrescriptionImagesView showUploadButton={false} showCancelImageButton={false}/>
           </div>
         </Col>
       </Row>
