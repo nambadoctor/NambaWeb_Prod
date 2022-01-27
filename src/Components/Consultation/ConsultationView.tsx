@@ -10,6 +10,8 @@ import { GetAppointmentForConsultation } from "../../ServiceActions/Consultation
 import { Col, Row } from "react-bootstrap";
 import "../../../src/App.css";
 import { RootState } from "../../store";
+import AllReportImagesView from "../ReportUpload/AllReportImagesView";
+import AllPrescriptionImagesView from "../PrescriptionUpload/AllPrescriptionImagesView";
 
 export default function ConsultationView() {
   const dispatch = useDispatch();
@@ -35,6 +37,7 @@ export default function ConsultationView() {
           </div>
           <div className="blue_border_rounded_white_box">
             <ReportImageView />
+            <AllReportImagesView />
           </div>
         </Col>
 
@@ -47,6 +50,7 @@ export default function ConsultationView() {
           </div>
           <div className="blue_border_rounded_white_box">
             <PrescriptionImageView />
+            <AllPrescriptionImagesView />
           </div>
         </Col>
       </Row>

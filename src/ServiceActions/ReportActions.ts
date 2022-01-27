@@ -39,7 +39,7 @@ export const GetAllReportsForCustomer = (organisationId:string, customerId:strin
       dispatch(SetAllReportsForConsultation(filterReports))
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not get reports for this appointment"))
+    dispatch(SetNonFatalError("Could not get all reports for this patient"))
   }
 }
 

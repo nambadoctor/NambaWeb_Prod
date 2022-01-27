@@ -39,7 +39,7 @@ export const GetAllPrescriptionsForCustomer = (organisationId: string, customerI
       dispatch(SetAllPrescriptionsForConsultation(filteredPrescriptions))
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not get prescription for this appointment"))
+    dispatch(SetNonFatalError("Could not get all prescriptions for this patient"))
   }
 }
 

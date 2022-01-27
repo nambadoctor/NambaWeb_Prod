@@ -15,12 +15,8 @@ export default function ReportImageView() {
   const {
     currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
   } = useImagesHook();
-  
-  let currentCustomerReportsImages = useSelector(
-    (state: RootState) => state.ConsultationState.currentCustomerReports
-  );
 
-  let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
+  let currentCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.currentCustomerReports)
 
   useEffect(() => {
     getImageURLsFromReports();
@@ -77,32 +73,6 @@ export default function ReportImageView() {
               </div>
             ))}
 
-
-          {(allCustomerReportsImages && allCustomerReportsImages.length > 0) &&
-            <div>
-              <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-              <h5>History Of Reports</h5>
-
-              {allCustomerReportsImages.map((src, index) => (
-                <div
-                  style={{
-                    display: "inline-block",
-                    position: "relative",
-                    width: 100,
-                    marginTop: 10,
-                    marginRight: 20
-                  }}
-                >
-                  <img
-                    src={src.sasUrl}
-                    onClick={() => openImageViewer(index)}
-                    key={index}
-                    style={{ width: 100, height: 100 }}
-                  />
-                </div>
-              ))}
-            </div>}
-
           {isViewerOpen && (
             <ImageViewer
               src={images}
@@ -134,7 +104,7 @@ export default function ReportImageView() {
 
   return (
     <div>
-      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0) || allCustomerReportsImages && allCustomerReportsImages.length > 0
+      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0)
         ? imageViewDisplay()
         : noReportsDisplay()}
     </div>

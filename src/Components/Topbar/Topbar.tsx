@@ -7,12 +7,17 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
 import { ClearAddPatientState } from "../../Actions/AddPatientActions";
+import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
   const dispatch = useDispatch()
 
-  
+
+  function switchTabs () {
+    dispatch(ClearAddPatientState())
+    dispatch(ClearAllValuesForConsultation())
+  }
   
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
@@ -40,7 +45,7 @@ export default function Topbar() {
           <OrganisationPicker></OrganisationPicker>
           <Link
             to='/Appointments'
-            onClick={() => {dispatch(ClearAddPatientState())}}
+            onClick={() => {switchTabs()}}
             style={{
               color: "white",
               fontSize: 18,
@@ -52,7 +57,7 @@ export default function Topbar() {
           </Link>
           <Link
             to='/Patients'
-            onClick={() => {dispatch(ClearAddPatientState())}}
+            onClick={() => {switchTabs()}}
             style={{
               color: "white",
               fontSize: 18,
