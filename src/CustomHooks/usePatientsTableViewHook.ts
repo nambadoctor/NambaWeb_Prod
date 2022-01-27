@@ -7,6 +7,8 @@ import {
   SetAddPatientPhoneNumber,
 } from "../Actions/AddPatientActions";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
+import { GetAllReportsForCustomer } from "../ServiceActions/ReportActions";
+import { GetAllPrescriptionsForCustomer } from "../ServiceActions/PrescriptionActions";
 
 export default function usePatientsTableViewHook() {
   const dispatch = useDispatch();
@@ -22,16 +24,19 @@ export default function usePatientsTableViewHook() {
 
   const onSearch = (value: any) => {
     setSearch(value);
-
-    var filteredCustomers:ICustomerIncomingData[]
-    var filterWithNames = customerState.customers.filter((customer) =>
-      customer.firstName.toLowerCase().includes(value.toLowerCase())
-    );
+    
+    var filterWithNames = customerState.customers.filter((customer) => {
+      return(
+        customer.firstName.toLowerCase().includes(value.toLowerCase()) ||
+        customer.phoneNumbers[0].number.toLowerCase().includes(value.toLowerCase()))
+    });
     setFiltered(filterWithNames);
   };
 
   function handleCustomerSelect(customer: ICustomerIncomingData) {
     dispatch(SetAddPatientIsCheckingForCustomer(true));
+    dispatch(GetAllReportsForCustomer(customer.organisationId, customer.customerId, null))
+    dispatch(GetAllPrescriptionsForCustomer(customer.organisationId, customer.customerId, null))
     dispatch(
       CheckIfCustomerExists(
         customer.phoneNumbers[0].number,

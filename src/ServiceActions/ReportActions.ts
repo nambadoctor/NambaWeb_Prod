@@ -4,14 +4,14 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerReportEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetStrayReportEndPoint } from "../Helpers/EndPointHelpers";
+import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetStrayReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetReportsForConsultation } from "../Actions/ConsultationActions";
-import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
+import { SetAllReportsForConsultation, SetReportsForConsultation } from "../Actions/ConsultationActions";
+import { ConvertInputToFileOrBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
-import { GetAllReportsForCustomer } from "./ConsultationActions";
+import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -22,7 +22,21 @@ export const GetReports = (): ThunkAction<void, RootState, null, Action> => asyn
 
     if (response) {
       dispatch(SetReportsForConsultation(response.data))
-      dispatch(GetAllReportsForCustomer())
+      dispatch(GetAllReportsForCustomer(currentConsultationAppointment?.organisationId ?? "", currentConsultationAppointment?.customerId ?? "", response.data))
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not get reports for this appointment"))
+  }
+}
+
+export const GetAllReportsForCustomer = (organisationId:string, customerId:string, currentReports:IReportIncomingData[]|null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  try {
+    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerAllReportsEndPoint(organisationId, customerId), "GetReports");
+
+    if (response) {
+      var filterReports = FilterAllAndCurrentReports(currentReports, response.data)
+      dispatch(SetAllReportsForConsultation(filterReports))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get reports for this appointment"))
@@ -116,7 +130,6 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
     if (response) {
       dispatch(GetReports());
-      dispatch(GetAllReportsForCustomer());
 
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Report Image Deleted")

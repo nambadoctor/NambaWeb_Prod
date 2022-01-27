@@ -4,14 +4,14 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerPrescriptionEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
-import { SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
+import { DeleteCustomerPrescriptionEndPoint, GetCustomerAllPrescriptionsEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
+import { SetAllPrescriptionsForConsultation, SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
 import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
-import { GetAllPrescriptionsForCustomer } from "./ConsultationActions";
+import { FilterAllAndCurrentPrescriptions } from "../Actions/PrescriptionActions";
 
 export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -22,7 +22,21 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
 
     if (response) {
       dispatch(SetPrescriptionsForConsultation(response.data))
-      dispatch(GetAllPrescriptionsForCustomer())
+      dispatch(GetAllPrescriptionsForCustomer(currentConsultationAppointment?.organisationId ?? "", currentConsultationAppointment?.customerId ?? "", response.data))
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not get prescription for this appointment"))
+  }
+}
+
+export const GetAllPrescriptionsForCustomer = (organisationId: string, customerId: string, currentPrescriptions: IPrescriptionIncomingData[] | null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  try {
+    let response = await getCall({} as Array<IPrescriptionIncomingData>, GetCustomerAllPrescriptionsEndPoint(organisationId, customerId), "GetPrescriptions");
+
+    if (response) {
+      var filteredPrescriptions = FilterAllAndCurrentPrescriptions(currentPrescriptions, response.data)
+      dispatch(SetAllPrescriptionsForConsultation(filteredPrescriptions))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get prescription for this appointment"))
@@ -52,7 +66,7 @@ export const UploadPrescription = (prescription: File): ThunkAction<void, RootSt
 
     if (response) {
       dispatch(GetPrescriptions());
-      
+
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Prescription Image Uploaded")
     }
@@ -73,7 +87,6 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
 
     if (response) {
       dispatch(GetPrescriptions());
-      dispatch(GetAllPrescriptionsForCustomer());
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Prescription Image Deleted")
     }
