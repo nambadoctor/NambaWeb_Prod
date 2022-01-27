@@ -7,17 +7,13 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
 import { ClearAddPatientState } from "../../Actions/AddPatientActions";
-import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
   const dispatch = useDispatch()
 
-  function TabOnClick() {
-    dispatch(ClearAddPatientState())
-    dispatch(ClearAllValuesForConsultation())
-  }
-
+  
+  
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
       <Navbar.Brand>
@@ -44,7 +40,7 @@ export default function Topbar() {
           <OrganisationPicker></OrganisationPicker>
           <Link
             to='/Appointments'
-            onClick={TabOnClick}
+            onClick={() => {dispatch(ClearAddPatientState())}}
             style={{
               color: "white",
               fontSize: 18,
@@ -56,7 +52,7 @@ export default function Topbar() {
           </Link>
           <Link
             to='/Patients'
-            onClick={TabOnClick}
+            onClick={() => {dispatch(ClearAddPatientState())}}
             style={{
               color: "white",
               fontSize: 18,
@@ -66,7 +62,7 @@ export default function Topbar() {
               textDecoration: 'none'
             }}>Patients
           </Link>
-          <div onClick={SignOut} style={{ background: "#1054c4", padding: 10, borderRadius: 30, marginLeft: 10, marginRight: 20 }}>
+          <div onClick={SignOut} style={{ background: "#1054c4", padding:10, borderRadius: 30, marginLeft: 10, marginRight: 20 }}>
             <LogoutIcon style={{ color: 'white' }}> </LogoutIcon>
           </div>
         </Nav>
