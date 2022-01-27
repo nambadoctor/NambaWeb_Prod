@@ -70,3 +70,35 @@ export const GetCustomerForConsultation = (customerId: string): ThunkAction<void
         dispatch(SetNonFatalError("Could not find customer for this appointment"))
     }
 };
+
+export const GetAllReportsForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Reports For Customer Action", "GetAllReportsForCustomer", SeverityLevel.Information);
+    const currentAppointment = getState().ConsultationState.currentAppointment!
+    const currentAppointmentReports = getState().ConsultationState.currentCustomerReports!;
+
+    let response = await getCall({} as Array<IAppointmentData>, GetCustomerAllReportsEndPoint(currentAppointment.organisationId, currentAppointment.customerId), "GetAllReportsForCustomer");
+
+    if (response) {
+        SetTrackTrace("Dispatch Set All Reports For Customer" + response.data, "GetAllReportsForCustomer", SeverityLevel.Information);
+        var allReportsToSet = FilterAllAndCurrentReports(currentAppointmentReports, response.data);
+        dispatch(SetAllReportsForConsultation(allReportsToSet));
+    } else {
+        dispatch(SetNonFatalError("Could not get history of reports"))
+    }
+};
+
+export const GetAllPrescriptionsForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Prescriptions For Customer Action", "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
+    const currentAppointment = getState().ConsultationState.currentAppointment!
+    const currentAppointmentPrescriptions = getState().ConsultationState.currentCustomerPrescriptions;
+
+    let response = await getCall({} as Array<IAppointmentData>, GetCustomerAllPrescriptionsEndPoint(currentAppointment.organisationId, currentAppointment.customerId), "GetAllPrescriptionsForCustomer");
+
+    if (response) {
+        SetTrackTrace("Dispatch Set All Prescriptions For Customer" + response.data, "GetAllPrescriptionsForCustomer", SeverityLevel.Information);
+        var allPrescriptionsToSet = FilterAllAndCurrentPrescriptions(currentAppointmentPrescriptions, response.data);
+        dispatch(SetAllPrescriptionsForConsultation(allPrescriptionsToSet));
+    } else {
+        dispatch(SetNonFatalError("Could not get history of prescriptions"))
+    }
+};
