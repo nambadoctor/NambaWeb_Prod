@@ -7,27 +7,20 @@ import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
 import { Divider } from "@mui/material";
 import { Row } from "react-bootstrap";
+import useImagesHook from "../../CustomHooks/useImagesViewHook";
 
 export default function ReportImageView() {
   const dispatch = useDispatch();
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [images, setImages] = useState([""]);
+
+  const {
+    currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+  } = useImagesHook();
+  
   let currentCustomerReportsImages = useSelector(
     (state: RootState) => state.ConsultationState.currentCustomerReports
   );
 
   let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
-
-  const openImageViewer = useCallback((index) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-  };
 
   useEffect(() => {
     getImageURLsFromReports();

@@ -4,7 +4,7 @@ import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetStrayReportEndPoint } from "../Helpers/EndPointHelpers";
+import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetCustomerStrayReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { SetAllReportsForConsultation, SetReportsForConsultation } from "../Actions/ConsultationActions";
@@ -96,7 +96,7 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
   SetTrackTrace("Enter Upload Stray Report Action", "UploadReportAsStray", SeverityLevel.Information)
 
   try {
-    let response = await postCall({} as any, SetStrayReportEndPoint(
+    let response = await postCall({} as any, SetCustomerStrayReportEndPoint(
       currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
       currentServiceProvider?.serviceProviderId ?? "",
       "61769628911377a1b6e507e2"),
