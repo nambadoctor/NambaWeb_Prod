@@ -54,6 +54,10 @@ export function SetCustomerPrescriptionEndPoint() {
     return "prescription"
 }
 
+export function SetCustomerNoteEndPoint() {
+    return "note"
+}
+
 export function SetCustomerStrayPrescriptionEndPoint(OrganisationId:string, ServiceProviderId:string, CustomerId:string) {
     return "prescription/Stray/" + OrganisationId + "/" + ServiceProviderId + "/" + CustomerId
 }
