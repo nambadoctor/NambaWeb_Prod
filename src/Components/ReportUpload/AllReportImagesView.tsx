@@ -101,7 +101,11 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                     textAlign: "center",
                 }}
             >
-                No reports yet. Upload image or Take Photo.
+
+                <Row>
+                    <Col><div>No reports yet. Upload image or Take Photo.</div></Col>
+                    {props.showUploadButton && <Col><ReportUploadPicker handlePhotoCallBack={UploadReportAsStray} uploadButtonColor='#0863e4'></ReportUploadPicker></Col>}
+                </Row>
             </div>
         );
     }

@@ -13,6 +13,9 @@ export default function PatientInfoColumnView() {
             <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
 
             <AllPrescriptionImagesView showUploadButton={true} showCancelImageButton={true}></AllPrescriptionImagesView>
+
+            <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
+            
             <AllReportImagesView showUploadButton={true} showCancelImageButton={true}></AllReportImagesView>
         </div>
     )
