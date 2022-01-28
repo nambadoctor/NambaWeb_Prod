@@ -13,6 +13,7 @@ import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/Appoint
 import { ClearAllValuesForConsultation, SetAllPrescriptionsForConsultation, SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
 import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 import { FilterAllAndCurrentPrescriptions } from "../Actions/PrescriptionActions";
+import { UploadNote } from "./NoteActions";
 
 
 //Get consultation appointment
