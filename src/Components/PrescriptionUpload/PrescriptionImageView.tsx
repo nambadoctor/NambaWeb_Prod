@@ -7,29 +7,19 @@ import { DeletePrescription } from "../../ServiceActions/PrescriptionActions";
 import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
 import { Row } from "react-bootstrap";
 import { Divider } from "@mui/material";
+import useImagesHook from "../../CustomHooks/useImagesViewHook";
 
 export default function PrescriptionImageView() {
   const dispatch = useDispatch();
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [images, setImages] = useState([""]);
+
+  const {
+    currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+  } = useImagesHook();
+
+
   let currentCustomerPrescriptionImages = useSelector(
     (state: RootState) => state.ConsultationState.currentCustomerPrescriptions
   );
-
-  let allCustomerPrescriptionImages = useSelector(
-    (state: RootState) => state.ConsultationState.allCustomerPrescriptions
-  );
-
-  const openImageViewer = useCallback((index) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-  };
 
   useEffect(() => {
     getImageURLsFromPrescriptions();
@@ -83,31 +73,6 @@ export default function PrescriptionImageView() {
             </div>
           ))}
 
-        {(allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0) &&
-          <div>
-            <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-            <h5>History Of Prescriptions</h5>
-
-            {allCustomerPrescriptionImages.map((src, index) => (
-              <div
-                style={{
-                  display: "inline-block",
-                  position: "relative",
-                  width: 100,
-                  marginTop: 10,
-                  marginRight: 20
-                }}
-              >
-                <img
-                  src={src.sasUrl}
-                  onClick={() => openImageViewer(index)}
-                  key={index}
-                  style={{ width: 100, height: 100 }}
-                />
-              </div>
-            ))}
-          </div>}
-
         {isViewerOpen && (
           <ImageViewer
             src={images}
@@ -138,7 +103,7 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0) || allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0
+      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0)
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

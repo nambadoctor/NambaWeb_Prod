@@ -72,7 +72,6 @@ export const checkIfDateExists = (item: IMatrixDateObj) => {
     }
 }
 
-
 export const fileToBase64 = async (file: File) =>
     new Promise((resolve, reject) => {
         const reader = new FileReader()
@@ -80,3 +79,11 @@ export const fileToBase64 = async (file: File) =>
         reader.onload = () => resolve(reader.result)
         reader.onerror = (e) => reject(e)
     })
+
+export async function ConvertInputToFileOrBase64(input:any) {
+    if (input instanceof File) {
+        return await fileToBase64(input as File)
+    } else if (typeof input == 'string') {
+        return input;
+    }
+}

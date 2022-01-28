@@ -7,27 +7,16 @@ import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
 import { Divider } from "@mui/material";
 import { Row } from "react-bootstrap";
+import useImagesHook from "../../CustomHooks/useImagesViewHook";
 
 export default function ReportImageView() {
   const dispatch = useDispatch();
-  const [currentImage, setCurrentImage] = useState(0);
-  const [isViewerOpen, setIsViewerOpen] = useState(false);
-  const [images, setImages] = useState([""]);
-  let currentCustomerReportsImages = useSelector(
-    (state: RootState) => state.ConsultationState.currentCustomerReports
-  );
 
-  let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
+  const {
+    currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+  } = useImagesHook();
 
-  const openImageViewer = useCallback((index) => {
-    setCurrentImage(index);
-    setIsViewerOpen(true);
-  }, []);
-
-  const closeImageViewer = () => {
-    setCurrentImage(0);
-    setIsViewerOpen(false);
-  };
+  let currentCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.currentCustomerReports)
 
   useEffect(() => {
     getImageURLsFromReports();
@@ -84,32 +73,6 @@ export default function ReportImageView() {
               </div>
             ))}
 
-
-          {(allCustomerReportsImages && allCustomerReportsImages.length > 0) &&
-            <div>
-              <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-              <h5>History Of Reports</h5>
-
-              {allCustomerReportsImages.map((src, index) => (
-                <div
-                  style={{
-                    display: "inline-block",
-                    position: "relative",
-                    width: 100,
-                    marginTop: 10,
-                    marginRight: 20
-                  }}
-                >
-                  <img
-                    src={src.sasUrl}
-                    onClick={() => openImageViewer(index)}
-                    key={index}
-                    style={{ width: 100, height: 100 }}
-                  />
-                </div>
-              ))}
-            </div>}
-
           {isViewerOpen && (
             <ImageViewer
               src={images}
@@ -141,7 +104,7 @@ export default function ReportImageView() {
 
   return (
     <div>
-      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0) || allCustomerReportsImages && allCustomerReportsImages.length > 0
+      {(currentCustomerReportsImages && currentCustomerReportsImages.length > 0)
         ? imageViewDisplay()
         : noReportsDisplay()}
     </div>
