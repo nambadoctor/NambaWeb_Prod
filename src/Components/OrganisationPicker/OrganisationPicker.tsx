@@ -53,7 +53,6 @@ const StyledMenu = styled((props: MenuProps) => (
 }));
 
 export default function OrganisationPicker() {
-
   const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -76,19 +75,15 @@ export default function OrganisationPicker() {
 
   return (
     <div>
-      <div className="orgSwitcherButtonContainer">
+      <div
+        className="orgSwitcherButtonContainer"
+        style={{ margin: "0 10px", padding: "0 10px" }}
+      >
         <button className="orgSwitcherButton" onClick={handleClick}>
           {organisationState.selectedOrganisation != null
             ? organisationState.selectedOrganisation!.name
             : "Please Select An Organisation"}
-        </button>
-        <button className="orgSwitcherDropDownIcon" onClick={handleClick}>
-          {" "}
-          {
-            <KeyboardArrowDownIcon
-              style={{ fill: "white" }}
-            ></KeyboardArrowDownIcon>
-          }{" "}
+          <KeyboardArrowDownIcon style={{ fill: "white" }} />
         </button>
       </div>
 

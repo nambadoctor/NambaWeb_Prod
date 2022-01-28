@@ -2,14 +2,14 @@ import Topbar from "../Topbar/Topbar";
 import { Routes, Route } from "react-router-dom";
 import AppointmentsTableView from "../Appointments/AppointmentsTableView";
 import { Container, Row, Col } from "react-bootstrap";
-import "../../App.css"
+import "../../App.css";
 import OrganisationInitialModalPickerComponent from "../OrganisationPicker/OrganisationInitialModalPickerComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { useEffect } from "react";
 import { GetServiceProviderBasic } from "../../ServiceActions/ServiceProviderBasicActions";
 import AddPatientForm from "../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm";
-import { Divider } from '@mui/material';
+import { Divider } from "@mui/material";
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import ConsultationView from "../Consultation/ConsultationView";
@@ -21,33 +21,42 @@ import CriticalAlertDisplay from "../UIHelperComponents/CriticalAlertDisplay";
 import { SetInitialLoadingStartTime } from "../../Actions/LoadedStatesActions";
 
 function Dashboard() {
-
   const dispatch = useDispatch();
-  const serviceProviderBasicState = useSelector((state: RootState) => state.ServiceProviderBasicState)
+  const serviceProviderBasicState = useSelector(
+    (state: RootState) => state.ServiceProviderBasicState
+  );
 
   //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
   useEffect(() => {
     console.log("hello init");
     SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
-    dispatch(SetInitialLoadingStartTime())
+    dispatch(SetInitialLoadingStartTime());
     dispatch(GetServiceProviderBasic());
-  }, [])
+  }, []);
   //END
 
   function AppointmentsAndCalendarView() {
     return (
-      <div style={{ margin: 20, display: "flex", flexDirection: "row", gap: 20 }}>
+      <div
+        style={{ margin: 20, display: "flex", flexDirection: "row", gap: 20 }}
+      >
         <Container fluid>
           <Row>
-            <Col md="9">
+            <Col md="8" sm="6">
               <h5 style={{ marginBottom: 20 }}>Appointments</h5>
               <AppointmentsTableView />
             </Col>
-            <Col md="3">
+            <Col md="4" sm="6">
               <h5 style={{ marginBottom: 20 }}>Calendar</h5>
-              <Row><Calendar /></Row>
-              <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
-              <Row><AddPatientForm></AddPatientForm></Row>
+              <Row>
+                <Calendar />
+              </Row>
+              <Row>
+                <Divider style={{ marginTop: 20 }} />
+              </Row>
+              <Row>
+                <AddPatientForm />
+              </Row>
             </Col>
           </Row>
         </Container>
@@ -71,10 +80,13 @@ function Dashboard() {
         <Topbar />
         <div style={{ marginTop: 110 }}>
           <Routes>
-            <Route path="/Appointments" element={AppointmentsAndCalendarView()} />
+            <Route
+              path="/Appointments"
+              element={AppointmentsAndCalendarView()}
+            />
             <Route path="/" element={AppointmentsAndCalendarView()} />
             <Route path="/Patients" element={PatientsView()} />
-            <Route path="/Consultation/:id" element={<ConsultationView></ConsultationView>} />
+            <Route path="/Consultation/:id" element={<ConsultationView />} />
           </Routes>
         </div>
       </div>
@@ -85,7 +97,11 @@ function Dashboard() {
   return (
     <>
       <div>
-        {serviceProviderBasicState.serviceProvider ? MainDashboardView() : <NonExistentUserDisplayComponent />}
+        {serviceProviderBasicState.serviceProvider ? (
+          MainDashboardView()
+        ) : (
+          <NonExistentUserDisplayComponent />
+        )}
         <OrganisationInitialModalPickerComponent />
         <FullPageLoadingDisplay />
         <CriticalAlertDisplay />

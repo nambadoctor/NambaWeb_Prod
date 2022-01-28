@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
 import { ClearAddPatientState } from "../../Actions/AddPatientActions";
@@ -11,14 +11,13 @@ import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-
-  function switchTabs () {
-    dispatch(ClearAddPatientState())
-    dispatch(ClearAllValuesForConsultation())
+  function switchTabs() {
+    dispatch(ClearAddPatientState());
+    dispatch(ClearAllValuesForConsultation());
   }
-  
+
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
       <Navbar.Brand>
@@ -40,35 +39,51 @@ export default function Topbar() {
       <Navbar.Collapse>
         <Nav
           className="ms-auto"
-          style={{ marginRight: 20, alignItems: "center" }}
+          style={{ marginRight: 30, alignItems: "center" }}
         >
-          <OrganisationPicker></OrganisationPicker>
+          <OrganisationPicker />
           <Link
-            to='/Appointments'
-            onClick={() => {switchTabs()}}
+            to="/Appointments"
+            onClick={() => {
+              switchTabs();
+            }}
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "600",
+              margin: "0 30px",
+              textDecoration: "none",
+            }}
+          >
+            Appointments
+          </Link>
+          <Link
+            to="/Patients"
+            onClick={() => {
+              switchTabs();
+            }}
             style={{
               color: "white",
               fontSize: 18,
               fontWeight: "600",
               marginLeft: 20,
               marginRight: 40,
-              textDecoration: 'none'
-            }}>Appointments
+              textDecoration: "none",
+            }}
+          >
+            Patients
           </Link>
-          <Link
-            to='/Patients'
-            onClick={() => {switchTabs()}}
+          <div
+            onClick={SignOut}
             style={{
-              color: "white",
-              fontSize: 18,
-              fontWeight: "600",
-              marginLeft: 20,
-              marginRight: 40,
-              textDecoration: 'none'
-            }}>Patients
-          </Link>
-          <div onClick={SignOut} style={{ background: "#1054c4", padding:10, borderRadius: 30, marginLeft: 10, marginRight: 20 }}>
-            <LogoutIcon style={{ color: 'white' }}> </LogoutIcon>
+              background: "#1054c4",
+              padding: 10,
+              borderRadius: 30,
+              marginLeft: 10,
+              marginRight: 20,
+            }}
+          >
+            <LogoutIcon style={{ color: "white" }} />
           </div>
         </Nav>
       </Navbar.Collapse>

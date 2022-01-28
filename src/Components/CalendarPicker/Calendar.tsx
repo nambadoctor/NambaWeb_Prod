@@ -29,7 +29,8 @@ export default function Calendar() {
   function getActiveOrInactiveDate(item: ICustomDateData) {
     if (
       checkIfDateExists(item) &&
-      viewingDate.getMonth() === selectedDatesState.selectedDateRage[0].getMonth() &&
+      viewingDate.getMonth() ===
+        selectedDatesState.selectedDateRage[0].getMonth() &&
       item.date.getDate() === selectedDatesState.selectedDateRage[0].getDate()
     ) {
       return styles.activeDate;
@@ -67,7 +68,7 @@ export default function Calendar() {
                   {getDisplayableItem(item)}
                 </Text>
                 {getActiveOrInactiveDate(item) === styles.inActiveDate &&
-                  item.hasAppointment ? (
+                item.hasAppointment ? (
                   getHasAppointmentMarker()
                 ) : (
                   <div />
@@ -87,34 +88,27 @@ export default function Calendar() {
 
   return (
     <div className="wholeCalendarContainer">
-      {selectedDatesState.selectedDateRage[0] && selectedDatesState.datesWithAppointments && (
-        <div>
-          <div className="titleAndActionContainer">
-            <button className="actionItem" onClick={() => changeMonth(-1)}>
-              {
-                <ArrowBackIosIcon
-                  style={{ fill: "white", height: 17 }}
-                ></ArrowBackIosIcon>
-              }
-            </button>
-
-            <div className="titleItem">
-              {`${months[viewingDate.getMonth()]} ${viewingDate.getFullYear()}`}
+      {selectedDatesState.selectedDateRage[0] &&
+        selectedDatesState.datesWithAppointments && (
+          <div style={{ minWidth: 250 }}>
+            <div className="titleAndActionContainer">
+              <button className="actionItem" onClick={() => changeMonth(-1)}>
+                {<ArrowBackIosIcon style={{ fill: "white", height: 17 }} />}
+              </button>
+              <div className="titleItem">
+                {`${
+                  months[viewingDate.getMonth()]
+                } ${viewingDate.getFullYear()}`}
+              </div>
+              <button className="actionItem" onClick={() => changeMonth(+1)}>
+                <ArrowForwardIosIcon style={{ fill: "white", height: 17 }} />
+              </button>
             </div>
-
-            <button className="actionItem" onClick={() => changeMonth(+1)}>
-              {
-                <ArrowForwardIosIcon
-                  style={{ fill: "white", height: 17 }}
-                ></ArrowForwardIosIcon>
-              }
-            </button>
+            <div className="datePickerBox">
+              <View>{rows}</View>
+            </div>
           </div>
-          <div className="datePickerBox">
-            <View>{rows}</View>
-          </div>
-        </div>
-      )}
+        )}
     </div>
   );
 }
