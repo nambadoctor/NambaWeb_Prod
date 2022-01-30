@@ -2,6 +2,7 @@ import { ConsultationTypes_Types } from "../Reducers/ConsultationReducer";
 import { Action } from "../Types/ActionType";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
+import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 
@@ -47,6 +48,20 @@ function setAllPrescriptionsAction(prescriptions: IPrescriptionIncomingData[]) {
     };
 }
 
+function setNotesActions(notes: INoteIncomingData[]) {
+    return {
+        type: ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_NOTES,
+        payload: notes
+    };
+}
+
+function setAllNotesActions(notes: INoteIncomingData[]) {
+    return {
+        type: ConsultationTypes_Types.SET_ALL_CUSTOMER_NOTES,
+        payload: notes
+    };
+}
+
 function setPreviousAppointmentAction(appointment: IAppointmentData) {
     return {
         type: ConsultationTypes_Types.SET_PREVIOUS_APPOINTMENT,
@@ -72,6 +87,8 @@ export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentD
 export const SetSelectedCustomerForConsultation = (customer: ICustomerIncomingData): Action => (setSelectedCustomerAction(customer));
 export const SetReportsForConsultation = (reports: IReportIncomingData[]): Action => (setReportsAction(reports));
 export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData[]): Action => (setPrescriptionsAction(prescriptions));
+export const SetNotesForConsultation = (notes: INoteIncomingData[]): Action => (setNotesActions(notes));
+export const SetAllNotesForCustomer = (notes: INoteIncomingData[]): Action => (setAllNotesActions(notes));
 export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData): Action => (setPreviousAppointmentAction(appointment));
 export const SetNextAppointmentForConsultation = (appointment: IAppointmentData): Action => (setNextAppointmentAction(appointment));
 export const SetAllReportsForConsultation = (reports: IReportIncomingData[]): Action => (setAllReportsAction(reports));

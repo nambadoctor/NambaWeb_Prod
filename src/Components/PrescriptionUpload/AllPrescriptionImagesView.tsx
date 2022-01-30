@@ -98,7 +98,10 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
                     textAlign: "center",
                 }}
             >
-                No prescriptions yet. Upload image or Take Photo.
+                <Row>
+                    <Col><div>No prescriptions yet. Upload image or Take Photo.</div></Col>
+                    {props.showUploadButton && <Col><PrescriptionUploadPicker handlePhotoCallBack={UploadPrescriptionAsStray} uploadButtonColor='#0863e4'></PrescriptionUploadPicker></Col>}
+                </Row>
             </div>
         );
     }

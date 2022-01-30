@@ -3,6 +3,7 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType"
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
+import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 
@@ -14,6 +15,9 @@ export enum ConsultationTypes_Types {
     SET_CURRENT_APPOINTMENT_ONLY_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_CUSTOMER_PRESCRIPTIONS",
     SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS = "SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_REPORTS",
     SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS = "SET_CURRENT_APPOINTMENT_ALL_CUSTOMER_PRESCRIPTIONS",
+
+    SET_CURRENT_APPOINTMENT_NOTES = "SET_CURRENT_APPOINTMENT_NOTES",
+    SET_ALL_CUSTOMER_NOTES = "SET_ALL_CUSTOMER_NOTES",
 
     SET_PREVIOUS_APPOINTMENT = "SET_PREVIOUS_APPOINTMENT",
     SET_NEXT_APPOINTMENT = "SET_NEXT_APPOINTMENT",
@@ -30,6 +34,9 @@ export interface ConsultationState {
     allCustomerReports: IReportIncomingData[] | null,
     allCustomerPrescriptions: IPrescriptionIncomingData[] | null,
 
+    currentCustomerNotes: INoteIncomingData[] | null,
+    allNotesForCustomer: INoteIncomingData[] | null,
+
     previousAppointment: IAppointmentData | null,
     nextAppointment: IAppointmentData | null
 }
@@ -42,6 +49,9 @@ const initialState: ConsultationState = {
     currentCustomerPrescriptions: null,
     allCustomerReports: null,
     allCustomerPrescriptions: null,
+
+    currentCustomerNotes: null,
+    allNotesForCustomer: null,
 
     previousAppointment: null,
     nextAppointment: null
@@ -98,6 +108,18 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
                 ...state,
                 allCustomerPrescriptions: action.payload as IPrescriptionIncomingData[]
             }
+        case ConsultationTypes_Types.SET_CURRENT_APPOINTMENT_NOTES:
+            SetTrackTrace("Consultation Reducer Set Current Appointment Notes in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                currentCustomerNotes: action.payload as INoteIncomingData[]
+            }
+        case ConsultationTypes_Types.SET_ALL_CUSTOMER_NOTES:
+            SetTrackTrace("Consultation Reducer Set All Appointment Notes in Store", "ConsultationReducer", SeverityLevel.Information)
+            return {
+                ...state,
+                currentCustomerNotes: action.payload as INoteIncomingData[]
+            }
         case ConsultationTypes_Types.CLEAR_ALL_CONSULTATION_STATES:
             SetTrackTrace("Consultation Reducer Clear All Consultation States in Store", "ConsultationReducer", SeverityLevel.Information)
             return {
@@ -107,6 +129,8 @@ export const ConsultationReducer = (state: ConsultationState = initialState, act
                 currentCustomerPrescriptions: null,
                 allCustomerReports: null,
                 allCustomerPrescriptions: null,
+                currentCustomerNotes: null,
+                allNotesForCustomer: null,
                 previousAppointment: null,
                 nextAppointment: null
             }
