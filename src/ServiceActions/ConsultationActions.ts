@@ -13,7 +13,7 @@ import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/Appoint
 import { ClearAllValuesForConsultation, SetAllPrescriptionsForConsultation, SetAllReportsForConsultation, SetSelectedAppointmentForConsultation, SetSelectedCustomerForConsultation } from "../Actions/ConsultationActions";
 import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 import { FilterAllAndCurrentPrescriptions } from "../Actions/PrescriptionActions";
-import { UploadNote } from "./NoteActions";
+import { GetNotes, UploadNote } from "./NoteActions";
 
 
 //Get consultation appointment
@@ -42,6 +42,7 @@ export const GetAppointmentForConsultation = (appointmentId: string): ThunkActio
         dispatch(GetNextAndPreviousAppointmentForConsultation())
         dispatch(GetReports())
         dispatch(GetPrescriptions())
+        dispatch(GetNotes())
     } catch (error) {
         dispatch(SetFatalError("Appointment Not Found" + error))
     }

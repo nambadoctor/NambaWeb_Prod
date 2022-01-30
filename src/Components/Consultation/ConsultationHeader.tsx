@@ -39,7 +39,6 @@ export default function ConsultationHeader() {
                     to={"/Consultation/" + currentConsultationState.nextAppointment?.appointmentId}
                     onClick={() => dispatch(GetAppointmentForConsultation(currentConsultationState.nextAppointment?.appointmentId ?? ""))}>
                     <div>
-
                         <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{currentConsultationState.nextAppointment?.customerName}</Typography>
                     </div>
                     <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultationState.nextAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
