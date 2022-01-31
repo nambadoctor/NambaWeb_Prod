@@ -34,9 +34,6 @@ export default function ConsultationView() {
     <div>
       <ConsultationHeader />
       <Row style={{ margin: 20 }}>
-        <NotesView />
-      </Row>
-      <Row style={{ margin: 20 }}>
         <Col md="6">
           <div className="blue_filled_rounded_box_top">
             <h3 className="blue_filled_rounded_box_top_title_item">Reports</h3>
