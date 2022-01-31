@@ -10,7 +10,7 @@ import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DeleteNote, UploadNote } from '../../ServiceActions/NoteActions';
+import { DeleteNote, EditNote, UploadNote } from '../../ServiceActions/NoteActions';
 import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
 import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
@@ -42,8 +42,7 @@ export const OutlinedCard: React.FC<NotesProps> = (props) => {
                 Note: editedText
             } as INoteOutgoingData;
 
-
-            dispatch(UploadNote(note))
+            dispatch(EditNote(note))
         }
 
         setEditing(!editing)
