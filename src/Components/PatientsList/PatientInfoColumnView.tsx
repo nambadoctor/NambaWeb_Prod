@@ -17,7 +17,7 @@ export default function PatientInfoColumnView() {
 
       <AllPrescriptionImagesView
         showUploadButton={true}
-        showCancelImageButton={true}
+        showCancelImageButton={false}
       ></AllPrescriptionImagesView>
 
       <Row>
@@ -26,7 +26,7 @@ export default function PatientInfoColumnView() {
 
       <AllReportImagesView
         showUploadButton={true}
-        showCancelImageButton={true}
+        showCancelImageButton={false}
       ></AllReportImagesView>
 
       <Row>

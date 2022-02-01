@@ -111,10 +111,10 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Prescription Image Uploaded")
+      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray prescription image"))
+    dispatch(SetNonFatalError("Could not upload prescription image"))
   }
 
 };

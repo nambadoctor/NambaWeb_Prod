@@ -112,10 +112,10 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Report Image Uploaded")
+      toast.success("Report Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray report image"))
+    dispatch(SetNonFatalError("Could not upload report image"))
   }
 
 };
