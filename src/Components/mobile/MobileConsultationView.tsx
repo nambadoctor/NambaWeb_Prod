@@ -12,6 +12,7 @@ import { RootState } from "../../store";
 import { UploadReportForConsultation } from "../../ServiceActions/ReportActions";
 import { UploadPrescriptionForConsultation } from "../../ServiceActions/PrescriptionActions";
 import MobileConsultationHeader from "./MobileConsultationHeader";
+import PreviousAndNextConsultations from "./PreviousAndNextConsultations";
 
 export default function MobileConsultationView() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ export default function MobileConsultationView() {
   return (
     <div>
       <MobileConsultationHeader />
+      <PreviousAndNextConsultations />
       <Row style={{ margin: 20 }}>
         <Col md="6">
           <div className="blue_filled_rounded_box_top">
