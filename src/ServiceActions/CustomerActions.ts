@@ -51,9 +51,6 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
         if (response.data) {
             dispatch(SetAddPatientIsCustomerExists(true))
             dispatch(SetAddPatientCustomerProfile(response.data))
-
-            //TODO: Separate customer and consultation data!
-            dispatch(SetSelectedCustomer(response.data))
         } else {
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsInvalidNumber(false))

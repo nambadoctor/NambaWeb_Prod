@@ -75,7 +75,7 @@ export const DeleteNote = (noteId:string): ThunkAction<void, RootState, null, Ac
     SetTrackTrace("Enter Delete Note Action", "DeleteNote", SeverityLevel.Information)
   
     try {
-      let response = await deleteCall({} as any, DeleteCustomerNoteEndPoint(currentAppointment?.serviceRequestId ?? "", noteId), "DeleteNote")
+      let response = await deleteCall({} as any, DeleteCustomerNoteEndPoint(noteId), "DeleteNote")
   
       if (response) {
         dispatch(GetNotes());

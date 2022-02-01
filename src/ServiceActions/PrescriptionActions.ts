@@ -127,7 +127,7 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
   SetTrackTrace("Enter Upload Prescription Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(currentAppointment!.serviceRequestId, prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
+    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
 
     if (response) {
       dispatch(GetPrescriptions());

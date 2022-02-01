@@ -125,12 +125,10 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentAppointment = getState().ConsultationState.currentAppointment
-
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.serviceRequestId, reportToDelete.reportId), "DeleteReport")
+    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(reportToDelete.reportId), "DeleteReport")
 
     if (response) {
       dispatch(GetReports());
