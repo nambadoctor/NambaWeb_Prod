@@ -15,16 +15,7 @@ import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
 import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
-const bull = (
-    <Box
-        component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-        •
-    </Box>
-);
-
-export const OutlinedCard: React.FC<NotesProps> = (props) => {
+export const NoteCard: React.FC<NotesProps> = (props) => {
     const dispatch = useDispatch()
     const [editing, setEditing] = useState(false)
 
