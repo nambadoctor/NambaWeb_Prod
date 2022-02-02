@@ -21,7 +21,7 @@ export const NoteCard: React.FC<NotesProps> = (props) => {
 
     const [editedText, setEditedText] = useState("")
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.currentAppointment);
+    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.Appointment);
 
     function toggleEditing() {
 

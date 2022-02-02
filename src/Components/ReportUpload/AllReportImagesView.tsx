@@ -19,7 +19,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
     } = useImagesHook();
 
-    let allCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.allCustomerReports)
+    let allCustomerReportsImages = useSelector((state: RootState) => state.CurrentCustomerState.allCustomerReports)
 
     useEffect(() => {
         getImageURLsFromReports();

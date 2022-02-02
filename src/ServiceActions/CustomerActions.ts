@@ -15,7 +15,7 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetCustomersLoadedState } from "../Actions/LoadedStatesActions";
 import { toast } from "react-toastify";
-import { SetCustomers, SetSelectedCustomer } from "../Actions/CustomerActions";
+import { SetCustomers } from "../Actions/CustomerActions";
 
 
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

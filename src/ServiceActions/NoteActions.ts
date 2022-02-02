@@ -3,7 +3,8 @@ import { toast } from "react-toastify";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetAllNotesForCustomer, SetNotesForConsultation } from "../Actions/ConsultationActions";
+import { SetNotesForConsultation } from "../Actions/ConsultationActions";
+import { SetNotes } from "../Actions/CurrentCustomerActions";
 import { DeleteCustomerNoteEndPoint, GetCustomerAllNotesEndPoint, GetCustomerNotesEndPoint, SetCustomerNoteEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
@@ -13,7 +14,7 @@ import { INoteOutgoingData } from "../Types/OutgoingDataModels/NoteOutgoing";
 
 export const GetNotes = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-    let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+    let currentConsultationAppointment = getState().ConsultationState.Appointment
 
     try {
         let response = await getCall({} as Array<INoteIncomingData>, GetCustomerNotesEndPoint(currentConsultationAppointment!.serviceRequestId), "GetNotes");
@@ -33,7 +34,7 @@ export const GetAllNotesForCustomer = (organisationId: string, customerId: strin
 
         if (response) {
             //var filterReports = FilterAllAndCurrentReports(currentReports, response.data)
-            dispatch(SetAllNotesForCustomer(response.data))
+            dispatch(SetNotes(response.data))
         }
     } catch (error) {
         dispatch(SetNonFatalError("Could not get all notes for this patient"))
@@ -69,8 +70,6 @@ export const EditNote = (note: INoteOutgoingData): ThunkAction<void, RootState, 
 export const DeleteNote = (noteId:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
     dispatch(SetLinearLoadingBarToggle(true))
-
-    let currentAppointment = getState().ConsultationState.currentAppointment
     
     SetTrackTrace("Enter Delete Note Action", "DeleteNote", SeverityLevel.Information)
   

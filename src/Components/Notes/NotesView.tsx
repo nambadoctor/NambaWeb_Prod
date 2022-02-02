@@ -13,7 +13,7 @@ export default function NotesView() {
 
     const dispatch = useDispatch()
 
-    const currentConsultationNotes = useSelector((state: RootState) => state.ConsultationState.currentCustomerNotes)
+    const currentConsultationNotes = useSelector((state: RootState) => state.ConsultationState.Notes)
     
     return (
         <div>

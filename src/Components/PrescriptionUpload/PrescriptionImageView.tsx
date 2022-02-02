@@ -18,7 +18,7 @@ export default function PrescriptionImageView() {
 
 
   let currentCustomerPrescriptionImages = useSelector(
-    (state: RootState) => state.ConsultationState.currentCustomerPrescriptions
+    (state: RootState) => state.ConsultationState.Prescriptions
   );
 
   useEffect(() => {

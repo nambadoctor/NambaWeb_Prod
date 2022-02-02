@@ -15,7 +15,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
     const dispatch = useDispatch();
 
     let allCustomerPrescriptionImages = useSelector(
-        (state: RootState) => state.ConsultationState.allCustomerPrescriptions
+        (state: RootState) => state.CurrentCustomerState.allCustomerPrescriptions
     );
 
     const {

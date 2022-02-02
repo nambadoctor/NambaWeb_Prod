@@ -28,7 +28,7 @@ export default function NewNoteCard() {
     const dispatch = useDispatch()
     const [note, setNote] = useState("")
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.currentAppointment)
+    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.Appointment)
 
     function makeNewNote() {
         var noteOutgoing = {

@@ -16,7 +16,7 @@ export default function ReportImageView() {
     currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
   } = useImagesHook();
 
-  let currentCustomerReportsImages = useSelector((state: RootState) => state.ConsultationState.currentCustomerReports)
+  let currentCustomerReportsImages = useSelector((state: RootState) => state.CurrentCustomerState.allCustomerReports)
 
   useEffect(() => {
     getImageURLsFromReports();
