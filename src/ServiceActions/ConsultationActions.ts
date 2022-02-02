@@ -83,7 +83,7 @@ export const GetAppointmentForConsultation =
       dispatch(GetNextAndPreviousAppointmentForConsultation());
       dispatch(GetReports());
       dispatch(GetPrescriptions());
-      //dispatch(GetNotes())
+      dispatch(GetNotes())
     } catch (error) {
       dispatch(SetFatalError("Appointment Not Found" + error));
     }

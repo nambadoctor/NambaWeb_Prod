@@ -111,10 +111,10 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Prescription Image Uploaded")
+      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray prescription image"))
+    dispatch(SetNonFatalError("Could not upload prescription image"))
   }
 
 };
@@ -127,7 +127,7 @@ export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingDa
   SetTrackTrace("Enter Upload Prescription Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(currentAppointment!.serviceRequestId, prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
+    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
 
     if (response) {
       dispatch(GetPrescriptions());

@@ -15,7 +15,7 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetCustomersLoadedState } from "../Actions/LoadedStatesActions";
 import { toast } from "react-toastify";
-import { SetCustomers } from "../Actions/CustomerActions";
+import { SetCustomers, SetSelectedCustomer } from "../Actions/CustomerActions";
 
 
 export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -39,7 +39,7 @@ export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, Root
 
 //NEED TO INTEGRATE WITH SERVICE CALL
 export const CheckIfCustomerExists = (phoneNumber: string, organisationId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-
+    dispatch(SetAddPatientIsCheckingForCustomer(true));
     SetTrackTrace("Enter Check If Customer Exists with Phone Number Action PhNumber:" + phoneNumber + "OrgId: " + organisationId, "CheckIfCustomerExists", SeverityLevel.Information);
 
     try {

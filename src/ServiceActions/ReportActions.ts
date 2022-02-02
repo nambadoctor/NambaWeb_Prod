@@ -112,10 +112,10 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Report Image Uploaded")
+      toast.success("Report Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray report image"))
+    dispatch(SetNonFatalError("Could not upload report image"))
   }
 
 };
@@ -125,12 +125,10 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentAppointment = getState().ConsultationState.currentAppointment
-
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.serviceRequestId, reportToDelete.reportId), "DeleteReport")
+    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(reportToDelete.reportId), "DeleteReport")
 
     if (response) {
       dispatch(GetReports());

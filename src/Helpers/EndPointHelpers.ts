@@ -58,6 +58,10 @@ export function SetCustomerNoteEndPoint() {
     return "note"
 }
 
+export function EditCustomerNoteEndPoint () {
+    return "note/edit"
+}
+
 export function SetCustomerStrayPrescriptionEndPoint(OrganisationId:string, ServiceProviderId:string, CustomerId:string) {
     return "prescription/Stray/" + OrganisationId + "/" + ServiceProviderId + "/" + CustomerId
 }
@@ -74,16 +78,16 @@ export function GetCustomerNotesEndPoint(serviceRequestId:string) {
     return "note/" + serviceRequestId
 }
 
-export function DeleteCustomerReportEndPoint (serviceRequestId:string, reportId:string) {
-    return "report/" + serviceRequestId + "/" + reportId
+export function DeleteCustomerReportEndPoint (reportId:string) {
+    return "report/" + reportId
 }
 
-export function DeleteCustomerPrescriptionEndPoint (serviceRequestId:string, prescriptionid:string) {
-    return "prescription/" + serviceRequestId + "/" + prescriptionid
+export function DeleteCustomerPrescriptionEndPoint (prescriptionid:string) {
+    return "prescription/" + prescriptionid
 }
 
-export function DeleteCustomerNoteEndPoint (serviceRequestId:string, noteId:string) {
-    return "note/" + serviceRequestId + "/" + noteId
+export function DeleteCustomerNoteEndPoint (noteId:string) {
+    return "note/" + noteId
 }
 
 export function GetCustomerAllReportsEndPoint (organisationId:string, customerId:string) {

@@ -1,8 +1,7 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import ImageViewer from "react-simple-image-viewer";
 import { DeleteReport, UploadReportAsStray } from "../../ServiceActions/ReportActions";
 import { RootState } from "../../store";
-import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
 import { Divider } from "@mui/material";
@@ -10,6 +9,7 @@ import { Col, Row } from "react-bootstrap";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
 import { ReportUploadPicker } from "./ReportUploadPicker";
 import { AllImageDisplayProps } from "../../Helpers/CommonProps";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 
 export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
@@ -73,6 +73,15 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                         key={index}
                                         style={{ width: 100, height: 100 }}
                                     />
+
+                                    {props.showCancelImageButton &&
+                                        <div
+                                            onClick={() => dispatch(deleteReport(src))}
+                                            style={{ position: "absolute", top: -10, right: -15 }}
+                                        >
+                                            <CancelIcon />
+                                        </div>
+                                    }
                                 </div>
                             ))}
                         </div>}
