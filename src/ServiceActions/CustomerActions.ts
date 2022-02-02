@@ -1,6 +1,6 @@
 import { ThunkAction } from "redux-thunk";
 import { Customer_Types } from "../Reducers/CustomersReducer";
-import { GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEndPoint, SetCustomerEndPoint, SetCustomerWithAppointment } from "../Helpers/EndPointHelpers";
+import { GetCustomerForServiceProvider, GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEndPoint, SetCustomerEndPoint, SetCustomerWithAppointment } from "../Helpers/EndPointHelpers";
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
@@ -128,4 +128,55 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
 };
 
 
+export const GetCustomerForConsultation =
+    (customerId: string): ThunkAction<void, RootState, null, Action> =>
+        async (dispatch, getState) => {
+            SetTrackTrace(
+                "Enter Get Customer Action",
+                "GetCustomerForConsultation",
+                SeverityLevel.Information
+            );
+            const currentServiceProvider =
+                getState().CurrentServiceProviderState.serviceProvider!;
 
+            if (currentServiceProvider) {
+                SetTrackTrace(
+                    "Retrieved Current Service Provider: " + currentServiceProvider,
+                    "GetCustomerForConsultation",
+                    SeverityLevel.Information
+                );
+            } else {
+                SetTrackTrace(
+                    "Retrieved Current Service Provider DOES NOT EXIST: " +
+                    currentServiceProvider,
+                    "GetCustomerForConsultation",
+                    SeverityLevel.Error
+                );
+            }
+
+            try {
+                let response = await getCall(
+                    {} as ICustomerIncomingData,
+                    GetCustomerForServiceProvider(
+                        customerId,
+                        currentServiceProvider.serviceProviderProfile.organisationId
+                    ),
+                    "GetCustomerForConsultation"
+                );
+
+                if (response) {
+                    SetTrackTrace(
+                        "Dispatch Set Selected Customer" + response.data,
+                        "GetCustomerForConsultation",
+                        SeverityLevel.Information
+                    );
+                    dispatch(SetCustomer(response.data));
+                } else {
+                    dispatch(SetNonFatalError("Could not find this customer"));
+                }
+            } catch (error) {
+                dispatch(
+                    SetNonFatalError("Could not find customer for this appointment")
+                );
+            }
+        };

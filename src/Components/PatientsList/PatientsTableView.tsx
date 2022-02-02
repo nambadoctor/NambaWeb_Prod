@@ -7,15 +7,9 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
 import ICustomerIncomingData from "../../Types/IncomingDataModels/CustomerIncoming";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { CheckIfCustomerExists } from "../../ServiceActions/CustomerActions";
-import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 import { Link, TableFooter, TablePagination } from "@mui/material";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
-import { GetAllReportsForCustomer } from "../../ServiceActions/ReportActions";
-import { GetAllPrescriptionsForCustomer } from "../../ServiceActions/PrescriptionActions";
 import usePatientsTableViewHook from "../../CustomHooks/usePatientsTableViewHook";
 import { useState } from "react";
 

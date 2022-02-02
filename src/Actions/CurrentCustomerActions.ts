@@ -1,6 +1,5 @@
-import { Action } from "redux";
-import { ConsultationTypes_Types } from "../Reducers/ConsultationReducer";
 import { CurrentCustomer_Types } from "../Reducers/CurrentCustomerReducer";
+import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";

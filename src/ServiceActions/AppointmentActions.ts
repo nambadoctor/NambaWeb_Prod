@@ -4,7 +4,7 @@ import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
 import { filterAppointments } from "../Helpers/AppointmentHelpers";
-import { CancelAppointmentEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, GetAppointmentForServiceProvider, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -15,30 +15,6 @@ import { SetAppointmentsLoadedState } from "../Actions/LoadedStatesActions";
 import { SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
 import { SetAppointments, SetFilteredAppointmentsAction } from "../Payload/AppointmentPayloads";
-
-export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
-  var appointments = getState().AppointmentState.appointments
-  var selectedDates = getState().SelectedDatesState.selectedDateRage
-
-  if (appointments) {
-    SetTrackTrace("Getting appointments from state SUCCESS: " + appointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-  } else {
-    SetTrackTrace("Getting appointments from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-  }
-
-  if (selectedDates) {
-    SetTrackTrace("Getting selected dates from state SUCCESS: " + selectedDates.length, "SetFilteredAppointments", SeverityLevel.Information);
-  } else {
-    SetTrackTrace("Getting selected dates from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-  }
-
-  var filteredAppointments = filterAppointments(selectedDates, appointments)
-
-  SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-  dispatch(SetFilteredAppointmentsAction(filteredAppointments));
-  dispatch(SetAppointmentsLoadedState(true))
-};
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -67,6 +43,30 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
   } catch (error) {
     dispatch(SetFatalError("Could not retrieve your appointments!"))
   }
+};
+
+export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
+  var appointments = getState().AppointmentState.appointments
+  var selectedDates = getState().SelectedDatesState.selectedDateRage
+
+  if (appointments) {
+    SetTrackTrace("Getting appointments from state SUCCESS: " + appointments.length, "SetFilteredAppointments", SeverityLevel.Information);
+  } else {
+    SetTrackTrace("Getting appointments from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
+  }
+
+  if (selectedDates) {
+    SetTrackTrace("Getting selected dates from state SUCCESS: " + selectedDates.length, "SetFilteredAppointments", SeverityLevel.Information);
+  } else {
+    SetTrackTrace("Getting selected dates from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
+  }
+
+  var filteredAppointments = filterAppointments(selectedDates, appointments)
+
+  SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
+  dispatch(SetFilteredAppointmentsAction(filteredAppointments));
+  dispatch(SetAppointmentsLoadedState(true))
 };
 
 export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -112,3 +112,58 @@ export const CancelAppointment = (appointment: IAppointmentData): ThunkAction<vo
     dispatch(SetNonFatalError("Could not CancelAppointment"))
   }
 };
+
+export const GetAppointment =
+  (appointmentId: string): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+      dispatch(SetLinearLoadingBarToggle(true));
+
+      SetTrackTrace(
+        "Enter Get Appointment Action",
+        "GetAppointmentForConsultation",
+        SeverityLevel.Information
+      );
+      const currentServiceProvider =
+        getState().CurrentServiceProviderState.serviceProvider!;
+
+      if (currentServiceProvider) {
+        SetTrackTrace(
+          "Retrieved Current Service Provider: " + currentServiceProvider,
+          "GetAppointmentForConsultation",
+          SeverityLevel.Information
+        );
+      } else {
+        SetTrackTrace(
+          "Retrieved Current Service Provider DOES NOT EXIST: " +
+          currentServiceProvider,
+          "GetAppointmentForConsultation",
+          SeverityLevel.Error
+        );
+      }
+
+      try {
+        let response = await getCall(
+          {} as Array<IAppointmentData>,
+          GetAppointmentForServiceProvider(
+            appointmentId,
+            currentServiceProvider.serviceProviderId
+          ),
+          "GetAllAppointments"
+        );
+
+        dispatch(SetLinearLoadingBarToggle(false));
+
+        if (response.data) {
+          dispatch()
+        }
+
+        SetTrackTrace(
+          "Dispatch Set Appointment" + response.data,
+          "GetAppointmentForConsultation",
+          SeverityLevel.Information
+        );
+
+      } catch (error) {
+        dispatch(SetFatalError("Appointment Not Found" + error));
+      }
+    };

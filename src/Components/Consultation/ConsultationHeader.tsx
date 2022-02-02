@@ -7,8 +7,8 @@ import { getReadableDateAndTimeString } from "../../Utils/GeneralUtils";
 import { Button, Typography } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { GetAppointmentForConsultation } from "../../ServiceActions/ConsultationActions";
 import { Link } from "react-router-dom";
+import { GetAppointment } from "../../ServiceActions/AppointmentActions";
 
 
 export default function ConsultationHeader() {
@@ -24,7 +24,7 @@ export default function ConsultationHeader() {
             <Button startIcon={<ArrowBackIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowBackIcon>}>
                 <Link
                     to={"/Consultation/" + currentConsultation.previousAppointment?.appointmentId}
-                    onClick={() => dispatch(GetAppointmentForConsultation(currentConsultation.previousAppointment?.appointmentId ?? ""))}>
+                    onClick={() => dispatch(GetAppointment(currentConsultation.previousAppointment?.appointmentId ?? ""))}>
 
                     <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{currentConsultation.previousAppointment?.customerName}</Typography>
                     <Typography style={{ fontSize: 13, textAlign: 'left', color: 'blue' }}>{getReadableDateAndTimeString(currentConsultation.previousAppointment?.scheduledAppointmentStartTime ?? "")}</Typography>
@@ -38,7 +38,7 @@ export default function ConsultationHeader() {
             <Button endIcon={<ArrowForwardIcon style={{ height: 22, width: 22, color: 'blue' }}></ArrowForwardIcon>}>
                 <Link
                     to={"/Consultation/" + currentConsultation.nextAppointment?.appointmentId}
-                    onClick={() => dispatch(GetAppointmentForConsultation(currentConsultation.nextAppointment?.appointmentId ?? ""))}>
+                    onClick={() => dispatch(GetAppointment(currentConsultation.nextAppointment?.appointmentId ?? ""))}>
                     <div>
                         <Typography style={{ fontSize: 13, textAlign: 'right', color: 'blue' }}>{currentConsultation.nextAppointment?.customerName}</Typography>
                     </div>
