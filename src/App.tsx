@@ -5,25 +5,17 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import "./index.css";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../src/Telemetry/AppInsights";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import IndexPage from "./Components/Index/Index";
 
-toast.configure()
+toast.configure();
 
 function App() {
   const user = useContext(AuthContext);
-
   return (
     <AppInsightsContext.Provider value={reactPlugin}>
-      <div>
-        {!user ? (
-          <IndexPage />
-          //<LoginPage></LoginPage>
-        ) : (
-          <Dashboard />
-        )}
-      </div>
+      {!user ? <IndexPage /> : user !== "loading" && <Dashboard />}
     </AppInsightsContext.Provider>
   );
 }
