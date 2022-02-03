@@ -3,12 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
 import {
+  ClearAddPatientState,
   SetAddPatientIsCheckingForCustomer,
   SetAddPatientPhoneNumber,
 } from "../Actions/AddPatientActions";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import { GetAllReportsForCustomer } from "../ServiceActions/ReportActions";
 import { GetAllPrescriptionsForCustomer } from "../ServiceActions/PrescriptionActions";
+import { ClearAllValuesForConsultation } from "../Actions/ConsultationActions";
+import { SetSelectedCustomer } from "../Actions/CustomerActions";
 
 export default function usePatientsTableViewHook() {
   const dispatch = useDispatch();
@@ -34,16 +37,7 @@ export default function usePatientsTableViewHook() {
   };
 
   function handleCustomerSelect(customer: ICustomerIncomingData) {
-    dispatch(SetAddPatientIsCheckingForCustomer(true));
-    dispatch(GetAllReportsForCustomer(customer.organisationId, customer.customerId, null))
-    dispatch(GetAllPrescriptionsForCustomer(customer.organisationId, customer.customerId, null))
-    dispatch(
-      CheckIfCustomerExists(
-        customer.phoneNumbers[0].number,
-        customer.organisationId
-      )
-    );
-    dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number));
+    dispatch(SetSelectedCustomer(customer))
   }
 
   return {

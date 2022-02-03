@@ -13,7 +13,6 @@ import { RootState } from "../../store";
 import { useDispatch, useSelector } from "react-redux";
 import IAppointmentData from "../../Types/IncomingDataModels/Appointment";
 import { Link } from "react-router-dom";
-import { GetAppointmentForConsultation, GetCustomerForConsultation } from "../../ServiceActions/ConsultationActions";
 import NoAppointmentsView from "./NoAppointmentsView";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";

@@ -42,7 +42,7 @@ export const GetNextAndPreviousAppointmentForConsultation = (): ThunkAction<void
         SetTrackTrace("Get All Appointments From State Failed. ", "GetNextAndPreviousAppointmentForConsultation", SeverityLevel.Error);
     }
 
-    const currentAppointment = getState().ConsultationState.currentAppointment;
+    const currentAppointment = getState().ConsultationState.Appointment;
 
     if (allAppointments) {
         SetTrackTrace("Get Current Appointment From State Successs. ", "GetNextAndPreviousAppointmentForConsultation", SeverityLevel.Information);

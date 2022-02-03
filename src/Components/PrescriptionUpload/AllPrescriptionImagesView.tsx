@@ -1,20 +1,21 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "react-simple-image-viewer";
 import { RootState } from "../../store";
-import { DeletePrescription, UploadPrescriptionForConsultation, UploadPrescriptionAsStray } from "../../ServiceActions/PrescriptionActions";
+import { DeletePrescription, UploadPrescriptionAsStray } from "../../ServiceActions/PrescriptionActions";
 import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
 import { Col, Row } from "react-bootstrap";
 import { Divider } from "@mui/material";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
 import { PrescriptionUploadPicker } from "./PrescriptionUploadPicker";
 import { AllImageDisplayProps } from "../../Helpers/CommonProps";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props) => {
     const dispatch = useDispatch();
 
     let allCustomerPrescriptionImages = useSelector(
-        (state: RootState) => state.ConsultationState.allCustomerPrescriptions
+        (state: RootState) => state.CurrentCustomerState.allCustomerPrescriptions
     );
 
     const {
@@ -71,6 +72,15 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
                                     key={index}
                                     style={{ width: 100, height: 100 }}
                                 />
+
+                                {props.showCancelImageButton &&
+                                    <div
+                                        onClick={() => dispatch(deletePrescription(src))}
+                                        style={{ position: "absolute", top: -10, right: -15 }}
+                                    >
+                                        <CancelIcon />
+                                    </div>
+                                }
                             </div>
                         ))}
                     </div>}

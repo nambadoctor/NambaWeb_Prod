@@ -5,17 +5,18 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerPrescriptionEndPoint, GetCustomerAllPrescriptionsEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint, SetCustomerStrayPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
-import { SetAllPrescriptionsForConsultation, SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
+import { SetPrescriptionsForConsultation } from "../Actions/ConsultationActions";
 import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
 import { FilterAllAndCurrentPrescriptions } from "../Actions/PrescriptionActions";
+import { SetPrescriptions } from "../Actions/CurrentCustomerActions";
 
 export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+  let currentConsultationAppointment = getState().ConsultationState.Appointment
 
   try {
     let response = await getCall({} as Array<IPrescriptionIncomingData>, GetCustomerPrescriptionEndPoint(currentConsultationAppointment!.serviceRequestId), "GetPrescriptions");
@@ -36,7 +37,7 @@ export const GetAllPrescriptionsForCustomer = (organisationId: string, customerI
 
     if (response) {
       var filteredPrescriptions = FilterAllAndCurrentPrescriptions(currentPrescriptions, response.data)
-      dispatch(SetAllPrescriptionsForConsultation(filteredPrescriptions))
+      dispatch(SetPrescriptions(filteredPrescriptions))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get all prescriptions for this patient"))
@@ -47,7 +48,7 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+  let currentConsultationAppointment = getState().ConsultationState.Appointment
 
   var prescriptionRequest = {
     AppointmentId: currentConsultationAppointment!.appointmentId,
@@ -111,10 +112,10 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Prescription Image Uploaded")
+      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray prescription image"))
+    dispatch(SetNonFatalError("Could not upload prescription image"))
   }
 
 };
@@ -122,12 +123,10 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
 export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentAppointment = getState().ConsultationState.currentAppointment
-
   SetTrackTrace("Enter Upload Prescription Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(currentAppointment!.serviceRequestId, prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
+    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
 
     if (response) {
       dispatch(GetPrescriptions());

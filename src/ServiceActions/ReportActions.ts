@@ -7,15 +7,16 @@ import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetCustomerStrayReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetAllReportsForConsultation, SetReportsForConsultation } from "../Actions/ConsultationActions";
+import { SetReportsForConsultation } from "../Actions/ConsultationActions";
 import { ConvertInputToFileOrBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
 import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
+import { SetReports } from "../Actions/CurrentCustomerActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+  let currentConsultationAppointment = getState().ConsultationState.Appointment
 
   try {
     let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.serviceRequestId), "GetReports");
@@ -36,7 +37,7 @@ export const GetAllReportsForCustomer = (organisationId: string, customerId: str
 
     if (response) {
       var filterReports = FilterAllAndCurrentReports(currentReports, response.data)
-      dispatch(SetAllReportsForConsultation(filterReports))
+      dispatch(SetReports(filterReports))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get all reports for this patient"))
@@ -47,7 +48,7 @@ export const UploadReportForConsultation = (file: any): ThunkAction<void, RootSt
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentConsultationAppointment = getState().ConsultationState.currentAppointment
+  let currentConsultationAppointment = getState().ConsultationState.Appointment
 
   var reportRequest = {
     AppointmentId: currentConsultationAppointment!.appointmentId,
@@ -112,10 +113,10 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
       );
 
       dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Stray Report Image Uploaded")
+      toast.success("Report Image Uploaded")
     }
   } catch (error) {
-    dispatch(SetNonFatalError("Could not upload stray report image"))
+    dispatch(SetNonFatalError("Could not upload report image"))
   }
 
 };
@@ -125,12 +126,10 @@ export const DeleteReport = (reportToDelete: IReportIncomingData): ThunkAction<v
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let currentAppointment = getState().ConsultationState.currentAppointment
-
   SetTrackTrace("Enter Upload Report Action", "UploadReport", SeverityLevel.Information)
 
   try {
-    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(currentAppointment!.serviceRequestId, reportToDelete.reportId), "DeleteReport")
+    let response = await deleteCall({} as any, DeleteCustomerReportEndPoint(reportToDelete.reportId), "DeleteReport")
 
     if (response) {
       dispatch(GetReports());

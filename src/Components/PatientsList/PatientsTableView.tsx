@@ -7,16 +7,11 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { makeStyles } from "@mui/styles";
 import ICustomerIncomingData from "../../Types/IncomingDataModels/CustomerIncoming";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { CheckIfCustomerExists } from "../../ServiceActions/CustomerActions";
-import { SetAddPatientIsCheckingForCustomer, SetAddPatientPhoneNumber } from "../../Actions/AddPatientActions";
 import { Link, TableFooter, TablePagination } from "@mui/material";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
-import { GetAllReportsForCustomer } from "../../ServiceActions/ReportActions";
-import { GetAllPrescriptionsForCustomer } from "../../ServiceActions/PrescriptionActions";
 import usePatientsTableViewHook from "../../CustomHooks/usePatientsTableViewHook";
+import { useState } from "react";
 
 const usePatientTableStyles = makeStyles(() => ({
   table: {
@@ -48,10 +43,20 @@ const usePatientTableStyles = makeStyles(() => ({
     padding: "5px 12px",
     display: "inline-block",
   },
+  tableRow: {
+    "&.Mui-selected, &.Mui-selected:hover": {
+      backgroundColor: "purple",
+      "& > .MuiTableCell-root": {
+        color: "yellow"
+      }
+    }
+  }
 }));
 
 export default function PatientsTableView() {
   const classes = usePatientTableStyles();
+
+  const [selectedID, setSelectedID] = useState("");
 
   const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
     usePaginationHook(10);
@@ -65,7 +70,11 @@ export default function PatientsTableView() {
         ? filtered.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         : filtered
     ).map((customer: ICustomerIncomingData, index: number) => (
-      <TableRow key={customer.customerId}>
+      <TableRow
+        key={customer.customerId}
+        onClick={() => { setSelectedID(customer.customerId) }}
+        selected={selectedID === customer.customerId}>
+
         <TableCell align="left" onClick={() => handleCustomerSelect(customer)}>
           <Link>
             {customer.firstName +
