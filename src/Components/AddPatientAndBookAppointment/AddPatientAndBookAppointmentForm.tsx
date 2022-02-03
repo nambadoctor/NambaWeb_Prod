@@ -1,5 +1,5 @@
-import AddPatientView from "./AddPatientView";
-import BookAppointmentView from "./BookAppointmentView";
+import AddPatientView from './AddPatientView';
+import BookAppointmentView from './BookAppointmentView';
 
 export default function AddPatientForm() {
     return (

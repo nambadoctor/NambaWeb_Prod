@@ -1,16 +1,20 @@
-import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { appInsights } from "./AppInsights";
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { appInsights } from './AppInsights';
 
-export default function SetTrackTrace(message: string, calledFrom: string = "", severityLevel: SeverityLevel) {
+export default function SetTrackTrace(
+    message: string,
+    calledFrom: string = '',
+    severityLevel: SeverityLevel,
+) {
     appInsights.trackTrace(
         {
             message: message,
-            severityLevel: severityLevel
+            severityLevel: severityLevel,
         },
         //Custom Dimensions Start
         {
-            calledFrom: calledFrom
+            calledFrom: calledFrom,
         },
         //Custom Dimensions End
-    )
+    );
 }

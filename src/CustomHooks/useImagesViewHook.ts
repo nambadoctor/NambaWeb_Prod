@@ -1,11 +1,11 @@
-import { useState, ChangeEvent, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
+import { useState, ChangeEvent, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { SignInWithPhoneNumberHelper } from '../ServiceActions/LoginActions';
 
 export default function useImagesHook() {
     const [currentImage, setCurrentImage] = useState(0);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
-    const [images, setImages] = useState([""]);
+    const [images, setImages] = useState(['']);
 
     const openImageViewer = useCallback((index) => {
         setCurrentImage(index);
@@ -17,5 +17,12 @@ export default function useImagesHook() {
         setIsViewerOpen(false);
     };
 
-    return { currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer };
+    return {
+        currentImage,
+        isViewerOpen,
+        images,
+        setImages,
+        openImageViewer,
+        closeImageViewer,
+    };
 }

@@ -1,12 +1,13 @@
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store'
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 
 export default function NonExistentUserDisplayComponent() {
-
-    const loadingBarInProgress = useSelector((state: RootState) => state.UITriggerState.showLinearLoadingBarToggle)
+    const loadingBarInProgress = useSelector(
+        (state: RootState) => state.UITriggerState.showLinearLoadingBarToggle,
+    );
 
     function EmptyDisplay() {
-        return <div></div>
+        return <div></div>;
     }
 
     function NonExistentUser() {
@@ -14,8 +15,6 @@ export default function NonExistentUserDisplayComponent() {
     }
 
     return (
-        <div>
-            {loadingBarInProgress ? EmptyDisplay() : NonExistentUser()}
-        </div>
-    )
+        <div>{loadingBarInProgress ? EmptyDisplay() : NonExistentUser()}</div>
+    );
 }

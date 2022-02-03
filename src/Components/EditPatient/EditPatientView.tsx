@@ -10,8 +10,7 @@ import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import { toast } from 'react-toastify';
 
 export default function EditPatientView() {
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const {
         addPatientState,
@@ -21,21 +20,27 @@ export default function EditPatientView() {
         handleAgeChange,
         genderOptionChange,
         makeCustomerObject,
-        validateEntryFields
+        validateEntryFields,
     } = usePatientInputHook();
 
     function savePatient() {
         if (validateEntryFields()) {
-            dispatch(SetCustomer(makeCustomerObject()))
+            dispatch(SetCustomer(makeCustomerObject()));
         } else {
-            toast.error("Invalid Data")
+            toast.error('Invalid Data');
         }
     }
 
     return (
         <div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <TextField
                     fullWidth
                     label="Phone Number"
@@ -47,7 +52,9 @@ export default function EditPatientView() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <LocalPhoneIcon style={{ width: 22, height: 22 }}></LocalPhoneIcon>
+                                <LocalPhoneIcon
+                                    style={{ width: 22, height: 22 }}
+                                ></LocalPhoneIcon>
                             </InputAdornment>
                         ),
                     }}
@@ -56,14 +63,44 @@ export default function EditPatientView() {
                     onChange={handleNumberChange}
                 />
 
-                {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
+                {addPatientState.isCheckingNumber ? (
+                    <CircularProgress
+                        style={{ width: 30, height: 30, marginLeft: 5 }}
+                    />
+                ) : (
+                    <div />
+                )}
 
                 {/* Indicator to display once customer exists check is complete
                 {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
             </div>
 
-            {addPatientState.isCustomerExists ? <div style={{ fontSize: 12, color: "#1672f9", fontWeight: 'bold' }}>this patient exists</div> : <div />}
-            {addPatientState.isInvalidNumber ? <div style={{ fontSize: 12, color: "#ff6c6c", fontWeight: 'bold' }}>sorry, you cannot add this number</div> : <div />}
+            {addPatientState.isCustomerExists ? (
+                <div
+                    style={{
+                        fontSize: 12,
+                        color: '#1672f9',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    this patient exists
+                </div>
+            ) : (
+                <div />
+            )}
+            {addPatientState.isInvalidNumber ? (
+                <div
+                    style={{
+                        fontSize: 12,
+                        color: '#ff6c6c',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    sorry, you cannot add this number
+                </div>
+            ) : (
+                <div />
+            )}
 
             {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
 
@@ -88,7 +125,6 @@ export default function EditPatientView() {
 
             <Row className="align-items-center">
                 <Col>
-
                     <TextField
                         margin="dense"
                         size="small"
@@ -109,7 +145,6 @@ export default function EditPatientView() {
                         }}
                         variant="outlined"
                     />
-
                 </Col>
                 <Col>
                     <ButtonGroup style={{ marginTop: 3 }}>
@@ -118,11 +153,16 @@ export default function EditPatientView() {
                                 key={idx}
                                 id={`gender-${idx}`}
                                 type="radio"
-                                variant='outline-primary'
+                                variant="outline-primary"
                                 name="gender"
                                 value={addPatientState.customerProfile.gender}
-                                checked={addPatientState.customerProfile.gender === genderOption}
-                                onChange={(e) => genderOptionChange(genderOption)}
+                                checked={
+                                    addPatientState.customerProfile.gender ===
+                                    genderOption
+                                }
+                                onChange={(e) =>
+                                    genderOptionChange(genderOption)
+                                }
                             >
                                 {genderOption}
                             </ToggleButton>
@@ -130,17 +170,25 @@ export default function EditPatientView() {
                     </ButtonGroup>
                 </Col>
 
-                <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+                <div
+                    style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        marginTop: 10,
+                    }}
+                >
                     <Button
                         style={{ padding: 10, width: '100%' }}
                         type="submit"
                         color="primary"
-                        onClick={() => savePatient()}>
+                        onClick={() => savePatient()}
+                    >
                         Save
                     </Button>
                 </div>
-
             </Row>
         </div>
-    )
+    );
 }

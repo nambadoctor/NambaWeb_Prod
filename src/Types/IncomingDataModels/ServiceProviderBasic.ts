@@ -1,6 +1,6 @@
-import IOrganisationBasic from "./OrganisationBasic";
+import IOrganisationBasic from './OrganisationBasic';
 
 export default interface IServiceProviderBasic {
-    serviceProviderId:string,
-    organisations:IOrganisationBasic[]
+    serviceProviderId: string;
+    organisations: IOrganisationBasic[];
 }

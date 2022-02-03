@@ -1,16 +1,19 @@
-import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
+import IReportIncomingData from '../Types/IncomingDataModels/ReportIncoming';
 
-export function FilterAllAndCurrentReports (currentAppointmentReports:IReportIncomingData[]|null, allAppointmentReports:IReportIncomingData[]) {
-    var reportsToReturn:IReportIncomingData[] = [];
+export function FilterAllAndCurrentReports(
+    currentAppointmentReports: IReportIncomingData[] | null,
+    allAppointmentReports: IReportIncomingData[],
+) {
+    var reportsToReturn: IReportIncomingData[] = [];
 
     if (currentAppointmentReports && currentAppointmentReports.length > 0) {
-        var currentReportIds:string[] = []
+        var currentReportIds: string[] = [];
 
-        currentAppointmentReports.forEach(report => {
+        currentAppointmentReports.forEach((report) => {
             currentReportIds.push(report.reportId);
         });
-    
-        allAppointmentReports.forEach(report => {
+
+        allAppointmentReports.forEach((report) => {
             if (!currentReportIds.includes(report.reportId)) {
                 reportsToReturn.push(report);
             }
@@ -19,5 +22,5 @@ export function FilterAllAndCurrentReports (currentAppointmentReports:IReportInc
         reportsToReturn = allAppointmentReports;
     }
 
-    return reportsToReturn
+    return reportsToReturn;
 }

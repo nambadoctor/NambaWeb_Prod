@@ -25,24 +25,26 @@ const bull = (
 );
 
 export default function NewNoteCard() {
-    const dispatch = useDispatch()
-    const [note, setNote] = useState("")
+    const dispatch = useDispatch();
+    const [note, setNote] = useState('');
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.currentAppointment)
+    const currentAppointment = useSelector(
+        (state: RootState) => state.ConsultationState.currentAppointment,
+    );
 
     function makeNewNote() {
         var noteOutgoing = {
-            NoteId: "",
-            AppointmentId: currentAppointment?.appointmentId ?? "",
-            ServiceRequestId: currentAppointment?.serviceRequestId ?? "",
-            Note: note
+            NoteId: '',
+            AppointmentId: currentAppointment?.appointmentId ?? '',
+            ServiceRequestId: currentAppointment?.serviceRequestId ?? '',
+            Note: note,
         } as INoteOutgoingData;
 
-        dispatch(UploadNote(noteOutgoing))
+        dispatch(UploadNote(noteOutgoing));
     }
 
     const handleEditedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNote(event.target.value)
+        setNote(event.target.value);
     };
 
     return (
@@ -64,7 +66,9 @@ export default function NewNoteCard() {
                         />
                     </CardContent>
                     <CardActions>
-                        <Button size="small" onClick={makeNewNote}>Done</Button>
+                        <Button size="small" onClick={makeNewNote}>
+                            Done
+                        </Button>
                     </CardActions>
                 </React.Fragment>
             </Card>

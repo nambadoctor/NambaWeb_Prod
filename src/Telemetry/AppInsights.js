@@ -10,9 +10,9 @@ const appInsights = new ApplicationInsights({
         instrumentationKey: '1eafdbcc-0f9d-4e2c-b9c1-4b9609cebb2a',
         extensions: [reactPlugin],
         extensionConfig: {
-          [reactPlugin.identifier]: { history: browserHistory }
-        }
-    }
+            [reactPlugin.identifier]: { history: browserHistory },
+        },
+    },
 });
 appInsights.loadAppInsights();
 export { reactPlugin, appInsights };

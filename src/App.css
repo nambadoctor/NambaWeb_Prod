@@ -10,7 +10,7 @@
 
 .org-selector-modal {
     width: 100px;
-} 
+}
 
 .horiztontalContainer {
     display: flex;
@@ -61,4 +61,4 @@
     border-right: 2px solid gray;
 }
 
-@import url("https://cdn.syncfusion.com/ej2/material.css");
+@import url('https://cdn.syncfusion.com/ej2/material.css');

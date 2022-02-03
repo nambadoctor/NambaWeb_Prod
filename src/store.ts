@@ -1,16 +1,16 @@
-import { createStore, applyMiddleware, combineReducers } from "redux"; 
-import thunk from "redux-thunk";
-import {composeWithDevTools} from "redux-devtools-extension";
-import { orgReducer } from "./Reducers/OrganisationsReducer";
-import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBasicReducer";
-import { appointmentReducer } from "./Reducers/AppointmentsReducer";
-import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
-import { customerReducer } from "./Reducers/CustomersReducer";
-import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
-import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProviderReducer";
-import { addPatientReducer } from "./Reducers/AddPatientReducer";
-import { ConsultationReducer } from "./Reducers/ConsultationReducer";
-import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { orgReducer } from './Reducers/OrganisationsReducer';
+import { serviceProviderBasicReducer } from './Reducers/Common/ServiceProviderBasicReducer';
+import { appointmentReducer } from './Reducers/AppointmentsReducer';
+import { selectedDateReducer } from './Reducers/SelectedDateReducer';
+import { customerReducer } from './Reducers/CustomersReducer';
+import { uiTriggerReducer } from './Reducers/Common/UITriggerReducer';
+import { currentServiceProviderReducer } from './Reducers/CurrentServiceProviderReducer';
+import { addPatientReducer } from './Reducers/AddPatientReducer';
+import { ConsultationReducer } from './Reducers/ConsultationReducer';
+import { LoadedStatesReducer } from './Reducers/LoadedStatesReducer';
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -22,11 +22,14 @@ const rootReducer = combineReducers({
     CurrentServiceProviderState: currentServiceProviderReducer,
     AddPatientState: addPatientReducer,
     ConsultationState: ConsultationReducer,
-    LoadedState: LoadedStatesReducer
+    LoadedState: LoadedStatesReducer,
 });
 
-const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+const Store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk)),
+);
 
-export default Store
+export default Store;
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

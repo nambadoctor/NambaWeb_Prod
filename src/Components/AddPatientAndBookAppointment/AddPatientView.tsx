@@ -6,7 +6,6 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
 
-
 export default function AddPatientView() {
     const {
         addPatientState,
@@ -14,13 +13,19 @@ export default function AddPatientView() {
         handleNumberChange,
         handleNameChange,
         handleAgeChange,
-        genderOptionChange
+        genderOptionChange,
     } = usePatientInputHook();
 
     return (
         <div>
-            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-
+            <div
+                style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <TextField
                     fullWidth
                     label="Phone Number"
@@ -32,30 +37,67 @@ export default function AddPatientView() {
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
-                                <LocalPhoneIcon style={{ width: 22, height: 22 }}></LocalPhoneIcon>
+                                <LocalPhoneIcon
+                                    style={{ width: 22, height: 22 }}
+                                ></LocalPhoneIcon>
                             </InputAdornment>
                         ),
                     }}
                     inputProps={{ maxLength: 10 }}
                     variant="outlined"
                     onChange={handleNumberChange}
-                    error={Boolean(addPatientState.validationErrors.phoneNumber)}
+                    error={Boolean(
+                        addPatientState.validationErrors.phoneNumber,
+                    )}
                     helperText={addPatientState.validationErrors.phoneNumber}
                 />
 
-                {addPatientState.isCheckingNumber ? <CircularProgress style={{ width: 30, height: 30, marginLeft: 5 }} /> : <div />}
+                {addPatientState.isCheckingNumber ? (
+                    <CircularProgress
+                        style={{ width: 30, height: 30, marginLeft: 5 }}
+                    />
+                ) : (
+                    <div />
+                )}
 
                 {/* Indicator to display once customer exists check is complete
                 {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
             </div>
 
-            {addPatientState.isCustomerExists ? <div style={{ fontSize: 12, color: "#1672f9", fontWeight: 'bold' }}>This patient exists</div> : <div />}
-            {addPatientState.isInvalidNumber ? <div style={{ fontSize: 12, color: "#ff6c6c", fontWeight: 'bold' }}>Sorry, cannot add this number</div> : <div />}
+            {addPatientState.isCustomerExists ? (
+                <div
+                    style={{
+                        fontSize: 12,
+                        color: '#1672f9',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    This patient exists
+                </div>
+            ) : (
+                <div />
+            )}
+            {addPatientState.isInvalidNumber ? (
+                <div
+                    style={{
+                        fontSize: 12,
+                        color: '#ff6c6c',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    Sorry, cannot add this number
+                </div>
+            ) : (
+                <div />
+            )}
 
             {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
 
             <TextField
-                disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                disabled={
+                    addPatientState.isCustomerExists ||
+                    addPatientState.isInvalidNumber
+                }
                 fullWidth
                 label="Name"
                 placeholder="Name"
@@ -80,7 +122,10 @@ export default function AddPatientView() {
             <Row className="align-items-center">
                 <Col>
                     <TextField
-                        disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                        disabled={
+                            addPatientState.isCustomerExists ||
+                            addPatientState.isInvalidNumber
+                        }
                         type="number"
                         margin="dense"
                         size="small"
@@ -101,23 +146,30 @@ export default function AddPatientView() {
                         variant="outlined"
                         error={Boolean(addPatientState.validationErrors.age)}
                         helperText={addPatientState.validationErrors.age}
-                        style={{width: 158}}
+                        style={{ width: 158 }}
                     />
-
                 </Col>
                 <Col>
                     <ButtonGroup style={{ marginTop: 3 }}>
                         {genderOptions.map((genderOption, idx) => (
                             <ToggleButton
-                                disabled={addPatientState.isCustomerExists || addPatientState.isInvalidNumber}
+                                disabled={
+                                    addPatientState.isCustomerExists ||
+                                    addPatientState.isInvalidNumber
+                                }
                                 key={idx}
                                 id={`gender-${idx}`}
                                 type="radio"
-                                variant='outline-primary'
+                                variant="outline-primary"
                                 name="gender"
                                 value={addPatientState.customerProfile.gender}
-                                checked={addPatientState.customerProfile.gender === genderOption}
-                                onChange={(e) => genderOptionChange(genderOption)}
+                                checked={
+                                    addPatientState.customerProfile.gender ===
+                                    genderOption
+                                }
+                                onChange={(e) =>
+                                    genderOptionChange(genderOption)
+                                }
                             >
                                 {genderOption}
                             </ToggleButton>
@@ -126,5 +178,5 @@ export default function AddPatientView() {
                 </Col>
             </Row>
         </div>
-    )
+    );
 }

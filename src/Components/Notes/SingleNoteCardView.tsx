@@ -10,45 +10,50 @@ import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DeleteNote, EditNote, UploadNote } from '../../ServiceActions/NoteActions';
+import {
+    DeleteNote,
+    EditNote,
+    UploadNote,
+} from '../../ServiceActions/NoteActions';
 import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
 import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
 export const NoteCard: React.FC<NotesProps> = (props) => {
-    const dispatch = useDispatch()
-    const [editing, setEditing] = useState(false)
+    const dispatch = useDispatch();
+    const [editing, setEditing] = useState(false);
 
-    const [editedText, setEditedText] = useState("")
+    const [editedText, setEditedText] = useState('');
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.currentAppointment);
+    const currentAppointment = useSelector(
+        (state: RootState) => state.ConsultationState.currentAppointment,
+    );
 
     function toggleEditing() {
-
         if (editing) {
             var note = {
                 NoteId: props.note.noteId,
-                AppointmentId: currentAppointment?.appointmentId ?? "",
-                ServiceRequestId: currentAppointment?.serviceRequestId ?? "",
-                Note: editedText
+                AppointmentId: currentAppointment?.appointmentId ?? '',
+                ServiceRequestId: currentAppointment?.serviceRequestId ?? '',
+                Note: editedText,
             } as INoteOutgoingData;
 
-            dispatch(EditNote(note))
+            dispatch(EditNote(note));
         }
 
-        setEditing(!editing)
+        setEditing(!editing);
     }
 
     function deleteNote(note: INoteIncomingData) {
-        dispatch(DeleteNote(note.noteId))
+        dispatch(DeleteNote(note.noteId));
     }
 
     useEffect(() => {
-        setEditedText(props.note.note)
-    }, [])
+        setEditedText(props.note.note);
+    }, []);
 
     const handleEditedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEditedText(event.target.value)
+        setEditedText(event.target.value);
     };
 
     return (
@@ -56,10 +61,16 @@ export const NoteCard: React.FC<NotesProps> = (props) => {
             <Card variant="outlined">
                 <React.Fragment>
                     <CardContent>
-                        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                            {getReadableDateAndTimeString(props.note.lastModifiedDateTime)}
+                        <Typography
+                            sx={{ fontSize: 14 }}
+                            color="text.secondary"
+                            gutterBottom
+                        >
+                            {getReadableDateAndTimeString(
+                                props.note.lastModifiedDateTime,
+                            )}
                         </Typography>
-                        {editing ?
+                        {editing ? (
                             <TextField
                                 fullWidth
                                 label=""
@@ -72,18 +83,27 @@ export const NoteCard: React.FC<NotesProps> = (props) => {
                                 maxRows={6}
                                 onChange={handleEditedChange}
                             />
-                            :
+                        ) : (
                             <Typography variant="body2">
                                 {props.note.note}
                             </Typography>
-                        }
+                        )}
                     </CardContent>
                     <CardActions>
-                        <Button size="small" onClick={() => { deleteNote(props.note) }}>Delete</Button>
-                        <Button size="small" onClick={toggleEditing}>{editing ? "Done" : "Edit"}</Button>
+                        <Button
+                            size="small"
+                            onClick={() => {
+                                deleteNote(props.note);
+                            }}
+                        >
+                            Delete
+                        </Button>
+                        <Button size="small" onClick={toggleEditing}>
+                            {editing ? 'Done' : 'Edit'}
+                        </Button>
                     </CardActions>
                 </React.Fragment>
             </Card>
         </Box>
     );
-}
+};
