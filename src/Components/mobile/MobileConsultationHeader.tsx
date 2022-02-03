@@ -7,14 +7,16 @@ import { getReadableDateAndTimeString } from "../../Utils/GeneralUtils";
 import { Typography } from "@mui/material";
 
 export default function MobileConsultationHeader() {
-  const currentConsultationState = useSelector(
+  const currentConsultation = useSelector(
     (state: RootState) => state.ConsultationState
   );
-
+  const currentCustomer = useSelector(
+    (state: RootState) => state.CurrentCustomerState.currentCustomer
+  );
   return (
     <div className="horiztontalContainer">
       <Container fluid>
-        {currentConsultationState.currentCustomer && (
+        {currentCustomer && (
           <>
             <Row>
               <Col>
@@ -22,7 +24,7 @@ export default function MobileConsultationHeader() {
                   Patient Name
                 </Typography>
                 <Typography style={{ fontSize: 17 }}>
-                  {currentConsultationState.currentAppointment!.customerName}
+                  {currentConsultation.Appointment!.customerName}
                 </Typography>
               </Col>
               <Col style={{ paddingLeft: "8em" }}>
@@ -30,8 +32,7 @@ export default function MobileConsultationHeader() {
                   Age
                 </Typography>
                 <Typography style={{ fontSize: 17 }}>
-                  {currentConsultationState.currentCustomer!.dateOfBirth.age ??
-                    ""}
+                  {currentCustomer!.dateOfBirth.age ?? ""}
                 </Typography>
               </Col>
             </Row>
@@ -42,8 +43,7 @@ export default function MobileConsultationHeader() {
                 </Typography>
                 <Typography style={{ fontSize: 17 }}>
                   +91
-                  {currentConsultationState.currentCustomer!.phoneNumbers[0]
-                    .number ?? ""}
+                  {currentCustomer!.phoneNumbers[0].number ?? ""}
                 </Typography>
               </Col>
               <Col style={{ paddingLeft: "5em" }}>
@@ -51,7 +51,7 @@ export default function MobileConsultationHeader() {
                   Gender
                 </Typography>
                 <Typography style={{ fontSize: 17 }}>
-                  {currentConsultationState.currentCustomer!.gender ?? ""}
+                  {currentCustomer!.gender ?? ""}
                 </Typography>
               </Col>
             </Row>
@@ -61,7 +61,7 @@ export default function MobileConsultationHeader() {
               </Typography>
               <Typography style={{ fontSize: 17 }}>
                 {getReadableDateAndTimeString(
-                  currentConsultationState.currentAppointment
+                  currentConsultation.Appointment
                     ?.scheduledAppointmentStartTime ?? ""
                 )}
               </Typography>

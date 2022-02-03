@@ -7,12 +7,12 @@ import { getReadableDateAndTimeString } from "../../Utils/GeneralUtils";
 import { Button, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { GetAppointmentForConsultation } from "../../ServiceActions/ConsultationActions";
+import { GetAppointment } from "../../ServiceActions/AppointmentActions";
 import { Link } from "react-router-dom";
 
 export default function PreviousAndNextConsultations() {
   const dispatch = useDispatch();
-  const currentConsultationState = useSelector(
+  const currentConsultation = useSelector(
     (state: RootState) => state.ConsultationState
   );
 
@@ -20,19 +20,20 @@ export default function PreviousAndNextConsultations() {
     return (
       <Button
         startIcon={
-          <ArrowBackIcon style={{ height: 22, width: 22, color: "blue" }} />
+          <ArrowBackIcon
+            style={{ height: 22, width: 22, color: "blue" }}
+          ></ArrowBackIcon>
         }
       >
         <Link
           to={
             "/Consultation/" +
-            currentConsultationState.previousAppointment?.appointmentId
+            currentConsultation.previousAppointment?.appointmentId
           }
           onClick={() =>
             dispatch(
-              GetAppointmentForConsultation(
-                currentConsultationState.previousAppointment?.appointmentId ??
-                  ""
+              GetAppointment(
+                currentConsultation.previousAppointment?.appointmentId ?? ""
               )
             )
           }
@@ -40,13 +41,13 @@ export default function PreviousAndNextConsultations() {
           <Typography
             style={{ fontSize: 13, textAlign: "left", color: "blue" }}
           >
-            {currentConsultationState.previousAppointment?.customerName}
+            {currentConsultation.previousAppointment?.customerName}
           </Typography>
           <Typography
             style={{ fontSize: 13, textAlign: "left", color: "blue" }}
           >
             {getReadableDateAndTimeString(
-              currentConsultationState.previousAppointment
+              currentConsultation.previousAppointment
                 ?.scheduledAppointmentStartTime ?? ""
             )}
           </Typography>
@@ -59,18 +60,20 @@ export default function PreviousAndNextConsultations() {
     return (
       <Button
         endIcon={
-          <ArrowForwardIcon style={{ height: 22, width: 22, color: "blue" }} />
+          <ArrowForwardIcon
+            style={{ height: 22, width: 22, color: "blue" }}
+          ></ArrowForwardIcon>
         }
       >
         <Link
           to={
             "/Consultation/" +
-            currentConsultationState.nextAppointment?.appointmentId
+            currentConsultation.nextAppointment?.appointmentId
           }
           onClick={() =>
             dispatch(
-              GetAppointmentForConsultation(
-                currentConsultationState.nextAppointment?.appointmentId ?? ""
+              GetAppointment(
+                currentConsultation.nextAppointment?.appointmentId ?? ""
               )
             )
           }
@@ -79,14 +82,14 @@ export default function PreviousAndNextConsultations() {
             <Typography
               style={{ fontSize: 13, textAlign: "right", color: "blue" }}
             >
-              {currentConsultationState.nextAppointment?.customerName}
+              {currentConsultation.nextAppointment?.customerName}
             </Typography>
           </div>
           <Typography
             style={{ fontSize: 13, textAlign: "right", color: "blue" }}
           >
             {getReadableDateAndTimeString(
-              currentConsultationState.nextAppointment
+              currentConsultation.nextAppointment
                 ?.scheduledAppointmentStartTime ?? ""
             )}
           </Typography>
@@ -100,11 +103,11 @@ export default function PreviousAndNextConsultations() {
       <Container fluid>
         <Row>
           <Col>
-            {currentConsultationState.previousAppointment &&
+            {currentConsultation.previousAppointment &&
               getPreviousAppointmentUI()}
           </Col>
           <Col>
-            {currentConsultationState.nextAppointment && getNextAppointmentUI()}
+            {currentConsultation.nextAppointment && getNextAppointmentUI()}
           </Col>
         </Row>
       </Container>

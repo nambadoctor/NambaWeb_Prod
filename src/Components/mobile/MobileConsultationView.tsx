@@ -5,7 +5,7 @@ import PrescriptionImageView from "../PrescriptionUpload/PrescriptionImageView";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAppointmentForConsultation } from "../../ServiceActions/ConsultationActions";
+import { GetAppointment } from "../../ServiceActions/AppointmentActions";
 import { Col, Row } from "react-bootstrap";
 import "../../Styles/mobile.css";
 import { RootState } from "../../store";
@@ -23,9 +23,10 @@ export default function MobileConsultationView() {
 
   useEffect(() => {
     if (currentServiceProvider) {
-      dispatch(GetAppointmentForConsultation(id as string));
+      dispatch(GetAppointment(id as string));
     }
   }, [currentServiceProvider]);
+
 
   return (
     <div>
