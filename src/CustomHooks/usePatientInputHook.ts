@@ -1,36 +1,53 @@
-import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
-import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
+import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
 import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
-import { format } from "../Helpers/Constants";
 import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";
 import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useEffect, useState } from "react";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
+import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 
 export default function usePatientInputHook() {
     const dispatch = useDispatch()
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
+    const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
+    useEffect(() => {
+        currentCustomer && mapCustomerToValues(currentCustomer)
+    }, [currentCustomer])
+
+    const [gender, setGender] = useState("")
     const genderOptions = ["Male", "Female", "Other"]
 
+    const formik = useFormik({
+        initialValues: {
+            phonenumber: "",
+            name: "",
+            age: "",
+            gender: "",
+        },
+        validationSchema: Yup.object({
+            phonenumber: Yup.string().required().length(10),
+            name: Yup.string().required(),
+            age: Yup.number().positive().integer(),
+            gender: Yup.string(),
+        }),
+        onSubmit: (values) => { makeCustomerObject() },
+    });
+
     const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        if (event.target.value.includes("+91") || format.test(event.target.value)) {
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-            dispatch(SetAddPatientPhoneNumberValidationError("Cannot have special characters"))
-        } else {
-            dispatch(SetAddPatientPhoneNumberValidationError(""))
-        }
-
         if (event.target.value.length >= 10) {
             dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.serviceProviderProfile.organisationId))
             dispatch(SetAddPatientIsCheckingForCustomer(true))
             dispatch(SetAddPatientPhoneNumber(event.target.value));
         } else {
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientPhoneNumber(event.target.value));
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsCheckingForCustomer(false))
@@ -38,85 +55,40 @@ export default function usePatientInputHook() {
         }
     };
 
-    //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.firstName = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        if (Number(event.target.value) > 120 || Number(event.target.value) < 0) {
-            dispatch(SetAddPatientAgeValidationError("Age must be between 0 and 120"))
-        } else{
-            dispatch(SetAddPatientAgeValidationError(""))
-        }
-
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.dateOfBirth.age = event.target.value
-        tempCustomerProfile.dateOfBirth.createdDate = new Date();
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const genderOptionChange = (gender: string) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.gender = gender
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    }
-
     const makeCustomerObject = () => {
-        var currentCustomerRequestObj = addPatientState.customerProfile
-        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
-        currentCustomerRequestObj.organisationId = currentServiceProvider?.serviceProviderProfile.organisationId ?? ""
-        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
+        var CustomerRequestObj = {
+            customerId: currentCustomer?.customerId,
+            customerProfileId: currentCustomer?.customerProfileId,
+            firstName: formik.values.name,
+            lastName: currentCustomer?.lastName,
+            phoneNumbers: currentCustomer?.phoneNumbers,
+            gender: gender,
+            dateOfBirth: currentCustomer?.dateOfBirth,
+            emailAddress: currentCustomer?.emailAddress,
+            profilePicURL: currentCustomer?.profilePicURL,
+            organisationId: currentCustomer?.organisationId ?? currentServiceProvider?.serviceProviderProfile.organisationId,
+            serviceProviderId: currentCustomer?.serviceProviderId ?? currentServiceProvider?.serviceProviderId
+        } as ICustomerProfileOutgoing
 
-        return currentCustomerRequestObj;
+        CustomerRequestObj.dateOfBirth.age = formik.values.age;
+
+        return CustomerRequestObj;
     }
 
-    const validateEntryFields = () => {
-        if (
-            addPatientState.validationErrors.age ||
-            addPatientState.validationErrors.phoneNumber ||
-            addPatientState.phoneNumber.length == 0 || 
-            addPatientState.phoneNumber.length < 10 ||
-            addPatientState.customerProfile.dateOfBirth.age.length == 0 ||
-            addPatientState.customerProfile.firstName.length == 0
-        ) {
-
-            if (addPatientState.phoneNumber.length == 0 || addPatientState.phoneNumber.length < 10) {
-                dispatch(SetAddPatientPhoneNumberValidationError("Please Enter A Valid Phone Number"))
-            } else {
-                dispatch(SetAddPatientPhoneNumberValidationError(""))
-            }
-
-            if (addPatientState.customerProfile.firstName.length == 0) {
-                dispatch(SetAddPatientNameValidationError("Please Enter Name"))
-            } else {
-                dispatch(SetAddPatientNameValidationError(""))
-            }
-
-            if (addPatientState.customerProfile.dateOfBirth.age.length == 0) {
-                dispatch(SetAddPatientAgeValidationError("Please Enter Age"))
-            } else {
-                dispatch(SetAddPatientAgeValidationError(""))
-            }
-
-            return false
-        } else {
-            dispatch(ClearAddPatientValidationErrors())
-            return true
-        }
+    function mapCustomerToValues (customer: ICustomerIncomingData) {
+        formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
+        formik.setFieldValue("name", customer.firstName + " " + customer.lastName);
+        formik.setFieldValue("age", customer.dateOfBirth.age);
+        formik.setFieldValue("gender", customer.gender);
     }
 
     return {
         addPatientState,
         genderOptions,
+        gender,
+        formik,
         handleNumberChange,
-        handleNameChange,
-        handleAgeChange,
-        genderOptionChange,
-        makeCustomerObject,
-        validateEntryFields
+        setGender,
+        makeCustomerObject
     };
 }

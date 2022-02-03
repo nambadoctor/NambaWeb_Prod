@@ -63,7 +63,7 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let selectedPatient = getState().AddPatientState.customerProfile
+  let selectedPatient = getState().CurrentCustomerState.Customer
   let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
 
   var prescriptionRequest = {
@@ -82,7 +82,7 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
     let response = await postCall({} as any, SetCustomerStrayPrescriptionEndPoint(
       currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
       currentServiceProvider?.serviceProviderId ?? "",
-      selectedPatient.customerId),
+      selectedPatient?.customerId ?? ""),
       prescriptionRequest,
       "UploadStrayPrescription"
     )

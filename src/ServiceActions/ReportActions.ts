@@ -64,7 +64,7 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
 
   dispatch(SetLinearLoadingBarToggle(true))
 
-  let selectedPatient = getState().AddPatientState.customerProfile
+  let selectedPatient = getState().CurrentCustomerState.Customer
   let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
 
   var reportRequest = {
@@ -83,7 +83,7 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
     let response = await postCall({} as any, SetCustomerStrayReportEndPoint(
       currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
       currentServiceProvider?.serviceProviderId ?? "",
-      selectedPatient.customerId),
+      selectedPatient?.customerId ?? ""),
       reportRequest,
       "UploadReport"
     )

@@ -3,7 +3,7 @@ import { GetCustomerForServiceProviderEndPoint, GetCustomerFromPhoneNumberEndPoi
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
+import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
@@ -53,11 +53,11 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 
         if (response.data) {
             dispatch(SetAddPatientIsCustomerExists(true))
-            dispatch(SetAddPatientCustomerProfile(response.data))
+            dispatch(SetCurrentCustomer(response.data))
         } else {
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsInvalidNumber(false))
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
         }
 
     } catch (error) {
@@ -82,7 +82,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
         if (response) {
             dispatch(SetAddPatientPhoneNumber(""))
             dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
@@ -118,7 +118,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
             //TODO: Make calls in here and SetCustomerAndBookAppointment in common action
             dispatch(SetAddPatientPhoneNumber(""))
             dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
+            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(GetAllCustomersForServiceProviderInOrg())
             toast.success("Customer Set Successfully")

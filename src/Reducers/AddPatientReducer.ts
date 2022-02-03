@@ -4,7 +4,6 @@ import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCre
 
 export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_PHONE_NUMBER = "SET_LOCAL_PHONE_NUMBER",
-    SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE = "SET_LOCAL_CUSTOMER_PROFILE",
     SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER = "SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER",
     SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS = "SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS",
     SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL = "SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL",
@@ -22,7 +21,6 @@ export interface IAddPatientError {
 
 export interface AddPatientState {
     phoneNumber: string,
-    customerProfile: ICustomerProfileOutgoing,
     isCheckingNumber: boolean,
     isCustomerExists: boolean,
     isMakingDoneCall: boolean,
@@ -33,7 +31,6 @@ export interface AddPatientState {
 
 const initialState: AddPatientState = {
     phoneNumber: "",
-    customerProfile: makeEmptyValueCustomerSetRequestData(),
     isCheckingNumber: false,
     isCustomerExists: false,
     isMakingDoneCall: false,
@@ -48,11 +45,6 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
             return {
                 ...state,
                 phoneNumber: action.payload,
-            }
-        case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE:
-            return {
-                ...state,
-                customerProfile: action.payload,
             }
         case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER:
             return {
@@ -87,7 +79,6 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
         case AddPatientReducer_Types.CLEAR_ADD_PATIENT_STATE:
             return {
                 phoneNumber: initialState.phoneNumber,
-                customerProfile: initialState.customerProfile,
                 isCheckingNumber: initialState.isCheckingNumber,
                 isCustomerExists: initialState.isCustomerExists,
                 isMakingDoneCall: initialState.isMakingDoneCall,

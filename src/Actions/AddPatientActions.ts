@@ -18,13 +18,6 @@ function ClearPatientStateAction() {
     };
 }
 
-function SetAddPatientCustomerProfileAction(customerProfile: ICustomerProfileOutgoing) {
-    return {
-        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_CUSTOMER_PROFILE,
-        payload: customerProfile
-    };
-}
-
 function SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer: boolean) {
     return {
         type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER,
@@ -68,8 +61,6 @@ function SetAddPatientErrorsAction (error:IAddPatientError) {
 }
 
 export const SetAddPatientPhoneNumber = (phoneNumber: string): Action => (SetAddPatientPhoneNumberAction(phoneNumber));
-
-export const SetAddPatientCustomerProfile = (customerProfile: ICustomerProfileOutgoing): Action => (SetAddPatientCustomerProfileAction(customerProfile));
 
 export const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
 
