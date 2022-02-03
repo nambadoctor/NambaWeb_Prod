@@ -7,37 +7,20 @@ import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { DeleteCustomerReportEndPoint, GetCustomerAllReportsEndPoint, GetCustomerReportEndPoint, SetCustomerReportEndPoint, SetCustomerStrayReportEndPoint } from "../Helpers/EndPointHelpers";
 import IReportUploadData from "../Types/OutgoingDataModels/ReportUpload";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { SetReportsForConsultation } from "../Actions/ConsultationActions";
 import { ConvertInputToFileOrBase64 } from "../Utils/GeneralUtils";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
-import { FilterAllAndCurrentReports } from "../Actions/ReportActions";
 import { SetReports } from "../Actions/CurrentCustomerActions";
 
 export const GetReports = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-  let currentConsultationAppointment = getState().ConsultationState.Appointment
+  const customer = getState().CurrentCustomerState.Customer
 
   try {
-    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerReportEndPoint(currentConsultationAppointment!.serviceRequestId), "GetReports");
+    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerAllReportsEndPoint(customer?.organisationId ?? "", customer?.customerId ?? ""), "GetReports");
 
     if (response) {
-      dispatch(SetReportsForConsultation(response.data))
-      dispatch(GetAllReportsForCustomer(currentConsultationAppointment?.organisationId ?? "", currentConsultationAppointment?.customerId ?? "", response.data))
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not get reports for this appointment"))
-  }
-}
-
-export const GetAllReportsForCustomer = (organisationId: string, customerId: string, currentReports: IReportIncomingData[] | null): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-
-  try {
-    let response = await getCall({} as Array<IReportIncomingData>, GetCustomerAllReportsEndPoint(organisationId, customerId), "GetReports");
-
-    if (response) {
-      var filterReports = FilterAllAndCurrentReports(currentReports, response.data)
-      dispatch(SetReports(filterReports))
+      dispatch(SetReports(response.data))
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not get all reports for this patient"))
@@ -106,11 +89,7 @@ export const UploadReportAsStray = (file: any): ThunkAction<void, RootState, nul
     )
 
     if (response) {
-      dispatch(GetAllReportsForCustomer(
-        currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
-        selectedPatient.customerId,
-        null)
-      );
+      dispatch(GetReports());
 
       dispatch(SetLinearLoadingBarToggle(false))
       toast.success("Report Image Uploaded")

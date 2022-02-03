@@ -17,7 +17,7 @@ export default function ConsultationHeader() {
 
     const dispatch = useDispatch()
     const currentConsultation = useSelector((state: RootState) => state.ConsultationState)
-    const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.currentCustomer)
+    const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
 
     function getPreviousAppointmentUI() {
         return (
@@ -61,7 +61,7 @@ export default function ConsultationHeader() {
                                 </Col>
                                 <Col className="col-md-auto" style={{ marginLeft: 15 }}>
                                     <Typography style={{ fontSize: 10, opacity: 0.5 }}>Patient Name</Typography>
-                                    <Typography style={{ fontSize: 17 }}>{currentConsultation.Appointment!.customerName}</Typography>
+                                    <Typography style={{ fontSize: 17 }}>{currentConsultation.Appointment?.customerName ?? ""}</Typography>
                                 </Col>
                                 <Col className="col-md-auto" style={{ marginLeft: 15 }}>
                                     <Typography style={{ fontSize: 10, opacity: 0.5 }}>Phone Number</Typography>

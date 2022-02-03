@@ -8,8 +8,8 @@ import {
   SetAddPatientPhoneNumber,
 } from "../Actions/AddPatientActions";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { GetAllReportsForCustomer } from "../ServiceActions/ReportActions";
-import { GetAllPrescriptionsForCustomer } from "../ServiceActions/PrescriptionActions";
+import { GetReports } from "../ServiceActions/ReportActions";
+import { GetPrescriptions } from "../ServiceActions/PrescriptionActions";
 import { ClearAllValuesForConsultation } from "../Actions/ConsultationActions";
 import { SetSelectedCustomer } from "../Actions/CustomerActions";
 

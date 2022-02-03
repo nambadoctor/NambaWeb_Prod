@@ -1,6 +1,5 @@
 import { ThunkAction } from "redux-thunk";
-import { Customer_Types } from "../Reducers/CustomersReducer";
-import { GetCustomerForServiceProvider, GetCustomerFromPhoneNumber, GetServiceProviderCustomersInOrganisationEndPoint, SetCustomerEndPoint, SetCustomerWithAppointment } from "../Helpers/EndPointHelpers";
+import { GetCustomerForServiceProviderEndPoint, GetCustomerFromPhoneNumberEndPoint, GetServiceProviderCustomersInOrganisationEndPoint, SetCustomerEndPoint, SetCustomerWithAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
@@ -15,6 +14,10 @@ import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataMo
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetCustomersLoadedState } from "../Actions/LoadedStatesActions";
 import { toast } from "react-toastify";
+import { GetReports } from "./ReportActions";
+import { GetPrescriptions } from "./PrescriptionActions";
+import { GetNotes } from "./NoteActions";
+import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
 
 
@@ -44,7 +47,7 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
 
     try {
 
-        let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumber(phoneNumber, organisationId), "CheckIfCustomerExists")
+        let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumberEndPoint(phoneNumber, organisationId), "CheckIfCustomerExists")
 
         dispatch(SetAddPatientIsCheckingForCustomer(false))
 
@@ -72,7 +75,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
     SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     try {
-        let response = await postCall({} as any, SetCustomerWithAppointment(), appointmentRequest, "SetCustomerAndBookAppointment")
+        let response = await postCall({} as any, SetCustomerWithAppointmentEndPoint(), appointmentRequest, "SetCustomerAndBookAppointment")
 
         dispatch(SetLinearLoadingBarToggle(false))
 
@@ -128,55 +131,61 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
 };
 
 
-export const GetCustomerForConsultation =
-    (customerId: string): ThunkAction<void, RootState, null, Action> =>
-        async (dispatch, getState) => {
+export const GetCustomer = (customerId: string): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+        SetTrackTrace(
+            "Enter Get Customer Action",
+            "GetCustomerForConsultation",
+            SeverityLevel.Information
+        );
+
+        const currentServiceProvider =
+            getState().CurrentServiceProviderState.serviceProvider!;
+
+        if (currentServiceProvider) {
             SetTrackTrace(
-                "Enter Get Customer Action",
+                "Retrieved Current Service Provider: " + currentServiceProvider,
                 "GetCustomerForConsultation",
                 SeverityLevel.Information
             );
-            const currentServiceProvider =
-                getState().CurrentServiceProviderState.serviceProvider!;
+        } else {
+            SetTrackTrace(
+                "Retrieved Current Service Provider DOES NOT EXIST: " +
+                currentServiceProvider,
+                "GetCustomerForConsultation",
+                SeverityLevel.Error
+            );
+        }
 
-            if (currentServiceProvider) {
+        try {
+            let response = await getCall(
+                {} as ICustomerIncomingData,
+                GetCustomerForServiceProviderEndPoint(
+                    customerId,
+                    currentServiceProvider.serviceProviderProfile.organisationId
+                ),
+                "GetCustomerForConsultation"
+            );
+
+            if (response) {
                 SetTrackTrace(
-                    "Retrieved Current Service Provider: " + currentServiceProvider,
+                    "Dispatch Set Selected Customer" + response.data,
                     "GetCustomerForConsultation",
                     SeverityLevel.Information
                 );
+
+                dispatch(SetCurrentCustomer(response.data))
+
+                //Get Notes, Reports, and Prescriptions for customer
+                dispatch(GetReports())
+                dispatch(GetPrescriptions())
+                dispatch(GetNotes())
             } else {
-                SetTrackTrace(
-                    "Retrieved Current Service Provider DOES NOT EXIST: " +
-                    currentServiceProvider,
-                    "GetCustomerForConsultation",
-                    SeverityLevel.Error
-                );
+                dispatch(SetNonFatalError("Could not find this customer"));
             }
-
-            try {
-                let response = await getCall(
-                    {} as ICustomerIncomingData,
-                    GetCustomerForServiceProvider(
-                        customerId,
-                        currentServiceProvider.serviceProviderProfile.organisationId
-                    ),
-                    "GetCustomerForConsultation"
-                );
-
-                if (response) {
-                    SetTrackTrace(
-                        "Dispatch Set Selected Customer" + response.data,
-                        "GetCustomerForConsultation",
-                        SeverityLevel.Information
-                    );
-                    dispatch(SetCustomer(response.data));
-                } else {
-                    dispatch(SetNonFatalError("Could not find this customer"));
-                }
-            } catch (error) {
-                dispatch(
-                    SetNonFatalError("Could not find customer for this appointment")
-                );
-            }
-        };
+        } catch (error) {
+            dispatch(
+                SetNonFatalError("Could not find customer for this appointment")
+            );
+        }
+    };

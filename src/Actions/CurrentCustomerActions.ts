@@ -33,7 +33,7 @@ function setNotesAction(notes: INoteIncomingData[]) {
     };
 }
 
-export const SetCustomer = (customer: ICustomerIncomingData): Action => (setCustomerAction(customer));
+export const SetCurrentCustomer = (customer: ICustomerIncomingData): Action => (setCustomerAction(customer));
 export const SetNotes = (notes: INoteIncomingData[]): Action => (setNotesAction(notes));
 export const SetReports = (reports: IReportIncomingData[]): Action => (setReportsAction(reports));
 export const SetPrescriptions = (prescriptions: IPrescriptionIncomingData[]): Action => (setPrescriptionsAction(prescriptions));

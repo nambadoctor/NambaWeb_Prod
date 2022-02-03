@@ -8,17 +8,34 @@ import IPrescriptionIncomingData from "../../Types/IncomingDataModels/Prescripti
 import { Row } from "react-bootstrap";
 import { Divider } from "@mui/material";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
+import { createSelector } from "reselect";
 
 export default function PrescriptionImageView() {
   const dispatch = useDispatch();
 
   const {
-    currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+    currentImage,
+    isViewerOpen,
+    images,
+    setImages,
+    openImageViewer,
+    closeImageViewer,
   } = useImagesHook();
 
+  const currentAppointmentId = useSelector(
+    (state: RootState) => state.ConsultationState.Appointment?.appointmentId
+  );
+
+  const showAppointmentPrescriptions = createSelector(
+    (state: RootState) => state.CurrentCustomerState.Prescriptions,
+    (prescriptions) =>
+      prescriptions?.filter(
+        (prescription) => prescription.appointmentId == currentAppointmentId
+      )
+  );
 
   let currentCustomerPrescriptionImages = useSelector(
-    (state: RootState) => state.ConsultationState.Prescriptions
+    showAppointmentPrescriptions
   );
 
   useEffect(() => {
@@ -54,7 +71,7 @@ export default function PrescriptionImageView() {
                 position: "relative",
                 width: 100,
                 marginTop: 10,
-                marginRight: 20
+                marginRight: 20,
               }}
             >
               <img
@@ -103,7 +120,8 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0)
+      {currentCustomerPrescriptionImages &&
+      currentCustomerPrescriptionImages.length > 0
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

@@ -1,10 +1,9 @@
 import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
-import { Appointment_Types } from "../Reducers/AppointmentsReducer";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
 import { filterAppointments } from "../Helpers/AppointmentHelpers";
-import { CancelAppointmentEndPoint, GetAppointmentForServiceProvider, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -15,6 +14,9 @@ import { SetAppointmentsLoadedState } from "../Actions/LoadedStatesActions";
 import { SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
 import { SetAppointments, SetFilteredAppointmentsAction } from "../Payload/AppointmentPayloads";
+import { GetCustomer } from "./CustomerActions";
+import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
+import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -142,23 +144,21 @@ export const GetAppointment =
       }
 
       try {
-        let response = await getCall(
-          {} as Array<IAppointmentData>,
-          GetAppointmentForServiceProvider(
-            appointmentId,
-            currentServiceProvider.serviceProviderId
-          ),
+        //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+        let response = await getCall({} as IAppointmentData, GetAppointmentForServiceProviderEndPoint(appointmentId, currentServiceProvider.serviceProviderId),
           "GetAllAppointments"
         );
 
-        dispatch(SetLinearLoadingBarToggle(false));
-
         if (response.data) {
-          dispatch()
+          dispatch(SetSelectedAppointmentForConsultation(response.data))
+          dispatch(GetNextAndPreviousAppointmentForConsultation())
+          dispatch(GetCustomer(response.data.customerId))
         }
 
+        dispatch(SetLinearLoadingBarToggle(false));
+
         SetTrackTrace(
-          "Dispatch Set Appointment" + response.data,
+          "Dispatch Set Selected Appointment" + response.data,
           "GetAppointmentForConsultation",
           SeverityLevel.Information
         );

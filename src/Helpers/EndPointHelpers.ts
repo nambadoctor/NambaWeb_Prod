@@ -18,7 +18,7 @@ export function SetNewAppointmentEndPoint () {
     return "appointment"
 }
 
-export function SetCustomerWithAppointment () {
+export function SetCustomerWithAppointmentEndPoint () {
     return "customer/appointment"
 }
 
@@ -30,15 +30,15 @@ export function GetServiceProviderBasicEndPoint () {
     return "serviceprovider";
 }
 
-export function GetAppointmentForServiceProvider(appointmentId:string, serviceProviderId:string) {
+export function GetAppointmentForServiceProviderEndPoint(appointmentId:string, serviceProviderId:string) {
     return  "appointment/" + appointmentId + "/" + serviceProviderId;
 }
 
-export function GetCustomerForServiceProvider(customerId:string, organisationId:string) {
+export function GetCustomerForServiceProviderEndPoint(customerId:string, organisationId:string) {
     return  "customer/" + customerId + "/" + organisationId;
 }
 
-export function GetCustomerFromPhoneNumber(phoneNumber:string, organisationId:string) {
+export function GetCustomerFromPhoneNumberEndPoint(phoneNumber:string, organisationId:string) {
     return "customer/phonenumber/+91" + phoneNumber + "/" + organisationId;
 }
 

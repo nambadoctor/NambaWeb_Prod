@@ -13,27 +13,6 @@ export function setSelectedAppointmentAction(appointment: IAppointmentData) {
     };
 }
 
-function setReportsAction(reports: IReportIncomingData[]) {
-    return {
-        type: ConsultationTypes_Types.SET_APPOINTMENT_REPORTS,
-        payload: reports
-    };
-}
-
-function setPrescriptionsAction(prescriptions: IPrescriptionIncomingData[]) {
-    return {
-        type: ConsultationTypes_Types.SET_APPOINTMENT_PRESCRIPTIONS,
-        payload: prescriptions
-    };
-}
-
-function setNotesActions(notes: INoteIncomingData[]) {
-    return {
-        type: ConsultationTypes_Types.SET_APPOINTMENT_NOTES,
-        payload: notes
-    };
-}
-
 function setPreviousAppointmentAction(appointment: IAppointmentData) {
     return {
         type: ConsultationTypes_Types.SET_PREVIOUS_APPOINTMENT,
@@ -56,9 +35,6 @@ function clearAllValuesForConsultationAction () {
 }
 
 export const SetSelectedAppointmentForConsultation = (appointment: IAppointmentData): Action => (setSelectedAppointmentAction(appointment));
-export const SetReportsForConsultation = (reports: IReportIncomingData[]): Action => (setReportsAction(reports));
-export const SetPrescriptionsForConsultation = (prescriptions: IPrescriptionIncomingData[]): Action => (setPrescriptionsAction(prescriptions));
-export const SetNotesForConsultation = (notes: INoteIncomingData[]): Action => (setNotesActions(notes));
 export const SetPreviousAppointmentConsultation = (appointment: IAppointmentData): Action => (setPreviousAppointmentAction(appointment));
 export const SetNextAppointmentForConsultation = (appointment: IAppointmentData): Action => (setNextAppointmentAction(appointment));
 export const ClearAllValuesForConsultation = (): Action => (clearAllValuesForConsultationAction());

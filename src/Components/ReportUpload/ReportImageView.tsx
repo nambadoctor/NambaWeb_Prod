@@ -5,9 +5,8 @@ import { RootState } from "../../store";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useDispatch, useSelector } from "react-redux";
 import IReportIncomingData from "../../Types/IncomingDataModels/ReportIncoming";
-import { Divider } from "@mui/material";
-import { Row } from "react-bootstrap";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
+import { createSelector } from "reselect";
 
 export default function ReportImageView() {
   const dispatch = useDispatch();
@@ -16,7 +15,19 @@ export default function ReportImageView() {
     currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
   } = useImagesHook();
 
-  let currentCustomerReportsImages = useSelector((state: RootState) => state.CurrentCustomerState.allCustomerReports)
+  const currentAppointmentId = useSelector(
+    (state: RootState) => state.ConsultationState.Appointment?.appointmentId
+  );
+
+  const showAppointmentReports = createSelector(
+    (state: RootState) => state.CurrentCustomerState.Reports,
+    (reports) =>
+    reports?.filter(
+        (report) => report.appointmentId == currentAppointmentId
+      )
+  );
+
+  let currentCustomerReportsImages = useSelector(showAppointmentReports)
 
   useEffect(() => {
     getImageURLsFromReports();
