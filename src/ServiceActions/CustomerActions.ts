@@ -21,7 +21,7 @@ import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
 
 
-export const GetAllCustomersForServiceProviderInOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Customers For Service Provider In Org Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
 
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
@@ -86,7 +86,7 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
             dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
-            dispatch(GetAllCustomersForServiceProviderInOrg())
+            dispatch(GetAllCustomers())
             toast.success("Customer and Appointment Set Successfully")
         } else {
             dispatch(SetAddPatientIsDoneCallSuccess(false))
@@ -120,7 +120,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientIsMakingDoneCall(false))
-            dispatch(GetAllCustomersForServiceProviderInOrg())
+            dispatch(GetAllCustomers())
             toast.success("Customer Set Successfully")
         } else {
             dispatch(SetAddPatientIsDoneCallSuccess(false))

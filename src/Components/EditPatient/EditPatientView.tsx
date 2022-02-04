@@ -24,6 +24,7 @@ export default function EditPatientView() {
           margin="normal"
           size="small"
           {...formik.getFieldProps("phonenumber")}
+          inputProps={{ maxLength: 10 }}
           helperText={formik.touched.phonenumber && formik.errors.phonenumber}
           error={formik.touched.phonenumber && !!formik.errors.phonenumber}
         />

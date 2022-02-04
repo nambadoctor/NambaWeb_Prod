@@ -7,7 +7,7 @@ import IOrganisationBasic from "../../Types/IncomingDataModels/OrganisationBasic
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { RootState } from "../../store";
-import { SetLocallySelectedOrg } from "../../Actions/OrganisationActions";
+import { SetSelectedOrg } from "../../Actions/OrganisationActions";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -70,7 +70,7 @@ export default function OrganisationPicker() {
   };
 
   function getSelectedOption(organisation?: IOrganisationBasic) {
-    dispatch(SetLocallySelectedOrg(organisation));
+    dispatch(SetSelectedOrg(organisation));
     handleClose();
   }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { SetOrgPickerModalToggle } from '../../Actions/Common/UIControlActions';
-import { SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
+import { SetSelectedOrg } from '../../Actions/OrganisationActions';
 import { RootState } from '../../store';
 import IOrganisationBasic from '../../Types/IncomingDataModels/OrganisationBasic';
 
@@ -15,7 +15,7 @@ export default function OrganisationInitialModalPickerComponent() {
 
     function selectOrg(selectedOrg?:IOrganisationBasic) {
         dispatch(SetOrgPickerModalToggle(false))
-        dispatch(SetLocallySelectedOrg(selectedOrg))
+        dispatch(SetSelectedOrg(selectedOrg))
     }
 
     return (

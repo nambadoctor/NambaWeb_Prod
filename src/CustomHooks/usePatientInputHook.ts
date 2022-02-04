@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
 import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
-import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { RootState } from "../store";
-import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
 import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
+import { isNull } from "util";
 
 export default function usePatientInputHook() {
     const dispatch = useDispatch()
@@ -19,7 +18,7 @@ export default function usePatientInputHook() {
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
     useEffect(() => {
-        currentCustomer && mapCustomerToValues(currentCustomer)
+        mapCustomerToValues(currentCustomer)
     }, [currentCustomer])
 
     const [gender, setGender] = useState("")
@@ -41,19 +40,21 @@ export default function usePatientInputHook() {
         onSubmit: (values) => { makeCustomerObject() },
     });
 
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.value.length >= 10) {
-            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.serviceProviderProfile.organisationId))
+    //Phone Number Change Handler
+    useEffect(() => {
+        const number = formik.values.phonenumber;
+        if (number.length == 10) {
+            dispatch(CheckIfCustomerExists(number, currentServiceProvider!.serviceProviderProfile.organisationId))
             dispatch(SetAddPatientIsCheckingForCustomer(true))
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
+            dispatch(SetAddPatientPhoneNumber(number));
         } else {
-            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
+            dispatch(SetCurrentCustomer(null))
+            dispatch(SetAddPatientPhoneNumber(number));
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsInvalidNumber(false))
         }
-    };
+    }, [formik.values.phonenumber])
 
     const makeCustomerObject = () => {
         var CustomerRequestObj = {
@@ -75,11 +76,15 @@ export default function usePatientInputHook() {
         return CustomerRequestObj;
     }
 
-    function mapCustomerToValues (customer: ICustomerIncomingData) {
-        formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
-        formik.setFieldValue("name", customer.firstName + " " + customer.lastName);
-        formik.setFieldValue("age", customer.dateOfBirth.age);
-        formik.setFieldValue("gender", customer.gender);
+    function mapCustomerToValues(customer: ICustomerIncomingData|null) {
+        if (customer) {
+            formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
+            formik.setFieldValue("name", customer.firstName + " " + customer.lastName);
+            formik.setFieldValue("age", customer.dateOfBirth.age);
+            formik.setFieldValue("gender", customer.gender);
+        } else {
+            formik.resetForm()
+        }
     }
 
     return {
@@ -87,7 +92,6 @@ export default function usePatientInputHook() {
         genderOptions,
         gender,
         formik,
-        handleNumberChange,
         setGender,
         makeCustomerObject
     };

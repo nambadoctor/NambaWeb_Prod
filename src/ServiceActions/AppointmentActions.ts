@@ -37,8 +37,6 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
     SetTrackTrace("Dispatch Set Dates With Appointments Range Helper", "GetAllAppointments", SeverityLevel.Information);
     dispatch(SetDatesWithAppointmentsRange(response.data));
 
-    //TODO: Check if this is proper design to set filtered appointments
-    SetTrackTrace("Dispatch Set Filtered Appointments Helper", "GetAllAppointments", SeverityLevel.Information);
   } catch (error) {
     dispatch(SetFatalError("Could not retrieve your appointments!"))
   }
