@@ -1,7 +1,6 @@
 import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilteredAppointments } from '../../ServiceActions/AppointmentActions';
 import { SetOrgPickerModalToggle } from '../../Actions/Common/UIControlActions';
 import { SetLocallySelectedOrg } from '../../Actions/OrganisationActions';
 import { RootState } from '../../store';
@@ -17,7 +16,6 @@ export default function OrganisationInitialModalPickerComponent() {
     function selectOrg(selectedOrg?:IOrganisationBasic) {
         dispatch(SetOrgPickerModalToggle(false))
         dispatch(SetLocallySelectedOrg(selectedOrg))
-        dispatch(setFilteredAppointments())
     }
 
     return (

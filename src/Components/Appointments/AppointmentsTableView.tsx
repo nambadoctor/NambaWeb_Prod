@@ -5,7 +5,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { convertDaysIntoNearestUnit, getReadableDateAndTimeString, getReadableDateString } from "../../Utils/GeneralUtils";
+import {
+  convertDaysIntoNearestUnit,
+  getReadableDateAndTimeString,
+  isDatesEqual,
+} from "../../Utils/GeneralUtils";
 import { makeStyles } from "@mui/styles";
 import { Box, TableFooter, TablePagination, Typography } from "@mui/material";
 import AppointmentStatusEnum from "../../Types/Enums/AppointmentStatusEnums";
@@ -17,7 +21,8 @@ import NoAppointmentsView from "./NoAppointmentsView";
 import TablePaginationActions from "../Pagination/PaginationActions";
 import usePaginationHook from "../../CustomHooks/usePaginationHook";
 import { CancelAppointment } from "../../ServiceActions/AppointmentActions";
-import CancelIcon from '@mui/icons-material/Cancel';
+import CancelIcon from "@mui/icons-material/Cancel";
+import { createSelector } from "reselect";
 
 const useAppointmentTableStyles = makeStyles(() => ({
   table: {
@@ -55,14 +60,28 @@ export default function AppointmentsTable() {
   const classes = useAppointmentTableStyles();
   const dispatch = useDispatch();
 
-  const appointmentState = useSelector((state: RootState) => state.AppointmentState);
+  const dates = useSelector((state: RootState) => state.SelectedDatesState.selectedDateRage);
 
-  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = usePaginationHook(-1)
+  const showAppointmentReports = createSelector(
+    (state: RootState) => state.AppointmentState.appointments,
+    (appointments) =>
+      appointments.filter((appointment) =>
+        isDatesEqual(
+          dates[0],
+          new Date(appointment.scheduledAppointmentStartTime)
+        )
+      )
+  );
+
+  const appointments = useSelector(showAppointmentReports)
+
+  const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
+    usePaginationHook(-1);
 
   //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
   function getLastVisitForCustomer(customerId: string) {
     var lastVisitedDate = new Date();
-    appointmentState.appointments.forEach((element) => {
+    appointments.forEach((element) => {
       if (element.customerId === customerId) {
         var currentAppointmentDate = new Date(
           element.scheduledAppointmentStartTime
@@ -118,60 +137,63 @@ export default function AppointmentsTable() {
   }
 
   function GetAppointmentList() {
-
-    return (rowsPerPage > 0
-      ? appointmentState.filteredAppointments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      : appointmentState.filteredAppointments
-    ).map(
-      (appointment: IAppointmentData, index: number) => (
-        <TableRow key={appointment.appointmentId}>
-          <TableCell align="left">
-            <Link to={"/Consultation/" + appointment.appointmentId}>{appointment.customerName}</Link>
-          </TableCell>
-          <TableCell align="left">
-            {getLastVisitForCustomer(
-              appointment.customerId
-            )}
-          </TableCell>
-          <TableCell>
-            <Typography
-              className={classes.status}
-              style={{
-                backgroundColor:
-                  getBackgroundColorForAppointmentState(
-                    appointment.status
-                  )[0],
-                color: getBackgroundColorForAppointmentState(
-                  appointment.status
-                )[1],
-              }}
-            >
-              {getDisplayNameForAppointmentState(
+    return (
+      rowsPerPage > 0
+        ? appointments.slice(
+            page * rowsPerPage,
+            page * rowsPerPage + rowsPerPage
+          )
+        : appointments
+    ).map((appointment: IAppointmentData, index: number) => (
+      <TableRow key={appointment.appointmentId}>
+        <TableCell align="left">
+          <Link to={"/Consultation/" + appointment.appointmentId}>
+            {appointment.customerName}
+          </Link>
+        </TableCell>
+        <TableCell align="left">
+          {getLastVisitForCustomer(appointment.customerId)}
+        </TableCell>
+        <TableCell>
+          <Typography
+            className={classes.status}
+            style={{
+              backgroundColor: getBackgroundColorForAppointmentState(
                 appointment.status
-              )}
-            </Typography>
-          </TableCell>
-          <TableCell align="left">
-            {getReadableDateAndTimeString(
-              appointment.scheduledAppointmentStartTime
-            )}
-          </TableCell>
-          <TableCell align="left">
-            <div onClick={() => cancelAppointment(appointment)}><CancelIcon /></div>
-          </TableCell>
-        </TableRow>
-      )
-    )
+              )[0],
+              color: getBackgroundColorForAppointmentState(
+                appointment.status
+              )[1],
+            }}
+          >
+            {getDisplayNameForAppointmentState(appointment.status)}
+          </Typography>
+        </TableCell>
+        <TableCell align="left">
+          {getReadableDateAndTimeString(
+            appointment.scheduledAppointmentStartTime
+          )}
+        </TableCell>
+        <TableCell align="left">
+          <div onClick={() => cancelAppointment(appointment)}>
+            <CancelIcon />
+          </div>
+        </TableCell>
+      </TableRow>
+    ));
   }
 
   function cancelAppointment(appointment: IAppointmentData) {
     if (window.confirm("Do you want to delete this appointment?")) {
-      dispatch(CancelAppointment(appointment))
+      dispatch(CancelAppointment(appointment));
     }
   }
 
   return (
-    <TableContainer component={Paper} style={{ borderRadius: 15, marginBottom: 10 }}>
+    <TableContainer
+      component={Paper}
+      style={{ borderRadius: 15, marginBottom: 10 }}
+    >
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow style={{ height: 10 }}>
@@ -187,27 +209,34 @@ export default function AppointmentsTable() {
             <TableCell className={classes.tableHeaderCell} align="left">
               Appointment Time
             </TableCell>
-            <TableCell className={classes.tableHeaderCell} align="left"></TableCell>
+            <TableCell
+              className={classes.tableHeaderCell}
+              align="left"
+            ></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {appointmentState.filteredAppointments && appointmentState.filteredAppointments.length !== 0 ?
-            GetAppointmentList() :
-            <TableCell colSpan={6}><NoAppointmentsView /></TableCell>
-          }
+          {appointments &&
+          appointments.length !== 0 ? (
+            GetAppointmentList()
+          ) : (
+            <TableCell colSpan={6}>
+              <NoAppointmentsView />
+            </TableCell>
+          )}
         </TableBody>
 
         <TableFooter>
           <TableRow>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
               colSpan={3}
-              count={appointmentState.filteredAppointments.length}
+              count={appointments.length}
               rowsPerPage={rowsPerPage}
               page={page}
               SelectProps={{
                 inputProps: {
-                  'aria-label': 'rows per page',
+                  "aria-label": "rows per page",
                 },
                 native: true,
               }}

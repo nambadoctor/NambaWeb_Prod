@@ -1,6 +1,5 @@
 import { Action } from "../Types/ActionType";
 import { AddPatientReducer_Types, IAddPatientError } from "../Reducers/AddPatientReducer";
-import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import { ThunkAction } from "redux-thunk";
 import { RootState } from "../store";
 
@@ -73,7 +72,6 @@ export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Acti
 export const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));
 
 export const ClearAddPatientState = (): Action => (ClearPatientStateAction());
-
 
 export const SetAddPatientPhoneNumberValidationError = (errorMessage:string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     const addPatientStateErrors = getState().AddPatientState.validationErrors;

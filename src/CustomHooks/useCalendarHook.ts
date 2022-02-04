@@ -6,7 +6,6 @@ import { generateMatrix } from "../Utils/CalendarUtils";
 import { checkIfDateExists } from "../Utils/GeneralUtils";
 import IMatrixDateObj from "../Types/MatrixDateObj";
 import ICustomDateData from "../Types/MatrixDateObj";
-import { setFilteredAppointments } from "../ServiceActions/AppointmentActions";
 
 export default function useCalendarHook() {
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ export default function useCalendarHook() {
 
   function setDates(date: Date) {
     dispatch(SetSelectedDateRange([date, date]));
-    dispatch(setFilteredAppointments());
   }
 
   const _onPress = (item: IMatrixDateObj) => {

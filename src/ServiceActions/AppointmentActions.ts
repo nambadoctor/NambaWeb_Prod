@@ -2,7 +2,6 @@ import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
-import { filterAppointments } from "../Helpers/AppointmentHelpers";
 import { CancelAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
@@ -10,10 +9,9 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetAppointmentsLoadedState } from "../Actions/LoadedStatesActions";
 import { SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
-import { SetAppointments, SetFilteredAppointmentsAction } from "../Payload/AppointmentPayloads";
+import { SetAppointments } from "../Payload/AppointmentPayloads";
 import { GetCustomer } from "./CustomerActions";
 import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
 import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
@@ -41,34 +39,9 @@ export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action>
 
     //TODO: Check if this is proper design to set filtered appointments
     SetTrackTrace("Dispatch Set Filtered Appointments Helper", "GetAllAppointments", SeverityLevel.Information);
-    dispatch(setFilteredAppointments());
   } catch (error) {
     dispatch(SetFatalError("Could not retrieve your appointments!"))
   }
-};
-
-export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
-  var appointments = getState().AppointmentState.appointments
-  var selectedDates = getState().SelectedDatesState.selectedDateRage
-
-  if (appointments) {
-    SetTrackTrace("Getting appointments from state SUCCESS: " + appointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-  } else {
-    SetTrackTrace("Getting appointments from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-  }
-
-  if (selectedDates) {
-    SetTrackTrace("Getting selected dates from state SUCCESS: " + selectedDates.length, "SetFilteredAppointments", SeverityLevel.Information);
-  } else {
-    SetTrackTrace("Getting selected dates from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-  }
-
-  var filteredAppointments = filterAppointments(selectedDates, appointments)
-
-  SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-  dispatch(SetFilteredAppointmentsAction(filteredAppointments));
-  dispatch(SetAppointmentsLoadedState(true))
 };
 
 export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
