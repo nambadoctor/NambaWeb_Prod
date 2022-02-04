@@ -6,7 +6,7 @@ import { GetReports } from "../ServiceActions/ReportActions";
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { ClearAddPatientState, SetAddPatientPhoneNumber } from "./AddPatientActions";
+import { ClearAddPatientState } from "./AddPatientActions";
 import { ClearAllValuesForConsultation } from "./ConsultationActions";
 
 function setCustomersHelper(customers: ICustomerIncomingData[]) {
@@ -28,6 +28,5 @@ export const SetSelectedCustomer = (customer: ICustomerIncomingData): ThunkActio
             customer.organisationId
         )
     );
-    dispatch(SetAddPatientPhoneNumber(customer.phoneNumbers[0].number));
     dispatch(GetCustomer(customer.customerId))
 }

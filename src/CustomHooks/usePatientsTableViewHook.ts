@@ -1,16 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
-import {
-  ClearAddPatientState,
-  SetAddPatientIsCheckingForCustomer,
-  SetAddPatientPhoneNumber,
-} from "../Actions/AddPatientActions";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { GetReports } from "../ServiceActions/ReportActions";
-import { GetPrescriptions } from "../ServiceActions/PrescriptionActions";
-import { ClearAllValuesForConsultation } from "../Actions/ConsultationActions";
 import { SetSelectedCustomer } from "../Actions/CustomerActions";
 
 export default function usePatientsTableViewHook() {

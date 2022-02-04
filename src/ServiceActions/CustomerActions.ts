@@ -3,12 +3,11 @@ import { GetCustomerForServiceProviderEndPoint, GetCustomerFromPhoneNumberEndPoi
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall, SetAddPatientPhoneNumber } from "../Actions/AddPatientActions";
+import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { GetAllAppointments } from "./AppointmentActions";
-import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
@@ -80,7 +79,6 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            dispatch(SetAddPatientPhoneNumber(""))
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientIsMakingDoneCall(false))
@@ -116,7 +114,6 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
 
         if (response) {
             //TODO: Make calls in here and SetCustomerAndBookAppointment in common action
-            dispatch(SetAddPatientPhoneNumber(""))
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(SetAddPatientIsMakingDoneCall(false))

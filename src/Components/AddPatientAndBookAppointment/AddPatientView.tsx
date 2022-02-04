@@ -58,8 +58,8 @@ export default function AddPatientView() {
   };
 
   const makeAppointment = () => {
-      formik.handleSubmit()
-  }
+    formik.handleSubmit();
+  };
 
   return (
     <div>
@@ -116,6 +116,9 @@ export default function AddPatientView() {
         placeholder="Name"
         margin="normal"
         size="small"
+        disabled={
+          addPatientState.isCustomerExists || addPatientState.isInvalidNumber
+        }
         {...formik.getFieldProps("name")}
         helperText={formik.touched.name && formik.errors.name}
         error={formik.touched.name && !!formik.errors.name}
@@ -129,6 +132,10 @@ export default function AddPatientView() {
             placeholder="Age"
             margin="normal"
             size="small"
+            disabled={
+              addPatientState.isCustomerExists ||
+              addPatientState.isInvalidNumber
+            }
             {...formik.getFieldProps("age")}
             helperText={formik.touched.age && formik.errors.age}
             error={formik.touched.age && !!formik.errors.age}

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
+import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber } from "../Actions/AddPatientActions";
 import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
 import { RootState } from "../store";
 import { useFormik } from "formik";
@@ -46,10 +46,8 @@ export default function usePatientInputHook() {
         if (number.length == 10) {
             dispatch(CheckIfCustomerExists(number, currentServiceProvider!.serviceProviderProfile.organisationId))
             dispatch(SetAddPatientIsCheckingForCustomer(true))
-            dispatch(SetAddPatientPhoneNumber(number));
         } else {
             dispatch(SetCurrentCustomer(null))
-            dispatch(SetAddPatientPhoneNumber(number));
             dispatch(SetAddPatientIsCustomerExists(false))
             dispatch(SetAddPatientIsCheckingForCustomer(false))
             dispatch(SetAddPatientIsInvalidNumber(false))
