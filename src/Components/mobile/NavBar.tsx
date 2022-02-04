@@ -8,10 +8,13 @@ import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
 import { ClearAddPatientState } from "../../Actions/AddPatientActions";
 import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
+import { useState } from "react";
 
 export default function NavBar() {
   const logo = require("../../Assets/NDLogo.png");
   const dispatch = useDispatch();
+
+  const [expanded, setExpanded] = useState(false);
 
   function switchTabs() {
     dispatch(ClearAddPatientState());
@@ -19,7 +22,13 @@ export default function NavBar() {
   }
 
   return (
-    <Navbar bg="topBarBlue" fixed="top" expand="sm">
+    <Navbar
+      expanded={expanded}
+      expand="lg"
+      bg="topBarBlue"
+      variant="dark"
+      fixed="top"
+    >
       <Navbar.Brand>
         <img
           alt="logo"
@@ -34,24 +43,26 @@ export default function NavBar() {
         />
         <span className="logo">NAMBA DOCTOR</span>
       </Navbar.Brand>
-
-      <Navbar.Toggle />
+      <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
       <Navbar.Collapse>
         <Nav
           className="ms-auto"
-          style={{ marginRight: 20, alignItems: "center" }}
+          style={{
+            flexDirection: "row",
+            alignItems: "baseline",
+          }}
         >
           <OrganisationPicker />
           <Link
             to="/Appointments"
             onClick={() => {
               switchTabs();
+              setExpanded(false);
             }}
             style={{
               color: "white",
               fontSize: 18,
               fontWeight: "600",
-              marginLeft: 20,
               marginRight: 40,
               textDecoration: "none",
             }}
@@ -68,7 +79,7 @@ export default function NavBar() {
               marginRight: 20,
             }}
           >
-            <LogoutIcon style={{ color: "white" }}> </LogoutIcon>
+            <LogoutIcon style={{ color: "white" }} />
           </div>
         </Nav>
       </Navbar.Collapse>
