@@ -54,9 +54,7 @@ export default function EditPatientView() {
       ) : (
         <div />
       )}
-
-      {/* TODO: SHOW LOADER WHEN CHECKING FOR EXISTING PATIENT */}
-
+      
       <TextField
         fullWidth
         label="Name"
