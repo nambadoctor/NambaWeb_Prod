@@ -33,7 +33,16 @@ function setNotesAction(notes: INoteIncomingData[]) {
     };
 }
 
+function clearAllAction() {
+    return {
+        type: CurrentCustomer_Types.CLEAR_ALL,
+        payload: null
+    };
+}
+
 export const SetCurrentCustomer = (customer: ICustomerIncomingData|null): Action => (setCustomerAction(customer));
 export const SetNotes = (notes: INoteIncomingData[]): Action => (setNotesAction(notes));
 export const SetReports = (reports: IReportIncomingData[]): Action => (setReportsAction(reports));
 export const SetPrescriptions = (prescriptions: IPrescriptionIncomingData[]): Action => (setPrescriptionsAction(prescriptions));
+
+export const ClearCurrentCustomerState = (): Action => (clearAllAction());

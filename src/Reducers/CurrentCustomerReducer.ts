@@ -8,7 +8,8 @@ export enum CurrentCustomer_Types {
     SET_CUSTOMER = "SET_CUSTOMER",
     SET_REPORTS = "SET_REPORTS",
     SET_PRESCRIPTIONS = "SET_PRESCRIPTIONS",
-    SET_NOTES = "SET_NOTES"
+    SET_NOTES = "SET_NOTES",
+    CLEAR_ALL = "CLEAR_ALL"
 }
 
 export interface CurrentCustomerState {
@@ -46,6 +47,13 @@ export const CurrentCustomerReducer = (state: CurrentCustomerState = initialStat
             return {
                 ...state,
                 Notes: action.payload
+            }
+        case CurrentCustomer_Types.CLEAR_ALL:
+            return {
+                Customer: null,
+                Reports: null,
+                Prescriptions: null,
+                Notes: null
             }
         default:
             return state
