@@ -1,11 +1,12 @@
 import { CircularProgress, TextField } from "@mui/material";
-import { Button, ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
 import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
 import CustomButton from "../CustomButton";
 
 export default function EditPatientView() {
+
   const { addPatientState, genderOptions, gender, formik, setGender } =
-    usePatientInputHook();
+    usePatientInputHook(false);
 
   return (
     <div>
@@ -34,9 +35,6 @@ export default function EditPatientView() {
         ) : (
           <div />
         )}
-
-        {/* Indicator to display once customer exists check is complete
-                {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
       </div>
 
       {addPatientState.isCustomerExists ? (

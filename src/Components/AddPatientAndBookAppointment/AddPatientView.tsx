@@ -1,65 +1,16 @@
 import { CircularProgress, TextField } from "@mui/material";
-import { Button, ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
+import { ButtonGroup, Col, Row, ToggleButton } from "react-bootstrap";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
 import DateTimePicker from "@mui/lab/DateTimePicker";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import IAppointmentOutgoing from "../../Types/OutgoingDataModels/AppointmentOutgoing";
-import ICustomerProfileWithAppointmentOutgoingData from "../../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
+
+import CustomButton from "../CustomButton";
+import usePatientInputHook from "../../CustomHooks/usePatientInputHook";
 
 export default function AddPatientView() {
-  const {
-    addPatientState,
-    genderOptions,
-    gender,
-    formik,
-    setGender,
-    makeCustomerObject,
-  } = usePatientInputHook();
 
-  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const currentServiceProvider = useSelector(
-    (state: RootState) => state.CurrentServiceProviderState.serviceProvider
-  );
-  const currentCustomer = useSelector(
-    (state: RootState) => state.CurrentCustomerState.Customer
-  );
-
-  const makeAppointmentObject = () => {
-    return {
-      appointmentId: "",
-      organisationId:
-        currentServiceProvider?.serviceProviderProfile.organisationId,
-      serviceRequestId: "",
-      serviceProviderId: currentServiceProvider?.serviceProviderId,
-      customerId: currentCustomer?.customerId,
-      appointmentType: "InPerson",
-      addressId: "",
-      status: "",
-      scheduledAppointmentStartTime: selectedDate,
-      scheduledAppointmentEndTime: null,
-      actualAppointmentStartTime: null,
-      actualAppointmentEndTime: null,
-    } as IAppointmentOutgoing;
-  };
-
-  //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
-  const makeCustomerAndAppointmentRequest = () => {
-    var currentCustomerRequestObj = makeCustomerObject();
-    var aptObj = makeAppointmentObject();
-
-    return {
-      customerProfileIncoming: currentCustomerRequestObj,
-      appointmentIncoming: aptObj,
-    } as ICustomerProfileWithAppointmentOutgoingData;
-  };
-
-  const makeAppointment = () => {
-    formik.handleSubmit();
-  };
+  const { addPatientState, genderOptions, gender, formik, setGender } =
+    usePatientInputHook(true);
 
   return (
     <div>
@@ -179,9 +130,9 @@ export default function AddPatientView() {
             disabled={addPatientState.isInvalidNumber}
             renderInput={(props) => <TextField {...props} />}
             label="Appointment Date (If Needed)"
-            value={selectedDate}
+            value={formik.values.dateForAppointment}
             onChange={(newValue) => {
-              setSelectedDate(newValue);
+              formik.setFieldValue("dateForAppointment", newValue);
             }}
           />
         </LocalizationProvider>
@@ -196,15 +147,14 @@ export default function AddPatientView() {
             alignItems: "center",
           }}
         >
-          <Button
-            disabled={addPatientState.isInvalidNumber}
-            style={{ padding: 10, width: "100%" }}
+          <CustomButton
+            isDisabled={addPatientState.isInvalidNumber}
             type="submit"
-            color="primary"
-            onClick={() => {}}
-          >
-            Save
-          </Button>
+            onClick={formik.handleSubmit}
+            isPurple={false}
+            title="Save"
+            small={false}
+          />
         </div>
       </Row>
     </div>
