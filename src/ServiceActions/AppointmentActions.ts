@@ -10,10 +10,9 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
-import { SetAppointments } from "../Payload/AppointmentPayloads";
 import { GetCustomer } from "./CustomerActions";
 import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
-import { GetNextAndPreviousAppointmentForConsultation } from "../Actions/AppointmentsActions";
+import { GetNextAndPreviousAppointmentForConsultation, SetAppointments } from "../Actions/AppointmentsActions";
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

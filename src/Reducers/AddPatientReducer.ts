@@ -1,6 +1,4 @@
-import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
 import { Action } from "../Types/ActionType"
-import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 
 export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER = "SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER",
