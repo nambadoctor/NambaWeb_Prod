@@ -9,7 +9,6 @@ import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
 import { toast } from "react-toastify";
 import { SetAppointments } from "../Payload/AppointmentPayloads";
 import { GetCustomer } from "./CustomerActions";
@@ -53,7 +52,6 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     let response = await postCall({} as any, SetNewAppointmentEndPoint(), appointment, "SetNewAppointment")
 
     if (response) {
-      dispatch(SetAddPatientIsMakingDoneCall(false))
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
       toast.success("Appointment Set Successfully")
@@ -76,7 +74,6 @@ export const CancelAppointment = (appointment: IAppointmentData): ThunkAction<vo
     let response = await putCall({} as any, CancelAppointmentEndPoint(), appointment, "CancelAppointment")
 
     if (response) {
-      dispatch(SetAddPatientIsMakingDoneCall(false))
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
       toast.success("Appointment Cancelled Successfully")

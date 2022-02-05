@@ -5,26 +5,19 @@ import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCre
 export enum AddPatientReducer_Types {
     SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER = "SET_ADD_PATIENT_STATE_IS_CHECKING_NUMBER",
     SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS = "SET_ADD_PATIENT_STATE_IS_CUSTOMER_EXISTS",
-    SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL = "SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL",
-    SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS = "SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS",
     SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS = "SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS",
-    SET_ADD_PATIENT_STATE_ERRORS = "SET_ADD_PATIENT_STATE_ERRORS",
     CLEAR_ADD_PATIENT_STATE = "CLEAR_ADD_PATIENT_STATE"
 }
 
 export interface AddPatientState {
     isCheckingNumber: boolean,
     isCustomerExists: boolean,
-    isMakingDoneCall: boolean,
-    isDoneCallSuccess: boolean,
     isInvalidNumber: boolean,
 }
 
 const initialState: AddPatientState = {
     isCheckingNumber: false,
     isCustomerExists: false,
-    isMakingDoneCall: false,
-    isDoneCallSuccess: false,
     isInvalidNumber: false,
 }
 
@@ -40,16 +33,6 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
                 ...state,
                 isCustomerExists: action.payload,
             }
-        case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL:
-            return {
-                ...state,
-                isMakingDoneCall: action.payload,
-            }
-        case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS:
-            return {
-                ...state,
-                isDoneCallSuccess: action.payload,
-            }
         case AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS:
             return {
                 ...state,
@@ -59,8 +42,6 @@ export const addPatientReducer = (state: AddPatientState = initialState, action:
             return {
                 isCheckingNumber: initialState.isCheckingNumber,
                 isCustomerExists: initialState.isCustomerExists,
-                isMakingDoneCall: initialState.isMakingDoneCall,
-                isDoneCallSuccess: initialState.isDoneCallSuccess,
                 isInvalidNumber: initialState.isInvalidNumber,
             }
         default:

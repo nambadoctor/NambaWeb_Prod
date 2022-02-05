@@ -205,14 +205,6 @@ export default function AddPatientView() {
           >
             Save
           </Button>
-
-          {addPatientState.isMakingDoneCall ? (
-            <CircularProgress
-              style={{ width: 30, height: 30, marginLeft: 5 }}
-            />
-          ) : (
-            <div />
-          )}
         </div>
       </Row>
     </div>

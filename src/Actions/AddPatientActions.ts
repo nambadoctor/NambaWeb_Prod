@@ -24,21 +24,7 @@ function SetAddPatientIsCustomerAction(isCustomerExists: boolean) {
     };
 }
 
-function SetAddPatientIsMakingDoneCallAction(isMakingDoneCall: boolean) {
-    return {
-        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_MAKING_DONE_CALL,
-        payload: isMakingDoneCall
-    };
-}
-
-function SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess: boolean) {
-    return {
-        type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_DONE_CALL_SUCCESS,
-        payload: isDoneCallSuccess
-    };
-}
-
-function SetAddPatientIsInvalidNumberAction (isInvalidNumber: boolean) {
+function SetAddPatientIsInvalidNumberAction(isInvalidNumber: boolean) {
     return {
         type: AddPatientReducer_Types.SET_ADD_PATIENT_STATE_IS_INVALID_NUMBER_SUCCESS,
         payload: isInvalidNumber
@@ -46,14 +32,28 @@ function SetAddPatientIsInvalidNumberAction (isInvalidNumber: boolean) {
 }
 
 
-export const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
+const SetAddPatientIsCheckingForCustomer = (isCheckingForCustomer: boolean): Action => (SetAddPatientIsCheckingForCustomerAction(isCheckingForCustomer));
 
-export const SetAddPatientIsCustomerExists = (isCustomerExists: boolean): Action => (SetAddPatientIsCustomerAction(isCustomerExists));
+const SetAddPatientIsCustomerExists = (isCustomerExists: boolean): Action => (SetAddPatientIsCustomerAction(isCustomerExists));
 
-export const SetAddPatientIsMakingDoneCall = (isMakingDoneCall: boolean): Action => (SetAddPatientIsMakingDoneCallAction(isMakingDoneCall));
+const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));
 
-export const SetAddPatientIsDoneCallSuccess = (isDoneCallSuccess: boolean): Action => (SetAddPatientIsDoneCallSuccessAction(isDoneCallSuccess));
+export const SetIsCheckingForCustomer = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetAddPatientIsCheckingForCustomer(true))
+    dispatch(SetAddPatientIsCustomerExists(false))
+    dispatch(SetAddPatientIsInvalidNumber(false))
+}
 
-export const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action => (SetAddPatientIsInvalidNumberAction(isInvalidNumber));
+export const SetIsInvalidNumber = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetAddPatientIsCheckingForCustomer(false))
+    dispatch(SetAddPatientIsCustomerExists(false))
+    dispatch(SetAddPatientIsInvalidNumber(true))
+}
+
+export const SetCustomerExists = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetAddPatientIsCheckingForCustomer(false))
+    dispatch(SetAddPatientIsCustomerExists(true))
+    dispatch(SetAddPatientIsInvalidNumber(false))
+}
 
 export const ClearAddPatientState = (): Action => (ClearPatientStateAction());

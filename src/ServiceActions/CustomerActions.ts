@@ -3,7 +3,7 @@ import { GetCustomerForServiceProviderEndPoint, GetCustomerFromPhoneNumberEndPoi
 import { RootState } from "../store";
 import { Action } from "../Types/ActionType";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsDoneCallSuccess, SetAddPatientIsInvalidNumber, SetAddPatientIsMakingDoneCall } from "../Actions/AddPatientActions";
+import { ClearAddPatientState, SetCustomerExists, SetIsCheckingForCustomer, SetIsInvalidNumber } from "../Actions/AddPatientActions";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
@@ -41,27 +41,23 @@ export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> =>
 
 //NEED TO INTEGRATE WITH SERVICE CALL
 export const CheckIfCustomerExists = (phoneNumber: string, organisationId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-    dispatch(SetAddPatientIsCheckingForCustomer(true));
+    dispatch(SetIsCheckingForCustomer())
     SetTrackTrace("Enter Check If Customer Exists with Phone Number Action PhNumber:" + phoneNumber + "OrgId: " + organisationId, "CheckIfCustomerExists", SeverityLevel.Information);
 
     try {
 
         let response = await getCall({} as ICustomerProfileOutgoing, GetCustomerFromPhoneNumberEndPoint(phoneNumber, organisationId), "CheckIfCustomerExists")
 
-        dispatch(SetAddPatientIsCheckingForCustomer(false))
-
         if (response.data) {
-            dispatch(SetAddPatientIsCustomerExists(true))
+            dispatch(SetCustomerExists())
             dispatch(SetCurrentCustomer(response.data))
         } else {
-            dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientIsInvalidNumber(false))
+            dispatch(ClearAddPatientState())
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
         }
 
     } catch (error) {
-        dispatch(SetAddPatientIsCheckingForCustomer(false))
-        dispatch(SetAddPatientIsInvalidNumber(true))
+        dispatch(SetIsInvalidNumber())
         throw error;
     }
 };
@@ -79,15 +75,12 @@ export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfi
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            dispatch(SetAddPatientIsCustomerExists(false))
+            dispatch(ClearAddPatientState())
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
-            dispatch(SetAddPatientIsMakingDoneCall(false))
-            dispatch(SetAddPatientIsDoneCallSuccess(false))
             dispatch(GetAllAppointments())
             dispatch(GetAllCustomers())
             toast.success("Customer and Appointment Set Successfully")
         } else {
-            dispatch(SetAddPatientIsDoneCallSuccess(false))
         }
     } catch (error) {
         dispatch(SetNonFatalError("Could not set customer and book appointment"))
@@ -114,13 +107,11 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
 
         if (response) {
             //TODO: Make calls in here and SetCustomerAndBookAppointment in common action
-            dispatch(SetAddPatientIsCustomerExists(false))
+            dispatch(ClearAddPatientState())
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
-            dispatch(SetAddPatientIsMakingDoneCall(false))
             dispatch(GetAllCustomers())
             toast.success("Customer Set Successfully")
         } else {
-            dispatch(SetAddPatientIsDoneCallSuccess(false))
         }
     } catch (error) {
         dispatch(SetNonFatalError("Could not set customer"))
