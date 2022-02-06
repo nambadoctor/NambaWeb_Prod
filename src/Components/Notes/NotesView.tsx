@@ -1,11 +1,7 @@
-import { TextField } from "@mui/material";
-import React, { useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { UploadNote } from "../../ServiceActions/NoteActions";
+import { Col, Row } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { INoteIncomingData } from "../../Types/IncomingDataModels/NoteIncoming";
-import { INoteOutgoingData } from "../../Types/OutgoingDataModels/NoteOutgoing";
 import NewNoteCard from "./NewNoteCardView";
 import { NoteCard } from "./SingleNoteCardView";
 import { createSelector } from "reselect";

@@ -31,7 +31,7 @@ export default function ReportImageView() {
 
   useEffect(() => {
     getImageURLsFromReports();
-  }, [currentCustomerReportsImages]);
+  }, []);
 
   function getImageURLsFromReports() {
     var stringList: string[] = [];
@@ -42,7 +42,7 @@ export default function ReportImageView() {
       });
     }
 
-    setImages(stringList);
+    return () => setImages(stringList);
   }
 
   function deleteReport(report: IReportIncomingData) {
