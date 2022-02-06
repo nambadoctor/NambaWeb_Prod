@@ -97,9 +97,9 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     function mapCustomerToValues(customer: ICustomerIncomingData | null) {
         if (customer) {
             customer.phoneNumbers && formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
-            formik.setFieldValue("name", (customer.firstName ?? "") + " " + (customer.lastName ?? ""));
-            customer.dateOfBirth && formik.setFieldValue("age", customer.dateOfBirth.age);
-            formik.setFieldValue("gender", customer.gender);
+            customer.firstName ? formik.setFieldValue("name", (customer.firstName ?? "") + " " + (customer.lastName ?? "")) : formik.setFieldValue("name", "");
+            customer.dateOfBirth ? formik.setFieldValue("age", customer.dateOfBirth.age) : formik.setFieldValue("age", "");
+            customer.gender ? formik.setFieldValue("gender", customer.gender) : formik.setFieldValue("gender", "");
             setGender(customer.gender);
         } else {
             formik.resetForm()
