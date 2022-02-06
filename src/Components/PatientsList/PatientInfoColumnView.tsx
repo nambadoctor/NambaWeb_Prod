@@ -1,39 +1,49 @@
-import { Divider } from "@mui/material";
-import { Row } from "react-bootstrap";
-import EditPatientView from "../EditPatient/EditPatientView";
-import NotesView from "../Notes/NotesView";
-import { AllPrescriptionImagesView } from "../PrescriptionUpload/AllPrescriptionImagesView";
-import { AllReportImagesView } from "../ReportUpload/AllReportImagesView";
+import { Divider } from '@mui/material';
+import { Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import EditPatientView from '../EditPatient/EditPatientView';
+import NotesView from '../Notes/NotesView';
+import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
+import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 
 export default function PatientInfoColumnView() {
-  return (
-    <div>
-      <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
-      <EditPatientView></EditPatientView>
+    const currentCustomer = useSelector(
+        (state: RootState) => state.CurrentCustomerState.Customer,
+    );
 
-      <Row>
-        <Divider style={{ marginTop: 20 }}></Divider>
-      </Row>
+    return (
+        <div>
+            <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
+            <EditPatientView></EditPatientView>
 
-      <AllPrescriptionImagesView
-        showUploadButton={true}
-        showCancelImageButton={true}
-      ></AllPrescriptionImagesView>
+            {currentCustomer && (
+                <div>
+                    <Row>
+                        <Divider style={{ marginTop: 20 }}></Divider>
+                    </Row>
 
-      <Row>
-        <Divider style={{ marginTop: 20 }}></Divider>
-      </Row>
+                    <AllPrescriptionImagesView
+                        showUploadButton={true}
+                        showCancelImageButton={true}
+                    ></AllPrescriptionImagesView>
 
-      <AllReportImagesView
-        showUploadButton={true}
-        showCancelImageButton={true}
-      ></AllReportImagesView>
+                    <Row>
+                        <Divider style={{ marginTop: 20 }}></Divider>
+                    </Row>
 
-      <Row>
-        <Divider style={{ marginTop: 20 }}></Divider>
-      </Row>
+                    <AllReportImagesView
+                        showUploadButton={true}
+                        showCancelImageButton={true}
+                    ></AllReportImagesView>
 
-      {/* <NotesView></NotesView> */}
-    </div>
-  );
+                    <Row>
+                        <Divider style={{ marginTop: 20 }}></Divider>
+                    </Row>
+                </div>
+            )}
+
+            {/* <NotesView></NotesView> */}
+        </div>
+    );
 }
