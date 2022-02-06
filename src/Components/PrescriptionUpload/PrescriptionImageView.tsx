@@ -34,7 +34,9 @@ export default function PrescriptionImageView() {
     //         ),
     // );
 
-    let currentCustomerPrescriptions = useSelector((state:RootState) => state.CurrentCustomerState.Prescriptions);
+    let currentCustomerPrescriptions = useSelector(
+        (state: RootState) => state.CurrentCustomerState.Prescriptions,
+    );
 
     useEffect(() => {
         getImageURLsFromPrescriptions();
@@ -44,9 +46,14 @@ export default function PrescriptionImageView() {
         var stringList: string[] = [];
 
         if (currentCustomerPrescriptions) {
-            currentCustomerPrescriptions.forEach((element) => {
-                stringList.push(element.sasUrl);
-            });
+            currentCustomerPrescriptions
+                .filter(
+                    (prescription) =>
+                        prescription.appointmentId === currentAppointmentId,
+                )
+                .forEach((element) => {
+                    stringList.push(element.sasUrl);
+                });
         }
 
         setImages(stringList);

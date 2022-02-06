@@ -34,7 +34,9 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     //         ),
     // );
 
-    let allCustomerPrescriptionImages = useSelector((state:RootState) => state.CurrentCustomerState.Prescriptions);
+    let allCustomerPrescriptionImages = useSelector(
+        (state: RootState) => state.CurrentCustomerState.Prescriptions,
+    );
 
     const {
         currentImage,
@@ -53,9 +55,14 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
         var stringList: string[] = [];
 
         if (allCustomerPrescriptionImages) {
-            allCustomerPrescriptionImages.forEach((element) => {
-                stringList.push(element.sasUrl);
-            });
+            allCustomerPrescriptionImages
+                .filter(
+                    (prescription) =>
+                        prescription.appointmentId !== currentAppointmentId,
+                )
+                .forEach((element) => {
+                    stringList.push(element.sasUrl);
+                });
         }
 
         setImages(stringList);

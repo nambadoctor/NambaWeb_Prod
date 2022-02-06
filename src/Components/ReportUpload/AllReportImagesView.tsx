@@ -40,7 +40,9 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
     //         ),
     // );
 
-    let allCustomerReportsImages = useSelector((state:RootState) => state.CurrentCustomerState.Reports);
+    let allCustomerReportsImages = useSelector(
+        (state: RootState) => state.CurrentCustomerState.Reports,
+    );
 
     useEffect(() => {
         getImageURLsFromReports();
@@ -50,12 +52,16 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         var stringList: string[] = [];
 
         if (allCustomerReportsImages) {
-            allCustomerReportsImages.forEach((element) => {
-                stringList.push(element.sasUrl);
-            });
+            allCustomerReportsImages
+                .filter(
+                    (report) => report.appointmentId !== currentAppointmentId,
+                )
+                .forEach((element) => {
+                    stringList.push(element.sasUrl);
+                });
         }
 
-        return () => setImages(stringList);
+        setImages(stringList);
     }
 
     function deleteReport(report: IReportIncomingData) {

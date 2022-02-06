@@ -33,19 +33,25 @@ export default function ReportImageView() {
     //         ),
     // );
 
-    let currentCustomerReportsImages = useSelector((state:RootState) => state.CurrentCustomerState.Reports);
+    let currentCustomerReportsImages = useSelector(
+        (state: RootState) => state.CurrentCustomerState.Reports,
+    );
 
     useEffect(() => {
         getImageURLsFromReports();
-    }, []);
+    }, [currentCustomerReportsImages]);
 
     function getImageURLsFromReports() {
         var stringList: string[] = [];
 
         if (currentCustomerReportsImages) {
-            currentCustomerReportsImages.forEach((element) => {
-                stringList.push(element.sasUrl);
-            });
+            currentCustomerReportsImages
+                .filter(
+                    (report) => report.appointmentId == currentAppointmentId,
+                )
+                .forEach((element) => {
+                    stringList.push(element.sasUrl);
+                });
         }
 
         setImages(stringList);
