@@ -1,6 +1,4 @@
-import { useState, ChangeEvent, useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
+import { useState, useCallback } from "react";
 
 export default function useImagesHook() {
     const [currentImage, setCurrentImage] = useState(0);

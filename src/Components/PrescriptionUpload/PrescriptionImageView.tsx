@@ -1,40 +1,53 @@
-import { useState, useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ImageViewer from "react-simple-image-viewer";
 import { RootState } from "../../store";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { DeletePrescription } from "../../ServiceActions/PrescriptionActions";
 import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
-import { Row } from "react-bootstrap";
-import { Divider } from "@mui/material";
 import useImagesHook from "../../CustomHooks/useImagesViewHook";
+import { createSelector } from "reselect";
 
 export default function PrescriptionImageView() {
   const dispatch = useDispatch();
 
   const {
-    currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+    currentImage,
+    isViewerOpen,
+    images,
+    setImages,
+    openImageViewer,
+    closeImageViewer,
   } = useImagesHook();
 
-
-  let currentCustomerPrescriptionImages = useSelector(
-    (state: RootState) => state.ConsultationState.Prescriptions
+  const currentAppointmentId = useSelector(
+    (state: RootState) => state.ConsultationState.Appointment?.appointmentId
   );
+
+  const showAppointmentPrescriptions = createSelector(
+    (state: RootState) => state.CurrentCustomerState.Prescriptions,
+    (prescriptions) =>
+      prescriptions?.filter(
+        (prescription) => prescription.appointmentId == currentAppointmentId
+      )
+  );
+  
+  let currentCustomerPrescriptions = useSelector(showAppointmentPrescriptions);
 
   useEffect(() => {
     getImageURLsFromPrescriptions();
-  }, [currentCustomerPrescriptionImages]);
+  }, [currentCustomerPrescriptions]);
 
   function getImageURLsFromPrescriptions() {
     var stringList: string[] = [];
 
-    if (currentCustomerPrescriptionImages) {
-      currentCustomerPrescriptionImages.forEach((element) => {
+    if (currentCustomerPrescriptions) {
+      currentCustomerPrescriptions.forEach((element) => {
         stringList.push(element.sasUrl);
       });
     }
 
-    setImages(stringList);
+    return () => setImages(stringList);
   }
 
   function deletePrescription(prescription: IPrescriptionIncomingData) {
@@ -46,15 +59,15 @@ export default function PrescriptionImageView() {
   function imageViewDisplay() {
     return (
       <div style={{ overflow: "auto" }}>
-        {currentCustomerPrescriptionImages &&
-          currentCustomerPrescriptionImages.map((src, index) => (
+        {currentCustomerPrescriptions &&
+          currentCustomerPrescriptions.map((src, index) => (
             <div
               style={{
                 display: "inline-block",
                 position: "relative",
                 width: 100,
                 marginTop: 10,
-                marginRight: 20
+                marginRight: 20,
               }}
             >
               <img
@@ -103,7 +116,7 @@ export default function PrescriptionImageView() {
 
   return (
     <div>
-      {(currentCustomerPrescriptionImages && currentCustomerPrescriptionImages.length > 0)
+      {currentCustomerPrescriptions && currentCustomerPrescriptions.length > 0
         ? imageViewDisplay()
         : noPrescriptionsDisplay()}
     </div>

@@ -24,7 +24,7 @@ function setSelectedOrgTypeHelper(organisation?: IOrganisationBasic) {
 }
 
 export const SetOrgs = (organisations: Array<IOrganisationBasic>): Action => (setOrgsTypeHelper(organisations));
-export const SetLocallySelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation));
+export const SetSelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation));
 
 export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -41,7 +41,7 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
 
     if (defaultOrg != null) {
       SetTrackTrace("Setting Locally Selected Org as Default Org: " + defaultOrg, "CheckForDefaultOrg", SeverityLevel.Information)
-      dispatch(SetLocallySelectedOrg(defaultOrg))
+      dispatch(SetSelectedOrg(defaultOrg))
       dispatch(GetCurrentServiceProvider())
     } else {
       SetTrackTrace("DEFAULT ORG DOES NOT EXIST. ASKING USER TO SELECT", "CheckForDefaultOrg", SeverityLevel.Warning)

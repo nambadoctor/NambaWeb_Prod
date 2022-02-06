@@ -1,122 +1,152 @@
-import { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ClearAddPatientValidationErrors, SetAddPatientAgeValidationError, SetAddPatientCustomerProfile, SetAddPatientIsCheckingForCustomer, SetAddPatientIsCustomerExists, SetAddPatientIsInvalidNumber, SetAddPatientNameValidationError, SetAddPatientPhoneNumber, SetAddPatientPhoneNumberValidationError } from "../Actions/AddPatientActions";
-import { SignInWithPhoneNumberHelper } from "../ServiceActions/LoginActions";
-import { CheckIfCustomerExists } from "../ServiceActions/CustomerActions";
-import { format } from "../Helpers/Constants";
-import makeEmptyValueCustomerSetRequestData from "../Helpers/CustomerHelper";
+import { ClearAddPatientState, SetIsCheckingForCustomer } from "../Actions/AddPatientActions";
+import { CheckIfCustomerExists, SetCustomer, SetCustomerAndBookAppointment } from "../ServiceActions/CustomerActions";
 import { RootState } from "../store";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useEffect, useState } from "react";
+import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
+import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
+import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
+import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
+import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
+import { SetAppointment } from "../ServiceActions/AppointmentActions";
+import IDateOfBirthData from "../Types/OutgoingDataModels/DateOfBirth";
 import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
 
-export default function usePatientInputHook() {
+export default function usePatientInputHook(isForPatientAndAppointment: boolean) {
     const dispatch = useDispatch()
 
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
+    const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
+    useEffect(() => {
+        mapCustomerToValues(currentCustomer)
+    }, [currentCustomer])
+
+    const [gender, setGender] = useState("")
     const genderOptions = ["Male", "Female", "Other"]
 
-    const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const formik = useFormik({
+        initialValues: {
+            phonenumber: "",
+            name: "",
+            age: "",
+            gender: "",
+            dateForAppointment: new Date()
+        },
+        validationSchema: Yup.object({
+            phonenumber: Yup.string().required().length(10),
+            name: Yup.string().required(),
+            age: Yup.number().positive().integer(),
+            gender: Yup.string(),
+            dateForAppointment: Yup.date().nullable()
+        }),
+        onSubmit: (values) => {
+            if (isForPatientAndAppointment) {
+                makeCustomerAndAppointmentRequest()
+            } else {
+                dispatch(SetCustomer(makeCustomerObject()))
+            }
+        },
+    });
 
-        if (event.target.value.includes("+91") || format.test(event.target.value)) {
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-            dispatch(SetAddPatientPhoneNumberValidationError("Cannot have special characters"))
+    //Phone Number Change Handler
+    useEffect(() => {
+        const number = formik.values.phonenumber;
+        if (number.length == 10) {
+            dispatch(CheckIfCustomerExists(number, currentServiceProvider!.serviceProviderProfile.organisationId))
         } else {
-            dispatch(SetAddPatientPhoneNumberValidationError(""))
+            dispatch(SetCurrentCustomer(null))
+            dispatch(ClearAddPatientState())
         }
-
-        if (event.target.value.length >= 10) {
-            dispatch(CheckIfCustomerExists(event.target.value, currentServiceProvider!.serviceProviderProfile.organisationId))
-            dispatch(SetAddPatientIsCheckingForCustomer(true))
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-        } else {
-            dispatch(SetAddPatientCustomerProfile(makeEmptyValueCustomerSetRequestData()))
-            dispatch(SetAddPatientPhoneNumber(event.target.value));
-            dispatch(SetAddPatientIsCustomerExists(false))
-            dispatch(SetAddPatientIsCheckingForCustomer(false))
-            dispatch(SetAddPatientIsInvalidNumber(false))
-        }
-    };
-
-    //TODO: FIND HOW TO CHANGE THESE VALUES DIRECTLY IN REDUCER
-    const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.firstName = event.target.value
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const handleAgeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-
-        if (Number(event.target.value) > 120 || Number(event.target.value) < 0) {
-            dispatch(SetAddPatientAgeValidationError("Age must be between 0 and 120"))
-        } else{
-            dispatch(SetAddPatientAgeValidationError(""))
-        }
-
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.dateOfBirth.age = event.target.value
-        tempCustomerProfile.dateOfBirth.createdDate = new Date();
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    };
-
-    const genderOptionChange = (gender: string) => {
-        var tempCustomerProfile = addPatientState.customerProfile
-        tempCustomerProfile.gender = gender
-        dispatch(SetAddPatientCustomerProfile(tempCustomerProfile))
-    }
+    }, [formik.values.phonenumber])
 
     const makeCustomerObject = () => {
-        var currentCustomerRequestObj = addPatientState.customerProfile
-        currentCustomerRequestObj.serviceProviderId = currentServiceProvider?.serviceProviderId ?? ""
-        currentCustomerRequestObj.organisationId = currentServiceProvider?.serviceProviderProfile.organisationId ?? ""
-        currentCustomerRequestObj.phoneNumbers = [{ phoneNumberId: "", countryCode: "+91", number: addPatientState.phoneNumber, type: "" } as IPhoneNumberData]
+        var CustomerRequestObj = {
+            customerId: currentCustomer?.customerId ?? "",
+            customerProfileId: currentCustomer?.customerProfileId ?? "",
+            firstName: formik.values.name,
+            lastName: currentCustomer?.lastName ?? "",
+            //phoneNumbers: currentCustomer?.phoneNumbers ?? { countryCode: "+91", number: formik.values.phonenumber } as IPhoneNumberData,
+            gender: gender,
+            dateOfBirth: currentCustomer?.dateOfBirth,
+            organisationId: currentCustomer?.organisationId ?? currentServiceProvider?.serviceProviderProfile.organisationId,
+        } as ICustomerProfileOutgoing
 
-        return currentCustomerRequestObj;
+        CustomerRequestObj.dateOfBirth = {
+            dateOfBirthId: "",
+            day: 0,
+            month: 0,
+            year: 0,
+            age: formik.values.age,
+            createdDate: new Date()
+        } as IDateOfBirthData
+
+        CustomerRequestObj.phoneNumbers = currentCustomer?.phoneNumbers ?? [{
+            phoneNumberId: "",
+            countryCode: "+91",
+            number: "8573747384",
+            type: ""
+        } as IPhoneNumberData]
+
+        return CustomerRequestObj;
     }
 
-    const validateEntryFields = () => {
-        if (
-            addPatientState.validationErrors.age ||
-            addPatientState.validationErrors.phoneNumber ||
-            addPatientState.phoneNumber.length == 0 || 
-            addPatientState.phoneNumber.length < 10 ||
-            addPatientState.customerProfile.dateOfBirth.age.length == 0 ||
-            addPatientState.customerProfile.firstName.length == 0
-        ) {
-
-            if (addPatientState.phoneNumber.length == 0 || addPatientState.phoneNumber.length < 10) {
-                dispatch(SetAddPatientPhoneNumberValidationError("Please Enter A Valid Phone Number"))
-            } else {
-                dispatch(SetAddPatientPhoneNumberValidationError(""))
-            }
-
-            if (addPatientState.customerProfile.firstName.length == 0) {
-                dispatch(SetAddPatientNameValidationError("Please Enter Name"))
-            } else {
-                dispatch(SetAddPatientNameValidationError(""))
-            }
-
-            if (addPatientState.customerProfile.dateOfBirth.age.length == 0) {
-                dispatch(SetAddPatientAgeValidationError("Please Enter Age"))
-            } else {
-                dispatch(SetAddPatientAgeValidationError(""))
-            }
-
-            return false
+    function mapCustomerToValues(customer: ICustomerIncomingData | null) {
+        if (customer) {
+            customer.phoneNumbers && formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
+            formik.setFieldValue("name", customer.firstName + " " + customer.lastName);
+            customer.dateOfBirth && formik.setFieldValue("age", customer.dateOfBirth.age);
+            formik.setFieldValue("gender", customer.gender);
+            setGender(customer.gender);
         } else {
-            dispatch(ClearAddPatientValidationErrors())
-            return true
+            formik.resetForm()
         }
     }
+
+    //START- NEED TO THROW THIS INTO ANOTHER CUSTOM HOOK FOR BOOKING APPOINTMENT
+    const makeAppointmentObject = () => {
+        return {
+            appointmentId: "",
+            organisationId:
+                currentServiceProvider?.serviceProviderProfile.organisationId,
+            serviceRequestId: "",
+            serviceProviderId: currentServiceProvider?.serviceProviderId,
+            customerId: currentCustomer?.customerId ?? "",
+            appointmentType: "InPerson",
+            addressId: "",
+            status: "",
+            scheduledAppointmentStartTime: formik.values.dateForAppointment,
+            scheduledAppointmentEndTime: new Date(),
+            actualAppointmentStartTime: new Date(),
+            actualAppointmentEndTime: new Date(),
+        } as IAppointmentOutgoing;
+    };
+
+    const makeCustomerAndAppointmentRequest = () => {
+        const currentCustomerRequestObj = makeCustomerObject();
+        const aptObj = makeAppointmentObject();
+
+        if (currentCustomerRequestObj.customerId) {
+            dispatch(SetAppointment(aptObj))
+        } else {
+            const customerProfileWithAppointment = {
+                customerProfileIncoming: currentCustomerRequestObj,
+                appointmentIncoming: aptObj,
+            } as ICustomerProfileWithAppointmentOutgoingData
+            dispatch(SetCustomerAndBookAppointment(customerProfileWithAppointment))
+        }
+        return
+    };
+    //END
 
     return {
         addPatientState,
         genderOptions,
-        handleNumberChange,
-        handleNameChange,
-        handleAgeChange,
-        genderOptionChange,
-        makeCustomerObject,
-        validateEntryFields
+        gender,
+        formik,
+        setGender
     };
 }

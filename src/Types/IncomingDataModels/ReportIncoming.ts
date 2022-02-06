@@ -4,4 +4,6 @@ export default interface IReportIncomingData {
     fileType: string
     sasUrl: string
     uploadedDateTime: string
+    appointmentId:string
+    serviceRequestId:string
 }

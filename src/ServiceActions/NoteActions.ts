@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetNotesForConsultation } from "../Actions/ConsultationActions";
 import { SetNotes } from "../Actions/CurrentCustomerActions";
 import { DeleteCustomerNoteEndPoint, GetCustomerAllNotesEndPoint, GetCustomerNotesEndPoint, SetCustomerNoteEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
@@ -14,26 +13,12 @@ import { INoteOutgoingData } from "../Types/OutgoingDataModels/NoteOutgoing";
 
 export const GetNotes = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-    let currentConsultationAppointment = getState().ConsultationState.Appointment
+    const customer = getState().CurrentCustomerState.Customer
 
     try {
-        let response = await getCall({} as Array<INoteIncomingData>, GetCustomerNotesEndPoint(currentConsultationAppointment!.serviceRequestId), "GetNotes");
+        let response = await getCall({} as Array<INoteIncomingData>, GetCustomerAllNotesEndPoint(customer?.organisationId ?? "", customer?.customerId ?? ""), "GetAllNotes");
 
         if (response) {
-            dispatch(SetNotesForConsultation(response.data))
-        }
-    } catch (error) {
-        dispatch(SetNonFatalError("Could not get notes for this appointment"))
-    }
-}
-
-export const GetAllNotesForCustomer = (organisationId: string, customerId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-
-    try {
-        let response = await getCall({} as Array<INoteIncomingData>, GetCustomerAllNotesEndPoint(organisationId, customerId), "GetAllNotes");
-
-        if (response) {
-            //var filterReports = FilterAllAndCurrentReports(currentReports, response.data)
             dispatch(SetNotes(response.data))
         }
     } catch (error) {
@@ -56,7 +41,7 @@ export const UploadNote = (note: INoteOutgoingData): ThunkAction<void, RootState
 
 export const EditNote = (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     try {
-        let response = await putCall({} as any, SetCustomerNoteEndPoint(), note, "EditNote")
+        let response = await postCall({} as any, SetCustomerNoteEndPoint(), note, "EditNote")
 
         if (response) {
             dispatch(GetNotes())

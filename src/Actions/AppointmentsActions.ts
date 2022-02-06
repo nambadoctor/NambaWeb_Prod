@@ -1,34 +1,17 @@
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { filterAppointments, getIndexOfAppointment } from "../Helpers/AppointmentHelpers";
-import { SetFilteredAppointmentsAction } from "../Payload/AppointmentPayloads";
+import { getIndexOfAppointment } from "../Helpers/AppointmentHelpers";
 import { SetNextAppointmentForConsultation, SetPreviousAppointmentConsultation } from "./ConsultationActions";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
+import { Appointment_Types } from "../Reducers/AppointmentsReducer";
+import { Action } from "../Types/ActionType";
 
-export const setFilteredAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-    SetTrackTrace("Entered Filter Appointments Helper", "", SeverityLevel.Information);
-    var appointments = getState().AppointmentState.appointments
-    var selectedDates = getState().SelectedDatesState.selectedDateRage
-
-    if (appointments) {
-        SetTrackTrace("Getting appointments from state SUCCESS: " + appointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-    } else {
-        SetTrackTrace("Getting appointments from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-    }
-
-    if (selectedDates) {
-        SetTrackTrace("Getting selected dates from state SUCCESS: " + selectedDates.length, "SetFilteredAppointments", SeverityLevel.Information);
-    } else {
-        SetTrackTrace("Getting selected dates from state FAILED", "SetFilteredAppointments", SeverityLevel.Error);
-    }
-
-    var filteredAppointments = filterAppointments(selectedDates, appointments)
-
-    SetTrackTrace("Dispatch Set Filtered Appointments Action: filteredAppointmentsLength: " + filteredAppointments.length, "SetFilteredAppointments", SeverityLevel.Information);
-    dispatch(SetFilteredAppointmentsAction(filteredAppointments));
-};
+export const SetAppointments = (appointments: Array<IAppointmentData>): Action => ({
+    type: Appointment_Types.SET_APPOINTMENT_STATE_APPOINTMENTS,
+    payload: appointments
+});
 
 export const GetNextAndPreviousAppointmentForConsultation = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
