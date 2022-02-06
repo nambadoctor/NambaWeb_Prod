@@ -36,15 +36,18 @@ export const convertDaysIntoNearestUnit = (days: number): string => {
     } else if (30 < days) {
         return String(Math.trunc(days / 30) + " months ago");
     }
-
     return "";
 }
 
 
 export const isDatesEqual = (date1: Date, date2: Date): boolean => {
-    return date1.getFullYear() === date2.getFullYear() &&
-        date1.getMonth() === date2.getMonth() &&
-        date1.getDate() === date2.getDate();
+    if (date1 && date2) {
+        return date1.getFullYear() === date2.getFullYear() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getDate() === date2.getDate();
+    } else {
+        return false;
+    }
 }
 
 export const checkDatesWithOnlyMonthAndDay = (date: Date, dates: Date[]): boolean => {
@@ -80,7 +83,7 @@ export const fileToBase64 = async (file: File) =>
         reader.onerror = (e) => reject(e)
     })
 
-export async function ConvertInputToFileOrBase64(input:any) {
+export async function ConvertInputToFileOrBase64(input: any) {
     if (input instanceof File) {
         return await fileToBase64(input as File)
     } else if (typeof input == 'string') {

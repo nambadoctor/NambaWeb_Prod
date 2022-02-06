@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ClearAddPatientState, SetIsCheckingForCustomer } from "../Actions/AddPatientActions";
+import { ClearAddPatientState } from "../Actions/AddPatientActions";
 import { CheckIfCustomerExists, SetCustomer, SetCustomerAndBookAppointment } from "../ServiceActions/CustomerActions";
 import { RootState } from "../store";
 import { useFormik } from "formik";
@@ -87,7 +87,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         CustomerRequestObj.phoneNumbers = currentCustomer?.phoneNumbers ?? [{
             phoneNumberId: "",
             countryCode: "+91",
-            number: "8573747384",
+            number: formik.values.phonenumber,
             type: ""
         } as IPhoneNumberData]
 
@@ -97,7 +97,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     function mapCustomerToValues(customer: ICustomerIncomingData | null) {
         if (customer) {
             customer.phoneNumbers && formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
-            formik.setFieldValue("name", customer.firstName + " " + customer.lastName);
+            formik.setFieldValue("name", (customer.firstName ?? "") + " " + (customer.lastName ?? ""));
             customer.dateOfBirth && formik.setFieldValue("age", customer.dateOfBirth.age);
             formik.setFieldValue("gender", customer.gender);
             setGender(customer.gender);

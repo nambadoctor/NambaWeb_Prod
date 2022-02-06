@@ -8,8 +8,6 @@ import { Button, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Link } from "react-router-dom";
-import { GetAppointment } from "../../ServiceActions/AppointmentActions";
-import { ClearContext } from "../../Actions/ClearContextAction";
 
 export default function ConsultationHeader() {
   const Spacer = require("react-spacer");
@@ -116,7 +114,7 @@ export default function ConsultationHeader() {
                     Phone Number
                   </Typography>
                   <Typography style={{ fontSize: 17 }}>
-                    +91{currentCustomer!.phoneNumbers[0].number ?? ""}
+                    +91{currentCustomer?.phoneNumbers[0].number ?? ""}
                   </Typography>
                 </Col>
                 <Col className="col-md-auto" style={{ marginLeft: 15 }}>
@@ -125,7 +123,7 @@ export default function ConsultationHeader() {
                   </Typography>
                   <Col>
                     <Typography style={{ fontSize: 17 }}>
-                      {currentCustomer!.dateOfBirth.age ?? ""}
+                      {currentCustomer?.dateOfBirth.age ?? ""}
                     </Typography>
                   </Col>
                 </Col>
@@ -135,7 +133,7 @@ export default function ConsultationHeader() {
                   </Typography>
                   <Col>
                     <Typography style={{ fontSize: 17 }}>
-                      {currentCustomer!.gender ?? ""}
+                      {currentCustomer?.gender ?? ""}
                     </Typography>
                   </Col>
                 </Col>

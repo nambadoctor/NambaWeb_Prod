@@ -1,25 +1,48 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import ImageViewer from "react-simple-image-viewer";
-import { RootState } from "../../store";
-import { DeletePrescription, UploadPrescriptionAsStray } from "../../ServiceActions/PrescriptionActions";
-import IPrescriptionIncomingData from "../../Types/IncomingDataModels/PrescriptionIncoming";
-import { Col, Row } from "react-bootstrap";
-import { Divider } from "@mui/material";
-import useImagesHook from "../../CustomHooks/useImagesViewHook";
-import { PrescriptionUploadPicker } from "./PrescriptionUploadPicker";
-import { AllImageDisplayProps } from "../../Helpers/CommonProps";
-import CancelIcon from "@mui/icons-material/Cancel";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import ImageViewer from 'react-simple-image-viewer';
+import { RootState } from '../../store';
+import {
+    DeletePrescription,
+    UploadPrescriptionAsStray,
+} from '../../ServiceActions/PrescriptionActions';
+import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
+import { Col, Row } from 'react-bootstrap';
+import { Divider } from '@mui/material';
+import useImagesHook from '../../CustomHooks/useImagesViewHook';
+import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
+import { AllImageDisplayProps } from '../../Helpers/CommonProps';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { createSelector } from 'reselect';
 
-export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props) => {
+export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
+    props,
+) => {
     const dispatch = useDispatch();
 
-    let allCustomerPrescriptionImages = useSelector(
-        (state: RootState) => state.CurrentCustomerState.Prescriptions
+    const currentAppointmentId = useSelector(
+        (state: RootState) =>
+            state.ConsultationState.Appointment?.appointmentId,
     );
 
+    // const showAppointmentPrescriptions = createSelector(
+    //     (state: RootState) => state.CurrentCustomerState.Prescriptions,
+    //     (prescriptions) =>
+    //         prescriptions?.filter(
+    //             (prescription) =>
+    //                 prescription.appointmentId !== currentAppointmentId,
+    //         ),
+    // );
+
+    let allCustomerPrescriptionImages = useSelector((state:RootState) => state.CurrentCustomerState.Prescriptions);
+
     const {
-        currentImage, isViewerOpen, images, setImages, openImageViewer, closeImageViewer
+        currentImage,
+        isViewerOpen,
+        images,
+        setImages,
+        openImageViewer,
+        closeImageViewer,
     } = useImagesHook();
 
     useEffect(() => {
@@ -39,51 +62,85 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
     }
 
     function deletePrescription(prescription: IPrescriptionIncomingData) {
-        if (window.confirm("Are you sure you want to delete this prescription?")) {
+        if (
+            window.confirm('Are you sure you want to delete this prescription?')
+        ) {
             dispatch(DeletePrescription(prescription));
         }
     }
 
     function imageViewDisplay() {
         return (
-            <div style={{ overflow: "auto" }}>
+            <div style={{ overflow: 'auto' }}>
+                {allCustomerPrescriptionImages &&
+                    allCustomerPrescriptionImages.length > 0 && (
+                        <div>
+                            <Row>
+                                <Divider
+                                    style={{ marginTop: 20, marginBottom: 20 }}
+                                ></Divider>
+                            </Row>
+                            <Row>
+                                <Col md={8}>
+                                    <h5>History Of Prescriptions</h5>
+                                </Col>
+                                {props.showUploadButton && (
+                                    <Col>
+                                        <PrescriptionUploadPicker
+                                            handlePhotoCallBack={
+                                                UploadPrescriptionAsStray
+                                            }
+                                            uploadButtonColor="#0863e4"
+                                        ></PrescriptionUploadPicker>
+                                    </Col>
+                                )}
+                            </Row>
 
-                {(allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0) &&
-                    <div>
-                        <Row><Divider style={{ marginTop: 20, marginBottom: 20 }}></Divider></Row>
-                        <Row>
-                            <Col md={8}><h5>History Of Prescriptions</h5></Col>
-                            {props.showUploadButton && <Col><PrescriptionUploadPicker handlePhotoCallBack={UploadPrescriptionAsStray} uploadButtonColor='#0863e4'></PrescriptionUploadPicker></Col>}
-                        </Row>
-
-                        {allCustomerPrescriptionImages.map((src, index) => (
-                            <div
-                                style={{
-                                    display: "inline-block",
-                                    position: "relative",
-                                    width: 100,
-                                    marginTop: 10,
-                                    marginRight: 20
-                                }}
-                            >
-                                <img
-                                    src={src.sasUrl}
-                                    onClick={() => openImageViewer(index)}
-                                    key={index}
-                                    style={{ width: 100, height: 100 }}
-                                />
-
-                                {props.showCancelImageButton &&
+                            {allCustomerPrescriptionImages
+                                .filter(
+                                    (prescription) =>
+                                        prescription.appointmentId !==
+                                        currentAppointmentId,
+                                )
+                                .map((src, index) => (
                                     <div
-                                        onClick={() => dispatch(deletePrescription(src))}
-                                        style={{ position: "absolute", top: -10, right: -15 }}
+                                        style={{
+                                            display: 'inline-block',
+                                            position: 'relative',
+                                            width: 100,
+                                            marginTop: 10,
+                                            marginRight: 20,
+                                        }}
                                     >
-                                        <CancelIcon />
+                                        <img
+                                            src={src.sasUrl}
+                                            onClick={() =>
+                                                openImageViewer(index)
+                                            }
+                                            key={index}
+                                            style={{ width: 100, height: 100 }}
+                                        />
+
+                                        {props.showCancelImageButton && (
+                                            <div
+                                                onClick={() =>
+                                                    dispatch(
+                                                        deletePrescription(src),
+                                                    )
+                                                }
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: -10,
+                                                    right: -15,
+                                                }}
+                                            >
+                                                <CancelIcon />
+                                            </div>
+                                        )}
                                     </div>
-                                }
-                            </div>
-                        ))}
-                    </div>}
+                                ))}
+                        </div>
+                    )}
 
                 {isViewerOpen && (
                     <ImageViewer
@@ -105,12 +162,23 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
                     margin: 20,
                     marginTop: 50,
                     marginBottom: 50,
-                    textAlign: "center",
+                    textAlign: 'center',
                 }}
             >
                 <Row>
-                    <Col><div>No prescriptions yet. Upload image or Take Photo.</div></Col>
-                    {props.showUploadButton && <Col><PrescriptionUploadPicker handlePhotoCallBack={UploadPrescriptionAsStray} uploadButtonColor='#0863e4'></PrescriptionUploadPicker></Col>}
+                    <Col>
+                        <div>
+                            No prescriptions yet. Upload image or Take Photo.
+                        </div>
+                    </Col>
+                    {props.showUploadButton && (
+                        <Col>
+                            <PrescriptionUploadPicker
+                                handlePhotoCallBack={UploadPrescriptionAsStray}
+                                uploadButtonColor="#0863e4"
+                            ></PrescriptionUploadPicker>
+                        </Col>
+                    )}
                 </Row>
             </div>
         );
@@ -118,9 +186,10 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (props)
 
     return (
         <div>
-            {allCustomerPrescriptionImages && allCustomerPrescriptionImages.length > 0
+            {allCustomerPrescriptionImages &&
+            allCustomerPrescriptionImages.length > 0
                 ? imageViewDisplay()
                 : noPrescriptionsDisplay()}
         </div>
     );
-}
+};
