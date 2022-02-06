@@ -6,18 +6,14 @@ import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
-import { ClearAddPatientState } from "../../Actions/AddPatientActions";
-import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
-import { ClearCurrentCustomerState } from "../../Actions/CurrentCustomerActions";
+import { ClearContext } from "../../Actions/ClearContextAction";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
   const dispatch = useDispatch();
 
   function switchTabs() {
-    dispatch(ClearAddPatientState());
-    dispatch(ClearCurrentCustomerState());
-    dispatch(ClearAllValuesForConsultation());
+    dispatch(ClearContext());
   }
 
   return (

@@ -41,7 +41,7 @@ export const UploadNote = (note: INoteOutgoingData): ThunkAction<void, RootState
 
 export const EditNote = (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     try {
-        let response = await putCall({} as any, SetCustomerNoteEndPoint(), note, "EditNote")
+        let response = await postCall({} as any, SetCustomerNoteEndPoint(), note, "EditNote")
 
         if (response) {
             dispatch(GetNotes())
