@@ -13,9 +13,9 @@ import { AllReportImagesView } from "../ReportUpload/AllReportImagesView";
 import { AllPrescriptionImagesView } from "../PrescriptionUpload/AllPrescriptionImagesView";
 import { UploadReportForConsultation } from "../../ServiceActions/ReportActions";
 import { UploadPrescriptionForConsultation } from "../../ServiceActions/PrescriptionActions";
-import { TextField } from "@mui/material";
 import NotesView from "../Notes/NotesView";
 import { GetAppointment } from "../../ServiceActions/AppointmentActions";
+import { ClearContext } from "../../Actions/ClearContextAction";
 
 export default function ConsultationView() {
   const dispatch = useDispatch();
@@ -25,10 +25,11 @@ export default function ConsultationView() {
   const { id } = useParams();
 
   useEffect(() => {
+    dispatch(ClearContext())
     if (currentServiceProvider) {
       dispatch(GetAppointment(id as string));
     }
-  }, [currentServiceProvider]);
+  }, [currentServiceProvider, id]);
 
   return (
     <div>

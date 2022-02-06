@@ -14,7 +14,6 @@ import { ClearContext } from "../../Actions/ClearContextAction";
 export default function ConsultationHeader() {
   const Spacer = require("react-spacer");
 
-  const dispatch = useDispatch();
   const currentConsultation = useSelector(
     (state: RootState) => state.ConsultationState
   );
@@ -23,7 +22,6 @@ export default function ConsultationHeader() {
   );
 
   function getPreviousAppointmentUI() {
-    dispatch(ClearContext());
     return (
       <Button
         startIcon={
@@ -36,13 +34,6 @@ export default function ConsultationHeader() {
           to={
             "/Consultation/" +
             currentConsultation.previousAppointment?.appointmentId
-          }
-          onClick={() =>
-            dispatch(
-              GetAppointment(
-                currentConsultation.previousAppointment?.appointmentId ?? ""
-              )
-            )
           }
         >
           <Typography
@@ -64,7 +55,6 @@ export default function ConsultationHeader() {
   }
 
   function getNextAppointmentUI() {
-    dispatch(ClearContext());
     return (
       <Button
         endIcon={
@@ -77,13 +67,6 @@ export default function ConsultationHeader() {
           to={
             "/Consultation/" +
             currentConsultation.nextAppointment?.appointmentId
-          }
-          onClick={() =>
-            dispatch(
-              GetAppointment(
-                currentConsultation.nextAppointment?.appointmentId ?? ""
-              )
-            )
           }
         >
           <div>
