@@ -62,15 +62,15 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
     }
 };
 
-export const SetCustomerAndBookAppointment = (appointmentRequest: ICustomerProfileWithAppointmentOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const SetCustomerAndBookAppointment = (customerProfileWithAppointment: ICustomerProfileWithAppointmentOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(SetLinearLoadingBarToggle(true))
 
     SetTrackTrace("Enter Set Customer and Book Appointment Action", "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
-    SetTrackTrace("Current appointment request: " + appointmentRequest, "SetCustomerAndBookAppointment", SeverityLevel.Information);
+    SetTrackTrace("Current appointment request: " + customerProfileWithAppointment, "SetCustomerAndBookAppointment", SeverityLevel.Information);
 
     try {
-        let response = await postCall({} as any, SetCustomerWithAppointmentEndPoint(), appointmentRequest, "SetCustomerAndBookAppointment")
+        let response = await postCall({} as any, SetCustomerWithAppointmentEndPoint(), customerProfileWithAppointment, "SetCustomerAndBookAppointment")
 
         dispatch(SetLinearLoadingBarToggle(false))
 

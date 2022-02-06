@@ -12,6 +12,7 @@ import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoin
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetAppointment } from "../ServiceActions/AppointmentActions";
 import IDateOfBirthData from "../Types/OutgoingDataModels/DateOfBirth";
+import IPhoneNumberData from "../Types/OutgoingDataModels/PhoneNumber";
 
 export default function usePatientInputHook(isForPatientAndAppointment: boolean) {
     const dispatch = useDispatch()
@@ -64,26 +65,31 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
 
     const makeCustomerObject = () => {
         var CustomerRequestObj = {
-            customerId: currentCustomer?.customerId,
-            customerProfileId: currentCustomer?.customerProfileId,
+            customerId: currentCustomer?.customerId ?? "",
+            customerProfileId: currentCustomer?.customerProfileId ?? "",
             firstName: formik.values.name,
-            lastName: currentCustomer?.lastName,
-            phoneNumbers: currentCustomer?.phoneNumbers,
+            lastName: currentCustomer?.lastName ?? "",
+            //phoneNumbers: currentCustomer?.phoneNumbers ?? { countryCode: "+91", number: formik.values.phonenumber } as IPhoneNumberData,
             gender: gender,
             dateOfBirth: currentCustomer?.dateOfBirth,
-            emailAddress: currentCustomer?.emailAddress,
-            profilePicURL: currentCustomer?.profilePicURL,
             organisationId: currentCustomer?.organisationId ?? currentServiceProvider?.serviceProviderProfile.organisationId,
-            serviceProviderId: currentCustomer?.serviceProviderId ?? currentServiceProvider?.serviceProviderId
         } as ICustomerProfileOutgoing
 
-        if (CustomerRequestObj.dateOfBirth) {
-            CustomerRequestObj.dateOfBirth.age = formik.values.age;
-        } else {
-            CustomerRequestObj.dateOfBirth = {} as IDateOfBirthData
-            CustomerRequestObj.dateOfBirth.age = formik.values.age;
-        }
+        CustomerRequestObj.dateOfBirth = {
+            dateOfBirthId: "",
+            day: 0,
+            month: 0,
+            year: 0,
+            age: formik.values.age,
+            createdDate: new Date()
+        } as IDateOfBirthData
 
+        CustomerRequestObj.phoneNumbers = currentCustomer?.phoneNumbers ?? [{
+            phoneNumberId: "",
+            countryCode: "+91",
+            number: "8573747384",
+            type: ""
+        } as IPhoneNumberData]
 
         return CustomerRequestObj;
     }
@@ -108,18 +114,17 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
                 currentServiceProvider?.serviceProviderProfile.organisationId,
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
-            customerId: currentCustomer?.customerId,
+            customerId: currentCustomer?.customerId ?? "",
             appointmentType: "InPerson",
             addressId: "",
             status: "",
             scheduledAppointmentStartTime: formik.values.dateForAppointment,
-            scheduledAppointmentEndTime: null,
-            actualAppointmentStartTime: null,
-            actualAppointmentEndTime: null,
+            scheduledAppointmentEndTime: new Date(),
+            actualAppointmentStartTime: new Date(),
+            actualAppointmentEndTime: new Date(),
         } as IAppointmentOutgoing;
     };
 
-    //TODO: MAKE THIS A HELPER FUNCTION IN A DIFFERENCE CLASS OR ACTION
     const makeCustomerAndAppointmentRequest = () => {
         const currentCustomerRequestObj = makeCustomerObject();
         const aptObj = makeAppointmentObject();
@@ -127,11 +132,11 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         if (currentCustomerRequestObj.customerId) {
             dispatch(SetAppointment(aptObj))
         } else {
-            const customerAndAppointmentUpload = {
+            const customerProfileWithAppointment = {
                 customerProfileIncoming: currentCustomerRequestObj,
                 appointmentIncoming: aptObj,
             } as ICustomerProfileWithAppointmentOutgoingData
-            dispatch(SetCustomerAndBookAppointment(customerAndAppointmentUpload))
+            dispatch(SetCustomerAndBookAppointment(customerProfileWithAppointment))
         }
         return
     };
