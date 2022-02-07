@@ -62,7 +62,7 @@ function MobileDashboard() {
 
     function MobileDashboardView() {
         return (
-            <div>
+            <div style={{ overflowX: 'hidden' }}>
                 <MobileNavBar />
                 <div style={{ marginTop: 110 }}>
                     <Routes>
