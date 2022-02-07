@@ -21,50 +21,48 @@ const bull = (
 );
 
 export default function NewNoteCard() {
-    const dispatch = useDispatch()
-    const [note, setNote] = useState("")
+    const dispatch = useDispatch();
+    const [note, setNote] = useState('');
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.Appointment)
+    const currentAppointment = useSelector(
+        (state: RootState) => state.ConsultationState.Appointment,
+    );
 
     function makeNewNote() {
         var noteOutgoing = {
-            NoteId: "",
-            AppointmentId: currentAppointment?.appointmentId ?? "",
-            ServiceRequestId: currentAppointment?.serviceRequestId ?? "",
-            Note: note
+            NoteId: '',
+            AppointmentId: currentAppointment?.appointmentId ?? '',
+            ServiceRequestId: currentAppointment?.serviceRequestId ?? '',
+            Note: note,
         } as INoteOutgoingData;
 
-        dispatch(UploadNote(noteOutgoing))
-        setNote("")
+        dispatch(UploadNote(noteOutgoing));
+        setNote('');
     }
 
     const handleEditedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNote(event.target.value)
+        setNote(event.target.value);
     };
 
     return (
-        <Box sx={{ minWidth: 275 }}>
-            <Card variant="outlined">
-                <React.Fragment>
-                    <CardContent>
-                        <TextField
-                            fullWidth
-                            label=""
-                            placeholder="Enter New Note Here"
-                            margin="normal"
-                            size="medium"
-                            value={note}
-                            variant="outlined"
-                            onChange={handleEditedChange}
-                            multiline
-                            maxRows={6}
-                        />
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small" onClick={makeNewNote}>Done</Button>
-                    </CardActions>
-                </React.Fragment>
-            </Card>
-        </Box>
+        <div style={{display:'flex', flexDirection:'row'}}>
+            <TextField
+                fullWidth
+                label=""
+                placeholder="Enter New Note Here"
+                margin="normal"
+                size="medium"
+                value={note}
+                variant="outlined"
+                onChange={handleEditedChange}
+                multiline
+                maxRows={6}
+                style={{marginTop:10}}
+            />
+
+            <Button onClick={makeNewNote}>
+                Add
+            </Button>
+        </div>
     );
 }
