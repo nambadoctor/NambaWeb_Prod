@@ -106,9 +106,9 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            //TODO: Make calls in here and SetCustomerAndBookAppointment in common action
             dispatch(ClearAddPatientState())
-            dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
+            //GET CUSTOMER ID BACK IN RESPONSE, DONT USE CHECK IF CUSTOMER EXISTS
+            dispatch(CheckIfCustomerExists(customerRequest.phoneNumbers[0].number, customerRequest.organisationId))
             dispatch(GetAllCustomers())
             toast.success("Customer Set Successfully")
         } else {
@@ -173,7 +173,7 @@ export const GetCustomer = (customerId: string): ThunkAction<void, RootState, nu
             }
         } catch (error) {
             dispatch(
-                SetNonFatalError("Could not find customer for this appointment")
+                SetNonFatalError("Could not find customer")
             );
         }
     };

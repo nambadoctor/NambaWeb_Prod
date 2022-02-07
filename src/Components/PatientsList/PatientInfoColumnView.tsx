@@ -17,7 +17,7 @@ export default function PatientInfoColumnView() {
             <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
             <EditPatientView></EditPatientView>
 
-            {currentCustomer && (
+            {(currentCustomer && Object.entries(currentCustomer).length > 0) && (
                 <div>
                     <Row>
                         <Divider style={{ marginTop: 20 }}></Divider>
