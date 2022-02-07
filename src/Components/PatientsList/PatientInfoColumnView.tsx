@@ -3,6 +3,8 @@ import { Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import EditPatientView from '../EditPatient/EditPatientView';
+import AllNotesView from '../Notes/AllNotesView';
+import NewNoteCard from '../Notes/NewNoteCardView';
 import NotesView from '../Notes/NotesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
@@ -19,31 +21,22 @@ export default function PatientInfoColumnView() {
 
             {(currentCustomer && Object.entries(currentCustomer).length > 0) && (
                 <div>
-                    <Row>
-                        <Divider style={{ marginTop: 20 }}></Divider>
-                    </Row>
 
                     <AllPrescriptionImagesView
                         showUploadButton={true}
                         showCancelImageButton={true}
                     ></AllPrescriptionImagesView>
 
-                    <Row>
-                        <Divider style={{ marginTop: 20 }}></Divider>
-                    </Row>
-
                     <AllReportImagesView
                         showUploadButton={true}
                         showCancelImageButton={true}
                     ></AllReportImagesView>
 
-                    <Row>
-                        <Divider style={{ marginTop: 20 }}></Divider>
-                    </Row>
+                    <AllNotesView></AllNotesView>
+                    <NewNoteCard></NewNoteCard>
                 </div>
             )}
 
-            {/* <NotesView></NotesView> */}
         </div>
     );
 }

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UploadNote } from '../../ServiceActions/NoteActions';
+import { UploadNote, UploadStrayNote } from '../../ServiceActions/NoteActions';
 import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
@@ -36,7 +36,11 @@ export default function NewNoteCard() {
             Note: note,
         } as INoteOutgoingData;
 
-        dispatch(UploadNote(noteOutgoing));
+        if (currentAppointment) {
+            dispatch(UploadNote(noteOutgoing));
+        } else {
+            dispatch(UploadStrayNote(noteOutgoing))
+        }
         setNote('');
     }
 
