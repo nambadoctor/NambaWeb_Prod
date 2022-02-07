@@ -44,9 +44,8 @@ function Dashboard() {
               <AppointmentsTableView />
             </Col>
             <Col md="3">
-              <h5 style={{ marginBottom: 20 }}>Calendar</h5>
               <Row><AddPatientForm></AddPatientForm></Row>
-              <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
+              <Row><Divider style={{ marginBottom: 20 }}></Divider></Row>
               <Row><Calendar /></Row>
             </Col>
           </Row>
