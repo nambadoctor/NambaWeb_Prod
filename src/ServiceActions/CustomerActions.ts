@@ -18,6 +18,7 @@ import { GetPrescriptions } from "./PrescriptionActions";
 import { GetNotes } from "./NoteActions";
 import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
+import { ClearContext } from "../Actions/ClearContextAction";
 
 
 export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -106,8 +107,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         dispatch(SetLinearLoadingBarToggle(false))
 
         if (response) {
-            dispatch(ClearAddPatientState())
-            //GET CUSTOMER ID BACK IN RESPONSE, DONT USE CHECK IF CUSTOMER EXISTS
+            dispatch(ClearContext())
             dispatch(CheckIfCustomerExists(customerRequest.phoneNumbers[0].number, customerRequest.organisationId))
             dispatch(GetAllCustomers())
             toast.success("Customer Set Successfully")
