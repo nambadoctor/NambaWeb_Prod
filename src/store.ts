@@ -11,6 +11,7 @@ import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProvider
 import { addPatientReducer } from "./Reducers/AddPatientReducer";
 import { ConsultationReducer } from "./Reducers/ConsultationReducer";
 import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
+import { CurrentCustomerReducer } from "./Reducers/CurrentCustomerReducer";
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     CurrentServiceProviderState: currentServiceProviderReducer,
     AddPatientState: addPatientReducer,
     ConsultationState: ConsultationReducer,
+    CurrentCustomerState: CurrentCustomerReducer,
     LoadedState: LoadedStatesReducer
 });
 

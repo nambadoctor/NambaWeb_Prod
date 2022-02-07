@@ -4,14 +4,10 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import NotesProps from './SingleNoteView';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DeleteNote, UploadNote } from '../../ServiceActions/NoteActions';
-import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
+import { UploadNote } from '../../ServiceActions/NoteActions';
 import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
@@ -28,7 +24,7 @@ export default function NewNoteCard() {
     const dispatch = useDispatch()
     const [note, setNote] = useState("")
 
-    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.currentAppointment)
+    const currentAppointment = useSelector((state: RootState) => state.ConsultationState.Appointment)
 
     function makeNewNote() {
         var noteOutgoing = {
@@ -39,6 +35,7 @@ export default function NewNoteCard() {
         } as INoteOutgoingData;
 
         dispatch(UploadNote(noteOutgoing))
+        setNote("")
     }
 
     const handleEditedChange = (event: React.ChangeEvent<HTMLInputElement>) => {

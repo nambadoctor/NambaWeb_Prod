@@ -8,9 +8,6 @@ export interface ICustomerProfileOutgoing {
     lastName:string,
     phoneNumbers:IPhoneNumberData[],
     gender:string,
-    dateOfBirth:IDateOfBirthData,
-    emailAddress:string,
-    profilePicURL:string,
+    dateOfBirth:IDateOfBirthData
     organisationId:string,
-    serviceProviderId:string
 }

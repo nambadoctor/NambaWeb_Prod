@@ -5,4 +5,6 @@ export default interface IPrescriptionIncomingData {
     fileType: string
     sasUrl: string
     uploadedDateTime: string
+    appointmentId:string
+    serviceRequestId:string
 }

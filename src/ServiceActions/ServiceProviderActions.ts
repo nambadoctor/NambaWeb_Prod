@@ -5,7 +5,7 @@ import IServiceProvider from "../Types/IncomingDataModels/ServiceProvider";
 import { Current_Service_Provider_State_Types } from "../Reducers/CurrentServiceProviderReducer";
 import { GetAllAppointments } from "./AppointmentActions";
 import { GetServiceProviderProfileEndPoint } from "../Helpers/EndPointHelpers";
-import { GetAllCustomersForServiceProviderInOrg } from "./CustomerActions";
+import { GetAllCustomers } from "./CustomerActions";
 import { getCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
@@ -44,7 +44,7 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
         dispatch(GetAllAppointments());
 
         SetTrackTrace("Dispatch Get All Customers For Service Provider In Org" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
-        dispatch(GetAllCustomersForServiceProviderInOrg());
+        dispatch(GetAllCustomers());
     } catch (error) {
         dispatch(SetFatalError("Cannot get service provider!"))
     }

@@ -6,7 +6,6 @@ import PrescriptionImageView from "../PrescriptionUpload/PrescriptionImageView";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetAppointmentForConsultation } from "../../ServiceActions/ConsultationActions";
 import { Col, Row } from "react-bootstrap";
 import "../../../src/App.css";
 import { RootState } from "../../store";
@@ -14,8 +13,9 @@ import { AllReportImagesView } from "../ReportUpload/AllReportImagesView";
 import { AllPrescriptionImagesView } from "../PrescriptionUpload/AllPrescriptionImagesView";
 import { UploadReportForConsultation } from "../../ServiceActions/ReportActions";
 import { UploadPrescriptionForConsultation } from "../../ServiceActions/PrescriptionActions";
-import { TextField } from "@mui/material";
 import NotesView from "../Notes/NotesView";
+import { GetAppointment } from "../../ServiceActions/AppointmentActions";
+import { ClearContext } from "../../Actions/ClearContextAction";
 
 export default function ConsultationView() {
   const dispatch = useDispatch();
@@ -25,10 +25,11 @@ export default function ConsultationView() {
   const { id } = useParams();
 
   useEffect(() => {
+    dispatch(ClearContext())
     if (currentServiceProvider) {
-      dispatch(GetAppointmentForConsultation(id as string));
+      dispatch(GetAppointment(id as string));
     }
-  }, [currentServiceProvider]);
+  }, [currentServiceProvider, id]);
 
   return (
     <div>

@@ -3,22 +3,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import OrganisationPicker from "../OrganisationPicker/OrganisationPicker";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { SignOut } from "../../ServiceActions/LoginActions";
 import { useDispatch } from "react-redux";
-import { ClearAddPatientState } from "../../Actions/AddPatientActions";
-import { ClearAllValuesForConsultation } from "../../Actions/ConsultationActions";
+import { ClearContext } from "../../Actions/ClearContextAction";
 
 export default function Topbar() {
   const logo = require("../../Assets/NDLogo.png");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-
-  function switchTabs () {
-    dispatch(ClearAddPatientState())
-    dispatch(ClearAllValuesForConsultation())
+  function switchTabs() {
+    dispatch(ClearContext());
   }
-  
+
   return (
     <Navbar bg="topBarBlue" fixed="top" expand="sm">
       <Navbar.Brand>
@@ -44,31 +41,48 @@ export default function Topbar() {
         >
           <OrganisationPicker></OrganisationPicker>
           <Link
-            to='/Appointments'
-            onClick={() => {switchTabs()}}
+            to="/Appointments"
+            onClick={() => {
+              switchTabs();
+            }}
             style={{
               color: "white",
               fontSize: 18,
               fontWeight: "600",
               marginLeft: 20,
               marginRight: 40,
-              textDecoration: 'none'
-            }}>Appointments
+              textDecoration: "none",
+            }}
+          >
+            Appointments
           </Link>
           <Link
-            to='/Patients'
-            onClick={() => {switchTabs()}}
+            to="/Patients"
+            onClick={() => {
+              switchTabs();
+            }}
             style={{
               color: "white",
               fontSize: 18,
               fontWeight: "600",
               marginLeft: 20,
               marginRight: 40,
-              textDecoration: 'none'
-            }}>Patients
+              textDecoration: "none",
+            }}
+          >
+            Patients
           </Link>
-          <div onClick={SignOut} style={{ background: "#1054c4", padding:10, borderRadius: 30, marginLeft: 10, marginRight: 20 }}>
-            <LogoutIcon style={{ color: 'white' }}> </LogoutIcon>
+          <div
+            onClick={SignOut}
+            style={{
+              background: "#1054c4",
+              padding: 10,
+              borderRadius: 30,
+              marginLeft: 10,
+              marginRight: 20,
+            }}
+          >
+            <LogoutIcon style={{ color: "white" }}> </LogoutIcon>
           </div>
         </Nav>
       </Navbar.Collapse>
