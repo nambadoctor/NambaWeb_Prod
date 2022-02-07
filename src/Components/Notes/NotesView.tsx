@@ -23,14 +23,13 @@ export default function NotesView() {
     return (
         <div>
             <Row>
+                <NewNoteCard></NewNoteCard>
                 {currentConsultationNotes &&
                     currentConsultationNotes.map(
                         (note: INoteIncomingData, index: number) => (
                             <NoteCard note={note}></NoteCard>
                         ),
                     )}
-
-                <NewNoteCard></NewNoteCard>
             </Row>
         </div>
     );

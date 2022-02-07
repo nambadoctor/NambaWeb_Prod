@@ -26,17 +26,6 @@ export default function AllNotesView() {
     return (
         <div>
             <Row>
-                <Divider
-                    style={{
-                        marginTop: 20,
-                        marginBottom: 20,
-                    }}
-                ></Divider>
-            </Row>
-            <Row>
-                <h5>History Of Notes</h5>
-            </Row>
-            <Row>
                 {currentConsultationNotes &&
                     currentConsultationNotes.map(
                         (note: INoteIncomingData, index: number) => (

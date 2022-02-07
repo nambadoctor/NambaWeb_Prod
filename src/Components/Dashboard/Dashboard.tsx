@@ -40,7 +40,7 @@ function Dashboard() {
         <Container fluid>
           <Row>
             <Col md="9">
-              <h5 style={{ marginBottom: 20 }}>Appointments</h5>
+              <h5 style={{ marginBottom: 20 }}> Appointments </h5>
               <AppointmentsTableView />
             </Col>
             <Col md="3">

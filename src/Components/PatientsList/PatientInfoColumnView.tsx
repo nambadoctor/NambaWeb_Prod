@@ -19,9 +19,8 @@ export default function PatientInfoColumnView() {
             <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
             <EditPatientView></EditPatientView>
 
-            {(currentCustomer && Object.entries(currentCustomer).length > 0) && (
+            {currentCustomer && Object.entries(currentCustomer).length > 0 && (
                 <div>
-
                     <AllPrescriptionImagesView
                         showUploadButton={true}
                         showCancelImageButton={true}
@@ -32,11 +31,21 @@ export default function PatientInfoColumnView() {
                         showCancelImageButton={true}
                     ></AllReportImagesView>
 
-                    <AllNotesView></AllNotesView>
+                    <Row>
+                        <Divider
+                            style={{
+                                marginTop: 20,
+                                marginBottom: 20,
+                            }}
+                        ></Divider>
+                    </Row>
+                    <Row>
+                        <h5>History Of Notes</h5>
+                    </Row>
                     <NewNoteCard></NewNoteCard>
+                    <AllNotesView></AllNotesView>
                 </div>
             )}
-
         </div>
     );
 }
