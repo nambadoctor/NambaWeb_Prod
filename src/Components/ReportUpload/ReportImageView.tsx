@@ -142,9 +142,8 @@ export default function ReportImageView() {
     return (
         <div>
             {currentCustomerReportsImages &&
-            currentCustomerReportsImages.length > 0
-                ? imageViewDisplay()
-                : noReportsDisplay()}
+                currentCustomerReportsImages.length > 0 &&
+                imageViewDisplay()}
         </div>
     );
 }

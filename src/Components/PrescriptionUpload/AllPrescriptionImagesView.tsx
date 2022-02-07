@@ -79,8 +79,8 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
-                {allCustomerPrescriptionImages &&
-                    allCustomerPrescriptionImages.length > 0 && (
+                {images &&
+                    images.length > 0 && (
                         <div>
                             <Row>
                                 <Divider
@@ -103,7 +103,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                 )}
                             </Row>
 
-                            {allCustomerPrescriptionImages
+                            {allCustomerPrescriptionImages && allCustomerPrescriptionImages
                                 .filter(
                                     (prescription) =>
                                         prescription.appointmentId !==

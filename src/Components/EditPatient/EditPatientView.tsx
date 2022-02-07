@@ -37,13 +37,13 @@ export default function EditPatientView() {
         )}
       </div>
 
-      {addPatientState.isCustomerExists ? (
+      {/* {addPatientState.isCustomerExists ? (
         <div style={{ fontSize: 12, color: "#1672f9", fontWeight: "bold" }}>
           this patient exists
         </div>
       ) : (
         <div />
-      )}
+      )} */}
 
       {addPatientState.isInvalidNumber ? (
         <div style={{ fontSize: 12, color: "#ff6c6c", fontWeight: "bold" }}>

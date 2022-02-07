@@ -5,8 +5,9 @@ import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
 import NewNoteCard from './NewNoteCardView';
 import { NoteCard } from './SingleNoteCardView';
 import { createSelector } from 'reselect';
+import { Divider } from '@mui/material';
 
-export default function NotesView() {
+export default function AllNotesView() {
     const currentAppointmentId = useSelector(
         (state: RootState) =>
             state.ConsultationState.Appointment?.appointmentId,
@@ -15,7 +16,9 @@ export default function NotesView() {
     const showAppointmentPrescriptions = createSelector(
         (state: RootState) => state.CurrentCustomerState.Notes,
         (notes) =>
-            notes?.filter((note) => note.appointmentId == currentAppointmentId),
+            notes?.filter(
+                (note) => note.appointmentId !== currentAppointmentId,
+            ),
     );
 
     const currentConsultationNotes = useSelector(showAppointmentPrescriptions);
@@ -23,7 +26,6 @@ export default function NotesView() {
     return (
         <div>
             <Row>
-                <NewNoteCard></NewNoteCard>
                 {currentConsultationNotes &&
                     currentConsultationNotes.map(
                         (note: INoteIncomingData, index: number) => (
