@@ -45,9 +45,9 @@ function Dashboard() {
             </Col>
             <Col md="3">
               <h5 style={{ marginBottom: 20 }}>Calendar</h5>
-              <Row><Calendar /></Row>
-              <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
               <Row><AddPatientForm></AddPatientForm></Row>
+              <Row><Divider style={{ marginTop: 20 }}></Divider></Row>
+              <Row><Calendar /></Row>
             </Col>
           </Row>
         </Container>

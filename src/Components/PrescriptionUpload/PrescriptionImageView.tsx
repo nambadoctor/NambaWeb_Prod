@@ -140,9 +140,8 @@ export default function PrescriptionImageView() {
     return (
         <div>
             {currentCustomerPrescriptions &&
-            currentCustomerPrescriptions.length > 0
-                ? imageViewDisplay()
-                : noPrescriptionsDisplay()}
+                currentCustomerPrescriptions.length > 0 &&
+                imageViewDisplay()}
         </div>
     );
 }

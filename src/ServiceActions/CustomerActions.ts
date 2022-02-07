@@ -100,19 +100,26 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
         var response;
         if (customerRequest.customerId) {
             response = await putCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+
+            if (response) {
+                dispatch(ClearContext())
+                dispatch(GetCustomer(customerRequest.customerId))
+                dispatch(GetAllCustomers())
+                toast.success("Customer Set Successfully")
+            }
         } else {
             response = await postCall({} as any, SetCustomerEndPoint(), customerRequest, "SetCustomer")
+
+            if (response) {
+                dispatch(ClearContext())
+                dispatch(CheckIfCustomerExists(customerRequest.phoneNumbers[0].number, customerRequest.organisationId))
+                dispatch(GetAllCustomers())
+                toast.success("Customer Set Successfully")
+            }
         }
 
         dispatch(SetLinearLoadingBarToggle(false))
 
-        if (response) {
-            dispatch(ClearContext())
-            dispatch(CheckIfCustomerExists(customerRequest.phoneNumbers[0].number, customerRequest.organisationId))
-            dispatch(GetAllCustomers())
-            toast.success("Customer Set Successfully")
-        } else {
-        }
     } catch (error) {
         dispatch(SetNonFatalError("Could not set customer"))
     }

@@ -76,8 +76,8 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         return (
             <div style={{ overflow: 'auto' }}>
                 <div>
-                    {allCustomerReportsImages &&
-                        allCustomerReportsImages.length > 0 && (
+                    {images &&
+                        images.length > 0 && (
                             <div>
                                 <Row>
                                     <Divider
@@ -104,7 +104,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                     )}
                                 </Row>
 
-                                {allCustomerReportsImages
+                                {allCustomerReportsImages && allCustomerReportsImages
                                     .filter(
                                         (report) =>
                                             report.appointmentId !==
