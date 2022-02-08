@@ -9,7 +9,7 @@ import { isDatesEqual } from '../Utils/GeneralUtils';
 import { makeStyles } from '@mui/styles';
 import { TableFooter, TablePagination } from '@mui/material';
 import { RootState } from '../store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import IAppointmentData from '../Types/IncomingDataModels/Appointment';
 import NoAppointmentsView from '../Components/Appointments/NoAppointmentsView';
 import TablePaginationActions from '../Components/Pagination/PaginationActions';
@@ -19,6 +19,7 @@ import { UploadReportForConsultation } from '../ServiceActions/ReportActions';
 import { UploadPrescriptionForConsultation } from '../ServiceActions/PrescriptionActions';
 import { MobileReportUploadPicker } from './MobileReportUploadPicker';
 import { MobilePrescriptionUploadPicker } from './MobilePrescriptionUploadPicker';
+import { SetSelectedAppointmentForConsultation } from '../Actions/ConsultationActions';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     table: {
@@ -53,6 +54,7 @@ const useAppointmentTableStyles = makeStyles(() => ({
 
 export default function MobileAppointmentsTableView() {
     const classes = useAppointmentTableStyles();
+    const dispatch = useDispatch();
 
     const dates = useSelector(
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
@@ -82,25 +84,35 @@ export default function MobileAppointmentsTableView() {
                       page * rowsPerPage + rowsPerPage,
                   )
                 : appointments
-        ).map((appointment: IAppointmentData, index: number) => (
-            <TableRow key={appointment.appointmentId}>
-                <TableCell align="left" style={{ wordBreak: 'break-word' }}>
-                    {appointment.customerName}
-                </TableCell>
-                <TableCell align="left">
-                    <MobileReportUploadPicker
-                        handlePhotoCallBack={UploadReportForConsultation}
-                        uploadButtonColor="#1672f9"
-                    />
-                </TableCell>
-                <TableCell align="left">
-                    <MobilePrescriptionUploadPicker
-                        handlePhotoCallBack={UploadPrescriptionForConsultation}
-                        uploadButtonColor="#1672f9"
-                    />
-                </TableCell>
-            </TableRow>
-        ));
+        ).map((appointment: IAppointmentData, index: number) => {
+            const getAppointment = () => {
+                dispatch(SetSelectedAppointmentForConsultation(appointment));
+            };
+            return (
+                <TableRow
+                    key={appointment.appointmentId}
+                    onClick={getAppointment}
+                >
+                    <TableCell align="left" style={{ wordBreak: 'break-word' }}>
+                        {appointment.customerName}
+                    </TableCell>
+                    <TableCell align="left">
+                        <MobileReportUploadPicker
+                            handlePhotoCallBack={UploadReportForConsultation}
+                            uploadButtonColor="#1672f9"
+                        />
+                    </TableCell>
+                    <TableCell align="left">
+                        <MobilePrescriptionUploadPicker
+                            handlePhotoCallBack={
+                                UploadPrescriptionForConsultation
+                            }
+                            uploadButtonColor="#1672f9"
+                        />
+                    </TableCell>
+                </TableRow>
+            );
+        });
     }
 
     return (
