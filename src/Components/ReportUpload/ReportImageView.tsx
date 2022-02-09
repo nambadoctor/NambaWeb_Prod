@@ -6,7 +6,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
 import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { createSelector } from 'reselect';
 
 export default function ReportImageView() {
     const dispatch = useDispatch();
@@ -81,7 +80,6 @@ export default function ReportImageView() {
                                     style={{
                                         display: 'inline-block',
                                         position: 'relative',
-                                        width: 100,
                                         marginTop: 10,
                                         marginRight: 20,
                                     }}
@@ -89,8 +87,6 @@ export default function ReportImageView() {
                                     <img
                                         src={src.sasUrl}
                                         onClick={() => openImageViewer(index)}
-                                        width="200"
-                                        height="150"
                                         style={{ width: 100, height: 100 }}
                                         key={index}
                                     />
@@ -123,22 +119,7 @@ export default function ReportImageView() {
             </div>
         );
     }
-
-    function noReportsDisplay() {
-        return (
-            <div
-                style={{
-                    margin: 20,
-                    marginTop: 50,
-                    marginBottom: 50,
-                    textAlign: 'center',
-                }}
-            >
-                No reports yet. Upload image or Take Photo.
-            </div>
-        );
-    }
-
+    
     return (
         <div>
             {currentCustomerReportsImages &&

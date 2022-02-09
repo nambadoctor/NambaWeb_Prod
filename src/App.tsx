@@ -14,19 +14,18 @@ toast.configure();
 
 function App() {
     const user = useContext(AuthContext);
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     return (
         <AppInsightsContext.Provider value={reactPlugin}>
-            {isMobile && user && user !== 'loading' && <MobileDashboard />}
-            {!isMobile &&
-                (!user ? (
-                    <IndexPage />
-                ) : (
-                    user && user !== 'loading' && <Dashboard />
-                ))}
+            {(user && user !== "loading") ? <MobileOrDesktopViewDecider /> : <IndexPage />}
         </AppInsightsContext.Provider>
     );
+}
+
+function MobileOrDesktopViewDecider() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    return <div>{isMobile ? <MobileDashboard /> : <Dashboard />}</div>;
 }
 
 export default App;

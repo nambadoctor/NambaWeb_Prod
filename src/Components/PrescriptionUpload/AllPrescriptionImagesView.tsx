@@ -79,31 +79,31 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
-                {images &&
-                    images.length > 0 && (
-                        <div>
-                            <Row>
-                                <Divider
-                                    style={{ marginTop: 20, marginBottom: 20 }}
-                                ></Divider>
-                            </Row>
-                            <Row>
-                                <Col md={8}>
-                                    <h5>History Of Prescriptions</h5>
+                {images && images.length > 0 && (
+                    <div>
+                        <Row>
+                            <Divider
+                                style={{ marginTop: 20, marginBottom: 20 }}
+                            ></Divider>
+                        </Row>
+                        <Row>
+                            <Col md={8}>
+                                <h5>History Of Prescriptions</h5>
+                            </Col>
+                            {props.showUploadButton && (
+                                <Col>
+                                    <PrescriptionUploadPicker
+                                        handlePhotoCallBack={
+                                            UploadPrescriptionAsStray
+                                        }
+                                        uploadButtonColor="#0863e4"
+                                    ></PrescriptionUploadPicker>
                                 </Col>
-                                {props.showUploadButton && (
-                                    <Col>
-                                        <PrescriptionUploadPicker
-                                            handlePhotoCallBack={
-                                                UploadPrescriptionAsStray
-                                            }
-                                            uploadButtonColor="#0863e4"
-                                        ></PrescriptionUploadPicker>
-                                    </Col>
-                                )}
-                            </Row>
+                            )}
+                        </Row>
 
-                            {allCustomerPrescriptionImages && allCustomerPrescriptionImages
+                        {allCustomerPrescriptionImages &&
+                            allCustomerPrescriptionImages
                                 .filter(
                                     (prescription) =>
                                         prescription.appointmentId !==
@@ -114,7 +114,6 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                         style={{
                                             display: 'inline-block',
                                             position: 'relative',
-                                            width: 100,
                                             marginTop: 10,
                                             marginRight: 20,
                                         }}
@@ -146,8 +145,8 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                         )}
                                     </div>
                                 ))}
-                        </div>
-                    )}
+                    </div>
+                )}
 
                 {isViewerOpen && (
                     <ImageViewer

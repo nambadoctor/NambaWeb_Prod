@@ -115,7 +115,6 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                             style={{
                                                 display: 'inline-block',
                                                 position: 'relative',
-                                                width: 100,
                                                 marginTop: 10,
                                                 marginRight: 20,
                                             }}
