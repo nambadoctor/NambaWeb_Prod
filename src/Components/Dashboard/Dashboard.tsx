@@ -19,6 +19,7 @@ import FullPageLoadingDisplay from "../UIHelperComponents/FullPageLoadingDisplay
 import NonExistentUserDisplayComponent from "../UIHelperComponents/NonExistentUserDisplayComponent";
 import CriticalAlertDisplay from "../UIHelperComponents/CriticalAlertDisplay";
 import { SetInitialLoadingStartTime } from "../../Actions/LoadedStatesActions";
+import { clearAuthToken } from "../../Auth/FirebaseUserInfoHelper";
 
 function Dashboard() {
 
@@ -29,6 +30,7 @@ function Dashboard() {
   useEffect(() => {
     console.log("hello init");
     SetTrackTrace("Dashboard Mounted", "Dashboard", SeverityLevel.Information);
+    clearAuthToken()
     dispatch(SetInitialLoadingStartTime())
     dispatch(GetServiceProviderBasic());
   }, [])

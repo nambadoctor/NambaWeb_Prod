@@ -60,4 +60,8 @@ async function GetFirebaseIdToken() {
   return idToken
 }
 
-export default GetFirebaseIdToken;
+function clearAuthToken() {
+  idToken = ""
+}
+
+export {GetFirebaseIdToken, clearAuthToken};
