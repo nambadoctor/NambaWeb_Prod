@@ -76,34 +76,39 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
         }
     }
 
+    const upLoadedOn = (uploadedDateTime: any) => {
+        let date = new Date(uploadedDateTime).toLocaleDateString();
+        return date;
+    };
+
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
-                {images &&
-                    images.length > 0 && (
-                        <div>
-                            <Row>
-                                <Divider
-                                    style={{ marginTop: 20, marginBottom: 20 }}
-                                ></Divider>
-                            </Row>
-                            <Row>
-                                <Col md={8}>
-                                    <h5>History Of Prescriptions</h5>
+                {images && images.length > 0 && (
+                    <div>
+                        <Row>
+                            <Divider
+                                style={{ marginTop: 20, marginBottom: 20 }}
+                            />
+                        </Row>
+                        <Row>
+                            <Col md={8}>
+                                <h5>History Of Prescriptions</h5>
+                            </Col>
+                            {props.showUploadButton && (
+                                <Col>
+                                    <PrescriptionUploadPicker
+                                        handlePhotoCallBack={
+                                            UploadPrescriptionAsStray
+                                        }
+                                        uploadButtonColor="#0863e4"
+                                    />
                                 </Col>
-                                {props.showUploadButton && (
-                                    <Col>
-                                        <PrescriptionUploadPicker
-                                            handlePhotoCallBack={
-                                                UploadPrescriptionAsStray
-                                            }
-                                            uploadButtonColor="#0863e4"
-                                        ></PrescriptionUploadPicker>
-                                    </Col>
-                                )}
-                            </Row>
+                            )}
+                        </Row>
 
-                            {allCustomerPrescriptionImages && allCustomerPrescriptionImages
+                        {allCustomerPrescriptionImages &&
+                            allCustomerPrescriptionImages
                                 .filter(
                                     (prescription) =>
                                         prescription.appointmentId !==
@@ -120,6 +125,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                         }}
                                     >
                                         <img
+                                            alt=""
                                             src={src.sasUrl}
                                             onClick={() =>
                                                 openImageViewer(index)
@@ -127,7 +133,6 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                             key={index}
                                             style={{ width: 100, height: 100 }}
                                         />
-
                                         {props.showCancelImageButton && (
                                             <div
                                                 onClick={() =>
@@ -144,10 +149,13 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                                 <CancelIcon />
                                             </div>
                                         )}
+                                        <p>
+                                            {upLoadedOn(src.uploadedDateTime)}
+                                        </p>
                                     </div>
                                 ))}
-                        </div>
-                    )}
+                    </div>
+                )}
 
                 {isViewerOpen && (
                     <ImageViewer
@@ -183,7 +191,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                             <PrescriptionUploadPicker
                                 handlePhotoCallBack={UploadPrescriptionAsStray}
                                 uploadButtonColor="#0863e4"
-                            ></PrescriptionUploadPicker>
+                            />
                         </Col>
                     )}
                 </Row>

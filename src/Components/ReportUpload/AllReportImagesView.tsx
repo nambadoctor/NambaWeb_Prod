@@ -72,39 +72,44 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         }
     }
 
+    const upLoadedOn = (uploadedDateTime: any) => {
+        let date = new Date(uploadedDateTime).toLocaleDateString();
+        return date;
+    };
+
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
                 <div>
-                    {images &&
-                        images.length > 0 && (
-                            <div>
-                                <Row>
-                                    <Divider
-                                        style={{
-                                            marginTop: 20,
-                                            marginBottom: 20,
-                                        }}
-                                    ></Divider>
-                                </Row>
+                    {images && images.length > 0 && (
+                        <div>
+                            <Row>
+                                <Divider
+                                    style={{
+                                        marginTop: 20,
+                                        marginBottom: 20,
+                                    }}
+                                />
+                            </Row>
 
-                                <Row>
-                                    <Col md={8}>
-                                        <h5>History Of Reports</h5>
+                            <Row>
+                                <Col md={8}>
+                                    <h5>History Of Reports</h5>
+                                </Col>
+                                {props.showUploadButton && (
+                                    <Col>
+                                        <ReportUploadPicker
+                                            handlePhotoCallBack={
+                                                UploadReportAsStray
+                                            }
+                                            uploadButtonColor="#0863e4"
+                                        />
                                     </Col>
-                                    {props.showUploadButton && (
-                                        <Col>
-                                            <ReportUploadPicker
-                                                handlePhotoCallBack={
-                                                    UploadReportAsStray
-                                                }
-                                                uploadButtonColor="#0863e4"
-                                            ></ReportUploadPicker>
-                                        </Col>
-                                    )}
-                                </Row>
+                                )}
+                            </Row>
 
-                                {allCustomerReportsImages && allCustomerReportsImages
+                            {allCustomerReportsImages &&
+                                allCustomerReportsImages
                                     .filter(
                                         (report) =>
                                             report.appointmentId !==
@@ -121,6 +126,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                             }}
                                         >
                                             <img
+                                                alt=""
                                                 src={src.sasUrl}
                                                 onClick={() =>
                                                     openImageViewer(index)
@@ -148,10 +154,16 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                                     <CancelIcon />
                                                 </div>
                                             )}
+
+                                            <p>
+                                                {upLoadedOn(
+                                                    src.uploadedDateTime,
+                                                )}
+                                            </p>
                                         </div>
                                     ))}
-                            </div>
-                        )}
+                        </div>
+                    )}
 
                     {isViewerOpen && (
                         <ImageViewer
@@ -186,7 +198,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                             <ReportUploadPicker
                                 handlePhotoCallBack={UploadReportAsStray}
                                 uploadButtonColor="#0863e4"
-                            ></ReportUploadPicker>
+                            />
                         </Col>
                     )}
                 </Row>
