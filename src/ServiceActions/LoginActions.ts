@@ -1,6 +1,4 @@
 import { signInWithPhoneNumber, getAuth, RecaptchaVerifier } from "@firebase/auth";
-import { useDispatch } from "react-redux";
-import { useState, ChangeEvent } from "react";
 import { clearAuthToken } from "../Auth/FirebaseUserInfoHelper";
 
 function getAppVerifier() {
@@ -41,6 +39,7 @@ export default function useAuthHook() {
             getAuth().signOut();
         }
     }
+
     return { SignInWithPhoneNumberHelper, SignOut };
 }
 
