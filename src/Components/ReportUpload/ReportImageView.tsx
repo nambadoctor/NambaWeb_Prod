@@ -6,10 +6,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
 import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { createSelector } from 'reselect';
+import useReportsPdfViewHook from '../../CustomHooks/useReportsPdfViewHook';
 
 export default function ReportImageView() {
     const dispatch = useDispatch();
+    const logo = require('../../Assets/pdfImage.png');
 
     const {
         currentImage,
@@ -19,6 +20,8 @@ export default function ReportImageView() {
         openImageViewer,
         closeImageViewer,
     } = useImagesHook();
+
+    const { openPdf } = useReportsPdfViewHook();
 
     const currentAppointmentId = useSelector(
         (state: RootState) =>
@@ -86,14 +89,30 @@ export default function ReportImageView() {
                                         marginRight: 20,
                                     }}
                                 >
-                                    <img
-                                        src={src.sasUrl}
-                                        onClick={() => openImageViewer(index)}
-                                        width="200"
-                                        height="150"
-                                        style={{ width: 100, height: 100 }}
-                                        key={index}
-                                    />
+                                    {console.log('src', src)}
+                                    {src.fileType === 'application/pdf' ? (
+                                        <img
+                                            alt="reportPdf"
+                                            src={logo}
+                                            onClick={() => openPdf(src)}
+                                            width="200"
+                                            height="150"
+                                            style={{ width: 100, height: 100 }}
+                                            key={index}
+                                        />
+                                    ) : (
+                                        <img
+                                            alt="report"
+                                            src={src.sasUrl}
+                                            onClick={() =>
+                                                openImageViewer(index)
+                                            }
+                                            width="200"
+                                            height="150"
+                                            style={{ width: 100, height: 100 }}
+                                            key={index}
+                                        />
+                                    )}
 
                                     <div
                                         onClick={() =>

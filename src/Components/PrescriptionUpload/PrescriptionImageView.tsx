@@ -10,6 +10,7 @@ import { createSelector } from 'reselect';
 
 export default function PrescriptionImageView() {
     const dispatch = useDispatch();
+    const logo = require('../../Assets/pdfImage.png');
 
     const {
         currentImage,
@@ -87,12 +88,24 @@ export default function PrescriptionImageView() {
                                     marginRight: 20,
                                 }}
                             >
-                                <img
-                                    src={src.sasUrl}
-                                    onClick={() => openImageViewer(index)}
-                                    key={index}
-                                    style={{ width: 100, height: 100 }}
-                                />
+                                {src.fileType === 'application/pdf' ? (
+                                    <img
+                                        alt="reportPdf"
+                                        src={logo}
+                                        width="200"
+                                        height="150"
+                                        style={{ width: 100, height: 100 }}
+                                        key={index}
+                                    />
+                                ) : (
+                                    <img
+                                        alt=""
+                                        src={src.sasUrl}
+                                        onClick={() => openImageViewer(index)}
+                                        key={index}
+                                        style={{ width: 100, height: 100 }}
+                                    />
+                                )}
 
                                 <div
                                     onClick={() =>

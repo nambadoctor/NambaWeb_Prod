@@ -1,119 +1,179 @@
-import { ThunkAction } from "redux-thunk";
-import { RootState } from "../store";
-import { Action } from "../Types/ActionType";
-import SetTrackTrace from "../Telemetry/SetTrackTrace";
-import { SeverityLevel } from "@microsoft/applicationinsights-web";
-import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
-import { DeleteCustomerPrescriptionEndPoint, GetCustomerAllPrescriptionsEndPoint, GetCustomerPrescriptionEndPoint, SetCustomerPrescriptionEndPoint, SetCustomerStrayPrescriptionEndPoint } from "../Helpers/EndPointHelpers";
-import { ConvertInputToFileOrBase64, fileToBase64 } from "../Utils/GeneralUtils";
-import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
-import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/PrescriptionUpload";
-import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { toast } from "react-toastify";
-import { SetPrescriptions } from "../Actions/CurrentCustomerActions";
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from '../store';
+import { Action } from '../Types/ActionType';
+import SetTrackTrace from '../Telemetry/SetTrackTrace';
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { deleteCall, getCall, postCall, putCall } from '../Http/http-helpers';
+import {
+    DeleteCustomerPrescriptionEndPoint,
+    GetCustomerAllPrescriptionsEndPoint,
+    GetCustomerPrescriptionEndPoint,
+    SetCustomerPrescriptionEndPoint,
+    SetCustomerStrayPrescriptionEndPoint,
+} from '../Helpers/EndPointHelpers';
+import {
+    ConvertInputToFileOrBase64,
+    ConvertToFile,
+} from '../Utils/GeneralUtils';
+import IPrescriptionIncomingData from '../Types/IncomingDataModels/PrescriptionIncoming';
+import { IPrescriptionUploadData } from '../Types/OutgoingDataModels/PrescriptionUpload';
+import {
+    SetLinearLoadingBarToggle,
+    SetNonFatalError,
+} from '../Actions/Common/UIControlActions';
+import { toast } from 'react-toastify';
+import { SetPrescriptions } from '../Actions/CurrentCustomerActions';
 
-export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const GetPrescriptions =
+    (): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+        const customer = getState().CurrentCustomerState.Customer;
 
-  const customer = getState().CurrentCustomerState.Customer
+        try {
+            let response = await getCall(
+                {} as Array<IPrescriptionIncomingData>,
+                GetCustomerAllPrescriptionsEndPoint(
+                    customer?.organisationId ?? '',
+                    customer?.customerId ?? '',
+                ),
+                'GetPrescriptions',
+            );
 
-  try {
-    let response = await getCall({} as Array<IPrescriptionIncomingData>, GetCustomerAllPrescriptionsEndPoint(customer?.organisationId ?? "", customer?.customerId ?? ""), "GetPrescriptions");
+            if (response) {
+                dispatch(SetPrescriptions(response.data));
+            }
+        } catch (error) {
+            dispatch(
+                SetNonFatalError(
+                    'Could not get all prescriptions for this patient',
+                ),
+            );
+        }
+    };
 
-    if (response) {
-      dispatch(SetPrescriptions(response.data))
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not get all prescriptions for this patient"))
-  }
-}
+export const UploadPrescriptionForConsultation =
+    (prescription: File): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+        dispatch(SetLinearLoadingBarToggle(true));
 
-export const UploadPrescriptionForConsultation = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+        let currentConsultationAppointment =
+            getState().ConsultationState.Appointment;
 
-  dispatch(SetLinearLoadingBarToggle(true))
+        var prescriptionRequest = {
+            AppointmentId: currentConsultationAppointment!.appointmentId,
+            ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
+            File: await ConvertInputToFileOrBase64(prescription),
+            FileName: prescription.name,
+            FileType: prescription.type,
+            Details: '',
+            DetailsType: '',
+        } as IPrescriptionUploadData;
 
-  let currentConsultationAppointment = getState().ConsultationState.Appointment
+        SetTrackTrace(
+            'Enter Upload Prescription Action',
+            'UploadPrescription',
+            SeverityLevel.Information,
+        );
 
-  var prescriptionRequest = {
-    AppointmentId: currentConsultationAppointment!.appointmentId,
-    ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: await ConvertInputToFileOrBase64(prescription),
-    FileName: prescription.name,
-    FileType: prescription.type,
-    Details: "",
-    DetailsType: ""
-  } as IPrescriptionUploadData
+        try {
+            let response = await postCall(
+                {} as any,
+                SetCustomerPrescriptionEndPoint(),
+                prescriptionRequest,
+                'UploadPrescription',
+            );
 
-  SetTrackTrace("Enter Upload Prescription Action", "UploadPrescription", SeverityLevel.Information)
+            if (response) {
+                dispatch(GetPrescriptions());
 
-  try {
-    let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
+                dispatch(SetLinearLoadingBarToggle(false));
+                toast.success('Prescription Image Uploaded');
+            }
+        } catch (error) {
+            dispatch(SetNonFatalError('Could not upload prescription image'));
+        }
+    };
 
-    if (response) {
-      dispatch(GetPrescriptions());
+export const UploadPrescriptionAsStray =
+    (file: any): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+        dispatch(SetLinearLoadingBarToggle(true));
 
-      dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Prescription Image Uploaded")
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not upload prescription image"))
-  }
-};
+        let selectedPatient = getState().CurrentCustomerState.Customer;
+        let currentServiceProvider =
+            getState().CurrentServiceProviderState.serviceProvider;
+        let convertToFile = ConvertToFile(file);
 
-export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+        var prescriptionRequest = {
+            AppointmentId: '',
+            ServiceRequestId: '',
+            File: await ConvertInputToFileOrBase64(file),
+            FileName: convertToFile !== null && file.name,
+            FileType: convertToFile !== null && file.type,
+            Details: '',
+            DetailsType: '',
+        } as IPrescriptionUploadData;
 
-  dispatch(SetLinearLoadingBarToggle(true))
+        SetTrackTrace(
+            'Enter Upload Stray Prescription Action',
+            'UploadPrescriptionAsStray',
+            SeverityLevel.Information,
+        );
 
-  let selectedPatient = getState().CurrentCustomerState.Customer
-  let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
+        try {
+            let response = await postCall(
+                {} as any,
+                SetCustomerStrayPrescriptionEndPoint(
+                    currentServiceProvider?.serviceProviderProfile
+                        .organisationId ?? '',
+                    currentServiceProvider?.serviceProviderId ?? '',
+                    selectedPatient?.customerId ?? '',
+                ),
+                prescriptionRequest,
+                'UploadStrayPrescription',
+            );
 
-  var prescriptionRequest = {
-    AppointmentId: "",
-    ServiceRequestId: "",
-    File: await ConvertInputToFileOrBase64(file),
-    FileName: "",
-    FileType: "",
-    Details: "",
-    DetailsType: ""
-  } as IPrescriptionUploadData
+            if (response) {
+                dispatch(GetPrescriptions());
 
-  SetTrackTrace("Enter Upload Stray Prescription Action", "UploadPrescriptionAsStray", SeverityLevel.Information)
+                dispatch(SetLinearLoadingBarToggle(false));
+                toast.success('Prescription Image Uploaded');
+            }
+        } catch (error) {
+            dispatch(SetNonFatalError('Could not upload prescription image'));
+        }
+    };
 
-  try {
-    let response = await postCall({} as any, SetCustomerStrayPrescriptionEndPoint(
-      currentServiceProvider?.serviceProviderProfile.organisationId ?? "",
-      currentServiceProvider?.serviceProviderId ?? "",
-      selectedPatient?.customerId ?? ""),
-      prescriptionRequest,
-      "UploadStrayPrescription"
-    )
+export const DeletePrescription =
+    (
+        prescriptionToDelete: IPrescriptionIncomingData,
+    ): ThunkAction<void, RootState, null, Action> =>
+    async (dispatch, getState) => {
+        dispatch(SetLinearLoadingBarToggle(true));
 
-    if (response) {
-      dispatch(GetPrescriptions());
+        SetTrackTrace(
+            'Enter Upload Prescription Action',
+            'UploadReport',
+            SeverityLevel.Information,
+        );
 
-      dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Prescription Image Uploaded")
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not upload prescription image"))
-  }
+        try {
+            let response = await deleteCall(
+                {} as any,
+                DeleteCustomerPrescriptionEndPoint(
+                    prescriptionToDelete.prescriptionDocumentId,
+                ),
+                'DeletePrescription',
+            );
 
-};
-
-export const DeletePrescription = (prescriptionToDelete: IPrescriptionIncomingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-  dispatch(SetLinearLoadingBarToggle(true))
-
-  SetTrackTrace("Enter Upload Prescription Action", "UploadReport", SeverityLevel.Information)
-
-  try {
-    let response = await deleteCall({} as any, DeleteCustomerPrescriptionEndPoint(prescriptionToDelete.prescriptionDocumentId), "DeletePrescription")
-
-    if (response) {
-      dispatch(GetPrescriptions());
-      dispatch(SetLinearLoadingBarToggle(false))
-      toast.success("Prescription Image Deleted")
-    }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not delete this prescription image"))
-  }
-
-};
+            if (response) {
+                dispatch(GetPrescriptions());
+                dispatch(SetLinearLoadingBarToggle(false));
+                toast.success('Prescription Image Deleted');
+            }
+        } catch (error) {
+            dispatch(
+                SetNonFatalError('Could not delete this prescription image'),
+            );
+        }
+    };
