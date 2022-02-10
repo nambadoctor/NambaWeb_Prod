@@ -26,11 +26,6 @@ export default function PatientInfoColumnView() {
                         showCancelImageButton={true}
                     ></AllPrescriptionImagesView>
 
-                    <AllReportImagesView
-                        showUploadButton={true}
-                        showCancelImageButton={true}
-                    ></AllReportImagesView>
-
                     <Row>
                         <Divider
                             style={{

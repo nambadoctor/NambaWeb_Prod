@@ -129,10 +129,11 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                         />
 
                                         <div>
-                                            {src.uploadedDateTime &&
-                                                dateToDateString(
-                                                    src.uploadedDateTime,
-                                                )}
+                                            {src.uploadedDateTime
+                                                ? dateToDateString(
+                                                      src.uploadedDateTime,
+                                                  )
+                                                : '--/--/---'}
                                         </div>
 
                                         {props.showCancelImageButton && (

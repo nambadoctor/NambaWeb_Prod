@@ -95,3 +95,8 @@ export const dateToDateString = (uploadedDateTime: any) => {
     let date = new Date(uploadedDateTime).toLocaleDateString();
     return date;
 };
+
+export const getYearForDate = (uploadedDateTime: any) => {
+    let year = new Date(uploadedDateTime).getFullYear()
+    return year;
+};

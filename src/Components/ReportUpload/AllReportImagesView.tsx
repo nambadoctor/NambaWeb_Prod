@@ -133,9 +133,11 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                             />
 
                                             <div>
-                                                {src.uploadedDateTime && dateToDateString(
-                                                    src.uploadedDateTime,
-                                                )}
+                                                {src.uploadedDateTime
+                                                    ? dateToDateString(
+                                                          src.uploadedDateTime,
+                                                      )
+                                                    : '--/--/---'}
                                             </div>
 
                                             {props.showCancelImageButton && (

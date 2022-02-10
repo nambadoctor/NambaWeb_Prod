@@ -37,6 +37,25 @@ export default function ConsultationView() {
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
+                        Prescriptions
+                    </h3>
+                    <PrescriptionUploadPicker
+                        handlePhotoCallBack={UploadPrescriptionForConsultation}
+                        uploadButtonColor="white"
+                    />
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    <PrescriptionImageView />
+                    <AllPrescriptionImagesView
+                        showUploadButton={false}
+                        showCancelImageButton={false}
+                    />
+                </div>
+            </Row>
+
+            <Row style={{ margin: 20 }}>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
                         Reports
                     </h3>
                     <ReportUploadPicker
@@ -53,24 +72,6 @@ export default function ConsultationView() {
                 </div>
             </Row>
 
-            <Row style={{ margin: 20 }}>
-                <div className="blue_filled_rounded_box_top">
-                    <h3 className="blue_filled_rounded_box_top_title_item">
-                        Prescriptions
-                    </h3>
-                    <PrescriptionUploadPicker
-                        handlePhotoCallBack={UploadPrescriptionForConsultation}
-                        uploadButtonColor="white"
-                    />
-                </div>
-                <div className="blue_border_rounded_white_box">
-                    <PrescriptionImageView />
-                    <AllPrescriptionImagesView
-                        showUploadButton={false}
-                        showCancelImageButton={false}
-                    />
-                </div>
-            </Row>
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
