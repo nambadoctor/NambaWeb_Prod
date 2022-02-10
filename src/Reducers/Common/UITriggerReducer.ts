@@ -6,7 +6,8 @@ export enum UITrigger_Types {
   SET_ORG_PICKER_MODAL_TOGGLE = "SET_ORG_PICKER_MODAL_TOGGLE",
   SET_SHOW_LINEAR_LOADING_BAR_TOGGLE = "SET_SHOW_LINEAR_LOADING_BAR_TOGGLE",
   SET_FATAL_ERROR = "SET_FATAL_ERROR",
-  SET_NON_FATAL_ERROR = "SET_NON_FATAL_ERROR"
+  SET_NON_FATAL_ERROR = "SET_NON_FATAL_ERROR",
+  SET_IS_VIEWING_IMAGE = "SET_IS_VIEWING_IMAGE"
 }
 
 export interface UITriggerState {
@@ -14,13 +15,15 @@ export interface UITriggerState {
   showLinearLoadingBarToggle: boolean,
   FatalError: { toggle: boolean, message: string | null }
   NonFatalError: { toggle: boolean, message: string | null }
+  isViewingImage: boolean
 }
 
 const initialState: UITriggerState = {
   showOrgPickerModalToggle: false,
   showLinearLoadingBarToggle: false,
   FatalError: { toggle: false, message: null },
-  NonFatalError: { toggle: false, message: null }
+  NonFatalError: { toggle: false, message: null },
+  isViewingImage: false
 }
 
 export const uiTriggerReducer = (state: UITriggerState = initialState, action: Action): UITriggerState => {
@@ -49,6 +52,11 @@ export const uiTriggerReducer = (state: UITriggerState = initialState, action: A
       return {
         ...state,
         NonFatalError: action.payload
+      }
+    case UITrigger_Types.SET_IS_VIEWING_IMAGE:
+      return {
+        ...state,
+        isViewingImage: action.payload
       }
     default:
       SetTrackTrace("UI Trigger Reducer Hits default switch: Returns original state", "UiTriggerReducer", SeverityLevel.Error)

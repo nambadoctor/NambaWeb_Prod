@@ -82,7 +82,6 @@ export default function PrescriptionImageView() {
                                 style={{
                                     display: 'inline-block',
                                     position: 'relative',
-                                    width: 100,
                                     marginTop: 10,
                                     marginRight: 20,
                                 }}
@@ -121,22 +120,7 @@ export default function PrescriptionImageView() {
             </div>
         );
     }
-
-    function noPrescriptionsDisplay() {
-        return (
-            <div
-                style={{
-                    margin: 20,
-                    marginTop: 50,
-                    marginBottom: 50,
-                    textAlign: 'center',
-                }}
-            >
-                No prescriptions yet. Upload image or Take Photo.
-            </div>
-        );
-    }
-
+    
     return (
         <div>
             {currentCustomerPrescriptions &&

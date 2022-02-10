@@ -1,5 +1,5 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import GetFirebaseIdToken from '../../Auth/FirebaseUserInfoHelper';
+import { GetFirebaseIdToken } from '../../Auth/FirebaseUserInfoHelper';
 import SetTrackTrace from '../../Telemetry/SetTrackTrace';
 
 async function GetAuthHeader(): Promise<{

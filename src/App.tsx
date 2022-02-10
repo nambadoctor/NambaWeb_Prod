@@ -1,24 +1,31 @@
-import "./App.css";
-import { AuthContext } from "../src/Auth/Context/AuthContext";
-import { useContext } from "react";
-import Dashboard from "./Components/Dashboard/Dashboard";
-import "./index.css";
-import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
-import { reactPlugin } from "../src/Telemetry/AppInsights";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import IndexPage from "./Components/Index/Index";
+import './App.css';
+import { AuthContext } from '../src/Auth/Context/AuthContext';
+import { useContext } from 'react';
+import Dashboard from './Components/Dashboard/Dashboard';
+import './index.css';
+import { AppInsightsContext } from '@microsoft/applicationinsights-react-js';
+import { reactPlugin } from '../src/Telemetry/AppInsights';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import IndexPage from './Components/Index/Index';
+import MobileDashboard from './mobile/MobileDashboard';
 
 toast.configure();
 
 function App() {
-  const user = useContext(AuthContext);
+    const user = useContext(AuthContext);
 
-  return (
-    <AppInsightsContext.Provider value={reactPlugin}>
-      {!user ? <IndexPage /> : user !== "loading" && <Dashboard />}
-    </AppInsightsContext.Provider>
-  );
+    return (
+        <AppInsightsContext.Provider value={reactPlugin}>
+            {(user && user !== "loading") ? <MobileOrDesktopViewDecider /> : <IndexPage />}
+        </AppInsightsContext.Provider>
+    );
+}
+
+function MobileOrDesktopViewDecider() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    return <div>{isMobile ? <MobileDashboard /> : <Dashboard />}</div>;
 }
 
 export default App;

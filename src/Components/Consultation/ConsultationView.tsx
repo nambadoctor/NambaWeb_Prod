@@ -35,46 +35,43 @@ export default function ConsultationView() {
         <div>
             <ConsultationHeader />
             <Row style={{ margin: 20 }}>
-                <Col md="6">
-                    <div className="blue_filled_rounded_box_top">
-                        <h3 className="blue_filled_rounded_box_top_title_item">
-                            Reports
-                        </h3>
-                        <ReportUploadPicker
-                            handlePhotoCallBack={UploadReportForConsultation}
-                            uploadButtonColor="white"
-                        />
-                    </div>
-                    <div className="blue_border_rounded_white_box">
-                        <ReportImageView />
-                        <AllReportImagesView
-                            showUploadButton={false}
-                            showCancelImageButton={false}
-                        />
-                    </div>
-                </Col>
-
-                <Col md="6">
-                    <div className="blue_filled_rounded_box_top">
-                        <h3 className="blue_filled_rounded_box_top_title_item">
-                            Prescriptions
-                        </h3>
-                        <PrescriptionUploadPicker
-                            handlePhotoCallBack={
-                                UploadPrescriptionForConsultation
-                            }
-                            uploadButtonColor="white"
-                        />
-                    </div>
-                    <div className="blue_border_rounded_white_box">
-                        <PrescriptionImageView />
-                        <AllPrescriptionImagesView
-                            showUploadButton={false}
-                            showCancelImageButton={false}
-                        />
-                    </div>
-                </Col>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
+                        Prescriptions
+                    </h3>
+                    <PrescriptionUploadPicker
+                        handlePhotoCallBack={UploadPrescriptionForConsultation}
+                        uploadButtonColor="white"
+                    />
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    <PrescriptionImageView />
+                    <AllPrescriptionImagesView
+                        showUploadButton={false}
+                        showCancelImageButton={false}
+                    />
+                </div>
             </Row>
+
+            <Row style={{ margin: 20 }}>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
+                        Reports
+                    </h3>
+                    <ReportUploadPicker
+                        handlePhotoCallBack={UploadReportForConsultation}
+                        uploadButtonColor="white"
+                    />
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    <ReportImageView />
+                    <AllReportImagesView
+                        showUploadButton={false}
+                        showCancelImageButton={false}
+                    />
+                </div>
+            </Row>
+
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">

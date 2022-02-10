@@ -1,11 +1,12 @@
 import { ChangeEvent, useState } from "react";
 import { useDispatch } from "react-redux";
-import { SignInWithPhoneNumberHelper } from "../../ServiceActions/LoginActions";
+import useAuthHook from "../../ServiceActions/LoginActions";
 import "../../Styles/login.css";
 
 export default function LoginPage() {
   
   const dispatch = useDispatch();
+  const {SignInWithPhoneNumberHelper} = useAuthHook();
   const [phoneNumber, setPhoneNumber] = useState("");
 
   const onPhoneNumberChange = (event: ChangeEvent<HTMLInputElement>) => {

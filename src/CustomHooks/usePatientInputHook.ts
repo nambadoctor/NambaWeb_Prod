@@ -34,14 +34,16 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             name: "",
             age: "",
             gender: "",
-            dateForAppointment: new Date()
+            dateForAppointment: new Date(),
+            dateOfBirth: new Date()
         },
         validationSchema: Yup.object({
             phonenumber: Yup.string().required().length(10),
             name: Yup.string().required(),
             age: Yup.number().positive().integer(),
             gender: Yup.string(),
-            dateForAppointment: Yup.date().nullable()
+            dateForAppointment: Yup.date().nullable(),
+            dateOfBirth: Yup.date().nullable()
         }),
         onSubmit: (values) => {
             if (isForPatientAndAppointment) {
@@ -77,9 +79,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
 
         CustomerRequestObj.dateOfBirth = {
             dateOfBirthId: "",
-            day: 0,
-            month: 0,
-            year: 0,
+            date: formik.values.dateOfBirth,
             age: formik.values.age,
             createdDate: new Date()
         } as IDateOfBirthData
@@ -98,8 +98,16 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         if (customer) {
             customer.phoneNumbers && formik.setFieldValue("phonenumber", customer.phoneNumbers[0].number);
             customer.firstName ? formik.setFieldValue("name", (customer.firstName ?? "") + " " + (customer.lastName ?? "")) : formik.setFieldValue("name", "");
-            customer.dateOfBirth ? formik.setFieldValue("age", customer.dateOfBirth.age) : formik.setFieldValue("age", "");
             customer.gender ? formik.setFieldValue("gender", customer.gender) : formik.setFieldValue("gender", "");
+
+            if (customer.dateOfBirth) {
+                formik.setFieldValue("age", customer.dateOfBirth.age)
+                formik.setFieldValue("dateOfBirth", new Date(customer.dateOfBirth.date))
+            } else {
+                formik.setFieldValue("age", "")
+                formik.setFieldValue("dateOfBirth", new Date())
+            }
+
             setGender(customer.gender);
         } else {
             formik.resetForm()
