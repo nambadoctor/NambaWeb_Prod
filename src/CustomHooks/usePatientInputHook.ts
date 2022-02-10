@@ -79,9 +79,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
 
         CustomerRequestObj.dateOfBirth = {
             dateOfBirthId: "",
-            day: 0,
-            month: 0,
-            year: 0,
+            date: formik.values.dateOfBirth,
             age: formik.values.age,
             createdDate: new Date()
         } as IDateOfBirthData
@@ -103,14 +101,11 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             customer.gender ? formik.setFieldValue("gender", customer.gender) : formik.setFieldValue("gender", "");
 
             if (customer.dateOfBirth) {
-                if (customer.dateOfBirth) {
-                    formik.setFieldValue("age", customer.dateOfBirth.age)
-
-                    formik.setFieldValue("dateOfBirth", new Date(customer.dateOfBirth.year, customer.dateOfBirth.month, customer.dateOfBirth.day))
-                } else {
-                    formik.setFieldValue("age", "")
-                    formik.setFieldValue("dateOfBirth", new Date())
-                }
+                formik.setFieldValue("age", customer.dateOfBirth.age)
+                formik.setFieldValue("dateOfBirth", new Date(customer.dateOfBirth.date))
+            } else {
+                formik.setFieldValue("age", "")
+                formik.setFieldValue("dateOfBirth", new Date())
             }
 
             setGender(customer.gender);

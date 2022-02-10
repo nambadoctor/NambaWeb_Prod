@@ -95,6 +95,18 @@ export default function AddPatientView() {
             />
 
             <Row className="align-items-center">
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                        disabled={addPatientState.isInvalidNumber}
+                        renderInput={(props) => <TextField {...props} />}
+                        label="Date Of Birth"
+                        value={formik.values.dateOfBirth}
+                        onChange={(newValue) => {
+                            formik.setFieldValue('dateOfBirth', newValue);
+                        }}
+                    />
+                </LocalizationProvider> */}
+
                 <Col>
                     <TextField
                         fullWidth

@@ -22,9 +22,7 @@ export default function makeEmptyValueCustomerSetRequestData() {
         } as IPhoneNumberData],
         dateOfBirth: {
             dateOfBirthId: "",
-            day: 0,
-            month: 0,
-            year: 0,
+            date: new Date(),
             age: "",
             createdDate: new Date()
         } as IDateOfBirthData

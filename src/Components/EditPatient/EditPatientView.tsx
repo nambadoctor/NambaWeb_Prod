@@ -2,6 +2,9 @@ import { CircularProgress, TextField } from '@mui/material';
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
 import CustomButton from '../CustomButton';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DateTimePicker from '@mui/lab/DateTimePicker';
 
 export default function EditPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
@@ -69,6 +72,18 @@ export default function EditPatientView() {
             />
 
             <Row className="align-items-center">
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                        disabled={addPatientState.isInvalidNumber}
+                        renderInput={(props) => <TextField {...props} />}
+                        label="Date Of Birth"
+                        value={formik.values.dateOfBirth}
+                        onChange={(newValue) => {
+                            formik.setFieldValue('dateOfBirth', newValue);
+                        }}
+                    />
+                </LocalizationProvider> */}
+
                 <Col>
                     <TextField
                         fullWidth

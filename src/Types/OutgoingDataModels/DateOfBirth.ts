@@ -1,8 +1,6 @@
 export default interface IDateOfBirthData {
     dateOfBirthId:string,
-    day:number,
-    month:number,
-    year:number,
+    date: Date,
     age:string,
     createdDate:Date
 }
