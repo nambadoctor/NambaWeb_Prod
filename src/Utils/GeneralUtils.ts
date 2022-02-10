@@ -90,3 +90,8 @@ export async function ConvertInputToFileOrBase64(input: any) {
         return input;
     }
 }
+
+export const dateToDateString = (uploadedDateTime: any) => {
+    let date = new Date(uploadedDateTime).toLocaleDateString();
+    return date;
+};

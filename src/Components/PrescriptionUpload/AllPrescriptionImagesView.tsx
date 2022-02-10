@@ -14,6 +14,7 @@ import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
 import { AllImageDisplayProps } from '../../Helpers/CommonProps';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
+import { dateToDateString } from '../../Utils/GeneralUtils';
 
 export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     props,
@@ -126,6 +127,13 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                             key={index}
                                             style={{ width: 100, height: 100 }}
                                         />
+
+                                        <div>
+                                            {src.uploadedDateTime &&
+                                                dateToDateString(
+                                                    src.uploadedDateTime,
+                                                )}
+                                        </div>
 
                                         {props.showCancelImageButton && (
                                             <div
