@@ -34,7 +34,6 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
       let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
   
       if (response) {
-  
         dispatch(SetLinearLoadingBarToggle(false))
         toast.success("Prescription Image Uploaded")
       }

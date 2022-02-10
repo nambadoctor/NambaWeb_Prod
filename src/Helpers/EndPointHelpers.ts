@@ -6,6 +6,10 @@ export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisatio
     return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
 
+export function GetServiceProviderTreatmentsInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
+    return "treatmentplan/treatment/all/" + organisationId + "/" + serviceProviderId;
+}
+
 export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }

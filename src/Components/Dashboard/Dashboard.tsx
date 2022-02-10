@@ -21,13 +21,14 @@ import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import MobileDashboard from '../../mobile/MobileDashboard';
+import Treatments from '../Treatments/Treatments';
 
 function Dashboard() {
     const dispatch = useDispatch();
     const serviceProviderBasicState = useSelector(
         (state: RootState) => state.ServiceProviderBasicState,
     );
-    
+
     const isViewingImage = useSelector(
         (state: RootState) => state.UITriggerState.isViewingImage,
     );
@@ -59,6 +60,10 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
+                            <h5> Treatments </h5>
+                            <Treatments></Treatments>
+                            <div style={{ marginBottom: 20 }}></div>
+                            
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -108,7 +113,7 @@ function Dashboard() {
                             path="/Consultation/:id"
                             element={<ConsultationView></ConsultationView>}
                         />
-                    </Routes> 
+                    </Routes>
                 </div>
             </div>
         );

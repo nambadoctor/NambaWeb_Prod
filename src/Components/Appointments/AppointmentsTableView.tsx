@@ -65,7 +65,7 @@ export default function AppointmentsTable() {
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
     );
 
-    const showAppointmentReports = createSelector(
+    const showAppointments = createSelector(
         (state: RootState) => state.AppointmentState.appointments,
         (appointments) =>
             appointments.filter((appointment) =>
@@ -76,7 +76,7 @@ export default function AppointmentsTable() {
             ),
     );
 
-    const appointments = useSelector(showAppointmentReports);
+    const appointments = useSelector(showAppointments);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
