@@ -15,11 +15,11 @@ import NoAppointmentsView from '../Components/Appointments/NoAppointmentsView';
 import TablePaginationActions from '../Components/Pagination/PaginationActions';
 import usePaginationHook from '../CustomHooks/usePaginationHook';
 import { createSelector } from 'reselect';
-import { UploadReportForConsultation } from '../ServiceActions/ReportActions';
-import { UploadPrescriptionForConsultation } from '../ServiceActions/PrescriptionActions';
 import { MobileReportUploadPicker } from './MobileReportUploadPicker';
 import { MobilePrescriptionUploadPicker } from './MobilePrescriptionUploadPicker';
 import { SetSelectedAppointmentForConsultation } from '../Actions/ConsultationActions';
+import { UploadReportForConsultation } from './ServiceActions/ReportActions';
+import { UploadPrescriptionForConsultation } from './ServiceActions/PrescriptionActions';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     table: {

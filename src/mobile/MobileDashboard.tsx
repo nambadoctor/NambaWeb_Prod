@@ -64,7 +64,7 @@ function MobileDashboard() {
         return (
             <div style={{ overflowX: 'hidden' }}>
                 <MobileNavBar />
-                <div style={{ marginTop: 110 }}>
+                <div style={{ marginTop: 50 }}>
                     <Routes>
                         <Route
                             path="/Appointments"
