@@ -119,7 +119,7 @@ export default function ReportImageView() {
             </div>
         );
     }
-    
+
     return (
         <div>
             {currentCustomerReportsImages &&

@@ -32,6 +32,8 @@ export const NullifyFatalError = (): Action => (setErrorPayload(false, null, UIT
 
 export const NullifyNonFatalError = (): Action => (setErrorPayload(false, null, UITrigger_Types.SET_NON_FATAL_ERROR));
 
+export const SetIsViewingImage = (isViewingImage: boolean): Action => (setBooleanPayload(isViewingImage, UITrigger_Types.SET_IS_VIEWING_IMAGE));
+
 
 export const SetNonFatalError = (errorMessage: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     dispatch(SetLinearLoadingBarToggle(false))

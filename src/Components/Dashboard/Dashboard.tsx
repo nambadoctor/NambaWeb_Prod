@@ -27,6 +27,10 @@ function Dashboard() {
     const serviceProviderBasicState = useSelector(
         (state: RootState) => state.ServiceProviderBasicState,
     );
+    
+    const isViewingImage = useSelector(
+        (state: RootState) => state.UITriggerState.isViewingImage,
+    );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
     useEffect(() => {
@@ -88,7 +92,7 @@ function Dashboard() {
     function MainDashboardView() {
         return (
             <div>
-                <Topbar />
+                {!isViewingImage && <Topbar />}
                 <div style={{ marginTop: 110 }}>
                     <Routes>
                         <Route
