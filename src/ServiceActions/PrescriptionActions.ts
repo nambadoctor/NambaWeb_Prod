@@ -11,6 +11,7 @@ import { IPrescriptionUploadData } from "../Types/OutgoingDataModels/Prescriptio
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { toast } from "react-toastify";
 import { SetPrescriptions } from "../Actions/CurrentCustomerActions";
+import { EndAppointment } from "./AppointmentActions";
 
 export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -52,6 +53,10 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
       dispatch(GetPrescriptions());
 
       dispatch(SetLinearLoadingBarToggle(false))
+
+      //TODO: Temp fix to indicate prescriptions have been uploaded
+      dispatch(EndAppointment(currentConsultationAppointment!))
+
       toast.success("Prescription Image Uploaded")
     }
   } catch (error) {

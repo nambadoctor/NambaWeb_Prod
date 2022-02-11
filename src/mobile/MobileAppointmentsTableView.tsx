@@ -20,6 +20,7 @@ import { MobilePrescriptionUploadPicker } from './MobilePrescriptionUploadPicker
 import { SetSelectedAppointmentForConsultation } from '../Actions/ConsultationActions';
 import { UploadReportForConsultation } from './ServiceActions/ReportActions';
 import { UploadPrescriptionForConsultation } from './ServiceActions/PrescriptionActions';
+import CheckIcon from '@mui/icons-material/Check';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     table: {
@@ -56,7 +57,7 @@ export default function MobileAppointmentsTableView() {
     const classes = useAppointmentTableStyles();
     const dispatch = useDispatch();
 
-    const dates = useSelector(
+    const dates = useSelector (
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
     );
 
@@ -94,6 +95,7 @@ export default function MobileAppointmentsTableView() {
                     onClick={getAppointment}
                 >
                     <TableCell align="left" style={{ wordBreak: 'break-word' }}>
+                        {appointment.status === "Finished" && <CheckIcon color="info"></CheckIcon>}
                         {appointment.customerName}
                     </TableCell>
                     <TableCell align="left">
