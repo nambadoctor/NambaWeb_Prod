@@ -15,15 +15,12 @@ import { ConvertInputToFileOrBase64 } from "../../Utils/GeneralUtils";
 
 export const UploadReportForConsultation =
     (
-        file: any,
-        appointment?: IAppointmentData,
+        file: any
     ): ThunkAction<void, RootState, null, Action> =>
         async (dispatch, getState) => {
             dispatch(SetLinearLoadingBarToggle(true));
 
-            let currentConsultationAppointment = appointment
-                ? appointment
-                : getState().ConsultationState.Appointment;
+            let currentConsultationAppointment = getState().ConsultationState.Appointment;
 
             var reportRequest = {
                 AppointmentId: currentConsultationAppointment!.appointmentId,
