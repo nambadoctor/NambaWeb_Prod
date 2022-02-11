@@ -17,7 +17,11 @@ function App() {
 
     return (
         <AppInsightsContext.Provider value={reactPlugin}>
-            {(user && user !== "loading") ? <MobileOrDesktopViewDecider /> : <IndexPage />}
+            {user ? (
+                user !== 'loading' && <MobileOrDesktopViewDecider />
+            ) : (
+                <IndexPage />
+            )}
         </AppInsightsContext.Provider>
     );
 }
