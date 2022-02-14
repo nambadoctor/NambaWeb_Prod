@@ -25,12 +25,18 @@ function getAppVerifier() {
 }
 
 export const SignInWithPhoneNumberHelper = async (phoneNumber: string) => {
-    await signInWithPhoneNumber(getAuth(), phoneNumber, getAppVerifier()).then(
-        function (confirmationResult) {
+    try {
+        await signInWithPhoneNumber(
+            getAuth(),
+            phoneNumber,
+            getAppVerifier(),
+        ).then(function (confirmationResult) {
             confirmationR = confirmationResult;
-        },
-    );
-    return confirmationR?.verificationId;
+        });
+        return confirmationR?.verificationId;
+    } catch (error: any) {
+        return 'error';
+    }
 };
 
 export const VerifyOtp = (otp: string) => {
