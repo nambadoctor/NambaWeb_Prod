@@ -4,9 +4,9 @@ import { UserCredential } from '@firebase/auth';
 
 export default function useOtpPageHook() {
     const [otp, setOtp] = useState('');
-    const [credential, setCredential] = useState<
-        UserCredential | null | 'wrong otp'
-    >(null);
+    const [credential, setCredential] = useState<UserCredential | any | null>(
+        null,
+    );
 
     const onOtpChange = (event: ChangeEvent<HTMLInputElement>) => {
         let value = event.target.value;
@@ -15,8 +15,7 @@ export default function useOtpPageHook() {
 
     const verifyOtp = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        let userCredential = await VerifyOtp(otp);
-        setCredential(userCredential);
+        await VerifyOtp(otp).then((result: any) => setCredential(result));
     };
 
     return { otp, credential, onOtpChange, verifyOtp };

@@ -8,7 +8,7 @@ import {
 import { clearAuthToken } from '../Auth/FirebaseUserInfoHelper';
 
 let confirmationR: ConfirmationResult | null = null;
-let userCredential: UserCredential | null | 'wrong otp' = null;
+let userCredential: UserCredential | any | null = null;
 
 function getAppVerifier() {
     return new RecaptchaVerifier(
@@ -39,12 +39,16 @@ export const SignInWithPhoneNumberHelper = async (phoneNumber: string) => {
     }
 };
 
-export const VerifyOtp = (otp: string) => {
-    confirmationR &&
-        confirmationR.confirm(otp).then((result) => {
-            userCredential = result !== null ? result : 'wrong otp';
-        });
-    return userCredential;
+export const VerifyOtp = async (otp: string) => {
+    try {
+        confirmationR &&
+            (await confirmationR.confirm(otp).then((result) => {
+                userCredential = result;
+            }));
+        return userCredential;
+    } catch (error: any) {
+        return 'error';
+    }
 };
 
 export function SignOut() {
