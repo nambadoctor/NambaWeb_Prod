@@ -7,8 +7,8 @@ import { AppInsightsContext } from '@microsoft/applicationinsights-react-js';
 import { reactPlugin } from '../src/Telemetry/AppInsights';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import IndexPage from './Components/Index/Index';
 import MobileDashboard from './mobile/MobileDashboard';
+import { PhoneNumberLogin } from './Components/PhoneNumberAuth/PhoneNumberLogin';
 
 toast.configure();
 
@@ -20,7 +20,7 @@ function App() {
             {user ? (
                 user !== 'loading' && <MobileOrDesktopViewDecider />
             ) : (
-                <IndexPage />
+                <PhoneNumberLogin />
             )}
         </AppInsightsContext.Provider>
     );
