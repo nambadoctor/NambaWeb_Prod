@@ -5,6 +5,7 @@ import useGeoLocation from "../../CustomHooks/useGeoLocation";
 import Otp from "./OTP.js";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch } from "react-redux";
+import "../../Styles/otpstyles.css"
 
 import {
   SetCodeAction,
@@ -33,33 +34,22 @@ export const PhoneNumberLogin: React.FC = () => {
   return (
     <div>
       <Paper style={{ padding: 20, width: 300 }}>
-        {/* <h3
+        <h3
           style={{
-            color: "#9f9f9f",
+            color: "#076bf7",
             marginTop: 7,
             marginBottom: 0,
             fontSize: 25,
           }}
         >
-          N E U P L A T F O R M
+          N A M B A D O C T O R
         </h3>
         <Divider
           variant="middle"
-          style={{ marginBottom: 10, marginTop: 10, backgroundColor: "black" }}
+          style={{ marginBottom: 40, marginTop: 10, backgroundColor: "#076bf7"}}
         />
-        <h5
-          style={{
-            color: "black",
-            letterSpacing: 2,
-            marginTop: 0,
-            fontSize: 12,
-            marginBottom: 60,
-          }}
-        >
-          Real People | Anonymous Chat
-        </h5> */}
 
-        {!otpShow ? <h3>Enter your Phone Number</h3> : <h3>Enter the OTP</h3>}
+        {!otpShow ? <h5 style={{marginBottom: 20}}>Enter your Phone Number</h5> : <h5 style={{marginBottom: 20}}>Enter the OTP</h5>}
         <div>
           {!otpShow ? (
             <div

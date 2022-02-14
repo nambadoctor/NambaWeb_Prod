@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MobileDashboard from './mobile/MobileDashboard';
 import { PhoneNumberLogin } from './Components/PhoneNumberAuth/PhoneNumberLogin';
+import styles from '../src/Styles/loginstyles.module.scss';
 
 toast.configure();
 
@@ -20,7 +21,9 @@ function App() {
             {user ? (
                 user !== 'loading' && <MobileOrDesktopViewDecider />
             ) : (
-                <PhoneNumberLogin />
+                <div className={styles.container}>
+                    <PhoneNumberLogin />
+                </div>
             )}
         </AppInsightsContext.Provider>
     );

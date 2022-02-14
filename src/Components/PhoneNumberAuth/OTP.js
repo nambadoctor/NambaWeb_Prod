@@ -41,7 +41,7 @@ export default function OtpEntry() {
         value={otp.slice(0, 1)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
@@ -49,8 +49,7 @@ export default function OtpEntry() {
           textAlign: "center",
           marginRight: 5,
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (isNumeric(event.target.value)) {
@@ -74,7 +73,7 @@ export default function OtpEntry() {
         value={otp.slice(1, 2)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
@@ -82,8 +81,7 @@ export default function OtpEntry() {
           textAlign: "center",
           marginRight: 5,
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (isNumeric(event.target.value)) {
@@ -108,7 +106,7 @@ export default function OtpEntry() {
         value={otp.slice(2, 3)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
@@ -116,8 +114,7 @@ export default function OtpEntry() {
           textAlign: "center",
           marginRight: 5,
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (isNumeric(event.target.value)) {
@@ -142,7 +139,7 @@ export default function OtpEntry() {
         value={otp.slice(3, 4)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
@@ -150,8 +147,7 @@ export default function OtpEntry() {
           textAlign: "center",
           marginRight: 5,
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (isNumeric(event.target.value)) {
@@ -176,7 +172,7 @@ export default function OtpEntry() {
         value={otp.slice(4, 5)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
@@ -184,8 +180,7 @@ export default function OtpEntry() {
           textAlign: "center",
           marginRight: 5,
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (isNumeric(event.target.value)) {
@@ -210,15 +205,14 @@ export default function OtpEntry() {
         value={otp.slice(5)}
         style={{
           fontSize: 24,
-          width: 15,
+          width: 35,
           height: 40,
           display: "flex",
           alignItems: "center",
           justifySelf: "center",
           textAlign: "center",
           borderRadius: 5,
-          fontSize: 20,
-          fontWeight: "bold"
+          fontSize: 20
         }}
         onChange={(event) => {
           if (
