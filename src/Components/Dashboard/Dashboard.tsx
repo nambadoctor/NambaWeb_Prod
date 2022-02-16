@@ -20,8 +20,7 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
-import MobileDashboard from '../../mobile/MobileDashboard';
-import Treatments from '../Treatments/Treatments';
+import TreatmentsTable from '../Treatments/TreatmentsTable';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -31,6 +30,10 @@ function Dashboard() {
 
     const isViewingImage = useSelector(
         (state: RootState) => state.UITriggerState.isViewingImage,
+    );
+
+    const treatmentsExistForPatient = useSelector(
+        (state: RootState) => (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
     );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
@@ -60,10 +63,13 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            <h5> Treatments </h5>
-                            <Treatments></Treatments>
-                            <div style={{ marginBottom: 20 }}></div>
-                            
+                            {treatmentsExistForPatient && (
+                                <div>
+                                    <h5> Treatments </h5>
+                                    <TreatmentsTable></TreatmentsTable>
+                                    <div style={{ marginBottom: 20 }}></div>
+                                </div>
+                            )}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>

@@ -7,7 +7,23 @@ export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisatio
 }
 
 export function GetServiceProviderTreatmentsInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
-    return "treatmentplan/treatment/all/" + organisationId + "/" + serviceProviderId;
+    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId;
+}
+
+export function AddTreatmentEndPoint(treatmentId:string) {
+    return "treatmentplan/treatment/" + treatmentId;
+}
+
+export function AddTreatmentPlanEndPoint() {
+    return "treatmentplan";
+}
+
+export function DeleteTreatmentEndPoint(treatmentId:string, treatmentPlanId:string) {
+    return "treatmentplan/treatment/" + treatmentPlanId + "/" + treatmentId;
+}
+
+export function GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(organisationId: string, serviceProviderId: string, customerId: string, isUpcoming: boolean) {
+    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId + "?CustomerId=" + customerId + "&IsUpcoming=" + isUpcoming;
 }
 
 export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
