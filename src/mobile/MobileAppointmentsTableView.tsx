@@ -94,7 +94,7 @@ export default function MobileAppointmentsTableView() {
                     key={appointment.appointmentId}
                     onClick={getAppointment}
                 >
-                    <TableCell align="left" style={{ wordBreak: 'break-word' }}>
+                    <TableCell align="left">
                         {appointment.status === 'Finished' && (
                             <CheckIcon color="info"></CheckIcon>
                         )}
@@ -105,13 +105,13 @@ export default function MobileAppointmentsTableView() {
                             handlePhotoCallBack={
                                 UploadPrescriptionForConsultation
                             }
-                            uploadButtonColor="#1672f9"
+                            uploadButtonColor="white"
                         />
                     </TableCell>
                     <TableCell align="left">
                         <MobileReportUploadPicker
                             handlePhotoCallBack={UploadReportForConsultation}
-                            uploadButtonColor="#1672f9"
+                            uploadButtonColor="white"
                         />
                     </TableCell>
                 </TableRow>
@@ -137,10 +137,10 @@ export default function MobileAppointmentsTableView() {
                             className={classes.tableHeaderCell}
                             align="left"
                         >
-                            Prescription
+                            Prescriptions
                         </TableCell>
                         <TableCell className={classes.tableHeaderCell}>
-                            Report
+                            Reports
                         </TableCell>
                     </TableRow>
                 </TableHead>
