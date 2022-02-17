@@ -21,6 +21,16 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
+    const treatment = useSelector((state: RootState) => state.TreatmentState.selectedTreatment)
+
+    useEffect(() => {
+        if (treatment) {
+            setAppointmentType("Treatment")
+        } else {
+            setAppointmentType("Consultation")
+        }
+    }, [treatment])
+
     useEffect(() => {
         mapCustomerToValues(currentCustomer)
     }, [currentCustomer])
@@ -34,14 +44,13 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         setAppointmentType((event.target as HTMLInputElement).value);
     };
 
-
     const formik = useFormik({
         initialValues: {
             phonenumber: "",
             name: "",
             age: "",
             gender: "",
-            dateForAppointment: new Date(),
+            dateForAppointment: treatment ? new Date(treatment.plannedDateTime) : new Date(),
             dateOfBirth: new Date()
         },
         validationSchema: Yup.object({
@@ -164,6 +173,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         gender,
         formik,
         appointmentType,
+        treatment,
         handleAppointmentTypeChange,
         setGender
     };

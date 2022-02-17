@@ -21,6 +21,7 @@ import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import TreatmentsTable from '../Treatments/TreatmentsTable';
+import TreatmentPlanView from '../Treatments/TreatmentPlanView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -137,6 +138,7 @@ function Dashboard() {
                 <OrganisationInitialModalPickerComponent />
                 <FullPageLoadingDisplay />
                 <CriticalAlertDisplay />
+                <TreatmentPlanView></TreatmentPlanView>
             </div>
         </>
     );

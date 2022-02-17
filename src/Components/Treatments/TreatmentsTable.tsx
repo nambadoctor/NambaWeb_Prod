@@ -6,14 +6,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { makeStyles } from '@mui/styles';
-import usePaginationHook from '../../CustomHooks/usePaginationHook';
-import { useState } from 'react';
 import { RootState } from '../../store';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
 import { Row, Col } from 'react-bootstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
+import { useState } from 'react';
+import { SetSelectedTreatment } from '../../Actions/TreatmentActions';
 
 const usePatientTableStyles = makeStyles(() => ({
     table: {
@@ -57,18 +57,25 @@ const usePatientTableStyles = makeStyles(() => ({
 
 export default function TreatmentsTable() {
     const classes = usePatientTableStyles();
+    const dispatch = useDispatch();
+
+    const [selectedID, setSelectedID] = useState('');
 
     const treatments = useSelector(
         (state: RootState) => state.CurrentCustomerState.Treatments,
     );
+
+    function SelectTreatment(treatment: ITreatmentIncoming) {
+        setSelectedID(treatment.treatmentId);
+        dispatch(SetSelectedTreatment(treatment));
+    }
 
     function makeCustomerListDisplay() {
         return treatments!.map(
             (treatment: ITreatmentIncoming, index: number) => (
                 <TableRow
                     key={treatment.treatmentId}
-                    onClick={() => {}}
-                    // selected={selectedID === customer.customerId}
+                    selected={selectedID === treatment.treatmentId}
                 >
                     <TableCell align="left">
                         {treatment.treatmentPlanName}
@@ -83,7 +90,9 @@ export default function TreatmentsTable() {
                                 <VisibilityIcon></VisibilityIcon>
                             </Col>
                             <Col>
-                                <MoreTimeIcon></MoreTimeIcon>
+                                <div onClick={() => SelectTreatment(treatment)}>
+                                    <MoreTimeIcon></MoreTimeIcon>
+                                </div>
                             </Col>
                         </Row>
                     </TableCell>

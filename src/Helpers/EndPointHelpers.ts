@@ -10,6 +10,10 @@ export function GetServiceProviderTreatmentsInOrganisationEndPoint(organisationI
     return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId;
 }
 
+export function GetServiceProviderTreatmentPlansInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
+    return "treatmentplan/" + organisationId + "/" + serviceProviderId;
+}
+
 export function AddTreatmentEndPoint(treatmentId:string) {
     return "treatmentplan/treatment/" + treatmentId;
 }

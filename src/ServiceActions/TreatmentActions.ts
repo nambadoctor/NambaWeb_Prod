@@ -3,12 +3,14 @@ import { toast } from "react-toastify";
 import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetPatientTreatments } from "../Actions/CurrentCustomerActions";
-import { AddTreatmentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
+import { SetTreatmentPlans } from "../Actions/TreatmentActions";
+import { AddTreatmentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType";
 import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
+import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
 import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
 import { ITreatmentPlanOutgoing } from "../Types/OutgoingDataModels/TreatmentPlanOutgoing";
 
@@ -31,6 +33,28 @@ export const GetAllTreatments = (): ThunkAction<void, RootState, null, Action> =
 
     } catch (error) {
         dispatch(SetFatalError("Could not retrieve treatments!"))
+    }
+};
+
+export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    SetTrackTrace("Enter Get All Treatment plans Action", "GetAllTreatmentPlans", SeverityLevel.Information);
+    const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
+
+    if (currentServiceProvider) {
+        SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Information);
+    } else {
+        SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Error);
+    }
+
+    try {
+        //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+        let response = await getCall({} as Array<ITreatmentPlanIncoming>, GetServiceProviderTreatmentPlansInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId), "GetAllTreatmentPlans");
+
+        SetTrackTrace("Dispatch Set All Treatment plans" + response.data, "GetAllTreatmentPlans", SeverityLevel.Information);
+        dispatch(SetTreatmentPlans(response.data));
+
+    } catch (error) {
+        dispatch(SetFatalError("Could not retrieve treatment plans!"))
     }
 };
 

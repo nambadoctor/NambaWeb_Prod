@@ -8,7 +8,7 @@ import IOrganisationBasic from '../../Types/IncomingDataModels/OrganisationBasic
 
 export default function OrganisationInitialModalPickerComponent() {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch();  
 
     const uiTriggerState = useSelector((state: RootState) => state.UITriggerState);
     const orgState = useSelector((state: RootState) => state.OrgState);
