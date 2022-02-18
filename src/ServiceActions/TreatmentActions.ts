@@ -193,6 +193,10 @@ export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkA
         //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
         let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer.customerId, isUpcomingTreatment ?? false), "GetAllTreatments");
 
+        if (response) {
+            dispatch(GetAllTreatmentPlans())
+        }
+        
         SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
         dispatch(SetPatientTreatments(response.data));
 

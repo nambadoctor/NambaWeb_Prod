@@ -10,7 +10,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ITreatmentOutgoing } from '../../Types/OutgoingDataModels/TreatmentOutgoing';
 import { useDispatch } from 'react-redux';
-import { AddTreatment } from '../../ServiceActions/TreatmentActions';
+import { AddTreatment, DeleteTreatment } from '../../ServiceActions/TreatmentActions';
+import ClearIcon from '@mui/icons-material/Clear';
 
 interface TreatmentPlanRowProps {
     treatment: ITreatmentIncoming;
@@ -44,25 +45,27 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
                 status: props.treatment.status,
                 originalInstructions: props.treatment.originalInstructions,
                 actualProcedure: values.instructions,
-                plannedDateTime: values.plannedDate
-            } as ITreatmentOutgoing
+                plannedDateTime: values.plannedDate,
+            } as ITreatmentOutgoing;
 
-            dispatch(AddTreatment(outGoingTreatment, props.treatment.treatmentPlanId));
-            setEditToggle(false)
+            dispatch(
+                AddTreatment(
+                    outGoingTreatment,
+                    props.treatment.treatmentPlanId,
+                ),
+            );
+            setEditToggle(false);
         },
     });
 
     useEffect(() => {
-        mapOriginalValues()
+        mapOriginalValues();
     }, []);
 
-    function mapOriginalValues () {
-        setEditToggle(false)
+    function mapOriginalValues() {
+        setEditToggle(false);
         formik.setFieldValue('name', props.treatment.name);
-        formik.setFieldValue(
-            'instructions',
-            props.treatment.actualProcedure,
-        );
+        formik.setFieldValue('instructions', props.treatment.actualProcedure);
         formik.setFieldValue(
             'plannedDate',
             new Date(props.treatment.plannedDateTime),
@@ -139,8 +142,13 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
                         <div onClick={() => mapOriginalValues()}>cancel</div>
                     </div>
                 ) : (
-                    <div onClick={() => setEditToggle(true)}>
-                        <ModeIcon></ModeIcon>
+                    <div>
+                        <div onClick={() => setEditToggle(true)}>
+                            <ModeIcon></ModeIcon>
+                        </div>
+                        <div onClick={() => dispatch(DeleteTreatment(props.treatment))}>
+                            <ClearIcon></ClearIcon>
+                        </div>
                     </div>
                 )}
             </TableCell>
