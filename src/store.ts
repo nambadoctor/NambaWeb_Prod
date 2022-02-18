@@ -14,6 +14,7 @@ import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
 import { CurrentCustomerReducer } from "./Reducers/CurrentCustomerReducer";
 import { treatmentsReducer } from "./Reducers/TreatmentsReducers";
 
+
 const rootReducer = combineReducers({
     OrgState: orgReducer,
     ServiceProviderBasicState: serviceProviderBasicReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     ConsultationState: ConsultationReducer,
     CurrentCustomerState: CurrentCustomerReducer,
     LoadedState: LoadedStatesReducer,
-    TreatmentState: treatmentsReducer
+  TreatmentState: treatmentsReducer
+
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

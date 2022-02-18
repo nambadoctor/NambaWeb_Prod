@@ -6,13 +6,11 @@ import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from 'react-redux';
 import { ClearContext } from '../Actions/ClearContextAction';
-import useAuthHook from '../ServiceActions/LoginActions';
+import { SignOut } from '../ServiceActions/LoginActions';
 
 export default function MobileNavBar() {
     const logo = require('../Assets/NDLogo.png');
     const dispatch = useDispatch();
-
-    const {SignOut} = useAuthHook();
 
     function switchTabs() {
         dispatch(ClearContext());

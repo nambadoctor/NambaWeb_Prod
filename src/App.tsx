@@ -7,8 +7,9 @@ import { AppInsightsContext } from '@microsoft/applicationinsights-react-js';
 import { reactPlugin } from '../src/Telemetry/AppInsights';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import IndexPage from './Components/Index/Index';
 import MobileDashboard from './mobile/MobileDashboard';
+import { PhoneNumberLogin } from './Components/PhoneNumberAuth/PhoneNumberLogin';
+import styles from '../src/Styles/loginstyles.module.scss';
 
 toast.configure();
 
@@ -17,7 +18,13 @@ function App() {
 
     return (
         <AppInsightsContext.Provider value={reactPlugin}>
-            {(user && user !== "loading") ? <MobileOrDesktopViewDecider /> : <IndexPage />}
+            {user ? (
+                user !== 'loading' && <MobileOrDesktopViewDecider />
+            ) : (
+                <div className={styles.container}>
+                    <PhoneNumberLogin />
+                </div>
+            )}
         </AppInsightsContext.Provider>
     );
 }
