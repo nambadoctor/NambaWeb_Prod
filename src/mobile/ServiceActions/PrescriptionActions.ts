@@ -13,33 +13,34 @@ import { Action } from "../../Types/ActionType";
 import { IPrescriptionUploadData } from "../../Types/OutgoingDataModels/PrescriptionUpload";
 import { ConvertInputToFileOrBase64 } from "../../Utils/GeneralUtils";
 
-export const UploadPrescriptionForConsultation = (prescription: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadPrescriptionForConsultation = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
-  dispatch(SetLinearLoadingBarToggle(true))
+    dispatch(SetLinearLoadingBarToggle(true))
+  
+    let currentConsultationAppointment = getState().ConsultationState.Appointment
+  
+    var prescriptionRequest = {
+      AppointmentId: currentConsultationAppointment!.appointmentId,
+      ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
+      File: await ConvertInputToFileOrBase64(prescription),
+      FileName: prescription.name,
+      FileType: prescription.type,
+      Details: "",
+      DetailsType: ""
+    } as IPrescriptionUploadData
+  
+    SetTrackTrace("Enter Upload Prescription Action", "UploadPrescription", SeverityLevel.Information)
+  
+    try {
+      let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
+  
+      if (response) {
+        dispatch(SetLinearLoadingBarToggle(false))
+        toast.success("Prescription Image Uploaded")
+      }
+    } catch (error) {
+      dispatch(SetNonFatalError("Could not upload prescription image"))
 
-  let currentConsultationAppointment = getState().ConsultationState.Appointment
-
-  var prescriptionRequest = {
-    AppointmentId: currentConsultationAppointment!.appointmentId,
-    ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-    File: await ConvertInputToFileOrBase64(prescription),
-    FileName: '',
-    FileType: '',
-    Details: '',
-    DetailsType: ""
-  } as IPrescriptionUploadData
-
-  SetTrackTrace("Enter Upload Prescription Action", "UploadPrescription", SeverityLevel.Information)
-
-  try {
-    let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
-
-    if (response) {
-
-      dispatch(SetLinearLoadingBarToggle(false))
-
-      dispatch(EndAppointment(currentConsultationAppointment!))
-      toast.success("Prescription Image Uploaded")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not upload prescription image"))

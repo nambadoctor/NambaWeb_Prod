@@ -19,6 +19,7 @@ import { GetNotes } from "./NoteActions";
 import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
 import { ClearContext } from "../Actions/ClearContextAction";
+import { GetAllTreatmentsForPatient } from "./TreatmentActions";
 
 
 export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -52,6 +53,7 @@ export const CheckIfCustomerExists = (phoneNumber: string, organisationId: strin
         if (response.data) {
             dispatch(SetCustomerExists())
             dispatch(SetCurrentCustomer(response.data))
+            dispatch(GetCustomerData())
         } else {
             dispatch(ClearAddPatientState())
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
@@ -172,9 +174,7 @@ export const GetCustomer = (customerId: string): ThunkAction<void, RootState, nu
                 dispatch(SetCurrentCustomer(response.data))
 
                 //Get Notes, Reports, and Prescriptions for customer
-                dispatch(GetReports())
-                dispatch(GetPrescriptions())
-                dispatch(GetNotes())
+                dispatch(GetCustomerData())
             } else {
                 dispatch(SetNonFatalError("Could not find this customer"));
             }
@@ -184,3 +184,11 @@ export const GetCustomer = (customerId: string): ThunkAction<void, RootState, nu
             );
         }
     };
+
+
+export const GetCustomerData = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(GetReports())
+    dispatch(GetPrescriptions())
+    dispatch(GetNotes())
+    dispatch(GetAllTreatmentsForPatient(true))
+}
