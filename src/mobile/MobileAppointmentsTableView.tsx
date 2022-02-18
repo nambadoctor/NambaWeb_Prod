@@ -20,7 +20,6 @@ import { MobilePrescriptionUploadPicker } from './MobilePrescriptionUploadPicker
 import { SetSelectedAppointmentForConsultation } from '../Actions/ConsultationActions';
 import { UploadReportForConsultation } from './ServiceActions/ReportActions';
 import { UploadPrescriptionForConsultation } from './ServiceActions/PrescriptionActions';
-import CheckIcon from '@mui/icons-material/Check';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     table: {
@@ -94,24 +93,21 @@ export default function MobileAppointmentsTableView() {
                     key={appointment.appointmentId}
                     onClick={getAppointment}
                 >
-                    <TableCell align="left">
-                        {appointment.status === 'Finished' && (
-                            <CheckIcon color="info"></CheckIcon>
-                        )}
+                    <TableCell align="left" style={{ wordBreak: 'break-word' }}>
                         {appointment.customerName}
+                    </TableCell>
+                    <TableCell align="left">
+                        <MobileReportUploadPicker
+                            handlePhotoCallBack={UploadReportForConsultation}
+                            uploadButtonColor="#1672f9"
+                        />
                     </TableCell>
                     <TableCell align="left">
                         <MobilePrescriptionUploadPicker
                             handlePhotoCallBack={
                                 UploadPrescriptionForConsultation
                             }
-                            uploadButtonColor="white"
-                        />
-                    </TableCell>
-                    <TableCell align="left">
-                        <MobileReportUploadPicker
-                            handlePhotoCallBack={UploadReportForConsultation}
-                            uploadButtonColor="white"
+                            uploadButtonColor="#1672f9"
                         />
                     </TableCell>
                 </TableRow>
@@ -133,14 +129,14 @@ export default function MobileAppointmentsTableView() {
                         >
                             Name
                         </TableCell>
+                        <TableCell className={classes.tableHeaderCell}>
+                            Report
+                        </TableCell>
                         <TableCell
                             className={classes.tableHeaderCell}
                             align="left"
                         >
-                            Prescriptions
-                        </TableCell>
-                        <TableCell className={classes.tableHeaderCell}>
-                            Reports
+                            Prescription
                         </TableCell>
                     </TableRow>
                 </TableHead>

@@ -38,10 +38,6 @@ export function CancelAppointmentEndPoint () {
     return "appointment/cancel"
 }
 
-export function EndAppointmentEndPoint () {
-    return "appointment/end"
-}
-
 export function SetNewAppointmentEndPoint () {
     return "appointment"
 }

@@ -5,7 +5,6 @@ import { ThunkAction } from "redux-thunk";
 import { SetLinearLoadingBarToggle, SetNonFatalError } from "../../Actions/Common/UIControlActions";
 import { SetCustomerPrescriptionEndPoint } from "../../Helpers/EndPointHelpers";
 import { postCall } from "../../Http/http-helpers";
-import { EndAppointment } from "../../ServiceActions/AppointmentActions";
 import { GetPrescriptions } from "../../ServiceActions/PrescriptionActions";
 import { RootState } from "../../store";
 import SetTrackTrace from "../../Telemetry/SetTrackTrace";
@@ -40,9 +39,6 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
       }
     } catch (error) {
       dispatch(SetNonFatalError("Could not upload prescription image"))
-
     }
-  } catch (error) {
-    dispatch(SetNonFatalError("Could not upload prescription image"))
-  }
-};
+  };
+  
