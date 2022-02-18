@@ -190,5 +190,5 @@ export const GetCustomerData = (): ThunkAction<void, RootState, null, Action> =>
     dispatch(GetReports())
     dispatch(GetPrescriptions())
     dispatch(GetNotes())
-    dispatch(GetAllTreatmentsForPatient())
+    dispatch(GetAllTreatmentsForPatient(true))
 }

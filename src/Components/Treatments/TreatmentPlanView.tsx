@@ -41,9 +41,11 @@ export default function TreatmentPlanView() {
 
     const treatmentPlans = useSelector(treatmentPlanQuery);
 
+    const showTreatmentPopup = useSelector((state:RootState) => state.TreatmentState.showTreatmentPlanPopup)
+
     return (
         <div>
-            {treatmentPlans.length > 0 && (
+            {(showTreatmentPopup && treatmentPlans.length) && (
                 <Modal
                     show={true}
                     size="lg"

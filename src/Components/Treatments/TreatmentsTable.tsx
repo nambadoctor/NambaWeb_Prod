@@ -13,7 +13,7 @@ import { Row, Col } from 'react-bootstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import { useState } from 'react';
-import { SetSelectedTreatment } from '../../Actions/TreatmentActions';
+import { SetSelectedTreatment, SetTreatmentPlanPopup } from '../../Actions/TreatmentActions';
 
 const usePatientTableStyles = makeStyles(() => ({
     table: {
@@ -87,7 +87,12 @@ export default function TreatmentsTable() {
                     <TableCell align="left">
                         <Row>
                             <Col>
-                                <VisibilityIcon></VisibilityIcon>
+                                <div onClick={() => {
+                                    SelectTreatment(treatment)
+                                    dispatch(SetTreatmentPlanPopup(true))
+                                }}>
+                                    <VisibilityIcon></VisibilityIcon>
+                                </div>
                             </Col>
                             <Col>
                                 <div onClick={() => SelectTreatment(treatment)}>

@@ -143,6 +143,8 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             appointmentType: appointmentType,
             addressId: "",
             status: "",
+            treatmentId: treatment ? treatment.treatmentId : "",
+            treatmentPlanId: treatment ? treatment.treatmentPlanId : "",
             scheduledAppointmentStartTime: formik.values.dateForAppointment,
             scheduledAppointmentEndTime: new Date(),
             actualAppointmentStartTime: new Date(),

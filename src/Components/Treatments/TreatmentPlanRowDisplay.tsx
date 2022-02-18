@@ -8,6 +8,9 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { ITreatmentOutgoing } from '../../Types/OutgoingDataModels/TreatmentOutgoing';
+import { useDispatch } from 'react-redux';
+import { AddTreatment } from '../../ServiceActions/TreatmentActions';
 
 interface TreatmentPlanRowProps {
     treatment: ITreatmentIncoming;
@@ -18,6 +21,8 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
 ) => {
     const [selectedID, setselectedID] = useState('');
     const [editToggle, setEditToggle] = useState(false);
+
+    const dispatch = useDispatch();
 
     const formik = useFormik({
         initialValues: {
@@ -30,7 +35,21 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
             instructions: Yup.string().required(),
             plannedDate: Yup.date().required(),
         }),
-        onSubmit: (values) => {},
+        onSubmit: (values) => {
+            const outGoingTreatment = {
+                treatmentId: props.treatment.treatmentId,
+                appointmentId: props.treatment.appointmentId,
+                name: values.name,
+                serviceRequestId: props.treatment.serviceRequestId,
+                status: props.treatment.status,
+                originalInstructions: props.treatment.originalInstructions,
+                actualProcedure: values.instructions,
+                plannedDateTime: values.plannedDate
+            } as ITreatmentOutgoing
+
+            dispatch(AddTreatment(outGoingTreatment, props.treatment.treatmentPlanId));
+            setEditToggle(false)
+        },
     });
 
     useEffect(() => {
@@ -42,7 +61,7 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
         formik.setFieldValue('name', props.treatment.name);
         formik.setFieldValue(
             'instructions',
-            props.treatment.originalInstructions,
+            props.treatment.actualProcedure,
         );
         formik.setFieldValue(
             'plannedDate',
@@ -116,7 +135,7 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
             <TableCell align="left">
                 {editToggle ? (
                     <div>
-                        <div onClick={() => setEditToggle(false)}>done</div>
+                        <div onClick={() => formik.handleSubmit()}>done</div>
                         <div onClick={() => mapOriginalValues()}>cancel</div>
                     </div>
                 ) : (

@@ -6,5 +6,5 @@ export interface ITreatmentOutgoing {
     status: string
     originalInstructions: string,
     actualProcedure: string,
-    plannedDateTime: string
+    plannedDateTime: Date
 }

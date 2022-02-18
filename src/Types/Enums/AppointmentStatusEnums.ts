@@ -1,8 +1,5 @@
-enum AppointmentStatusEnum {
-    Confirmed = "Confirmed",
-    StartedConsultation = "StartedConsultation",
-    Cancelled = "Cancelled",
-    Finished = "Finished",
+enum AppointmentTypeEnum {
+    Consultation = "Consultation",
+    Treatment = "Treatment"
 }
-
-export default AppointmentStatusEnum;
+export default AppointmentTypeEnum;

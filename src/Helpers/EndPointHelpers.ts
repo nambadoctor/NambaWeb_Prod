@@ -14,8 +14,8 @@ export function GetServiceProviderTreatmentPlansInOrganisationEndPoint(organisat
     return "treatmentplan/" + organisationId + "/" + serviceProviderId;
 }
 
-export function AddTreatmentEndPoint(treatmentId:string) {
-    return "treatmentplan/treatment/" + treatmentId;
+export function AddTreatmentEndPoint(treatmentPlanId:string) {
+    return "treatmentplan/treatment/" + treatmentPlanId;
 }
 
 export function AddTreatmentPlanEndPoint() {
@@ -40,6 +40,10 @@ export function CancelAppointmentEndPoint () {
 
 export function SetNewAppointmentEndPoint () {
     return "appointment"
+}
+
+export function SetNewAppointmentWithTreatmentEndPoint () {
+    return "appointment/treatment"
 }
 
 export function SetCustomerWithAppointmentEndPoint () {

@@ -11,3 +11,8 @@ export const SetTreatmentPlans = (treatments: ITreatmentIncoming[]): Action => (
     type: Treatment_Types.SET_TREATMENT_PLANS,
     payload: treatments
 });
+
+export const SetTreatmentPlanPopup = (showPopup: boolean): Action => ({
+    type: Treatment_Types.SHOW_TREATMENT_PLAN_POPUP,
+    payload: showPopup
+});

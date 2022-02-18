@@ -14,7 +14,7 @@ import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPla
 import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
 import { ITreatmentPlanOutgoing } from "../Types/OutgoingDataModels/TreatmentPlanOutgoing";
 
-export const GetAllTreatments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const GetAllTreatments = (onlyShowUpcoming: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
@@ -40,6 +40,8 @@ export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Actio
     SetTrackTrace("Enter Get All Treatment plans Action", "GetAllTreatmentPlans", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
+    dispatch(SetLinearLoadingBarToggle(true));
+
     if (currentServiceProvider) {
         SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Information);
     } else {
@@ -53,14 +55,19 @@ export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Actio
         SetTrackTrace("Dispatch Set All Treatment plans" + response.data, "GetAllTreatmentPlans", SeverityLevel.Information);
         dispatch(SetTreatmentPlans(response.data));
 
+        dispatch(SetLinearLoadingBarToggle(false));
+
     } catch (error) {
-        dispatch(SetFatalError("Could not retrieve treatment plans!"))
+        dispatch(SetFatalError("Could not retrieve treatment plans!"));
+        dispatch(SetLinearLoadingBarToggle(false));
     }
 };
 
-export const AddTreatment = (treatment: ITreatmentOutgoing): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const AddTreatment = (treatment: ITreatmentOutgoing, treatmentPlanId: string): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Add Treatment Action", "AddTreatment", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
+
+    dispatch(SetLinearLoadingBarToggle(true));
 
     if (currentServiceProvider) {
         SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "AddTreatment", SeverityLevel.Information);
@@ -74,20 +81,35 @@ export const AddTreatment = (treatment: ITreatmentOutgoing): ThunkAction<void, R
         if (treatment.treatmentId) {
             let response = await putCall(
                 {} as Array<ITreatmentIncoming>,
-                AddTreatmentEndPoint(treatment.treatmentId),
+                AddTreatmentEndPoint(treatmentPlanId),
                 treatment,
                 'UpdateTreatment',
-            );
+            )
+
+            if (response) {
+                dispatch(GetAllTreatmentPlans())
+            }
         } else {
             let response = await postCall(
                 {} as Array<ITreatmentIncoming>,
-                AddTreatmentEndPoint(treatment.treatmentId),
+                AddTreatmentEndPoint(treatmentPlanId),
                 treatment,
                 'AddTreatment',
             );
+
+            if (response) {
+                dispatch(GetAllTreatmentPlans())
+            }
         }
+
+        dispatch(SetLinearLoadingBarToggle(false));
     } catch (error) {
-        dispatch(SetFatalError("Could not AddTreatment!"))
+        if (treatment.treatmentId) {
+            dispatch(SetNonFatalError("Could not Update Treatment!"))
+        } else {
+            dispatch(SetNonFatalError("Could not Add Treatment!"))
+        }
+        
     }
 };
 
@@ -145,7 +167,7 @@ export const DeleteTreatment =
                 );
 
                 if (response) {
-                    dispatch(GetAllTreatmentsForPatient());
+                    dispatch(GetAllTreatmentsForPatient(true));
 
                     dispatch(SetLinearLoadingBarToggle(false));
                     toast.success('Treatment Deleted');
@@ -156,7 +178,7 @@ export const DeleteTreatment =
         };
 
 
-export const GetAllTreatmentsForPatient = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
     const currentCustomer = getState().CurrentCustomerState.Customer!
@@ -169,7 +191,7 @@ export const GetAllTreatmentsForPatient = (): ThunkAction<void, RootState, null,
 
     try {
         //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-        let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer.customerId, false), "GetAllTreatments");
+        let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer.customerId, isUpcomingTreatment ?? false), "GetAllTreatments");
 
         SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
         dispatch(SetPatientTreatments(response.data));
