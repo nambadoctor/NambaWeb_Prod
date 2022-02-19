@@ -6,30 +6,6 @@ export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisatio
     return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
 
-export function GetServiceProviderTreatmentsInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
-    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId;
-}
-
-export function GetServiceProviderTreatmentPlansInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
-    return "treatmentplan/" + organisationId + "/" + serviceProviderId;
-}
-
-export function AddTreatmentEndPoint(treatmentPlanId:string) {
-    return "treatmentplan/treatment/" + treatmentPlanId;
-}
-
-export function AddTreatmentPlanEndPoint() {
-    return "treatmentplan";
-}
-
-export function DeleteTreatmentEndPoint(treatmentId:string, treatmentPlanId:string) {
-    return "treatmentplan/treatment/" + treatmentPlanId + "/" + treatmentId;
-}
-
-export function GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(organisationId: string, serviceProviderId: string, customerId: string, isUpcoming: boolean) {
-    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId + "?CustomerId=" + customerId + "&IsUpcoming=" + isUpcoming;
-}
-
 export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
@@ -44,10 +20,6 @@ export function EndAppointmentEndPoint () {
 
 export function SetNewAppointmentEndPoint () {
     return "appointment"
-}
-
-export function SetNewAppointmentWithTreatmentEndPoint () {
-    return "appointment/treatment"
 }
 
 export function SetCustomerWithAppointmentEndPoint () {

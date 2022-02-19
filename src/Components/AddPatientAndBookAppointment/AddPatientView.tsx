@@ -3,28 +3,13 @@ import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
+
 import CustomButton from '../CustomButton';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import BookingForTreatmentView from '../Treatments/BookingForTreatmentView';
 
 export default function AddPatientView() {
-    const {
-        addPatientState,
-        genderOptions,
-        gender,
-        formik,
-        appointmentType,
-        treatment,
-        handleAppointmentTypeChange,
-        setGender,
-    } = usePatientInputHook(true);
+    const { addPatientState, genderOptions, gender, formik, setGender } =
+        usePatientInputHook(true);
 
     return (
         <div>
@@ -60,6 +45,9 @@ export default function AddPatientView() {
                 ) : (
                     <div />
                 )}
+
+                {/* Indicator to display once customer exists check is complete
+                {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
             </div>
 
             {addPatientState.isCustomerExists ? (
@@ -107,6 +95,18 @@ export default function AddPatientView() {
             />
 
             <Row className="align-items-center">
+                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
+                    <DateTimePicker
+                        disabled={addPatientState.isInvalidNumber}
+                        renderInput={(props) => <TextField {...props} />}
+                        label="Date Of Birth"
+                        value={formik.values.dateOfBirth}
+                        onChange={(newValue) => {
+                            formik.setFieldValue('dateOfBirth', newValue);
+                        }}
+                    />
+                </LocalizationProvider> */}
+
                 <Col>
                     <TextField
                         fullWidth
@@ -171,32 +171,6 @@ export default function AddPatientView() {
                     />
                 </LocalizationProvider>
             </Row>
-
-            <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">
-                    Appointment Type
-                </FormLabel>
-                <RadioGroup
-                    row
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    name="controlled-radio-buttons-group"
-                    value={appointmentType}
-                    onChange={handleAppointmentTypeChange}
-                >
-                    <FormControlLabel
-                        value="Consultation"
-                        control={<Radio />}
-                        label="Consultation"
-                    />
-                    <FormControlLabel
-                        value="Treatment"
-                        control={<Radio />}
-                        label="Treatment"
-                    />
-                </RadioGroup>
-            </FormControl>
-
-            {treatment && <BookingForTreatmentView></BookingForTreatmentView>}
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
                 <div
