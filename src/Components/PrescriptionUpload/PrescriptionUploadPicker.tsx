@@ -1,6 +1,3 @@
-import { ChangeEvent, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { UploadPrescriptionForConsultation } from '../../ServiceActions/PrescriptionActions';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -17,7 +14,7 @@ export const PrescriptionUploadPicker: React.FC<ImageUploadProps> = (props) => {
         <div >
             <input
                 type="file"
-                accept="image/*"
+                accept="image/*,application/pdf"
                 style={{ display: 'none' }}
                 id="prescription_upload_picker"
                 onChange={handleChange}
