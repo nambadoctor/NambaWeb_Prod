@@ -40,8 +40,6 @@ export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Actio
     SetTrackTrace("Enter Get All Treatment plans Action", "GetAllTreatmentPlans", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
 
-    dispatch(SetLinearLoadingBarToggle(true));
-
     if (currentServiceProvider) {
         SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Information);
     } else {

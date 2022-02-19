@@ -15,11 +15,12 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
+import { SetLinearLoadingBarToggle } from '../../Actions/Common/UIControlActions';
 
 export default function NewTreatmentRow() {
     const dispatch = useDispatch();
 
-    const { selectedTreatment, treatmentPlans } = useTreatmentsHook();
+    const { selectedTreatment } = useTreatmentsHook();
 
     const formik = useFormik({
         initialValues: {
@@ -44,12 +45,16 @@ export default function NewTreatmentRow() {
                 plannedDateTime: values.plannedDate,
             } as ITreatmentOutgoing;
 
+            dispatch(SetLinearLoadingBarToggle(true));
+
             dispatch(
                 AddTreatment(
                     outGoingTreatment,
                     selectedTreatment?.treatmentPlanId ?? '',
                 ),
             );
+
+            formik.resetForm();
         },
     });
 

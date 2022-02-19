@@ -15,6 +15,7 @@ import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationAc
 import { GetNextAndPreviousAppointmentForConsultation, SetAppointments } from "../Actions/AppointmentsActions";
 import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
 import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
+import { GetAllTreatmentsForPatient } from "./TreatmentActions";
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -55,6 +56,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     if (response) {
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
+      dispatch(GetAllTreatmentsForPatient(true))
       toast.success("Appointment Set Successfully")
     }
   } catch (error) {
