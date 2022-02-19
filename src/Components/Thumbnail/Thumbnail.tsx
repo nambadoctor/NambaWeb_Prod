@@ -32,11 +32,11 @@ export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
                 display: 'inline-block',
                 position: 'relative',
                 marginTop: 10,
-                marginRight: 20,
+                marginRight: 20
             }}
         >
             {props.src.fileType === 'application/pdf' ? (
-                <Row style={{ marginLeft: 10 }}>
+                <Row style={{ marginLeft: 10 }} onClick={() => window.open(props.src.sasUrl)}>
                     <Row>
                         <img
                             alt="reportPdf"
@@ -54,9 +54,11 @@ export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
                     <Row>
                         <div
                             style={{
-                                width: 60,
+                                width: 50,
                                 fontSize: 10,
+                                textDecorationLine: "underline"
                             }}
+                            onClick={() => window.open(props.src.sasUrl)}
                         >
                             {props.src.fileType === 'application/pdf' && (
                                 <div>{props.src.fileName}</div>
