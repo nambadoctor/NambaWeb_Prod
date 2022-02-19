@@ -28,7 +28,7 @@ export const GetPrescriptions = (): ThunkAction<void, RootState, null, Action> =
   }
 }
 
-export const UploadPrescriptionForConsultation = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadPrescriptionForConsultation = (prescription: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -38,8 +38,8 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
     AppointmentId: currentConsultationAppointment!.appointmentId,
     ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
     File: await ConvertInputToFileOrBase64(prescription),
-    FileName: prescription.name,
-    FileType: prescription.type,
+    FileName: '',
+    FileType: '',
     Details: "",
     DetailsType: ""
   } as IPrescriptionUploadData
