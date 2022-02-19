@@ -90,11 +90,8 @@ export default function MobileAppointmentsTableView() {
                 dispatch(SetSelectedAppointmentForConsultation(appointment));
             };
             return (
-                <TableRow
-                    key={appointment.appointmentId}
-                    onClick={getAppointment}
-                >
-                    <TableCell align="left">
+                <TableRow key={appointment.appointmentId}>
+                    <TableCell align="left" onClick={getAppointment}>
                         {appointment.status === 'Finished' && (
                             <CheckIcon color="info"></CheckIcon>
                         )}

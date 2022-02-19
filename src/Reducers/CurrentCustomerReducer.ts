@@ -3,12 +3,14 @@ import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming"
 import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
+import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
 
 export enum CurrentCustomer_Types {
     SET_CUSTOMER = "SET_CUSTOMER",
     SET_REPORTS = "SET_REPORTS",
     SET_PRESCRIPTIONS = "SET_PRESCRIPTIONS",
     SET_NOTES = "SET_NOTES",
+    SET_TREATMENTS = "SET_TREATMENTS",
     CLEAR_ALL = "CLEAR_ALL"
 }
 
@@ -16,14 +18,16 @@ export interface CurrentCustomerState {
     Customer: ICustomerIncomingData | null,
     Reports: IReportIncomingData[] | null,
     Prescriptions: IPrescriptionIncomingData[] | null,
-    Notes: INoteIncomingData[] | null
+    Notes: INoteIncomingData[] | null,
+    Treatments: ITreatmentIncoming[] | null
 }
 
 const initialState: CurrentCustomerState = {
     Customer: null,
     Reports: null,
     Prescriptions: null,
-    Notes: null
+    Notes: null,
+    Treatments: null
 }
 
 export const CurrentCustomerReducer = (state: CurrentCustomerState = initialState, action: Action): CurrentCustomerState => {
@@ -48,12 +52,18 @@ export const CurrentCustomerReducer = (state: CurrentCustomerState = initialStat
                 ...state,
                 Notes: action.payload
             }
+        case CurrentCustomer_Types.SET_TREATMENTS:
+            return {
+                ...state,
+                Treatments: action.payload
+            }
         case CurrentCustomer_Types.CLEAR_ALL:
             return {
                 Customer: null,
                 Reports: null,
                 Prescriptions: null,
-                Notes: null
+                Notes: null,
+                Treatments: null
             }
         default:
             return state
