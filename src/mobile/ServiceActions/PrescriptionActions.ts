@@ -13,7 +13,7 @@ import { Action } from "../../Types/ActionType";
 import { IPrescriptionUploadData } from "../../Types/OutgoingDataModels/PrescriptionUpload";
 import { ConvertInputToFileOrBase64 } from "../../Utils/GeneralUtils";
 
-export const UploadPrescriptionForConsultation = (prescription: File): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+export const UploadPrescriptionForConsultation = (prescription: any): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
   dispatch(SetLinearLoadingBarToggle(true))
 
@@ -23,9 +23,9 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
     AppointmentId: currentConsultationAppointment!.appointmentId,
     ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
     File: await ConvertInputToFileOrBase64(prescription),
-    FileName: prescription.name,
-    FileType: prescription.type,
-    Details: "",
+    FileName: '',
+    FileType: '',
+    Details: '',
     DetailsType: ""
   } as IPrescriptionUploadData
 
@@ -35,7 +35,10 @@ export const UploadPrescriptionForConsultation = (prescription: File): ThunkActi
     let response = await postCall({} as any, SetCustomerPrescriptionEndPoint(), prescriptionRequest, "UploadPrescription")
 
     if (response) {
+
       dispatch(SetLinearLoadingBarToggle(false))
+
+      dispatch(EndAppointment(currentConsultationAppointment!))
       toast.success("Prescription Image Uploaded")
     }
   } catch (error) {

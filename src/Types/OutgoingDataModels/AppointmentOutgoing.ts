@@ -7,8 +7,6 @@ export default interface IAppointmentOutgoing {
     appointmentType:string,
     addressId:string,
     status:string,
-    treatmentId:string,
-    treatmentPlanId:string,
     scheduledAppointmentStartTime:Date|null,
     scheduledAppointmentEndTime:Date|null,
     actualAppointmentStartTime:Date|null,

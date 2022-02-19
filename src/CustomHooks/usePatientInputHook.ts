@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { ClearCurrentCustomerState, SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
+import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetAppointment } from "../ServiceActions/AppointmentActions";
@@ -21,16 +21,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
-    const treatment = useSelector((state: RootState) => state.TreatmentState.selectedTreatment)
-
-    useEffect(() => {
-        if (treatment) {
-            setAppointmentType("Treatment")
-        } else {
-            setAppointmentType("Consultation")
-        }
-    }, [treatment])
-
     useEffect(() => {
         mapCustomerToValues(currentCustomer)
     }, [currentCustomer])
@@ -38,19 +28,13 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const [gender, setGender] = useState("")
     const genderOptions = ["Male", "Female", "Other"]
 
-    const [appointmentType, setAppointmentType] = useState("Consultation")
-
-    const handleAppointmentTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAppointmentType((event.target as HTMLInputElement).value);
-    };
-
     const formik = useFormik({
         initialValues: {
             phonenumber: "",
             name: "",
             age: "",
             gender: "",
-            dateForAppointment: treatment ? new Date(treatment.plannedDateTime) : new Date(),
+            dateForAppointment: new Date(),
             dateOfBirth: new Date()
         },
         validationSchema: Yup.object({
@@ -59,7 +43,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             age: Yup.number().positive().integer(),
             gender: Yup.string(),
             dateForAppointment: Yup.date().nullable(),
-            dateOfBirth: Yup.date().nullable(),
+            dateOfBirth: Yup.date().nullable()
         }),
         onSubmit: (values) => {
             if (isForPatientAndAppointment) {
@@ -78,7 +62,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         } else {
             dispatch(SetCurrentCustomer(null))
             dispatch(ClearAddPatientState())
-            dispatch(ClearCurrentCustomerState())
         }
     }, [formik.values.phonenumber])
 
@@ -140,11 +123,9 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentCustomer?.customerId ?? "",
-            appointmentType: appointmentType,
+            appointmentType: "InPerson",
             addressId: "",
             status: "",
-            treatmentId: treatment ? treatment.treatmentId : "",
-            treatmentPlanId: treatment ? treatment.treatmentPlanId : "",
             scheduledAppointmentStartTime: formik.values.dateForAppointment,
             scheduledAppointmentEndTime: new Date(),
             actualAppointmentStartTime: new Date(),
@@ -174,9 +155,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         genderOptions,
         gender,
         formik,
-        appointmentType,
-        treatment,
-        handleAppointmentTypeChange,
         setGender
     };
 }

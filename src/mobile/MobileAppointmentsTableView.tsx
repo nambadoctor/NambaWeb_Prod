@@ -86,12 +86,9 @@ export default function MobileAppointmentsTableView() {
                   )
                 : appointments
         ).map((appointment: IAppointmentData, index: number) => {
-            const getAppointment = () => {
-                dispatch(SetSelectedAppointmentForConsultation(appointment));
-            };
             return (
                 <TableRow key={appointment.appointmentId}>
-                    <TableCell align="left" onClick={getAppointment}>
+                    <TableCell align="left">
                         {appointment.status === 'Finished' && (
                             <CheckIcon color="info"></CheckIcon>
                         )}
@@ -103,12 +100,14 @@ export default function MobileAppointmentsTableView() {
                                 UploadPrescriptionForConsultation
                             }
                             uploadButtonColor="white"
+                            appointment={appointment}
                         />
                     </TableCell>
                     <TableCell align="left">
                         <MobileReportUploadPicker
                             handlePhotoCallBack={UploadReportForConsultation}
                             uploadButtonColor="white"
+                            appointment={appointment}
                         />
                     </TableCell>
                 </TableRow>

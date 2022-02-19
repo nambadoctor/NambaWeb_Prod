@@ -20,21 +20,16 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
-import TreatmentsTable from '../Treatments/TreatmentsTable';
-import TreatmentPlanView from '../Treatments/TreatmentPlanView';
+import MobileDashboard from '../../mobile/MobileDashboard';
 
 function Dashboard() {
     const dispatch = useDispatch();
     const serviceProviderBasicState = useSelector(
         (state: RootState) => state.ServiceProviderBasicState,
     );
-
+    
     const isViewingImage = useSelector(
         (state: RootState) => state.UITriggerState.isViewingImage,
-    );
-
-    const treatmentsExistForPatient = useSelector(
-        (state: RootState) => (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
     );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
@@ -64,13 +59,6 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            {treatmentsExistForPatient && (
-                                <div>
-                                    <h5> Treatments </h5>
-                                    <TreatmentsTable></TreatmentsTable>
-                                    <div style={{ marginBottom: 20 }}></div>
-                                </div>
-                            )}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -120,7 +108,7 @@ function Dashboard() {
                             path="/Consultation/:id"
                             element={<ConsultationView></ConsultationView>}
                         />
-                    </Routes>
+                    </Routes> 
                 </div>
             </div>
         );
@@ -138,7 +126,6 @@ function Dashboard() {
                 <OrganisationInitialModalPickerComponent />
                 <FullPageLoadingDisplay />
                 <CriticalAlertDisplay />
-                <TreatmentPlanView></TreatmentPlanView>
             </div>
         </>
     );
