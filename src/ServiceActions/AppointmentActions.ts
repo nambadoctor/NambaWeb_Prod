@@ -2,7 +2,7 @@ import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
-import { CancelAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint, SetNewAppointmentWithTreatmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, EndAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint, SetNewAppointmentWithTreatmentEndPoint } from "../Helpers/EndPointHelpers";
 
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
