@@ -12,6 +12,7 @@ import {
 } from '../../Utils/GeneralUtils';
 import { makeStyles } from '@mui/styles';
 import { Box, TableFooter, TablePagination, Typography } from '@mui/material';
+import AppointmentStatusEnum from '../../Types/Enums/AppointmentStatusEnums';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import IAppointmentData from '../../Types/IncomingDataModels/Appointment';
@@ -23,7 +24,6 @@ import { CancelAppointment } from '../../ServiceActions/AppointmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { ClearContext } from '../../Actions/ClearContextAction';
-import AppointmentTypeEnum from '../../Types/Enums/AppointmentStatusEnums';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     table: {
@@ -65,7 +65,7 @@ export default function AppointmentsTable() {
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
     );
 
-    const showAppointments = createSelector(
+    const showAppointmentReports = createSelector(
         (state: RootState) => state.AppointmentState.appointments,
         (appointments) =>
             appointments.filter((appointment) =>
@@ -76,7 +76,7 @@ export default function AppointmentsTable() {
             ),
     );
 
-    const appointments = useSelector(showAppointments);
+    const appointments = useSelector(showAppointmentReports);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
@@ -101,18 +101,38 @@ export default function AppointmentsTable() {
         return convertDaysIntoNearestUnit(days);
     }
 
+    function getDisplayNameForAppointmentState(appointmentState: string) {
+        switch (appointmentState) {
+            case AppointmentStatusEnum.Confirmed:
+                return 'Confirmed';
+            case AppointmentStatusEnum.StartedConsultation:
+                return 'Started';
+            case AppointmentStatusEnum.Finished:
+                return 'Finished';
+            case AppointmentStatusEnum.Cancelled:
+                return 'Cancelled';
+            default:
+                break;
+        }
+    }
+
     function getBackgroundColorForAppointmentState(appointmentState: string) {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
         switch (appointmentState) {
-            case AppointmentTypeEnum.Consultation:
+            case AppointmentStatusEnum.Confirmed:
                 colorCodesToReturn = ['#e5faf2', '#3bb077'];
                 break;
-            case AppointmentTypeEnum.Treatment:
+            case AppointmentStatusEnum.StartedConsultation:
                 colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
                 break;
+            case AppointmentStatusEnum.Finished:
+                colorCodesToReturn = ['#fff0f1', '#d95087'];
+                break;
+            case AppointmentStatusEnum.Cancelled:
+                colorCodesToReturn = ['', ''];
+                break;
             default:
-                colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
                 break;
         }
 
@@ -146,14 +166,14 @@ export default function AppointmentsTable() {
                         style={{
                             backgroundColor:
                                 getBackgroundColorForAppointmentState(
-                                    appointment.appointmentType,
+                                    appointment.status,
                                 )[0],
                             color: getBackgroundColorForAppointmentState(
-                                appointment.appointmentType,
+                                appointment.status,
                             )[1],
                         }}
                     >
-                        {appointment.appointmentType}
+                        {getDisplayNameForAppointmentState(appointment.status)}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
