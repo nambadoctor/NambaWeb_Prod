@@ -17,35 +17,23 @@ import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
 import ModeIcon from '@mui/icons-material/Mode';
 import { TreatmentPlanRowDisplay } from './TreatmentPlanRowDisplay';
+import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
+import NewTreatmentRow from './NewTreatmentRow';
 
 export default function TreatmentPlanView() {
     const dispatch = useDispatch();
 
     const classes = usePatientTableStyles();
 
-    const [selectedID, setselectedID] = useState('');
+    const { selectedTreatment, treatmentPlans } = useTreatmentsHook();
 
-    const selectedTreatment = useSelector(
-        (state: RootState) => state.TreatmentState.selectedTreatment,
+    const showTreatmentPopup = useSelector(
+        (state: RootState) => state.TreatmentState.showTreatmentPlanPopup,
     );
-
-    const treatmentPlanQuery = createSelector(
-        (state: RootState) => state.TreatmentState.TreatmentPlans,
-        (treatments) =>
-            treatments.filter(
-                (treatment) =>
-                    treatment.treatmentPlanId ==
-                    selectedTreatment?.treatmentPlanId,
-            ),
-    );
-
-    const treatmentPlans = useSelector(treatmentPlanQuery);
-
-    const showTreatmentPopup = useSelector((state:RootState) => state.TreatmentState.showTreatmentPlanPopup)
 
     return (
         <div>
-            {(showTreatmentPopup && treatmentPlans.length) && (
+            {showTreatmentPopup && treatmentPlans.length > 0 && (
                 <Modal
                     show={true}
                     size="lg"
@@ -102,6 +90,7 @@ export default function TreatmentPlanView() {
                                                 ></TreatmentPlanRowDisplay>
                                             ),
                                         )}
+                                    <NewTreatmentRow></NewTreatmentRow>
                                 </TableBody>
                             </Table>
                         </TableContainer>
