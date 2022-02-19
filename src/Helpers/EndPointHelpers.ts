@@ -42,6 +42,10 @@ export function SetNewAppointmentEndPoint () {
     return "appointment"
 }
 
+export function EndAppointmentEndPoint () {
+    return "appointment/end"
+}
+
 export function SetNewAppointmentWithTreatmentEndPoint () {
     return "appointment/treatment"
 }

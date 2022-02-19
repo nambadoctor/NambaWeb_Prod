@@ -2,7 +2,7 @@ import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
-import { CancelAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint, SetNewAppointmentWithTreatmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, EndAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint, SetNewAppointmentWithTreatmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -13,8 +13,6 @@ import { toast } from "react-toastify";
 import { GetCustomer } from "./CustomerActions";
 import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
 import { GetNextAndPreviousAppointmentForConsultation, SetAppointments } from "../Actions/AppointmentsActions";
-import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
-import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
 import { GetAllTreatmentsForPatient } from "./TreatmentActions";
 
 //Get all appointments for currently logged in doctor.
@@ -84,6 +82,27 @@ export const CancelAppointment = (appointment: IAppointmentData): ThunkAction<vo
     dispatch(SetNonFatalError("Could not CancelAppointment"))
   }
 };
+
+//TODO: CHANGE IAPPOINTMENTDATA TO IAPPOINTMENTOUTGOINGDATA. Need to write converter for this!
+export const EndAppointment = (appointment: IAppointmentData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+
+  dispatch(SetLinearLoadingBarToggle(true))
+
+  SetTrackTrace("Enter End Appointments Action", "EndAppointment", SeverityLevel.Information);
+
+  try {
+    //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+    let response = await putCall({} as any, EndAppointmentEndPoint(), appointment, "EndAppointment")
+
+    if (response) {
+      dispatch(SetLinearLoadingBarToggle(false))
+      dispatch(GetAllAppointments())
+    }
+  } catch (error) {
+    dispatch(SetNonFatalError("Could not EndAppointment"))
+  }
+};
+
 
 export const GetAppointment =
   (appointmentId: string): ThunkAction<void, RootState, null, Action> =>
