@@ -75,6 +75,7 @@ export default function PrescriptionImageView() {
                                 openImage={openImageViewer}
                                 showCancelImageButton={true}
                                 showUploadedTime={false}
+                                type="Prescription"
                             ></Thumbnail>
                         ))}
 

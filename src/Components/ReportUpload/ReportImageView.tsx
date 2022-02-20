@@ -83,6 +83,7 @@ export default function ReportImageView() {
                                     openImage={openImageViewer}
                                     showCancelImageButton={true}
                                     showUploadedTime={false}
+                                    type="Report"
                                 ></Thumbnail>
                             ))}
 

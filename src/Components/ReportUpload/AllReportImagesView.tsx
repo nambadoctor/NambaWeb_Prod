@@ -121,6 +121,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                                 props.showCancelImageButton
                                             }
                                             showUploadedTime={true}
+                                            type="Report"
                                         ></Thumbnail>
                                     ))}
                         </div>
