@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { DeletePrescription } from '../../ServiceActions/PrescriptionActions';
 import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
 import { dateToDateString } from '../../Utils/GeneralUtils';
+import { DeleteReport } from '../../ServiceActions/ReportActions';
 
 interface ThumbnailProps {
     src: any;
@@ -12,17 +13,22 @@ interface ThumbnailProps {
     openImage: (index: number) => void;
     showCancelImageButton: boolean;
     showUploadedTime: boolean;
+    type: string;
 }
 
 export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
     const pdfLogo = require('../../Assets/pdfImage.png');
     const dispatch = useDispatch();
 
-    function deleteFile(prescription: IPrescriptionIncomingData) {
+    function deleteFile(file: any) {
         if (
             window.confirm('Are you sure you want to delete this prescription?')
         ) {
-            dispatch(DeletePrescription(prescription));
+            if (props.type === "Prescription") {
+                dispatch(DeletePrescription(file));
+            } else if (props.type === "Report") {
+                dispatch(DeleteReport(file));
+            }
         }
     }
 

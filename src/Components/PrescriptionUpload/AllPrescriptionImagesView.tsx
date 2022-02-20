@@ -120,6 +120,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                             props.showCancelImageButton
                                         }
                                         showUploadedTime={true}
+                                        type="Prescription"
                                     ></Thumbnail>
                                 ))}
                     </div>
