@@ -11,9 +11,9 @@ export default function useTreatmentsHook() {
     );
 
     const treatmentPlanQuery = createSelector(
-        (state: RootState) => state.TreatmentState.TreatmentPlans,
+        (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
         (treatments) =>
-            treatments.filter(
+            treatments && treatments.filter(
                 (treatment) =>
                     treatment.treatmentPlanId ==
                     selectedTreatment?.treatmentPlanId,
@@ -23,5 +23,5 @@ export default function useTreatmentsHook() {
     const treatmentPlans = useSelector(treatmentPlanQuery);
 
 
-  return { selectedTreatment, treatmentPlans };
+    return { selectedTreatment, treatmentPlans };
 }

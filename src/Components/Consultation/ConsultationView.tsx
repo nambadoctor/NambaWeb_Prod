@@ -75,6 +75,18 @@ export default function ConsultationView() {
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
+                        Treatments
+                    </h3>
+                    
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    
+                </div>
+            </Row>
+
+            <Row style={{ margin: 20 }}>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
                         Notes
                     </h3>
                 </div>

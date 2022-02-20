@@ -2,8 +2,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { toast } from "react-toastify";
 import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetPatientTreatments } from "../Actions/CurrentCustomerActions";
-import { SetTreatmentPlans } from "../Actions/TreatmentActions";
+import { SetPatientTreatmentPlans, SetPatientTreatments } from "../Actions/CurrentCustomerActions";
 import { AddTreatmentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
@@ -39,6 +38,7 @@ export const GetAllTreatments = (onlyShowUpcoming: boolean): ThunkAction<void, R
 export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Treatment plans Action", "GetAllTreatmentPlans", SeverityLevel.Information);
     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
+    const currentCustomer = getState().CurrentCustomerState.Customer
 
     if (currentServiceProvider) {
         SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Information);
@@ -46,12 +46,18 @@ export const GetAllTreatmentPlans = (): ThunkAction<void, RootState, null, Actio
         SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Error);
     }
 
+    if (currentCustomer) {
+        SetTrackTrace("Retrieved Current Customer: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Information);
+    } else {
+        SetTrackTrace("Retrieved Current Customer DOES NOT EXIST: " + currentServiceProvider, "GetAllTreatmentPlans", SeverityLevel.Error);
+    }
+
     try {
         //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-        let response = await getCall({} as Array<ITreatmentPlanIncoming>, GetServiceProviderTreatmentPlansInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId), "GetAllTreatmentPlans");
+        let response = await getCall({} as Array<ITreatmentPlanIncoming>, GetServiceProviderTreatmentPlansInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer?.customerId ?? ""), "GetAllTreatmentPlans");
 
         SetTrackTrace("Dispatch Set All Treatment plans" + response.data, "GetAllTreatmentPlans", SeverityLevel.Information);
-        dispatch(SetTreatmentPlans(response.data));
+        dispatch(SetPatientTreatmentPlans(response.data));
 
         dispatch(SetLinearLoadingBarToggle(false));
 

@@ -10,7 +10,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { ITreatmentOutgoing } from '../../Types/OutgoingDataModels/TreatmentOutgoing';
 import { useDispatch } from 'react-redux';
-import { AddTreatment, DeleteTreatment } from '../../ServiceActions/TreatmentActions';
+import {
+    AddTreatment,
+    DeleteTreatment,
+} from '../../ServiceActions/TreatmentActions';
 import ClearIcon from '@mui/icons-material/Clear';
 
 interface TreatmentPlanRowProps {
@@ -146,7 +149,11 @@ export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
                         <div onClick={() => setEditToggle(true)}>
                             <ModeIcon></ModeIcon>
                         </div>
-                        <div onClick={() => dispatch(DeleteTreatment(props.treatment))}>
+                        <div
+                            onClick={() =>
+                                dispatch(DeleteTreatment(props.treatment))
+                            }
+                        >
                             <ClearIcon></ClearIcon>
                         </div>
                     </div>

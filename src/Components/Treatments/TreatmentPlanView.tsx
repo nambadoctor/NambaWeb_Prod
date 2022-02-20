@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { Modal, Row } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { createSelector } from 'reselect';
 import {
     TableRow,
     TableCell,
@@ -14,8 +12,6 @@ import {
 } from '@mui/material';
 import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
-import ModeIcon from '@mui/icons-material/Mode';
 import { TreatmentPlanRowDisplay } from './TreatmentPlanRowDisplay';
 import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
 import NewTreatmentRow from './NewTreatmentRow';
@@ -33,7 +29,7 @@ export default function TreatmentPlanView() {
 
     return (
         <div>
-            {showTreatmentPopup && treatmentPlans.length > 0 && (
+            {showTreatmentPopup && treatmentPlans && treatmentPlans.length > 0 && (
                 <Modal
                     show={true}
                     size="lg"
