@@ -83,6 +83,7 @@ export const PhoneNumberLogin: React.FC = () => {
                                     id="code"
                                     label="Code"
                                     color="secondary"
+                                    disabled={true}
                                     value={code}
                                     onChange={(e) => {
                                         dispatch(SetCodeAction(e.target.value));

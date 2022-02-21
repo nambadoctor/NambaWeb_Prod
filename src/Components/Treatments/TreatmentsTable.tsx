@@ -14,6 +14,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import MoreTimeIcon from '@mui/icons-material/MoreTime';
 import { useState } from 'react';
 import { SetSelectedTreatment, SetTreatmentPlanPopup } from '../../Actions/TreatmentActions';
+import { TreatmentRowDisplay } from './TreatmentRowDisplay';
 
 const usePatientTableStyles = makeStyles(() => ({
     table: {
@@ -73,35 +74,7 @@ export default function TreatmentsTable() {
     function makeCustomerListDisplay() {
         return treatments!.map(
             (treatment: ITreatmentIncoming, index: number) => (
-                <TableRow
-                    key={treatment.treatmentId}
-                    selected={selectedID === treatment.treatmentId}
-                >
-                    <TableCell align="left">
-                        {treatment.treatmentPlanName}
-                    </TableCell>
-                    <TableCell align="left">{treatment.name}</TableCell>
-                    <TableCell align="left">
-                        {treatment.actualProcedure}
-                    </TableCell>
-                    <TableCell align="left">
-                        <Row>
-                            <Col>
-                                <div onClick={() => {
-                                    SelectTreatment(treatment)
-                                    dispatch(SetTreatmentPlanPopup(true))
-                                }}>
-                                    <VisibilityIcon></VisibilityIcon>
-                                </div>
-                            </Col>
-                            <Col>
-                                <div onClick={() => SelectTreatment(treatment)}>
-                                    <MoreTimeIcon></MoreTimeIcon>
-                                </div>
-                            </Col>
-                        </Row>
-                    </TableCell>
-                </TableRow>
+                <TreatmentRowDisplay treatment={treatment} SelectTreatment={SelectTreatment} selectedID={selectedID} showBookAppointmentButton={true}></TreatmentRowDisplay>
             ),
         );
     }

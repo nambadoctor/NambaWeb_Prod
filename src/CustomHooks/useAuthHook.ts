@@ -13,7 +13,8 @@ export default function useAuthHook() {
 
     const dispatch = useDispatch();
 
-    const code = useSelector((state: RootState) => state.loginState.code)
+    const code = "+91"
+    // useSelector((state: RootState) => state.loginState.code)
     const pno = useSelector((state: RootState) => state.loginState.pno)
     const otpShow = useSelector((state: RootState) => state.loginState.otpShow)
     const otp = useSelector((state: RootState) => state.loginState.otp)

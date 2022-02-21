@@ -22,6 +22,7 @@ import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import TreatmentsTable from '../Treatments/TreatmentsTable';
 import TreatmentPlanView from '../Treatments/TreatmentPlanView';
+import TreatmentPlanPopupView from '../Treatments/TreatmentPlanPopupView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -138,7 +139,7 @@ function Dashboard() {
                 <OrganisationInitialModalPickerComponent />
                 <FullPageLoadingDisplay />
                 <CriticalAlertDisplay />
-                <TreatmentPlanView></TreatmentPlanView>
+                <TreatmentPlanPopupView></TreatmentPlanPopupView>
             </div>
         </>
     );

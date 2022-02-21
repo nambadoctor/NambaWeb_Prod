@@ -16,6 +16,12 @@ import { UploadPrescriptionForConsultation } from '../../ServiceActions/Prescrip
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
+import TreatmentPlanView from '../Treatments/TreatmentPlanView';
+import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
+import { TreatmentPlanRowDisplay } from '../Treatments/TreatmentPlanRowDisplay';
+import { TreatmentRowDisplay } from '../Treatments/TreatmentRowDisplay';
+import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
+import { SetSelectedTreatment } from '../../Actions/TreatmentActions';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -30,6 +36,12 @@ export default function ConsultationView() {
             dispatch(GetAppointment(id as string));
         }
     }, [currentServiceProvider, id]);
+
+    const { appointmentTreatments } = useTreatmentsHook();
+
+    function SelectTreatment(treatment: ITreatmentIncoming) {
+        dispatch(SetSelectedTreatment(treatment));
+    }
 
     return (
         <div>
@@ -77,10 +89,18 @@ export default function ConsultationView() {
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatments
                     </h3>
-                    
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    
+                    {appointmentTreatments &&
+                        appointmentTreatments.map(
+                            (treatment: ITreatmentIncoming, index: number) => (
+                                <TreatmentRowDisplay
+                                    treatment={treatment}
+                                    SelectTreatment={SelectTreatment}
+                                    showBookAppointmentButton={false}
+                                ></TreatmentRowDisplay>
+                            ),
+                        )}
                 </div>
             </Row>
 

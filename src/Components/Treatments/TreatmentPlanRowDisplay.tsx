@@ -16,11 +16,11 @@ import {
 } from '../../ServiceActions/TreatmentActions';
 import ClearIcon from '@mui/icons-material/Clear';
 
-interface TreatmentPlanRowProps {
+interface TreatmentRowProps {
     treatment: ITreatmentIncoming;
 }
 
-export const TreatmentPlanRowDisplay: React.FC<TreatmentPlanRowProps> = (
+export const TreatmentPlanRowDisplay: React.FC<TreatmentRowProps> = (
     props,
 ) => {
     const [selectedID, setselectedID] = useState('');
