@@ -20,9 +20,6 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
-import TreatmentsTable from '../Treatments/TreatmentsTable';
-import TreatmentPlanView from '../Treatments/TreatmentPlanView';
-import TreatmentPlanPopupView from '../Treatments/TreatmentPlanPopupView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -65,13 +62,6 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            {treatmentsExistForPatient && (
-                                <div>
-                                    <h5> Treatments </h5>
-                                    <TreatmentsTable></TreatmentsTable>
-                                    <div style={{ marginBottom: 20 }}></div>
-                                </div>
-                            )}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -139,7 +129,6 @@ function Dashboard() {
                 <OrganisationInitialModalPickerComponent />
                 <FullPageLoadingDisplay />
                 <CriticalAlertDisplay />
-                <TreatmentPlanPopupView></TreatmentPlanPopupView>
             </div>
         </>
     );

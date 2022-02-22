@@ -16,12 +16,10 @@ import { UploadPrescriptionForConsultation } from '../../ServiceActions/Prescrip
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
-import TreatmentPlanView from '../Treatments/TreatmentPlanView';
 import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
-import { TreatmentPlanRowDisplay } from '../Treatments/TreatmentPlanRowDisplay';
-import { TreatmentRowDisplay } from '../Treatments/TreatmentRowDisplay';
 import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
 import { SetSelectedTreatment } from '../../Actions/TreatmentActions';
+import TreatmentPlanView from '../Treatments/TreatmentPlanView';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -37,7 +35,7 @@ export default function ConsultationView() {
         }
     }, [currentServiceProvider, id]);
 
-    const { appointmentTreatments } = useTreatmentsHook();
+    const { treatmentPlans, appointmentTreatments } = useTreatmentsHook();
 
     function SelectTreatment(treatment: ITreatmentIncoming) {
         dispatch(SetSelectedTreatment(treatment));
@@ -91,16 +89,7 @@ export default function ConsultationView() {
                     </h3>
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    {appointmentTreatments &&
-                        appointmentTreatments.map(
-                            (treatment: ITreatmentIncoming, index: number) => (
-                                <TreatmentRowDisplay
-                                    treatment={treatment}
-                                    SelectTreatment={SelectTreatment}
-                                    showBookAppointmentButton={false}
-                                ></TreatmentRowDisplay>
-                            ),
-                        )}
+                    <TreatmentPlanView></TreatmentPlanView>
                 </div>
             </Row>
 

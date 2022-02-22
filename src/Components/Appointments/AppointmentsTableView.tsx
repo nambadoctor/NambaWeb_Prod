@@ -26,9 +26,6 @@ import { ClearContext } from '../../Actions/ClearContextAction';
 import AppointmentTypeEnum from '../../Types/Enums/AppointmentStatusEnums';
 
 const useAppointmentTableStyles = makeStyles(() => ({
-    table: {
-        minWidth: 650,
-    },
     tableContainer: {
         borderRadius: 15,
         margin: '10px 10px',
@@ -181,7 +178,7 @@ export default function AppointmentsTable() {
             component={Paper}
             style={{ borderRadius: 15, marginBottom: 10 }}
         >
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 300 }} aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
                         <TableCell
