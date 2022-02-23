@@ -79,7 +79,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
 
         CustomerRequestObj.dateOfBirth = {
             dateOfBirthId: "",
-            date: formik.values.dateOfBirth,
+            date: new Date(),
             age: formik.values.age,
             createdDate: new Date()
         } as IDateOfBirthData
