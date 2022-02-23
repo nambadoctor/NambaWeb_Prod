@@ -20,6 +20,7 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
+import Treatments from '../Treatments/Treatments';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -32,7 +33,8 @@ function Dashboard() {
     );
 
     const treatmentsExistForPatient = useSelector(
-        (state: RootState) => (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
+        (state: RootState) =>
+            (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
     );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
@@ -107,6 +109,7 @@ function Dashboard() {
                             element={AppointmentsAndCalendarView()}
                         />
                         <Route path="/Patients" element={PatientsView()} />
+                        <Route path="/Treatments" element={<Treatments></Treatments>} />
                         <Route
                             path="/Consultation/:id"
                             element={<ConsultationView></ConsultationView>}

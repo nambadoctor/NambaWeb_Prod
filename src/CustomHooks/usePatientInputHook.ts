@@ -21,16 +21,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
 
-    const treatment = useSelector((state: RootState) => state.TreatmentState.selectedTreatment)
-
-    useEffect(() => {
-        if (treatment) {
-            setAppointmentType("Treatment")
-        } else {
-            setAppointmentType("Consultation")
-        }
-    }, [treatment])
-
     useEffect(() => {
         mapCustomerToValues(currentCustomer)
     }, [currentCustomer])
@@ -38,19 +28,13 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const [gender, setGender] = useState("")
     const genderOptions = ["Male", "Female", "Other"]
 
-    const [appointmentType, setAppointmentType] = useState("Consultation")
-
-    const handleAppointmentTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAppointmentType((event.target as HTMLInputElement).value);
-    };
-
     const formik = useFormik({
         initialValues: {
             phonenumber: "",
             name: "",
             age: "",
             gender: "",
-            dateForAppointment: treatment ? new Date(treatment.plannedDateTime) : new Date(),
+            dateForAppointment: new Date(),
             dateOfBirth: new Date()
         },
         validationSchema: Yup.object({
@@ -140,11 +124,11 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentCustomer?.customerId ?? "",
-            appointmentType: appointmentType,
+            appointmentType: "Consultation",
             addressId: "",
             status: "",
-            treatmentId: treatment ? treatment.treatmentId : "",
-            treatmentPlanId: treatment ? treatment.treatmentPlanId : "",
+            treatmentId: "",
+            treatmentPlanId: "",
             scheduledAppointmentStartTime: formik.values.dateForAppointment,
             scheduledAppointmentEndTime: new Date(),
             actualAppointmentStartTime: new Date(),
@@ -174,9 +158,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         genderOptions,
         gender,
         formik,
-        appointmentType,
-        treatment,
-        handleAppointmentTypeChange,
         setGender
     };
 }

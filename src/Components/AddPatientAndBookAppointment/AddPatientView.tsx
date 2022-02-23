@@ -12,8 +12,6 @@ export default function AddPatientView() {
         genderOptions,
         gender,
         formik,
-        appointmentType,
-        treatment,
         setGender,
     } = usePatientInputHook(true);
 

@@ -16,10 +16,7 @@ import { UploadPrescriptionForConsultation } from '../../ServiceActions/Prescrip
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
-import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
-import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
-import { SetSelectedTreatment } from '../../Actions/TreatmentActions';
-import TreatmentPlanView from '../Treatments/TreatmentPlanView';
+import TreatmentPlanView from '../TreatmentPlanView/TreatmentPlanView';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -34,12 +31,6 @@ export default function ConsultationView() {
             dispatch(GetAppointment(id as string));
         }
     }, [currentServiceProvider, id]);
-
-    const { treatmentPlans, appointmentTreatments } = useTreatmentsHook();
-
-    function SelectTreatment(treatment: ITreatmentIncoming) {
-        dispatch(SetSelectedTreatment(treatment));
-    }
 
     return (
         <div>

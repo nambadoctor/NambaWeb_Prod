@@ -3,31 +3,23 @@ import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncomin
 import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
 
 export enum Treatment_Types {
-  SET_TREATMENT = "SET_TREATMENT",
-  SHOW_TREATMENT_PLAN_POPUP = "SHOW_TREATMENT_PLAN_POPUP"
+  SET_TREATMENTS = "SET_TREATMENTS",
 }
 
 export interface TreatmentState {
-  selectedTreatment: ITreatmentIncoming | null
-  showTreatmentPlanPopup: boolean
+  treatments: ITreatmentIncoming[] | null
 }
 
 const initialState: TreatmentState = {
-  selectedTreatment: null,
-  showTreatmentPlanPopup: false
+  treatments: null,
 }
 
 export const treatmentsReducer = (state: TreatmentState = initialState, action: Action): TreatmentState => {
   switch (action.type) {
-    case Treatment_Types.SET_TREATMENT:
+    case Treatment_Types.SET_TREATMENTS:
       return {
         ...state,
-        selectedTreatment: action.payload,
-      }
-    case Treatment_Types.SHOW_TREATMENT_PLAN_POPUP:
-      return {
-        ...state,
-        showTreatmentPlanPopup: action.payload,
+        treatments: action.payload,
       }
     default:
       return state

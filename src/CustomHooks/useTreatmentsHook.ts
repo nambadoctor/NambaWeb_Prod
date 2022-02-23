@@ -5,10 +5,6 @@ import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPla
 
 export default function useTreatmentsHook() {
 
-    const selectedTreatment = useSelector(
-        (state: RootState) => state.TreatmentState.selectedTreatment,
-    );
-
     const currentAppointment = useSelector((state: RootState) => state.ConsultationState.Appointment);
 
     const treatmentPlanQuery = createSelector(
@@ -16,10 +12,7 @@ export default function useTreatmentsHook() {
         (treatmentsPlans) =>
             treatmentsPlans && treatmentsPlans.filter(
                 (treatmentPlan) =>
-                (
-                    treatmentPlan.treatmentPlanId === selectedTreatment?.treatmentPlanId ||
-                    (currentAppointment && currentAppointment?.serviceRequestId === treatmentPlan.originServiceRequestId)
-                ),
+                    currentAppointment && currentAppointment?.serviceRequestId === treatmentPlan.originServiceRequestId,
             ),
     );
 
@@ -34,10 +27,8 @@ export default function useTreatmentsHook() {
             ),
     );
 
-
-
     const treatmentPlans = useSelector(treatmentPlanQuery);
     const appointmentTreatments = useSelector(appointmentTreatmentQuery);
 
-    return { selectedTreatment, appointmentTreatments, treatmentPlans };
+    return { appointmentTreatments, treatmentPlans };
 }

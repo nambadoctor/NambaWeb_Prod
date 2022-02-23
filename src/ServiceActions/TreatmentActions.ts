@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetPatientTreatmentPlans, SetPatientTreatments } from "../Actions/CurrentCustomerActions";
+import { SetTreatments } from "../Actions/TreatmentActions";
 import { AddTreatmentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
@@ -28,9 +29,10 @@ export const GetAllTreatments = (onlyShowUpcoming: boolean): ThunkAction<void, R
         let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId), "GetAllTreatments");
 
         SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
-        //dispatch(SetTreatments(response.data));
+        dispatch(SetTreatments(response.data));
 
     } catch (error) {
+        var x = error
         dispatch(SetFatalError("Could not retrieve treatments!"))
     }
 };
@@ -92,6 +94,7 @@ export const AddTreatment = (treatment: ITreatmentOutgoing, treatmentPlanId: str
 
             if (response) {
                 dispatch(GetAllTreatmentPlans())
+                dispatch(GetAllTreatments(false))
             }
         } else {
             let response = await postCall(
