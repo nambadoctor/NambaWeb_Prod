@@ -20,7 +20,7 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
-import Treatments from '../Treatments/Treatments';
+import Treatments from '../TreatmentsTab/Treatments';
 
 function Dashboard() {
     const dispatch = useDispatch();

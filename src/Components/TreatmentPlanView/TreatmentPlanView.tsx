@@ -7,11 +7,10 @@ import { NewTreatmentCard } from './NewTreatmentCard';
 
 export default function TreatmentPlanView() {
     const classes = usePatientTableStyles();
-    const { treatmentPlans } = useTreatmentsHook();
 
     return (
         <div>
-            {treatmentPlans &&
+            {/* {treatmentPlans &&
                 treatmentPlans.length > 0 &&
                 treatmentPlans.map(
                     (treatmentPlan: ITreatmentPlanIncoming, index: number) => (
@@ -37,7 +36,7 @@ export default function TreatmentPlanView() {
                             </div>
                         </div>
                     ),
-                )}
+                )} */}
         </div>
     );
 }

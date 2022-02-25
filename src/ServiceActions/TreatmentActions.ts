@@ -174,7 +174,7 @@ export const DeleteTreatment =
                 );
 
                 if (response) {
-                    dispatch(GetAllTreatmentsForPatient(true));
+                    // dispatch(GetAllTreatmentsForPatient(true));
 
                     dispatch(SetLinearLoadingBarToggle(false));
                     toast.success('Treatment Deleted');
@@ -185,29 +185,29 @@ export const DeleteTreatment =
         };
 
 
-export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
-    SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
-    const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
-    const currentCustomer = getState().CurrentCustomerState.Customer!
+// export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+//     SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
+//     const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider!
+//     const currentCustomer = getState().CurrentCustomerState.Customer!
 
-    if (currentServiceProvider) {
-        SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatments", SeverityLevel.Information);
-    } else {
-        SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAllTreatments", SeverityLevel.Error);
-    }
+//     if (currentServiceProvider) {
+//         SetTrackTrace("Retrieved Current Service Provider: " + currentServiceProvider, "GetAllTreatments", SeverityLevel.Information);
+//     } else {
+//         SetTrackTrace("Retrieved Current Service Provider DOES NOT EXIST: " + currentServiceProvider, "GetAllTreatments", SeverityLevel.Error);
+//     }
 
-    try {
-        //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
-        let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer.customerId, isUpcomingTreatment ?? false), "GetAllTreatments");
+//     try {
+//         //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
+//         let response = await getCall({} as Array<ITreatmentIncoming>, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(currentServiceProvider.serviceProviderProfile.organisationId, currentServiceProvider.serviceProviderId, currentCustomer.customerId, isUpcomingTreatment ?? false), "GetAllTreatments");
 
-        if (response) {
-            dispatch(GetAllTreatmentPlans())
-        }
+//         if (response) {
+//             dispatch(GetAllTreatmentPlans())
+//         }
         
-        SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
-        dispatch(SetPatientTreatments(response.data));
+//         SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
+//         dispatch(SetPatientTreatments(response.data));
 
-    } catch (error) {
-        dispatch(SetFatalError("Could not retrieve treatments!"))
-    }
-};
+//     } catch (error) {
+//         dispatch(SetFatalError("Could not retrieve treatments!"))
+//     }
+// };

@@ -1,27 +1,23 @@
-import * as React from 'react';
+import { TableRow, TableCell, TextField, Button } from '@mui/material';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AddTreatment } from '../../ServiceActions/TreatmentActions';
+import { RootState } from '../../store';
 import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
-import { useEffect, useState } from 'react';
 import { ITreatmentOutgoing } from '../../Types/OutgoingDataModels/TreatmentOutgoing';
-import { useDispatch, useSelector } from 'react-redux';
+import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
+import * as Yup from 'yup';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import { TextField } from '@mui/material';
-import { AddTreatment } from '../../ServiceActions/TreatmentActions';
 import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
-import { RootState } from '../../store';
 
 interface TreatmentRowProps {
     treatment: ITreatmentIncoming;
 }
 
-export const TreatmentCard: React.FC<TreatmentRowProps> = (props) => {
+export const TreatmentRow: React.FC<TreatmentRowProps> = (props) => {
     const [editToggle, seteditToggle] = useState(false);
     const [changedToDoneToggle, setChangedToDoneToggle] = useState(false);
 
@@ -95,49 +91,50 @@ export const TreatmentCard: React.FC<TreatmentRowProps> = (props) => {
     }
 
     return (
-        <Card sx={{ maxWidth: 300, marginLeft: 2 }}>
-            <CardContent>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                        renderInput={(props) => <TextField {...props} />}
-                        label="Planned Date"
-                        value={formik.values.plannedDate}
-                        onChange={(newValue) => {
-                            formik.setFieldValue('plannedDate', newValue);
-                        }}
+        <TableRow>
+            <TableCell align="left">
+                {editToggle ? (
+                    <TextField
+                        fullWidth
+                        label="Actual Procedure"
+                        placeholder="Actual Procedure"
+                        margin="normal"
+                        size="medium"
+                        {...formik.getFieldProps('actualProcedure')}
+                        helperText={
+                            formik.touched.actualProcedure &&
+                            formik.errors.actualProcedure
+                        }
+                        error={
+                            formik.touched.actualProcedure &&
+                            !!formik.errors.actualProcedure
+                        }
                         disabled={!editToggle}
                     />
-                </LocalizationProvider>
-
-                <TextField
-                    fullWidth
-                    label="Original Instructions"
-                    placeholder="Original Instructions"
-                    margin="normal"
-                    size="small"
-                    value={props.treatment.originalInstructions}
-                    disabled={true}
-                />
-
-                <TextField
-                    fullWidth
-                    label="Actual Procedure"
-                    placeholder="Actual Procedure"
-                    margin="normal"
-                    size="small"
-                    {...formik.getFieldProps('actualProcedure')}
-                    helperText={
-                        formik.touched.actualProcedure &&
-                        formik.errors.actualProcedure
-                    }
-                    error={
-                        formik.touched.actualProcedure &&
-                        !!formik.errors.actualProcedure
-                    }
-                    disabled={!editToggle}
-                />
-            </CardContent>
-            <CardActions>
+                ) : (
+                    props.treatment.actualProcedure
+                )}
+            </TableCell>
+            <TableCell align="left">
+                {editToggle ? (
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            renderInput={(props) => <TextField {...props} />}
+                            label="Planned Date"
+                            value={formik.values.plannedDate}
+                            onChange={(newValue) => {
+                                formik.setFieldValue('plannedDate', newValue);
+                            }}
+                            disabled={!editToggle}
+                        />
+                    </LocalizationProvider>
+                ) : (
+                    getReadableDateAndTimeString(
+                        props.treatment.plannedDateTime,
+                    )
+                )}
+            </TableCell>
+            <TableCell align="left">
                 {props.treatment.status === 'Done' ? (
                     <div>
                         <AssignmentTurnedInIcon color="success"></AssignmentTurnedInIcon>
@@ -147,21 +144,27 @@ export const TreatmentCard: React.FC<TreatmentRowProps> = (props) => {
                             : 'Completed'}
                     </div>
                 ) : (
-                    <Button size="small" onClick={CompleteTreatment}>
-                        Mark As Done
+                    <Button variant="contained" onClick={CompleteTreatment}>
+                        Mark As Completed
                     </Button>
                 )}
 
                 {editToggle ? (
                     <div onClick={() => formik.handleSubmit()}>
-                        <Button size="small">Save</Button>
+                        <Button variant="contained" size="small">
+                            Save
+                        </Button>
                     </div>
                 ) : (
-                    <Button size="small" onClick={() => seteditToggle(true)}>
+                    <Button
+                        variant="contained"
+                        style={{ marginLeft: 10 }}
+                        onClick={() => seteditToggle(true)}
+                    >
                         Edit
                     </Button>
                 )}
-            </CardActions>
-        </Card>
+            </TableCell>
+        </TableRow>
     );
 };
