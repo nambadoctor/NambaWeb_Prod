@@ -11,5 +11,7 @@ export interface ITreatmentIncoming {
     createdDateTime:string,
     appointmentId:string,
     serviceRequestId:string,
+    serviceProviderId:string,
+    customerId:string,
     status:string
 }

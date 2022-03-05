@@ -36,6 +36,12 @@ export default function Treatments() {
                                 className={classes.tableHeaderCell}
                                 align="left"
                             >
+                                Customer Number
+                            </TableCell>
+                            <TableCell
+                                className={classes.tableHeaderCell}
+                                align="left"
+                            >
                                 Plan Name
                             </TableCell>
                             <TableCell

@@ -1,6 +1,5 @@
 import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
 import ReportImageView from '../ReportUpload/ReportImageView';
-import ConsultationHeader from './ConsultationHeader';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,16 +8,18 @@ import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
-import { UploadReportForConsultation } from '../../ServiceActions/ReportActions';
-import { UploadPrescriptionForConsultation } from '../../ServiceActions/PrescriptionActions';
+import { UploadReportAsStray, UploadReportForConsultation } from '../../ServiceActions/ReportActions';
+import { UploadPrescriptionAsStray, UploadPrescriptionForConsultation } from '../../ServiceActions/PrescriptionActions';
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
 import { TreatmentPlansTable } from '../TreatmentsTable/TreatmentsTable';
-import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
+import ConsultationHeader from '../Consultation/ConsultationHeader';
+import { GetCustomer } from '../../ServiceActions/CustomerActions';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
+import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
 
-export default function ConsultationView() {
+export default function DetailedPatient() {
     const dispatch = useDispatch();
     const currentServiceProvider = useSelector(
         (state: RootState) => state.CurrentServiceProviderState.serviceProvider,
@@ -28,11 +29,13 @@ export default function ConsultationView() {
     useEffect(() => {
         dispatch(ClearContext());
         if (currentServiceProvider) {
-            dispatch(GetAppointment(id as string));
+            dispatch(GetCustomer(id as string));
         }
     }, [currentServiceProvider, id]);
 
-    const currentCustomerTreatmentPlans = useSelector((state:RootState) => state.CurrentCustomerState.TreatmentPlans)
+    const currentCustomerTreatmentPlans = useSelector(
+        (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
+    );
 
     return (
         <div>
@@ -43,7 +46,7 @@ export default function ConsultationView() {
                         Prescriptions
                     </h3>
                     <PrescriptionUploadPicker
-                        handlePhotoCallBack={UploadPrescriptionForConsultation}
+                        handlePhotoCallBack={UploadPrescriptionAsStray}
                         uploadButtonColor="white"
                     />
                 </div>
@@ -62,7 +65,7 @@ export default function ConsultationView() {
                         Reports
                     </h3>
                     <ReportUploadPicker
-                        handlePhotoCallBack={UploadReportForConsultation}
+                        handlePhotoCallBack={UploadReportAsStray}
                         uploadButtonColor="white"
                     />
                 </div>
@@ -82,7 +85,9 @@ export default function ConsultationView() {
                     </h3>
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    <TreatmentPlansTable treatmentPlans={currentCustomerTreatmentPlans}></TreatmentPlansTable>
+                    <TreatmentPlansTable
+                        treatmentPlans={currentCustomerTreatmentPlans}
+                    ></TreatmentPlansTable>
                 </div>
             </Row>
 

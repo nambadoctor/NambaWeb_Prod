@@ -80,15 +80,6 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                     {images && images.length > 0 && (
                         <div>
                             <Row>
-                                <Divider
-                                    style={{
-                                        marginTop: 20,
-                                        marginBottom: 20,
-                                    }}
-                                ></Divider>
-                            </Row>
-
-                            <Row>
                                 <Col md={8}>
                                     <h5>History Of Reports</h5>
                                 </Col>

@@ -1,4 +1,10 @@
-import { TableRow, TableCell, TextField, Button } from '@mui/material';
+import {
+    TableRow,
+    TableCell,
+    TextField,
+    Button,
+    Typography,
+} from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,15 +17,30 @@ import * as Yup from 'yup';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
+import { makeStyles } from '@mui/styles';
+import EditIcon from '@mui/icons-material/Edit';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 interface TreatmentRowProps {
     treatment: ITreatmentIncoming;
 }
 
+export const useTreatmentActionsStyles = makeStyles(() => ({
+    status: {
+        fontWeight: 'bold',
+        fontSize: '0.75rem',
+        color: 'white',
+        borderRadius: 20,
+        padding: '5px 5px',
+        display: 'inline-block',
+    },
+}));
+
 export const TreatmentRow: React.FC<TreatmentRowProps> = (props) => {
     const [editToggle, seteditToggle] = useState(false);
     const [changedToDoneToggle, setChangedToDoneToggle] = useState(false);
+    const classes = useTreatmentActionsStyles();
 
     const currentAppointment = useSelector(
         (state: RootState) => state.ConsultationState.Appointment,
@@ -135,35 +156,54 @@ export const TreatmentRow: React.FC<TreatmentRowProps> = (props) => {
                 )}
             </TableCell>
             <TableCell align="left">
-                {props.treatment.status === 'Done' ? (
-                    <div>
-                        <AssignmentTurnedInIcon color="success"></AssignmentTurnedInIcon>
-                        {props.treatment.serviceRequestId ===
-                        currentAppointment?.serviceRequestId
-                            ? 'Completed In This Appointment'
-                            : 'Completed'}
-                    </div>
-                ) : (
-                    <Button variant="contained" onClick={CompleteTreatment}>
-                        Mark As Completed
-                    </Button>
-                )}
+                <div style={{ display: 'flex' }}>
+                    {!editToggle && (
+                        <div>
+                            {props.treatment.status === 'Done' ? (
+                                <CheckCircleIcon
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                        marginRight: 10,
+                                    }}
+                                    onClick={CompleteTreatment}
+                                    color="success"
+                                ></CheckCircleIcon>
+                            ) : (
+                                <CheckCircleOutlineIcon
+                                    style={{
+                                        width: 30,
+                                        height: 30,
+                                        marginRight: 10,
+                                    }}
+                                    color="primary"
+                                    onClick={CompleteTreatment}
+                                ></CheckCircleOutlineIcon>
+                            )}
+                        </div>
+                    )}
 
-                {editToggle ? (
-                    <div onClick={() => formik.handleSubmit()}>
-                        <Button variant="contained" size="small">
-                            Save
-                        </Button>
-                    </div>
-                ) : (
-                    <Button
-                        variant="contained"
-                        style={{ marginLeft: 10 }}
-                        onClick={() => seteditToggle(true)}
-                    >
-                        Edit
-                    </Button>
-                )}
+                    {editToggle ? (
+                        <div onClick={() => formik.handleSubmit()}>
+                            <Button variant="contained" size="small">
+                                Save
+                            </Button>
+                        </div>
+                    ) : (
+                        <Typography
+                            className={classes.status}
+                            style={{
+                                backgroundColor: '#e5faf2',
+                                color: '#3bb077',
+                            }}
+                            onClick={() => seteditToggle(true)}
+                        >
+                            <EditIcon
+                                style={{ width: 20, height: 20 }}
+                            ></EditIcon>
+                        </Typography>
+                    )}
+                </div>
             </TableCell>
         </TableRow>
     );

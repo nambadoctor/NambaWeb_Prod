@@ -10,11 +10,11 @@ import IPrescriptionIncomingData from '../../Types/IncomingDataModels/Prescripti
 import { Col, Row } from 'react-bootstrap';
 import { Divider } from '@mui/material';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
 import { AllImageDisplayProps } from '../../Helpers/CommonProps';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { dateToDateString } from '../../Utils/GeneralUtils';
+import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
 
 export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     props,
@@ -82,11 +82,6 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
             <div style={{ overflow: 'auto' }}>
                 {images && images.length > 0 && (
                     <div>
-                        <Row>
-                            <Divider
-                                style={{ marginTop: 20, marginBottom: 20 }}
-                            ></Divider>
-                        </Row>
                         <Row>
                             <Col md={8}>
                                 <h5>History Of Prescriptions</h5>

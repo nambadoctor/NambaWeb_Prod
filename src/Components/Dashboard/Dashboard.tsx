@@ -21,6 +21,7 @@ import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import Treatments from '../TreatmentsTab/Treatments';
+import DetailedPatient from '../DetailedPatient/DetailedPatient';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -109,11 +110,18 @@ function Dashboard() {
                             element={AppointmentsAndCalendarView()}
                         />
                         <Route path="/Patients" element={PatientsView()} />
-                        <Route path="/Treatments" element={<Treatments></Treatments>} />
+                        <Route
+                            path="/Treatments"
+                            element={<Treatments></Treatments>}
+                        />
                         <Route
                             path="/Consultation/:id"
                             element={<ConsultationView></ConsultationView>}
                         />
+                        <Route
+                            path="/Patient/:id"
+                            element={<DetailedPatient></DetailedPatient>}
+                        /> 
                     </Routes>
                 </div>
             </div>
