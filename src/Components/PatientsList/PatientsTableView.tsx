@@ -15,6 +15,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ClearContext } from '../../Actions/ClearContextAction';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
+import EditIcon from '@mui/icons-material/Edit';
 
 export default function PatientsTableView() {
     const classes = usePatientTableStyles();
@@ -68,6 +69,9 @@ export default function PatientsTableView() {
                         {customer.phoneNumbers[0].number}
                     </Link>
                 </TableCell>
+                <TableCell onClick={() => handleCustomerSelect(customer)}>
+                    <EditIcon></EditIcon>
+                </TableCell>
             </TableRow>
         ));
     }
@@ -117,6 +121,12 @@ export default function PatientsTableView() {
                                 align="left"
                             >
                                 Phone Number
+                            </TableCell>
+                            <TableCell
+                                className={classes.tableHeaderCell}
+                                align="left"
+                            >
+                                {' '}
                             </TableCell>
                         </TableRow>
                     </TableHead>
