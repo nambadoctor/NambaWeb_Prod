@@ -24,152 +24,152 @@ import IAppointmentData from '../Types/IncomingDataModels/Appointment';
 
 export const GetReports =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
-        const customer = getState().CurrentCustomerState.Customer;
+        async (dispatch, getState) => {
+            const customer = getState().CurrentCustomerState.Customer;
 
-        try {
-            let response = await getCall(
-                {} as Array<IReportIncomingData>,
-                GetCustomerAllReportsEndPoint(
-                    customer?.organisationId ?? '',
-                    customer?.customerId ?? '',
-                ),
-                'GetReports',
-            );
+            try {
+                let response = await getCall(
+                    {} as Array<IReportIncomingData>,
+                    GetCustomerAllReportsEndPoint(
+                        customer?.organisationId ?? '',
+                        customer?.customerId ?? '',
+                    ),
+                    'GetReports',
+                );
 
-            if (response) {
-                dispatch(SetReports(response.data));
+                if (response) {
+                    dispatch(SetReports(response.data));
+                }
+            } catch (error) {
+                dispatch(
+                    SetNonFatalError('Could not get all reports for this patient'),
+                );
             }
-        } catch (error) {
-            dispatch(
-                SetNonFatalError('Could not get all reports for this patient'),
-            );
-        }
-    };
+        };
 
 export const UploadReportForConsultation =
     (
         file: any,
         appointment?: IAppointmentData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
-        dispatch(SetLinearLoadingBarToggle(true));
+        async (dispatch, getState) => {
+            dispatch(SetLinearLoadingBarToggle(true));
 
-        let currentConsultationAppointment = appointment
-            ? appointment
-            : getState().ConsultationState.Appointment;
+            let currentConsultationAppointment = appointment
+                ? appointment
+                : getState().ConsultationState.Appointment;
 
-        var reportRequest = {
-            AppointmentId: currentConsultationAppointment!.appointmentId,
-            ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
-            File: await ConvertInputToFileOrBase64(file),
-            FileName: '',
-            FileType: '',
-            Details: '',
-            DetailsType: '',
-        } as IReportUploadData;
+            var reportRequest = {
+                AppointmentId: currentConsultationAppointment!.appointmentId,
+                ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
+                File: await ConvertInputToFileOrBase64(file),
+                FileName: (file as File).name ?? "",
+                FileType: (file as File).type ?? "",
+                Details: '',
+                DetailsType: '',
+            } as IReportUploadData;
 
-        SetTrackTrace(
-            'Enter Upload Report Action',
-            'UploadReport',
-            SeverityLevel.Information,
-        );
-
-        try {
-            let response = await postCall(
-                {} as any,
-                SetCustomerReportEndPoint(),
-                reportRequest,
+            SetTrackTrace(
+                'Enter Upload Report Action',
                 'UploadReport',
+                SeverityLevel.Information,
             );
 
-            if (response) {
-                dispatch(GetReports());
+            try {
+                let response = await postCall(
+                    {} as any,
+                    SetCustomerReportEndPoint(),
+                    reportRequest,
+                    'UploadReport',
+                );
 
-                dispatch(SetLinearLoadingBarToggle(false));
-                toast.success('Report Image Uploaded');
+                if (response) {
+                    dispatch(GetReports());
+
+                    dispatch(SetLinearLoadingBarToggle(false));
+                    toast.success('Report Image Uploaded');
+                }
+            } catch (error) {
+                dispatch(SetNonFatalError('Could not upload report image'));
             }
-        } catch (error) {
-            dispatch(SetNonFatalError('Could not upload report image'));
-        }
-    };
+        };
 
 export const UploadReportAsStray =
     (file: any): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
-        dispatch(SetLinearLoadingBarToggle(true));
+        async (dispatch, getState) => {
+            dispatch(SetLinearLoadingBarToggle(true));
 
-        let selectedPatient = getState().CurrentCustomerState.Customer;
-        let currentServiceProvider =
-            getState().CurrentServiceProviderState.serviceProvider;
+            let selectedPatient = getState().CurrentCustomerState.Customer;
+            let currentServiceProvider =
+                getState().CurrentServiceProviderState.serviceProvider;
 
-        var reportRequest = {
-            AppointmentId: '',
-            ServiceRequestId: '',
-            File: await ConvertInputToFileOrBase64(file),
-            FileName: '',
-            FileType: '',
-            Details: '',
-            DetailsType: '',
-        } as IReportUploadData;
+            var reportRequest = {
+                AppointmentId: '',
+                ServiceRequestId: '',
+                File: await ConvertInputToFileOrBase64(file),
+                FileName: (file as File).name ?? "",
+                FileType: (file as File).type ?? "",
+                Details: '',
+                DetailsType: '',
+            } as IReportUploadData;
 
-        SetTrackTrace(
-            'Enter Upload Stray Report Action',
-            'UploadReportAsStray',
-            SeverityLevel.Information,
-        );
-
-        try {
-            let response = await postCall(
-                {} as any,
-                SetCustomerStrayReportEndPoint(
-                    currentServiceProvider?.serviceProviderProfile
-                        .organisationId ?? '',
-                    currentServiceProvider?.serviceProviderId ?? '',
-                    selectedPatient?.customerId ?? '',
-                ),
-                reportRequest,
-                'UploadReport',
+            SetTrackTrace(
+                'Enter Upload Stray Report Action',
+                'UploadReportAsStray',
+                SeverityLevel.Information,
             );
 
-            if (response) {
-                dispatch(GetReports());
+            try {
+                let response = await postCall(
+                    {} as any,
+                    SetCustomerStrayReportEndPoint(
+                        currentServiceProvider?.serviceProviderProfile
+                            .organisationId ?? '',
+                        currentServiceProvider?.serviceProviderId ?? '',
+                        selectedPatient?.customerId ?? '',
+                    ),
+                    reportRequest,
+                    'UploadReport',
+                );
 
-                dispatch(SetLinearLoadingBarToggle(false));
-                toast.success('Report Image Uploaded');
+                if (response) {
+                    dispatch(GetReports());
+
+                    dispatch(SetLinearLoadingBarToggle(false));
+                    toast.success('Report Image Uploaded');
+                }
+            } catch (error) {
+                dispatch(SetNonFatalError('Could not upload report image'));
             }
-        } catch (error) {
-            dispatch(SetNonFatalError('Could not upload report image'));
-        }
-    };
+        };
 
 export const DeleteReport =
     (
         reportToDelete: IReportIncomingData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
-        dispatch(SetLinearLoadingBarToggle(true));
+        async (dispatch, getState) => {
+            dispatch(SetLinearLoadingBarToggle(true));
 
-        SetTrackTrace(
-            'Enter Upload Report Action',
-            'UploadReport',
-            SeverityLevel.Information,
-        );
-
-        try {
-            let response = await deleteCall(
-                {} as any,
-                DeleteCustomerReportEndPoint(reportToDelete.reportId),
-                'DeleteReport',
+            SetTrackTrace(
+                'Enter Upload Report Action',
+                'UploadReport',
+                SeverityLevel.Information,
             );
 
-            if (response) {
-                dispatch(GetReports());
+            try {
+                let response = await deleteCall(
+                    {} as any,
+                    DeleteCustomerReportEndPoint(reportToDelete.reportId),
+                    'DeleteReport',
+                );
 
-                dispatch(SetLinearLoadingBarToggle(false));
-                toast.success('Report Image Deleted');
+                if (response) {
+                    dispatch(GetReports());
+
+                    dispatch(SetLinearLoadingBarToggle(false));
+                    toast.success('Report Image Deleted');
+                }
+            } catch (error) {
+                dispatch(SetNonFatalError('Could not delete report image'));
             }
-        } catch (error) {
-            dispatch(SetNonFatalError('Could not delete report image'));
-        }
-    };
+        };
