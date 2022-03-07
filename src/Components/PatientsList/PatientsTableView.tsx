@@ -70,7 +70,7 @@ export default function PatientsTableView() {
                     </Link>
                 </TableCell>
                 <TableCell onClick={() => handleCustomerSelect(customer)}>
-                    <EditIcon></EditIcon>
+                    <EditIcon color="primary"></EditIcon>
                 </TableCell>
             </TableRow>
         ));
