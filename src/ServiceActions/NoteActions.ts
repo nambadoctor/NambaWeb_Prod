@@ -27,6 +27,8 @@ export const GetNotes = (): ThunkAction<void, RootState, null, Action> => async 
 }
 
 export const UploadNote = (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetLinearLoadingBarToggle(true));
+
     try {
         let response = await postCall({} as any, SetCustomerNoteEndPoint(), note, "UploadNote")
 
@@ -34,12 +36,16 @@ export const UploadNote = (note: INoteOutgoingData): ThunkAction<void, RootState
             dispatch(GetNotes())
             toast.success("Upload Note Success")
         }
+
+        dispatch(SetLinearLoadingBarToggle(false));
     } catch (error) {
         dispatch(SetNonFatalError("Could not upload note"))
+        dispatch(SetLinearLoadingBarToggle(false));
     }
 }
 
 export const UploadStrayNote = (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+    dispatch(SetLinearLoadingBarToggle(true));
 
     let selectedPatient = getState().CurrentCustomerState.Customer
     let currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
@@ -55,8 +61,11 @@ export const UploadStrayNote = (note: INoteOutgoingData): ThunkAction<void, Root
             dispatch(GetNotes())
             toast.success("Upload Note Success")
         }
+
+        dispatch(SetLinearLoadingBarToggle(false));
     } catch (error) {
         dispatch(SetNonFatalError("Could not upload note"))
+        dispatch(SetLinearLoadingBarToggle(false));
     }
 }
 
