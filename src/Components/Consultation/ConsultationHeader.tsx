@@ -123,8 +123,8 @@ export default function ConsultationHeader() {
             <Container fluid>
                 <Row style={{ alignItems: 'flex-end' }}>
                     <Col className="col-md-1">
-                        {currentConsultation.previousAppointment &&
-                            getPreviousAppointmentUI()}
+                        {/* {currentConsultation.previousAppointment &&
+                            getPreviousAppointmentUI()} */}
                     </Col>
                     <Col className="col-md-10">
                         {currentCustomer && (
@@ -153,7 +153,8 @@ export default function ConsultationHeader() {
                                         }}
                                     >
                                         {currentConsultation.Appointment
-                                            ?.customerName ?? ''}
+                                            ?.customerName ??
+                                            currentCustomer.firstName}
                                     </Typography>
                                 </Col>
                                 <Col
@@ -211,20 +212,30 @@ export default function ConsultationHeader() {
                                     className="col-md-auto"
                                     style={{ marginLeft: 15 }}
                                 >
-                                    <Typography
-                                        style={{ fontSize: 10, opacity: 0.5 }}
-                                    >
-                                        Appointment Time
-                                    </Typography>
-                                    <Col>
-                                        <Typography style={{ fontSize: 17 }}>
-                                            {getReadableDateAndTimeString(
-                                                currentConsultation.Appointment
-                                                    ?.scheduledAppointmentStartTime ??
-                                                    '',
-                                            )}{' '}
-                                        </Typography>
-                                    </Col>
+                                    {currentConsultation.Appointment && (
+                                        <div>
+                                            <Typography
+                                                style={{
+                                                    fontSize: 10,
+                                                    opacity: 0.5,
+                                                }}
+                                            >
+                                                Appointment Time
+                                            </Typography>
+                                            <Col>
+                                                <Typography
+                                                    style={{ fontSize: 17 }}
+                                                >
+                                                    {getReadableDateAndTimeString(
+                                                        currentConsultation
+                                                            .Appointment
+                                                            ?.scheduledAppointmentStartTime ??
+                                                            '',
+                                                    )}{' '}
+                                                </Typography>
+                                            </Col>
+                                        </div>
+                                    )}
                                 </Col>
                                 <Col>
                                     <Spacer grow="1" />
@@ -233,8 +244,8 @@ export default function ConsultationHeader() {
                         )}
                     </Col>
                     <Col className="col-md-1">
-                        {currentConsultation.nextAppointment &&
-                            getNextAppointmentUI()}
+                        {/* {currentConsultation.nextAppointment &&
+                            getNextAppointmentUI()} */}
                     </Col>
                 </Row>
             </Container>
