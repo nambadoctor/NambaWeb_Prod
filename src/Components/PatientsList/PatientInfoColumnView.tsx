@@ -19,7 +19,7 @@ export default function PatientInfoColumnView() {
             <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
             <EditPatientView></EditPatientView>
 
-            {currentCustomer && Object.entries(currentCustomer).length > 0 && (
+            {/* {currentCustomer && Object.entries(currentCustomer).length > 0 && (
                 <div>
                     <AllPrescriptionImagesView
                         showUploadButton={true}
@@ -40,7 +40,7 @@ export default function PatientInfoColumnView() {
                     <NewNoteCard></NewNoteCard>
                     <AllNotesView></AllNotesView>
                 </div>
-            )}
+            )} */}
         </div>
     );
 }

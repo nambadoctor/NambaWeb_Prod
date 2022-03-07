@@ -75,8 +75,8 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
     AppointmentId: "",
     ServiceRequestId: "",
     File: await ConvertInputToFileOrBase64(file),
-    FileName: "",
-    FileType: "",
+    FileName: (file as File).name ?? "",
+    FileType: (file as File).type ?? "",
     Details: "",
     DetailsType: ""
   } as IPrescriptionUploadData

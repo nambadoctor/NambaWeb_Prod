@@ -14,7 +14,7 @@ export const ReportUploadPicker: React.FC<ImageUploadProps> = (props) => {
         <div>
             <input
                 type="file"
-                accept="image/*"
+                accept="image/*,application/pdf"
                 style={{ display: 'none' }}
                 id="report_upload_picker"
                 onChange={handleChange}
