@@ -147,7 +147,7 @@ export default function AddPatientView() {
                 </Col>
             </Row>
 
-            {/* BOOK PATIENT COMP */}
+            {/* BOOK APPOINTMENT COMP */}
             <Row
                 style={{
                     marginTop: 10,

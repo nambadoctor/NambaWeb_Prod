@@ -11,13 +11,19 @@ import { Link } from 'react-router-dom';
 import TablePaginationActions from '../Pagination/PaginationActions';
 import usePaginationHook from '../../CustomHooks/usePaginationHook';
 import usePatientsTableViewHook from '../../CustomHooks/usePatientsTableViewHook';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ClearContext } from '../../Actions/ClearContextAction';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 import EditIcon from '@mui/icons-material/Edit';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import { ClearCurrentCustomerState } from '../../Actions/CurrentCustomerActions';
 
-export default function PatientsTableView() {
+interface EditPatientViewProps {
+    setIsSchedulingAppointment: Dispatch<SetStateAction<boolean>>;
+}
+
+export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     const classes = usePatientTableStyles();
 
     const [selectedID, setSelectedID] = useState('');
@@ -69,8 +75,25 @@ export default function PatientsTableView() {
                         {customer.phoneNumbers[0].number}
                     </Link>
                 </TableCell>
-                <TableCell onClick={() => handleCustomerSelect(customer)}>
-                    <EditIcon color="primary"></EditIcon>
+                <TableCell>
+                    <EditIcon
+                        color="primary"
+                        onClick={() => {
+                            dispatch(ClearCurrentCustomerState())
+                            props.setIsSchedulingAppointment(false);
+                            handleCustomerSelect(customer);
+                        }}
+                        style={{cursor:"pointer"}}
+                    ></EditIcon>
+                    <DateRangeIcon
+                        color="primary"
+                        onClick={() => {
+                            dispatch(ClearCurrentCustomerState())
+                            props.setIsSchedulingAppointment(true);
+                            handleCustomerSelect(customer);
+                        }}
+                        style={{ marginLeft: 15, cursor:"pointer" }}
+                    ></DateRangeIcon>
                 </TableCell>
             </TableRow>
         ));
@@ -163,4 +186,4 @@ export default function PatientsTableView() {
             </TableContainer>
         </div>
     );
-}
+};
