@@ -11,9 +11,7 @@ import MobileDashboard from './mobile/MobileDashboard';
 import { PhoneNumberLogin } from './Components/PhoneNumberAuth/PhoneNumberLogin';
 import styles from '../src/Styles/loginstyles.module.scss';
 import { RootState } from './store';
-import { useDispatch, useSelector } from 'react-redux';
-import { SetIsMobileView } from './Actions/Common/MobileOrDesktopActions';
-
+import { useSelector } from 'react-redux';
 toast.configure();
 
 function App() {
@@ -23,14 +21,12 @@ function App() {
         (state: RootState) => state.mobileOrDesktopViewReducer.isMobile,
     );
 
-    useEffect(() => {
-        var x = isMobile
-    }, [isMobile])
-
     return (
         <AppInsightsContext.Provider value={reactPlugin}>
             {user ? (
-                user !== 'loading' && <MobileOrDesktopViewDecider isMobile={isMobile}/>
+                user !== 'loading' && (
+                    <MobileOrDesktopViewDecider isMobile={isMobile} />
+                )
             ) : (
                 <div className={styles.container}>
                     <PhoneNumberLogin />
@@ -41,13 +37,15 @@ function App() {
 }
 
 interface MobileOrDesktopViewProps {
-    isMobile: boolean
+    isMobile: boolean;
 }
 
-export const MobileOrDesktopViewDecider: React.FC<MobileOrDesktopViewProps> = (props) => {
+export const MobileOrDesktopViewDecider: React.FC<MobileOrDesktopViewProps> = (
+    props,
+) => {
     // const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
     return <div>{props.isMobile ? <MobileDashboard /> : <Dashboard />}</div>;
-}
+};
 
 export default App;

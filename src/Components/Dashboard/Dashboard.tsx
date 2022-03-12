@@ -48,6 +48,8 @@ function Dashboard() {
     }, []);
     //END
 
+    const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     function AppointmentsAndCalendarView() {
         return (
             <div
@@ -61,7 +63,7 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            <MobileDesktopToggleView></MobileDesktopToggleView>
+                            {isMobileCheck && <MobileDesktopToggleView></MobileDesktopToggleView>}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
