@@ -83,6 +83,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                             props.setIsSchedulingAppointment(false);
                             handleCustomerSelect(customer);
                         }}
+                        style={{cursor:"pointer"}}
                     ></EditIcon>
                     <DateRangeIcon
                         color="primary"
@@ -91,7 +92,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                             props.setIsSchedulingAppointment(true);
                             handleCustomerSelect(customer);
                         }}
-                        style={{ marginLeft: 15 }}
+                        style={{ marginLeft: 15, cursor:"pointer" }}
                     ></DateRangeIcon>
                 </TableCell>
             </TableRow>
