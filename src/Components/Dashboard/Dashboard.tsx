@@ -22,6 +22,7 @@ import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import MobileDashboard from '../../mobile/MobileDashboard';
 import DetailedPatient from '../DetailedPatient/DetailedPatient';
+import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -60,6 +61,7 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
+                            <MobileDesktopToggleView></MobileDesktopToggleView>
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>

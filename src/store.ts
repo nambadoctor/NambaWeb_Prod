@@ -14,6 +14,7 @@ import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
 import { CurrentCustomerReducer } from "./Reducers/CurrentCustomerReducer";
 
 import { LoginReducer } from "./Reducers/LoginReducer";
+import { MobileOrDesktopViewReducer } from "./Reducers/MobileOrDesktopViewReducer";
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
     ConsultationState: ConsultationReducer,
     CurrentCustomerState: CurrentCustomerReducer,
     LoadedState: LoadedStatesReducer,
-    loginReducer: LoginReducer
+    loginReducer: LoginReducer,
+    mobileOrDesktopViewReducer: MobileOrDesktopViewReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

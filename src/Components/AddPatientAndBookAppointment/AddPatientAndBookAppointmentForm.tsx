@@ -1,3 +1,4 @@
+import MobileDesktopToggleView from "../MobileDesktopToggleView/MobileDesktopToggleView";
 import AddPatientView from "./AddPatientView";
 
 export default function AddPatientForm() {
