@@ -34,6 +34,10 @@ export function GetServiceProviderBasicEndPoint () {
     return "serviceprovider";
 }
 
+export function GetServiceProvidersInOrgEndPoint (organisationId:string) {
+    return "serviceprovider/organisation/" + organisationId;
+}
+
 export function GetAppointmentForServiceProviderEndPoint(appointmentId:string, serviceProviderId:string) {
     return  "appointment/" + appointmentId + "/" + serviceProviderId;
 }

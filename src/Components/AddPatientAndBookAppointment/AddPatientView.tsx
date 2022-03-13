@@ -6,6 +6,7 @@ import DateTimePicker from '@mui/lab/DateTimePicker';
 
 import CustomButton from '../CustomButton';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+import BookForServiceProviderPicker from '../BookForDoctor/BookForDoctor';
 
 export default function AddPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
@@ -171,6 +172,8 @@ export default function AddPatientView() {
                     />
                 </LocalizationProvider>
             </Row>
+
+            <BookForServiceProviderPicker></BookForServiceProviderPicker>
 
             <Row style={{ marginBottom: 10, marginLeft: 0, marginRight: 0 }}>
                 <div

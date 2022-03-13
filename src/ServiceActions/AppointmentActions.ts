@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { GetCustomer } from "./CustomerActions";
 import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
 import { GetNextAndPreviousAppointmentForConsultation, SetAppointments } from "../Actions/AppointmentsActions";
+import { ResetSelectedServiceProvider } from "../Actions/OrganisationActions";
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -53,6 +54,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     if (response) {
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
+      dispatch(ResetSelectedServiceProvider())
       toast.success("Appointment Set Successfully")
     }
   } catch (error) {

@@ -19,6 +19,7 @@ import { GetNotes } from "./NoteActions";
 import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
 import { ClearContext } from "../Actions/ClearContextAction";
+import { ResetSelectedServiceProvider } from "../Actions/OrganisationActions";
 
 
 export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -80,6 +81,7 @@ export const SetCustomerAndBookAppointment = (customerProfileWithAppointment: IC
             dispatch(SetCurrentCustomer({} as ICustomerIncomingData))
             dispatch(GetAllAppointments())
             dispatch(GetAllCustomers())
+            dispatch(ResetSelectedServiceProvider())
             toast.success("Customer and Appointment Set Successfully")
         } else {
         }
@@ -105,6 +107,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
                 dispatch(ClearContext())
                 dispatch(GetCustomer(customerRequest.customerId))
                 dispatch(GetAllCustomers())
+                dispatch(ResetSelectedServiceProvider())
                 toast.success("Customer Set Successfully")
             }
         } else {
@@ -114,6 +117,7 @@ export const SetCustomer = (customerRequest: ICustomerProfileOutgoing): ThunkAct
                 dispatch(ClearContext())
                 dispatch(CheckIfCustomerExists(customerRequest.phoneNumbers[0].number, customerRequest.organisationId))
                 dispatch(GetAllCustomers())
+                dispatch(ResetSelectedServiceProvider())
                 toast.success("Customer Set Successfully")
             }
         }
