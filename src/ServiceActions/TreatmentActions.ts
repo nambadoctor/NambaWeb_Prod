@@ -4,15 +4,18 @@ import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetPatientTreatmentPlans, SetPatientTreatments } from "../Actions/CurrentCustomerActions";
 import { SetTreatments } from "../Actions/TreatmentActions";
-import { AddTreatmentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
+import { AddTreatmentEndPoint, AddTreatmentPlanDocumentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType";
+import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
 import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
 import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
+import { ITreatmentPlanDocumentOutgoing } from "../Types/OutgoingDataModels/TreatmentPlanDocumentOutgoing";
 import { ITreatmentPlanOutgoing } from "../Types/OutgoingDataModels/TreatmentPlanOutgoing";
+import { ConvertInputToFileOrBase64 } from "../Utils/GeneralUtils";
 
 export const GetAllTreatments = (onlyShowUpcoming: boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
@@ -116,7 +119,7 @@ export const AddTreatment = (treatment: ITreatmentOutgoing, treatmentPlanId: str
         } else {
             dispatch(SetNonFatalError("Could not Add Treatment!"))
         }
-        
+
     }
 };
 
@@ -184,6 +187,46 @@ export const DeleteTreatment =
             }
         };
 
+export const UploadTreatmentPlanDocument =
+    (
+        file: any,
+        appointment?: IAppointmentData,
+    ): ThunkAction<void, RootState, null, Action> =>
+        async (dispatch, getState) => {
+            dispatch(SetLinearLoadingBarToggle(true));
+
+            var treatmentPlanDocRequest = {
+                File: await ConvertInputToFileOrBase64(file),
+                FileName: '',
+                FileType: '',
+                TreatmentPlanId: ''
+            } as ITreatmentPlanDocumentOutgoing;
+
+            SetTrackTrace(
+                'Enter Upload TreatmentPlanDocument Action',
+                'UploadTreatmentPlanDocument',
+                SeverityLevel.Information,
+            );
+
+            try {
+                let response = await postCall(
+                    {} as any,
+                    AddTreatmentPlanDocumentEndPoint(),
+                    treatmentPlanDocRequest,
+                    'UploadTreatmentPlanDocument',
+                );
+
+                if (response) {
+                    //dispatch(GetReports());
+
+                    dispatch(SetLinearLoadingBarToggle(false));
+                    toast.success('TreatmentPlan Image Uploaded');
+                }
+            } catch (error) {
+                dispatch(SetNonFatalError('Could not upload treatment plan image'));
+            }
+        };
+
 
 // export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 //     SetTrackTrace("Enter Get All Treatments Action", "GetAllTreatments", SeverityLevel.Information);
@@ -203,7 +246,7 @@ export const DeleteTreatment =
 //         if (response) {
 //             dispatch(GetAllTreatmentPlans())
 //         }
-        
+
 //         SetTrackTrace("Dispatch Set All Treatments" + response.data, "GetAllTreatments", SeverityLevel.Information);
 //         dispatch(SetPatientTreatments(response.data));
 
