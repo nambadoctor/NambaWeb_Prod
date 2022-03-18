@@ -18,7 +18,8 @@ import { TreatmentPlansTable } from '../TreatmentsTable/TreatmentsTable';
 import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
-import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocumentUploadPicker/TreatmentPlanDocumentUploadPicker';
+import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
+import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -90,9 +91,10 @@ export default function ConsultationView() {
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    <TreatmentPlansTable
+                    <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
+                    {/* <TreatmentPlansTable
                         treatmentPlans={currentCustomerTreatmentPlans}
-                    ></TreatmentPlansTable>
+                    ></TreatmentPlansTable> */}
                 </div>
             </Row>
 

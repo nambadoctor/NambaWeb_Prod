@@ -1,5 +1,6 @@
 export interface ITreatmentPlanDocumentOutgoing {
-    TreatmentPlanId:string
+    AppointmentId:string
+    ServiceRequestId:string
     File:string
     FileName:string
     FileType:string

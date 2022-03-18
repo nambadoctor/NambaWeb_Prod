@@ -4,6 +4,7 @@ import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
 import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
 import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
 import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
+import ITreatmentPlanDocumentIncomingData from "../Types/IncomingDataModels/TreatmentPlanDocumentIncoming";
 import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
 
 export enum CurrentCustomer_Types {
@@ -13,6 +14,7 @@ export enum CurrentCustomer_Types {
     SET_NOTES = "SET_NOTES",
     SET_TREATMENT_PLANS = "SET_TREATMENT_PLANS",
     SET_TREATMENTS = "SET_TREATMENTS",
+    SET_TREATMENT_PLAN_DOCUMENTS = "SET_TREATMENT_PLAN_DOCUMENTS",
     CLEAR_ALL = "CLEAR_ALL"
 }
 
@@ -22,7 +24,8 @@ export interface CurrentCustomerState {
     Prescriptions: IPrescriptionIncomingData[] | null,
     Notes: INoteIncomingData[] | null,
     TreatmentPlans: ITreatmentPlanIncoming[] | null
-    Treatments: ITreatmentIncoming[] | null
+    Treatments: ITreatmentIncoming[] | null,
+    TreatmentPlanDocuments: ITreatmentPlanDocumentIncomingData[] | null
 }
 
 const initialState: CurrentCustomerState = {
@@ -31,7 +34,8 @@ const initialState: CurrentCustomerState = {
     Prescriptions: null,
     Notes: null,
     TreatmentPlans: null,
-    Treatments: null
+    Treatments: null,
+    TreatmentPlanDocuments: null
 }
 
 export const CurrentCustomerReducer = (state: CurrentCustomerState = initialState, action: Action): CurrentCustomerState => {
@@ -66,6 +70,11 @@ export const CurrentCustomerReducer = (state: CurrentCustomerState = initialStat
                 ...state,
                 Treatments: action.payload
             }
+        case CurrentCustomer_Types.SET_TREATMENT_PLAN_DOCUMENTS:
+            return {
+                ...state,
+                TreatmentPlanDocuments: action.payload
+            }
         case CurrentCustomer_Types.CLEAR_ALL:
             return {
                 Customer: null,
@@ -73,7 +82,8 @@ export const CurrentCustomerReducer = (state: CurrentCustomerState = initialStat
                 Prescriptions: null,
                 Notes: null,
                 TreatmentPlans: null,
-                Treatments: null
+                Treatments: null,
+                TreatmentPlanDocuments: null
             }
         default:
             return state

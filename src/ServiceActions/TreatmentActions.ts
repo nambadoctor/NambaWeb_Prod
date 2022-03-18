@@ -2,15 +2,16 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { toast } from "react-toastify";
 import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
-import { SetPatientTreatmentPlans, SetPatientTreatments } from "../Actions/CurrentCustomerActions";
+import { SetPatientTreatmentPlanDocuments, SetPatientTreatmentPlans, SetPatientTreatments, SetReports } from "../Actions/CurrentCustomerActions";
 import { SetTreatments } from "../Actions/TreatmentActions";
-import { AddTreatmentEndPoint, AddTreatmentPlanDocumentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint } from "../Helpers/EndPointHelpers";
+import { AddTreatmentEndPoint, AddTreatmentPlanDocumentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint, GetTreatmentPlanDocumentsForAppointmentEndPoint, GetTreatmentPlanDocumentsForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { Action } from "../Types/ActionType";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
+import ITreatmentPlanDocumentIncomingData from "../Types/IncomingDataModels/TreatmentPlanDocumentIncoming";
 import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
 import { ITreatmentOutgoing } from "../Types/OutgoingDataModels/TreatmentOutgoing";
 import { ITreatmentPlanDocumentOutgoing } from "../Types/OutgoingDataModels/TreatmentPlanDocumentOutgoing";
@@ -190,16 +191,18 @@ export const DeleteTreatment =
 export const UploadTreatmentPlanDocument =
     (
         file: any,
-        appointment?: IAppointmentData,
     ): ThunkAction<void, RootState, null, Action> =>
         async (dispatch, getState) => {
             dispatch(SetLinearLoadingBarToggle(true));
+
+            const appointment = getState().ConsultationState.Appointment;
 
             var treatmentPlanDocRequest = {
                 File: await ConvertInputToFileOrBase64(file),
                 FileName: '',
                 FileType: '',
-                TreatmentPlanId: ''
+                AppointmentId: appointment?.appointmentId,
+                ServiceRequestId: appointment?.serviceRequestId
             } as ITreatmentPlanDocumentOutgoing;
 
             SetTrackTrace(
@@ -217,7 +220,7 @@ export const UploadTreatmentPlanDocument =
                 );
 
                 if (response) {
-                    //dispatch(GetReports());
+                    dispatch(GetTreatmentDocumentsForCustomer())
 
                     dispatch(SetLinearLoadingBarToggle(false));
                     toast.success('TreatmentPlan Image Uploaded');
@@ -226,6 +229,30 @@ export const UploadTreatmentPlanDocument =
                 dispatch(SetNonFatalError('Could not upload treatment plan image'));
             }
         };
+
+export const GetTreatmentDocumentsForCustomer =
+    (): ThunkAction<void, RootState, null, Action> =>
+        async (dispatch, getState) => {
+
+            const currentCustomer = getState().CurrentCustomerState.Customer;
+
+            try {
+                let response = await getCall(
+                    {} as Array<ITreatmentPlanDocumentIncomingData>,
+                    GetTreatmentPlanDocumentsForCustomerEndPoint(currentCustomer?.customerId ?? ""),
+                    'GetTreatmentPlanDocuments',
+                );
+
+                if (response) {
+                    dispatch(SetPatientTreatmentPlanDocuments(response.data));
+                }
+            } catch (error) {
+                dispatch(
+                    SetNonFatalError('Could not get all treatment plan documents for this patient'),
+                );
+            }
+        };
+
 
 
 // export const GetAllTreatmentsForPatient = (isUpcomingTreatment?:boolean): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

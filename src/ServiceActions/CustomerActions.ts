@@ -19,7 +19,7 @@ import { GetNotes } from "./NoteActions";
 import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import { SetCustomers } from "../Actions/CustomerActions";
 import { ClearContext } from "../Actions/ClearContextAction";
-import { GetAllTreatmentPlans } from "./TreatmentActions";
+import { GetAllTreatmentPlans, GetTreatmentDocumentsForCustomer } from "./TreatmentActions";
 
 
 export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -191,4 +191,5 @@ export const GetCustomerData = (): ThunkAction<void, RootState, null, Action> =>
     dispatch(GetPrescriptions())
     dispatch(GetNotes())
     dispatch(GetAllTreatmentPlans())
+    dispatch(GetTreatmentDocumentsForCustomer())
 }
