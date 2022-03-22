@@ -12,7 +12,6 @@ import {
 } from '../../Utils/GeneralUtils';
 import { makeStyles } from '@mui/styles';
 import { Box, TableFooter, TablePagination, Typography } from '@mui/material';
-import AppointmentStatusEnum from '../../Types/Enums/AppointmentStatusEnums';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import IAppointmentData from '../../Types/IncomingDataModels/Appointment';
@@ -24,11 +23,9 @@ import { CancelAppointment } from '../../ServiceActions/AppointmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { ClearContext } from '../../Actions/ClearContextAction';
+import AppointmentTypeEnum from '../../Types/Enums/AppointmentStatusEnums';
 
 const useAppointmentTableStyles = makeStyles(() => ({
-    table: {
-        minWidth: 650,
-    },
     tableContainer: {
         borderRadius: 15,
         margin: '10px 10px',
@@ -65,7 +62,7 @@ export default function AppointmentsTable() {
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
     );
 
-    const showAppointmentReports = createSelector(
+    const showAppointments = createSelector(
         (state: RootState) => state.AppointmentState.appointments,
         (appointments) =>
             appointments.filter((appointment) =>
@@ -76,7 +73,7 @@ export default function AppointmentsTable() {
             ),
     );
 
-    const appointments = useSelector(showAppointmentReports);
+    const appointments = useSelector(showAppointments);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
@@ -101,38 +98,18 @@ export default function AppointmentsTable() {
         return convertDaysIntoNearestUnit(days);
     }
 
-    function getDisplayNameForAppointmentState(appointmentState: string) {
-        switch (appointmentState) {
-            case AppointmentStatusEnum.Confirmed:
-                return 'Confirmed';
-            case AppointmentStatusEnum.StartedConsultation:
-                return 'Started';
-            case AppointmentStatusEnum.Finished:
-                return 'Finished';
-            case AppointmentStatusEnum.Cancelled:
-                return 'Cancelled';
-            default:
-                break;
-        }
-    }
-
     function getBackgroundColorForAppointmentState(appointmentState: string) {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
         switch (appointmentState) {
-            case AppointmentStatusEnum.Confirmed:
+            case AppointmentTypeEnum.Consultation:
                 colorCodesToReturn = ['#e5faf2', '#3bb077'];
                 break;
-            case AppointmentStatusEnum.StartedConsultation:
+            case AppointmentTypeEnum.Treatment:
                 colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
                 break;
-            case AppointmentStatusEnum.Finished:
-                colorCodesToReturn = ['#fff0f1', '#d95087'];
-                break;
-            case AppointmentStatusEnum.Cancelled:
-                colorCodesToReturn = ['', ''];
-                break;
             default:
+                colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
                 break;
         }
 
@@ -166,14 +143,14 @@ export default function AppointmentsTable() {
                         style={{
                             backgroundColor:
                                 getBackgroundColorForAppointmentState(
-                                    appointment.status,
+                                    appointment.appointmentType,
                                 )[0],
                             color: getBackgroundColorForAppointmentState(
-                                appointment.status,
+                                appointment.appointmentType,
                             )[1],
                         }}
                     >
-                        {getDisplayNameForAppointmentState(appointment.status)}
+                        {appointment.appointmentType}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
@@ -191,12 +168,8 @@ export default function AppointmentsTable() {
     }
 
     function cancelAppointment(appointment: IAppointmentData) {
-        if (appointment.status !== AppointmentStatusEnum.Finished) {
-            if (window.confirm('Do you want to cancel this appointment?')) {
-                dispatch(CancelAppointment(appointment));
-            }
-        } else {
-            window.confirm('Sorry you cannot delete this appointment');
+        if (window.confirm('Do you want to delete this appointment?')) {
+            dispatch(CancelAppointment(appointment));
         }
     }
 
@@ -205,7 +178,7 @@ export default function AppointmentsTable() {
             component={Paper}
             style={{ borderRadius: 15, marginBottom: 10 }}
         >
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 300 }} aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
                         <TableCell

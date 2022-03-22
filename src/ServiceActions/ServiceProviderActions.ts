@@ -12,8 +12,7 @@ import { SeverityLevel } from "@microsoft/applicationinsights-web";
 import { SetFatalError, SetLinearLoadingBarToggle } from "../Actions/Common/UIControlActions";
 import { SetCurrentServiceProviderLoadedState } from "../Actions/LoadedStatesActions";
 import { SetCurrentServiceProvider } from "../Actions/ServiceProviderActions";
-import { SetServiceProvidersInOrg } from "../Actions/OrganisationActions";
-
+import { GetAllTreatments } from "./TreatmentActions";
 
 export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get Service Provider", "GetCurrentServiceProvider", SeverityLevel.Information);
@@ -43,6 +42,9 @@ export const GetCurrentServiceProvider = (): ThunkAction<void, RootState, null, 
 
         SetTrackTrace("Dispatch Get All Appointments" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
         dispatch(GetAllAppointments());
+
+        SetTrackTrace("Dispatch Get All Treatments" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
+        dispatch(GetAllTreatments(false));
 
         SetTrackTrace("Dispatch Get All Customers For Service Provider In Org" + response.data, "GetCurrentServiceProvider", SeverityLevel.Information);
         dispatch(GetAllCustomers());
@@ -76,8 +78,6 @@ export const GetServiceProvidersInOrg = (): ThunkAction<void, RootState, null, A
 
         dispatch(SetLinearLoadingBarToggle(false))
         dispatch(SetCurrentServiceProviderLoadedState(true))
-
-        dispatch(SetServiceProvidersInOrg(response.data))
 
     } catch (error) {
         dispatch(SetFatalError("Cannot get service providers in org!"))

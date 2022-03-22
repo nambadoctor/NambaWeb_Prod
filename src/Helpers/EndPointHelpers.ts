@@ -6,6 +6,46 @@ export function GetServiceProviderAppointmentsInOrganisationEndPoint(organisatio
     return "organisation/" + organisationId + "/appointments" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
 
+export function GetServiceProviderTreatmentsInOrganisationEndPoint(organisationId: string, serviceProviderId: string) {
+    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId;
+}
+
+export function GetServiceProviderTreatmentPlansInOrganisationEndPoint(organisationId: string, serviceProviderId: string, customerId: string) {
+    return "treatmentplan/" + organisationId + "/" + serviceProviderId + "?CustomerId=" + customerId;
+}
+
+export function AddTreatmentEndPoint(treatmentPlanId:string) {
+    return "treatmentplan/treatment/" + treatmentPlanId;
+}
+
+export function AddTreatmentPlanEndPoint() {
+    return "treatmentplan";
+}
+
+export function AddTreatmentPlanDocumentEndPoint() {
+    return "treatmentplan/document";
+}
+
+export function DeleteTreatmentPlanDocumentEndPoint(treatmentPlanDocumentId:string) {
+    return "treatmentplan/document/" + treatmentPlanDocumentId;
+}
+
+export function GetTreatmentPlanDocumentsForAppointmentEndPoint(serviceRequestId: string) {
+    return "treatmentplan/document/" + serviceRequestId;
+}
+
+export function GetTreatmentPlanDocumentsForCustomerEndPoint(customerId: string) {
+    return "treatmentplan/document/customer/" + customerId;
+}
+
+export function DeleteTreatmentEndPoint(treatmentId:string, treatmentPlanId:string) {
+    return "treatmentplan/treatment/" + treatmentPlanId + "/" + treatmentId;
+}
+
+export function GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint(organisationId: string, serviceProviderId: string, customerId: string, isUpcoming: boolean) {
+    return "treatmentplan/treatments/" + organisationId + "/" + serviceProviderId + "?CustomerId=" + customerId + "&IsUpcoming=" + isUpcoming;
+}
+
 export function GetServiceProviderCustomersInOrganisationEndPoint(organisationId: string, serviceProviderIds: string[]) {
     return "organisation/" + organisationId + "/customers" + "?ServiceProviderIds=" + (serviceProviderIds.join(","));
 }
@@ -14,12 +54,16 @@ export function CancelAppointmentEndPoint () {
     return "appointment/cancel"
 }
 
+export function SetNewAppointmentEndPoint () {
+    return "appointment"
+}
+
 export function EndAppointmentEndPoint () {
     return "appointment/end"
 }
 
-export function SetNewAppointmentEndPoint () {
-    return "appointment"
+export function SetNewAppointmentWithTreatmentEndPoint () {
+    return "appointment/treatment"
 }
 
 export function SetCustomerWithAppointmentEndPoint () {

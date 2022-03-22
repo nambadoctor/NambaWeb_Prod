@@ -1,3 +1,4 @@
+import LoginPage from "../Login/LoginPage";
 import React, { Fragment } from 'react'
 
 
@@ -31,6 +32,12 @@ export default function IndexPage() {
                                                         <img src="https://nbigdatatest.blob.core.windows.net/ndtest/NDLogoBanner.png?sp=r&st=2022-01-17T19:57:19Z&se=2023-01-05T03:57:19Z&sv=2020-08-04&sr=b&sig=CExNZ7iAjY4Y50udWpgFmFjQchQgwjvBfbzSkK9AC88%3D" className="logo" alt="Namba Doctor" />
                                                     </div>
                                                 </div>
+
+                                                <div>
+
+                                                    <LoginPage />
+                                                </div>
+
                                             </div>
 
                                             <div className="col-md-6 col-xs-12 col-sm-12 zero_padd">

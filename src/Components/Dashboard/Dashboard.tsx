@@ -20,8 +20,9 @@ import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUs
 import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
-import MobileDashboard from '../../mobile/MobileDashboard';
+import Treatments from '../TreatmentsTab/Treatments';
 import DetailedPatient from '../DetailedPatient/DetailedPatient';
+import MobileDashboard from '../../mobile/MobileDashboard';
 import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
 
 function Dashboard() {
@@ -32,6 +33,11 @@ function Dashboard() {
 
     const isViewingImage = useSelector(
         (state: RootState) => state.UITriggerState.isViewingImage,
+    );
+
+    const treatmentsExistForPatient = useSelector(
+        (state: RootState) =>
+            (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
     );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
@@ -63,7 +69,9 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            {isMobileCheck && <MobileDesktopToggleView></MobileDesktopToggleView>}
+                            {isMobileCheck && (
+                                <MobileDesktopToggleView></MobileDesktopToggleView>
+                            )}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -109,6 +117,10 @@ function Dashboard() {
                             element={AppointmentsAndCalendarView()}
                         />
                         <Route path="/Patients" element={PatientsView()} />
+                        <Route
+                            path="/Treatments"
+                            element={<Treatments></Treatments>}
+                        />
                         <Route
                             path="/Consultation/:id"
                             element={<ConsultationView></ConsultationView>}

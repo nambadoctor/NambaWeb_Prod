@@ -1,12 +1,10 @@
 import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
 import ReportImageView from '../ReportUpload/ReportImageView';
 import ConsultationHeader from './ConsultationHeader';
-import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
-import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
@@ -16,6 +14,13 @@ import { UploadPrescriptionForConsultation } from '../../ServiceActions/Prescrip
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
+import { TreatmentPlansTable } from '../TreatmentsTable/TreatmentsTable';
+import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
+import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
+import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
+import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
+import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -30,6 +35,10 @@ export default function ConsultationView() {
             dispatch(GetAppointment(id as string));
         }
     }, [currentServiceProvider, id]);
+
+    const currentCustomerTreatmentPlans = useSelector(
+        (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
+    );
 
     return (
         <div>
@@ -69,6 +78,24 @@ export default function ConsultationView() {
                         showUploadButton={false}
                         showCancelImageButton={false}
                     />
+                </div>
+            </Row>
+
+            <Row style={{ margin: 20 }}>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
+                        Treatments
+                    </h3>
+                    <TreatmentPlanDocumentUploadPicker
+                        handlePhotoCallBack={UploadTreatmentPlanDocument}
+                        uploadButtonColor="white"
+                    />
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
+                    {/* <TreatmentPlansTable
+                        treatmentPlans={currentCustomerTreatmentPlans}
+                    ></TreatmentPlansTable> */}
                 </div>
             </Row>
 

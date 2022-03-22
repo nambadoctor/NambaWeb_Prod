@@ -11,7 +11,7 @@ export default function EditPatientView() {
         usePatientInputHook(false);
 
     return (
-        <div>
+        <div style={{width: 350}}>
             <div
                 style={{
                     display: 'flex',

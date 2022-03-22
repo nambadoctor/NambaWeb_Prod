@@ -13,11 +13,12 @@ export default function useAuthHook() {
 
     const dispatch = useDispatch();
 
-    const code = useSelector((state: RootState) => state.loginReducer.code)
-    const pno = useSelector((state: RootState) => state.loginReducer.pno)
-    const otpShow = useSelector((state: RootState) => state.loginReducer.otpShow)
-    const otp = useSelector((state: RootState) => state.loginReducer.otp)
-    const confirmationR = useSelector((state: RootState) => state.loginReducer.confirmationR)
+    const code = "+91"
+    // useSelector((state: RootState) => state.loginState.code)
+    const pno = useSelector((state: RootState) => state.loginState.pno)
+    const otpShow = useSelector((state: RootState) => state.loginState.otpShow)
+    const otp = useSelector((state: RootState) => state.loginState.otp)
+    const confirmationR = useSelector((state: RootState) => state.loginState.confirmationR)
 
     useEffect(() => {
         console.log(confirmationR)

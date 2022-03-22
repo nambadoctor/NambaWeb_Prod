@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import AddPatientView from '../AddPatientAndBookAppointment/AddPatientView';
@@ -7,6 +8,7 @@ import { PatientsTableView } from './PatientsTableView';
 export default function PatientsTabMainView() {
     const [isSchedulingAppointment, setIsSchedulingAppointment] =
         useState(false);
+
 
     return (
         <div>
