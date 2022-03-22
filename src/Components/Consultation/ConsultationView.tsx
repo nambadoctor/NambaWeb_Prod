@@ -88,7 +88,7 @@ export default function ConsultationView() {
                     </h3>
                     <TreatmentPlanDocumentUploadPicker
                         handlePhotoCallBack={UploadTreatmentPlanDocument}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">

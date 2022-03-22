@@ -102,11 +102,14 @@ export default function AppointmentsTable() {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
         switch (appointmentState) {
-            case AppointmentTypeEnum.Consultation:
-                colorCodesToReturn = ['#e5faf2', '#3bb077'];
-                break;
-            case AppointmentTypeEnum.Treatment:
-                colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
+            // case AppointmentTypeEnum.Consultation:
+            //     colorCodesToReturn = ['#e5faf2', '#3bb077'];
+            //     break;
+            // case AppointmentTypeEnum.Treatment:
+            //     colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
+            //     break;
+            case "Finished":
+                colorCodesToReturn = ['#fff0f1', '#d95087'];
                 break;
             default:
                 colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
@@ -143,14 +146,14 @@ export default function AppointmentsTable() {
                         style={{
                             backgroundColor:
                                 getBackgroundColorForAppointmentState(
-                                    appointment.appointmentType,
+                                    appointment.status,
                                 )[0],
                             color: getBackgroundColorForAppointmentState(
-                                appointment.appointmentType,
+                                appointment.status,
                             )[1],
                         }}
                     >
-                        {appointment.appointmentType}
+                        {appointment.status}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
@@ -197,7 +200,7 @@ export default function AppointmentsTable() {
                             className={classes.tableHeaderCell}
                             align="left"
                         >
-                            Status
+                            Type
                         </TableCell>
                         <TableCell
                             className={classes.tableHeaderCell}
