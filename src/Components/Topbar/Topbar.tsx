@@ -76,22 +76,6 @@ export default function Topbar() {
                     >
                         Patients
                     </Link>
-                    <Link
-                        to="/Treatments"
-                        onClick={() => {
-                            switchTabs();
-                        }}
-                        style={{
-                            color: 'white',
-                            fontSize: 18,
-                            fontWeight: '600',
-                            marginLeft: 20,
-                            marginRight: 40,
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Treatments
-                    </Link>
                     <div
                         onClick={SignOut}
                         style={{

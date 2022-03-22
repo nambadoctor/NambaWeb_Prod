@@ -168,12 +168,8 @@ export default function AppointmentsTable() {
     }
 
     function cancelAppointment(appointment: IAppointmentData) {
-        if (appointment.status !== AppointmentStatusEnum.Finished) {
-            if (window.confirm('Do you want to cancel this appointment?')) {
-                dispatch(CancelAppointment(appointment));
-            }
-        } else {
-            window.confirm('Sorry you cannot delete this appointment');
+        if (window.confirm('Do you want to delete this appointment?')) {
+            dispatch(CancelAppointment(appointment));
         }
     }
 

@@ -29,9 +29,9 @@ const rootReducer = combineReducers({
     ConsultationState: ConsultationReducer,
     CurrentCustomerState: CurrentCustomerReducer,
     LoadedState: LoadedStatesReducer,
-    loginReducer: LoginReducer,
+    loginState: LoginReducer,
     mobileOrDesktopViewReducer: MobileOrDesktopViewReducer,
-    TreatmentState: treatmentsReducer
+    TreatmentState: treatmentsReducer,
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

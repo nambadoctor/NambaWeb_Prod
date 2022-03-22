@@ -23,7 +23,6 @@ import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import Treatments from '../TreatmentsTab/Treatments';
 import DetailedPatient from '../DetailedPatient/DetailedPatient';
 import MobileDashboard from '../../mobile/MobileDashboard';
-import DetailedPatient from '../DetailedPatient/DetailedPatient';
 import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
 
 function Dashboard() {
@@ -70,7 +69,9 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
-                            {isMobileCheck && <MobileDesktopToggleView></MobileDesktopToggleView>}
+                            {isMobileCheck && (
+                                <MobileDesktopToggleView></MobileDesktopToggleView>
+                            )}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -127,7 +128,7 @@ function Dashboard() {
                         <Route
                             path="/Patient/:id"
                             element={<DetailedPatient></DetailedPatient>}
-
+                        />
                     </Routes>
                 </div>
             </div>
