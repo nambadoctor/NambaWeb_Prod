@@ -15,6 +15,7 @@ import CriticalAlertDisplay from '../Components/UIHelperComponents/CriticalAlert
 import { SetInitialLoadingStartTime } from '../Actions/LoadedStatesActions';
 import MobileNavBar from './MobileNavBar';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
+import MobileDesktopToggleView from '../Components/MobileDesktopToggleView/MobileDesktopToggleView';
 
 function MobileDashboard() {
     const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function MobileDashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
+                            <MobileDesktopToggleView></MobileDesktopToggleView>
                             <h5 style={{ marginBottom: 20 }}>Appointments</h5>
                             <MobileAppointmentsTableView />
                         </Col>

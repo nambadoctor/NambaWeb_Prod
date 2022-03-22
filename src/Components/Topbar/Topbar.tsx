@@ -20,20 +20,22 @@ export default function Topbar() {
 
     return (
         <Navbar bg="topBarBlue" fixed="top" expand="sm">
-            <Navbar.Brand>
-                <img
-                    alt="logo"
-                    style={{
-                        width: 60,
-                        height: 60,
-                        borderRadius: 15,
-                        marginRight: 10,
-                        marginLeft: 10,
-                    }}
-                    src={String(logo)}
-                />
-                <span className="logo">NAMBA DOCTOR</span>
-            </Navbar.Brand>
+            <Link to={'/'} onClick={() => dispatch(ClearContext())}>
+                <Navbar.Brand>
+                    <img
+                        alt="logo"
+                        style={{
+                            width: 60,
+                            height: 60,
+                            borderRadius: 15,
+                            marginRight: 10,
+                            marginLeft: 10,
+                        }}
+                        src={String(logo)}
+                    />
+                    <span className="logo">NAMBA DOCTOR</span>
+                </Navbar.Brand>
+            </Link>
 
             <Navbar.Toggle />
             <Navbar.Collapse>

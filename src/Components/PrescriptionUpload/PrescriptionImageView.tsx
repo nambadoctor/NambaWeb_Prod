@@ -2,11 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { DeletePrescription } from '../../ServiceActions/PrescriptionActions';
 import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { createSelector } from 'reselect';
+import { Row } from 'react-bootstrap';
+import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export default function PrescriptionImageView() {
     const dispatch = useDispatch();
@@ -15,8 +14,8 @@ export default function PrescriptionImageView() {
         currentImage,
         isViewerOpen,
         images,
-        setImages,
         openImageViewer,
+        setImages,
         closeImageViewer,
     } = useImagesHook();
 
@@ -59,14 +58,6 @@ export default function PrescriptionImageView() {
         setImages(stringList);
     }
 
-    function deletePrescription(prescription: IPrescriptionIncomingData) {
-        if (
-            window.confirm('Are you sure you want to delete this prescription?')
-        ) {
-            dispatch(DeletePrescription(prescription));
-        }
-    }
-
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
@@ -78,34 +69,14 @@ export default function PrescriptionImageView() {
                                 currentAppointmentId,
                         )
                         .map((src, index) => (
-                            <div
-                                style={{
-                                    display: 'inline-block',
-                                    position: 'relative',
-                                    marginTop: 10,
-                                    marginRight: 20,
-                                }}
-                            >
-                                <img
-                                    src={src.sasUrl}
-                                    onClick={() => openImageViewer(index)}
-                                    key={index}
-                                    style={{ width: 100, height: 100 }}
-                                />
-
-                                <div
-                                    onClick={() =>
-                                        dispatch(deletePrescription(src))
-                                    }
-                                    style={{
-                                        position: 'absolute',
-                                        top: -10,
-                                        right: -15,
-                                    }}
-                                >
-                                    <CancelIcon />
-                                </div>
-                            </div>
+                            <Thumbnail
+                                src={src}
+                                index={index}
+                                openImage={openImageViewer}
+                                showCancelImageButton={true}
+                                showUploadedTime={false}
+                                type="Prescription"
+                            ></Thumbnail>
                         ))}
 
                 {isViewerOpen && (
@@ -120,7 +91,7 @@ export default function PrescriptionImageView() {
             </div>
         );
     }
-    
+
     return (
         <div>
             {currentCustomerPrescriptions &&

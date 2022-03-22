@@ -63,8 +63,8 @@ export const UploadReportForConsultation =
                 AppointmentId: currentConsultationAppointment!.appointmentId,
                 ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
                 File: await ConvertInputToFileOrBase64(file),
-                FileName: '',
-                FileType: '',
+                FileName: (file as File).name ?? "",
+                FileType: (file as File).type ?? "",
                 Details: '',
                 DetailsType: '',
             } as IReportUploadData;
@@ -107,8 +107,8 @@ export const UploadReportAsStray =
                 AppointmentId: '',
                 ServiceRequestId: '',
                 File: await ConvertInputToFileOrBase64(file),
-                FileName: '',
-                FileType: '',
+                FileName: (file as File).name ?? "",
+                FileType: (file as File).type ?? "",
                 Details: '',
                 DetailsType: '',
             } as IReportUploadData;

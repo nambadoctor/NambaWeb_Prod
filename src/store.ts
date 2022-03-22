@@ -14,22 +14,24 @@ import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
 import { CurrentCustomerReducer } from "./Reducers/CurrentCustomerReducer";
 import { treatmentsReducer } from "./Reducers/TreatmentsReducers";
 import { LoginReducer } from "./Reducers/LoginReducer";
+import { MobileOrDesktopViewReducer } from "./Reducers/MobileOrDesktopViewReducer";
 
 
 const rootReducer = combineReducers({
-  OrgState: orgReducer,
-  ServiceProviderBasicState: serviceProviderBasicReducer,
-  AppointmentState: appointmentReducer,
-  SelectedDatesState: selectedDateReducer,
-  CustomersState: customerReducer,
-  UITriggerState: uiTriggerReducer,
-  CurrentServiceProviderState: currentServiceProviderReducer,
-  AddPatientState: addPatientReducer,
-  ConsultationState: ConsultationReducer,
-  CurrentCustomerState: CurrentCustomerReducer,
-  LoadedState: LoadedStatesReducer,
-  TreatmentState: treatmentsReducer,
-  loginState: LoginReducer
+    OrgState: orgReducer,
+    ServiceProviderBasicState: serviceProviderBasicReducer,
+    AppointmentState: appointmentReducer,
+    SelectedDatesState: selectedDateReducer,
+    CustomersState: customerReducer,
+    UITriggerState: uiTriggerReducer,
+    CurrentServiceProviderState: currentServiceProviderReducer,
+    AddPatientState: addPatientReducer,
+    ConsultationState: ConsultationReducer,
+    CurrentCustomerState: CurrentCustomerReducer,
+    LoadedState: LoadedStatesReducer,
+    loginReducer: LoginReducer,
+    mobileOrDesktopViewReducer: MobileOrDesktopViewReducer,
+    TreatmentState: treatmentsReducer
 });
 
 const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

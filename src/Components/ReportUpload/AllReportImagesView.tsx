@@ -15,6 +15,7 @@ import { AllImageDisplayProps } from '../../Helpers/CommonProps';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { dateToDateString } from '../../Utils/GeneralUtils';
+import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
     const dispatch = useDispatch();
@@ -103,51 +104,16 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                             currentAppointmentId,
                                     )
                                     .map((src, index) => (
-                                        <div
-                                            style={{
-                                                display: 'inline-block',
-                                                position: 'relative',
-                                                marginTop: 10,
-                                                marginRight: 20,
-                                            }}
-                                        >
-                                            <img
-                                                src={src.sasUrl}
-                                                onClick={() =>
-                                                    openImageViewer(index)
-                                                }
-                                                key={index}
-                                                style={{
-                                                    width: 100,
-                                                    height: 100,
-                                                }}
-                                            />
-
-                                            <div>
-                                                {src.uploadedDateTime
-                                                    ? dateToDateString(
-                                                          src.uploadedDateTime,
-                                                      )
-                                                    : '--/--/---'}
-                                            </div>
-
-                                            {props.showCancelImageButton && (
-                                                <div
-                                                    onClick={() =>
-                                                        dispatch(
-                                                            deleteReport(src),
-                                                        )
-                                                    }
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: -10,
-                                                        right: -15,
-                                                    }}
-                                                >
-                                                    <CancelIcon />
-                                                </div>
-                                            )}
-                                        </div>
+                                        <Thumbnail
+                                            src={src}
+                                            index={index}
+                                            openImage={openImageViewer}
+                                            showCancelImageButton={
+                                                props.showCancelImageButton
+                                            }
+                                            showUploadedTime={true}
+                                            type="Report"
+                                        ></Thumbnail>
                                     ))}
                         </div>
                     )}

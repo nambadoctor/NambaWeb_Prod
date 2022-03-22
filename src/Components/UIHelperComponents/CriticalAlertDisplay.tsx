@@ -2,7 +2,7 @@ import { Box, Button, LinearProgress } from '@mui/material';
 import React from 'react'
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import useAuthHook from '../../ServiceActions/LoginActions';
+import useAuthHook from '../../CustomHooks/useAuthHook';
 import { RootState } from '../../store';
 
 export default function CriticalAlertDisplay() {

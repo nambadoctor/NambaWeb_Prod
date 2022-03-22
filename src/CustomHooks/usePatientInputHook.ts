@@ -20,6 +20,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
     const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
+    const bookForDoctor = useSelector((state: RootState) => state.OrgState.selectedServiceProvider)
 
     useEffect(() => {
         mapCustomerToValues(currentCustomer)
@@ -80,7 +81,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
 
         CustomerRequestObj.dateOfBirth = {
             dateOfBirthId: "",
-            date: formik.values.dateOfBirth,
+            date: new Date(),
             age: formik.values.age,
             createdDate: new Date()
         } as IDateOfBirthData
@@ -120,9 +121,9 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         return {
             appointmentId: "",
             organisationId:
-                currentServiceProvider?.serviceProviderProfile.organisationId,
+                bookForDoctor?.serviceProviderProfile.organisationId,
             serviceRequestId: "",
-            serviceProviderId: currentServiceProvider?.serviceProviderId,
+            serviceProviderId: bookForDoctor?.serviceProviderId,
             customerId: currentCustomer?.customerId ?? "",
             appointmentType: "Consultation",
             addressId: "",

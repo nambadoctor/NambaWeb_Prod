@@ -36,7 +36,6 @@ export default function DetailedPatient() {
     const currentCustomerTreatmentPlans = useSelector(
         (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
     );
-
     return (
         <div>
             <ConsultationHeader />

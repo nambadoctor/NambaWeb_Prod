@@ -6,6 +6,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
 import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
+import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export default function ReportImageView() {
     const dispatch = useDispatch();
@@ -76,34 +77,14 @@ export default function ReportImageView() {
                                     currentAppointmentId,
                             )
                             .map((src, index) => (
-                                <div
-                                    style={{
-                                        display: 'inline-block',
-                                        position: 'relative',
-                                        marginTop: 10,
-                                        marginRight: 20,
-                                    }}
-                                >
-                                    <img
-                                        src={src.sasUrl}
-                                        onClick={() => openImageViewer(index)}
-                                        style={{ width: 100, height: 100 }}
-                                        key={index}
-                                    />
-
-                                    <div
-                                        onClick={() =>
-                                            dispatch(deleteReport(src))
-                                        }
-                                        style={{
-                                            position: 'absolute',
-                                            top: -10,
-                                            right: -15,
-                                        }}
-                                    >
-                                        <CancelIcon />
-                                    </div>
-                                </div>
+                                <Thumbnail
+                                    src={src}
+                                    index={index}
+                                    openImage={openImageViewer}
+                                    showCancelImageButton={true}
+                                    showUploadedTime={false}
+                                    type="Report"
+                                ></Thumbnail>
                             ))}
 
                     {isViewerOpen && (

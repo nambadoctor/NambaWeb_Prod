@@ -49,7 +49,7 @@ export default function ConsultationView() {
                     </h3>
                     <PrescriptionUploadPicker
                         handlePhotoCallBack={UploadPrescriptionForConsultation}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">
@@ -68,7 +68,7 @@ export default function ConsultationView() {
                     </h3>
                     <ReportUploadPicker
                         handlePhotoCallBack={UploadReportForConsultation}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">

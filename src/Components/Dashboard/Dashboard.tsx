@@ -22,6 +22,9 @@ import { SetInitialLoadingStartTime } from '../../Actions/LoadedStatesActions';
 import { clearAuthToken } from '../../Auth/FirebaseUserInfoHelper';
 import Treatments from '../TreatmentsTab/Treatments';
 import DetailedPatient from '../DetailedPatient/DetailedPatient';
+import MobileDashboard from '../../mobile/MobileDashboard';
+import DetailedPatient from '../DetailedPatient/DetailedPatient';
+import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -52,6 +55,8 @@ function Dashboard() {
     }, []);
     //END
 
+    const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
     function AppointmentsAndCalendarView() {
         return (
             <div
@@ -65,6 +70,7 @@ function Dashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="9">
+                            {isMobileCheck && <MobileDesktopToggleView></MobileDesktopToggleView>}
                             <h5 style={{ marginBottom: 20 }}> Appointments </h5>
                             <AppointmentsTableView />
                         </Col>
@@ -121,7 +127,7 @@ function Dashboard() {
                         <Route
                             path="/Patient/:id"
                             element={<DetailedPatient></DetailedPatient>}
-                        /> 
+
                     </Routes>
                 </div>
             </div>

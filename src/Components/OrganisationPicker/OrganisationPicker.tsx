@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { RootState } from "../../store";
 import { SetSelectedOrg } from "../../Actions/OrganisationActions";
 
-const StyledMenu = styled((props: MenuProps) => (
+export const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
     anchorOrigin={{

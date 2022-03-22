@@ -22,6 +22,7 @@ import { ClearContext } from "../Actions/ClearContextAction";
 import { GetAllTreatmentPlans, GetTreatmentDocumentsForCustomer } from "./TreatmentActions";
 
 
+
 export const GetAllCustomers = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
     SetTrackTrace("Enter Get All Customers For Service Provider In Org Action", "GetAllCustomersForServiceProviderInOrg", SeverityLevel.Information);
 

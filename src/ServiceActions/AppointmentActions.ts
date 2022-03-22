@@ -55,6 +55,7 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
       dispatch(GetAllTreatmentPlans())
+
       toast.success("Appointment Set Successfully")
     }
   } catch (error) {

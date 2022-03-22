@@ -8,6 +8,7 @@ import { GetCurrentServiceProvider } from "../ServiceActions/ServiceProviderActi
 import { Action } from "../Types/ActionType";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
 import { SeverityLevel } from "@microsoft/applicationinsights-web";
+import IServiceProvider from "../Types/IncomingDataModels/ServiceProvider";
 
 function setOrgsTypeHelper(organisations: Array<IOrganisationBasic>) {
   return {
@@ -23,8 +24,25 @@ function setSelectedOrgTypeHelper(organisation?: IOrganisationBasic) {
   };
 }
 
+function setServiceProvidersInOrgHelper(serviceProviders?: IServiceProvider[]) {
+  return {
+    type: Org_Types.SET_SERVICE_PROVIDERS_IN_ORG,
+    payload: serviceProviders
+  };
+}
+
+function setSelectedServiceProviderHelper(serviceProvider?: IServiceProvider) {
+  return {
+    type: Org_Types.SET_SELECTED_SERVICE_PROVIDER,
+    payload: serviceProvider
+  };
+}
+
 export const SetOrgs = (organisations: Array<IOrganisationBasic>): Action => (setOrgsTypeHelper(organisations));
 export const SetSelectedOrg = (organisation?: IOrganisationBasic): Action => (setSelectedOrgTypeHelper(organisation));
+export const SetServiceProvidersInOrg = (serviceProviders?: IServiceProvider[]): Action => (setServiceProvidersInOrgHelper(serviceProviders));
+export const SetSelectedServiceProvider = (serviceProvider?: IServiceProvider): Action => (setSelectedServiceProviderHelper(serviceProvider));
+
 
 export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
 
@@ -54,4 +72,10 @@ export const CheckForDefaultOrg = (): ThunkAction<void, RootState, null, Action>
   } else {
     SetTrackTrace("Current Service Provider Does Not Exist!", "CheckForDefaultOrg", SeverityLevel.Error)
   }
+};
+
+export const ResetSelectedServiceProvider = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
+  const currentServiceProvider = getState().CurrentServiceProviderState.serviceProvider
+
+  dispatch(SetSelectedServiceProvider(currentServiceProvider))
 };

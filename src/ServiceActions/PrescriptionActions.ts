@@ -37,8 +37,8 @@ export const UploadPrescriptionForConsultation = (prescription: any): ThunkActio
     AppointmentId: currentConsultationAppointment!.appointmentId,
     ServiceRequestId: currentConsultationAppointment!.serviceRequestId,
     File: await ConvertInputToFileOrBase64(prescription),
-    FileName: '',
-    FileType: '',
+    FileName: (prescription as File).name ?? "",
+    FileType: (prescription as File).type ?? "",
     Details: "",
     DetailsType: ""
   } as IPrescriptionUploadData
@@ -70,8 +70,8 @@ export const UploadPrescriptionAsStray = (file: any): ThunkAction<void, RootStat
     AppointmentId: "",
     ServiceRequestId: "",
     File: await ConvertInputToFileOrBase64(file),
-    FileName: "",
-    FileType: "",
+    FileName: (file as File).name ?? "",
+    FileType: (file as File).type ?? "",
     Details: "",
     DetailsType: ""
   } as IPrescriptionUploadData

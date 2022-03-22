@@ -15,6 +15,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { dateToDateString } from '../../Utils/GeneralUtils';
 import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
+import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     props,
@@ -106,48 +107,16 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                         currentAppointmentId,
                                 )
                                 .map((src, index) => (
-                                    <div
-                                        style={{
-                                            display: 'inline-block',
-                                            position: 'relative',
-                                            marginTop: 10,
-                                            marginRight: 20,
-                                        }}
-                                    >
-                                        <img
-                                            src={src.sasUrl}
-                                            onClick={() =>
-                                                openImageViewer(index)
-                                            }
-                                            key={index}
-                                            style={{ width: 100, height: 100 }}
-                                        />
-
-                                        <div>
-                                            {src.uploadedDateTime
-                                                ? dateToDateString(
-                                                      src.uploadedDateTime,
-                                                  )
-                                                : '--/--/---'}
-                                        </div>
-
-                                        {props.showCancelImageButton && (
-                                            <div
-                                                onClick={() =>
-                                                    dispatch(
-                                                        deletePrescription(src),
-                                                    )
-                                                }
-                                                style={{
-                                                    position: 'absolute',
-                                                    top: -10,
-                                                    right: -15,
-                                                }}
-                                            >
-                                                <CancelIcon />
-                                            </div>
-                                        )}
-                                    </div>
+                                    <Thumbnail
+                                        src={src}
+                                        index={index}
+                                        openImage={openImageViewer}
+                                        showCancelImageButton={
+                                            props.showCancelImageButton
+                                        }
+                                        showUploadedTime={true}
+                                        type="Prescription"
+                                    ></Thumbnail>
                                 ))}
                     </div>
                 )}

@@ -12,13 +12,15 @@ export default function NotesView() {
             state.ConsultationState.Appointment?.appointmentId,
     );
 
-    const showAppointmentPrescriptions = createSelector(
+    const currentCustomer = useSelector((state:RootState) => state.CurrentCustomerState.Customer)
+
+    const showAppointmentNotes = createSelector(
         (state: RootState) => state.CurrentCustomerState.Notes,
         (notes) =>
-            notes?.filter((note) => note.appointmentId == currentAppointmentId),
+            notes?.filter((note) => (currentAppointmentId && note.appointmentId == currentAppointmentId) || (currentCustomer !== null)),
     );
 
-    const currentConsultationNotes = useSelector(showAppointmentPrescriptions);
+    const currentConsultationNotes = useSelector(showAppointmentNotes);
 
     return (
         <div>

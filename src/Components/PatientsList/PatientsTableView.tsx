@@ -17,6 +17,19 @@ import { useDispatch } from 'react-redux';
 import { ClearContext } from '../../Actions/ClearContextAction';
 
 export default function PatientsTableView() {
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { ClearContext } from '../../Actions/ClearContextAction';
+import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
+import EditIcon from '@mui/icons-material/Edit';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import { ClearCurrentCustomerState } from '../../Actions/CurrentCustomerActions';
+
+interface EditPatientViewProps {
+    setIsSchedulingAppointment: Dispatch<SetStateAction<boolean>>;
+}
+
+export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     const classes = usePatientTableStyles();
 
     const [selectedID, setSelectedID] = useState('');
@@ -68,6 +81,27 @@ export default function PatientsTableView() {
                         {customer.phoneNumbers[0].number}
                     </Link>
                 </TableCell>
+
+                <TableCell>
+                    <EditIcon
+                        color="primary"
+                        onClick={() => {
+                            dispatch(ClearCurrentCustomerState())
+                            props.setIsSchedulingAppointment(false);
+                            handleCustomerSelect(customer);
+                        }}
+                        style={{cursor:"pointer"}}
+                    ></EditIcon>
+                    <DateRangeIcon
+                        color="primary"
+                        onClick={() => {
+                            dispatch(ClearCurrentCustomerState())
+                            props.setIsSchedulingAppointment(true);
+                            handleCustomerSelect(customer);
+                        }}
+                        style={{ marginLeft: 15, cursor:"pointer" }}
+                    ></DateRangeIcon>
+                </TableCell>
             </TableRow>
         ));
     }
@@ -118,6 +152,12 @@ export default function PatientsTableView() {
                             >
                                 Phone Number
                             </TableCell>
+                            <TableCell
+                                className={classes.tableHeaderCell}
+                                align="left"
+                            >
+                                {' '}
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -153,4 +193,4 @@ export default function PatientsTableView() {
             </TableContainer>
         </div>
     );
-}
+};
