@@ -20,7 +20,6 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
     const addPatientState = useSelector((state: RootState) => state.AddPatientState)
     const currentCustomer = useSelector((state: RootState) => state.CurrentCustomerState.Customer)
     const currentServiceProvider = useSelector((state: RootState) => state.CurrentServiceProviderState.serviceProvider)
-    const bookForDoctor = useSelector((state: RootState) => state.OrgState.selectedServiceProvider)
 
     useEffect(() => {
         mapCustomerToValues(currentCustomer)
@@ -121,9 +120,9 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         return {
             appointmentId: "",
             organisationId:
-                bookForDoctor?.serviceProviderProfile.organisationId,
+                currentServiceProvider?.serviceProviderProfile.organisationId,
             serviceRequestId: "",
-            serviceProviderId: bookForDoctor?.serviceProviderId,
+            serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentCustomer?.customerId ?? "",
             appointmentType: "Consultation",
             addressId: "",

@@ -53,7 +53,7 @@ export default function DetailedPatient() {
                     </h3>
                     <PrescriptionUploadPicker
                         handlePhotoCallBack={UploadPrescriptionAsStray}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">
@@ -72,7 +72,7 @@ export default function DetailedPatient() {
                     </h3>
                     <ReportUploadPicker
                         handlePhotoCallBack={UploadReportAsStray}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">
@@ -91,7 +91,7 @@ export default function DetailedPatient() {
                     </h3>
                     <TreatmentPlanDocumentUploadPicker
                         handlePhotoCallBack={UploadTreatmentPlanDocument}
-                        uploadButtonColor="white"
+                        uploadButtonColor="#1672f9"
                     />
                 </div>
                 <div className="blue_border_rounded_white_box">

@@ -15,8 +15,6 @@ export enum Org_Types {
 export interface OrganisationState {
   organisations: IOrganisationBasic[];
   selectedOrganisation?: IOrganisationBasic;
-  serviceProvidersInOrg?: IServiceProvider[];
-  selectedServiceProvider?: IServiceProvider;
 }
 
 const initialState: OrganisationState = {
@@ -34,16 +32,6 @@ export const orgReducer = (state: OrganisationState = initialState, action: Acti
       return {
         ...state,
         selectedOrganisation: action.payload,
-      }
-    case Org_Types.SET_SERVICE_PROVIDERS_IN_ORG:
-      return {
-        ...state,
-        serviceProvidersInOrg: action.payload,
-      }
-    case Org_Types.SET_SELECTED_SERVICE_PROVIDER:
-      return {
-        ...state,
-        selectedServiceProvider: action.payload,
       }
     default:
       return state

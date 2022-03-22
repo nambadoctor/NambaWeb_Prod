@@ -52,7 +52,7 @@ export default function TreatmentPlanDocumentImageView() {
         treatment: ITreatmentPlanDocumentIncomingData,
     ) {
         if (
-            window.confirm('Are you sure you want to delete this prescription?')
+            window.confirm('Are you sure you want to delete this treatment?')
         ) {
             dispatch(DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId));
         }
