@@ -7,14 +7,10 @@ import {
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
-import { Divider } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
 import { ReportUploadPicker } from './ReportUploadPicker';
 import { AllImageDisplayProps } from '../../Helpers/CommonProps';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { createSelector } from 'reselect';
-import { dateToDateString } from '../../Utils/GeneralUtils';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {

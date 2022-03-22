@@ -4,7 +4,7 @@ import { ThunkAction } from "redux-thunk";
 import { SetFatalError, SetLinearLoadingBarToggle, SetNonFatalError } from "../Actions/Common/UIControlActions";
 import { SetPatientTreatmentPlanDocuments, SetPatientTreatmentPlans, SetPatientTreatments, SetReports } from "../Actions/CurrentCustomerActions";
 import { SetTreatments } from "../Actions/TreatmentActions";
-import { AddTreatmentEndPoint, AddTreatmentPlanDocumentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint, GetTreatmentPlanDocumentsForAppointmentEndPoint, GetTreatmentPlanDocumentsForCustomerEndPoint } from "../Helpers/EndPointHelpers";
+import { AddTreatmentEndPoint, AddTreatmentPlanDocumentEndPoint, AddTreatmentPlanEndPoint, DeleteTreatmentEndPoint, DeleteTreatmentPlanDocumentEndPoint, GetServiceProviderTreatmentPlansInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationEndPoint, GetServiceProviderTreatmentsInOrganisationForCustomerEndPoint, GetTreatmentPlanDocumentsForAppointmentEndPoint, GetTreatmentPlanDocumentsForCustomerEndPoint } from "../Helpers/EndPointHelpers";
 import { deleteCall, getCall, postCall, putCall } from "../Http/http-helpers";
 import { RootState } from "../store";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -250,6 +250,37 @@ export const GetTreatmentDocumentsForCustomer =
                 dispatch(
                     SetNonFatalError('Could not get all treatment plan documents for this patient'),
                 );
+            }
+        };
+
+export const DeleteTreatmentPlanDocument =
+    (
+        treatmentDocumentId:string,
+    ): ThunkAction<void, RootState, null, Action> =>
+        async (dispatch, getState) => {
+            dispatch(SetLinearLoadingBarToggle(true));
+
+            SetTrackTrace(
+                'Enter Delete Treatment Plan Document Action',
+                'DeleteTreatmentPlanDocument',
+                SeverityLevel.Information,
+            );
+
+            try {
+                let response = await deleteCall(
+                    {} as any,
+                    DeleteTreatmentPlanDocumentEndPoint(treatmentDocumentId),
+                    'Delete Treatment Plan',
+                );
+
+                if (response) {
+                    dispatch(GetTreatmentDocumentsForCustomer());
+
+                    dispatch(SetLinearLoadingBarToggle(false));
+                    toast.success('Treatment Image Deleted');
+                }
+            } catch (error) {
+                dispatch(SetNonFatalError('Could not delete treatment image'));
             }
         };
 

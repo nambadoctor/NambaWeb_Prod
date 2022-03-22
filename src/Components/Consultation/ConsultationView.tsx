@@ -20,6 +20,7 @@ import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
+import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();

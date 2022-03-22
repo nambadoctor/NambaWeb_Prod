@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
-import { DeleteReport } from '../../ServiceActions/ReportActions';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
 import ITreatmentPlanDocumentIncomingData from '../../Types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { DeleteTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
 
 export default function TreatmentPlanDocumentImageView() {
     const dispatch = useDispatch();
@@ -49,11 +48,13 @@ export default function TreatmentPlanDocumentImageView() {
         setImages(stringList);
     }
 
-    function deleteTreatmentPlanDocument(treatment: ITreatmentPlanDocumentIncomingData) {
+    function deleteTreatmentPlanDocument(
+        treatment: ITreatmentPlanDocumentIncomingData,
+    ) {
         if (
             window.confirm('Are you sure you want to delete this prescription?')
         ) {
-            // dispatch(DeleteReport(report));
+            dispatch(DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId));
         }
     }
 
@@ -86,7 +87,11 @@ export default function TreatmentPlanDocumentImageView() {
 
                                     <div
                                         onClick={() =>
-                                            dispatch(deleteTreatmentPlanDocument(src))
+                                            dispatch(
+                                                deleteTreatmentPlanDocument(
+                                                    src,
+                                                ),
+                                            )
                                         }
                                         style={{
                                             position: 'absolute',

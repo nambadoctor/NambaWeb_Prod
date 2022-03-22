@@ -26,6 +26,10 @@ export function AddTreatmentPlanDocumentEndPoint() {
     return "treatmentplan/document";
 }
 
+export function DeleteTreatmentPlanDocumentEndPoint(treatmentPlanDocumentId:string) {
+    return "treatmentplan/document/" + treatmentPlanDocumentId;
+}
+
 export function GetTreatmentPlanDocumentsForAppointmentEndPoint(serviceRequestId: string) {
     return "treatmentplan/document/" + serviceRequestId;
 }

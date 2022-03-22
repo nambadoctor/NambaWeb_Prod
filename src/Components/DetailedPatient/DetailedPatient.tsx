@@ -8,8 +8,14 @@ import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
-import { UploadReportAsStray, UploadReportForConsultation } from '../../ServiceActions/ReportActions';
-import { UploadPrescriptionAsStray, UploadPrescriptionForConsultation } from '../../ServiceActions/PrescriptionActions';
+import {
+    UploadReportAsStray,
+    UploadReportForConsultation,
+} from '../../ServiceActions/ReportActions';
+import {
+    UploadPrescriptionAsStray,
+    UploadPrescriptionForConsultation,
+} from '../../ServiceActions/PrescriptionActions';
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
@@ -18,6 +24,10 @@ import ConsultationHeader from '../Consultation/ConsultationHeader';
 import { GetCustomer } from '../../ServiceActions/CustomerActions';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
+import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
+import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
+import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
 
 export default function DetailedPatient() {
     const dispatch = useDispatch();
@@ -33,9 +43,6 @@ export default function DetailedPatient() {
         }
     }, [currentServiceProvider, id]);
 
-    const currentCustomerTreatmentPlans = useSelector(
-        (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
-    );
     return (
         <div>
             <ConsultationHeader />
@@ -82,11 +89,20 @@ export default function DetailedPatient() {
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatments
                     </h3>
+                    <TreatmentPlanDocumentUploadPicker
+                        handlePhotoCallBack={UploadTreatmentPlanDocument}
+                        uploadButtonColor="white"
+                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    <TreatmentPlansTable
+                    <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
+                    <AllTreatmentPlanDocumentImageView
+                        showUploadButton={false}
+                        showCancelImageButton={false}
+                    ></AllTreatmentPlanDocumentImageView>
+                    {/* <TreatmentPlansTable
                         treatmentPlans={currentCustomerTreatmentPlans}
-                    ></TreatmentPlansTable>
+                    ></TreatmentPlansTable> */}
                 </div>
             </Row>
 

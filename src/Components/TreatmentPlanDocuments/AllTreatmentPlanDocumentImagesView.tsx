@@ -12,6 +12,8 @@ import { Col, Row } from 'react-bootstrap';
 import useImagesHook from '../../CustomHooks/useImagesViewHook';
 import { AllImageDisplayProps } from '../../Helpers/CommonProps';
 import ITreatmentPlanDocumentIncomingData from '../../Types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { DeleteTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 export const AllTreatmentPlanDocumentImageView: React.FC<
     AllImageDisplayProps
@@ -32,14 +34,6 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
             state.ConsultationState.Appointment?.serviceRequestId,
     );
 
-    // const showAppointmentReports = createSelector(
-    //     (state: RootState) => state.CurrentCustomerState.Reports,
-    //     (reports) =>
-    //         reports?.filter(
-    //             (report) => report.appointmentId !== currentAppointmentId,
-    //         ),
-    // );
-
     let currentCustomerTreatmentImages = useSelector(
         (state: RootState) => state.CurrentCustomerState.TreatmentPlanDocuments,
     );
@@ -52,17 +46,17 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
         var stringList: string[] = [];
 
         if (currentCustomerTreatmentImages) {
-            currentCustomerTreatmentImages
-                .filter(
-                    (doc) => doc.serviceRequestId == currentServiceRequestId,
-                )
-                .forEach((element) => {
-                    stringList.push(element.sasUrl);
-                });
+            currentCustomerTreatmentImages.forEach((element) => {
+                stringList.push(element.sasUrl);
+            });
         }
 
         setImages(stringList);
     }
+
+    useEffect(() => {
+        var c = 5;
+    }, [images]);
 
     function deleteTreatmentPlanDocument(
         treatment: ITreatmentPlanDocumentIncomingData,
@@ -70,7 +64,9 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
         if (
             window.confirm('Are you sure you want to delete this prescription?')
         ) {
-            // dispatch(DeleteReport(report));
+            dispatch(
+                DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId),
+            );
         }
     }
 
@@ -81,13 +77,8 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
                     {images && images.length > 0 && (
                         <div>
                             {currentCustomerTreatmentImages &&
-                                currentCustomerTreatmentImages
-                                    .filter(
-                                        (treatment) =>
-                                            treatment.serviceRequestId !==
-                                            currentServiceRequestId,
-                                    )
-                                    .map((src, index) => (
+                                currentCustomerTreatmentImages.map(
+                                    (src, index) => (
                                         <div
                                             style={{
                                                 display: 'inline-block',
@@ -108,19 +99,11 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
                                                 }}
                                             />
 
-                                            {/* <div>
-                                                {src.uploadedDateTime
-                                                    ? dateToDateString(
-                                                          src.uploadedDateTime,
-                                                      )
-                                                    : '--/--/---'}
-                                            </div> */}
-{/* 
                                             {props.showCancelImageButton && (
                                                 <div
                                                     onClick={() =>
-                                                        dispatch(
-                                                            deleteReport(src),
+                                                        deleteTreatmentPlanDocument(
+                                                            src,
                                                         )
                                                     }
                                                     style={{
@@ -131,9 +114,10 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
                                                 >
                                                     <CancelIcon />
                                                 </div>
-                                            )} */}
+                                            )}
                                         </div>
-                                    ))}
+                                    ),
+                                )}
                         </div>
                     )}
 
@@ -163,7 +147,10 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
             >
                 <Row>
                     <Col>
-                        <div>No treatment plan docs yet. Upload image or Take Photo.</div>
+                        <div>
+                            No treatment plan docs yet. Upload image or Take
+                            Photo.
+                        </div>
                     </Col>
                     {/* {props.showUploadButton && (
                         <Col>
@@ -180,7 +167,8 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
 
     return (
         <div>
-            {currentCustomerTreatmentImages && currentCustomerTreatmentImages.length > 0
+            {currentCustomerTreatmentImages &&
+            currentCustomerTreatmentImages.length > 0
                 ? imageViewDisplay()
                 : noReportsDisplay()}
         </div>
