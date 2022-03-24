@@ -50,11 +50,11 @@ export default function DetailedPatient() {
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Prescriptions
+                        <PrescriptionUploadPicker
+                            handlePhotoCallBack={UploadPrescriptionAsStray}
+                            uploadButtonColor="#1672f9"
+                        />
                     </h3>
-                    <PrescriptionUploadPicker
-                        handlePhotoCallBack={UploadPrescriptionAsStray}
-                        uploadButtonColor="#1672f9"
-                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <PrescriptionImageView />
@@ -69,11 +69,11 @@ export default function DetailedPatient() {
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Reports
+                        <ReportUploadPicker
+                            handlePhotoCallBack={UploadReportAsStray}
+                            uploadButtonColor="#1672f9"
+                        />
                     </h3>
-                    <ReportUploadPicker
-                        handlePhotoCallBack={UploadReportAsStray}
-                        uploadButtonColor="#1672f9"
-                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <ReportImageView />
@@ -88,11 +88,11 @@ export default function DetailedPatient() {
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatments
+                        <TreatmentPlanDocumentUploadPicker
+                            handlePhotoCallBack={UploadTreatmentPlanDocument}
+                            uploadButtonColor="#1672f9"
+                        />
                     </h3>
-                    <TreatmentPlanDocumentUploadPicker
-                        handlePhotoCallBack={UploadTreatmentPlanDocument}
-                        uploadButtonColor="#1672f9"
-                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
@@ -100,9 +100,6 @@ export default function DetailedPatient() {
                         showUploadButton={false}
                         showCancelImageButton={false}
                     ></AllTreatmentPlanDocumentImageView>
-                    {/* <TreatmentPlansTable
-                        treatmentPlans={currentCustomerTreatmentPlans}
-                    ></TreatmentPlansTable> */}
                 </div>
             </Row>
 
