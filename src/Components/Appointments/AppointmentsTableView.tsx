@@ -6,7 +6,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {
-    convertDaysIntoNearestUnit,
     getReadableDateAndTimeString,
     isDatesEqual,
 } from '../../Utils/GeneralUtils';
@@ -23,7 +22,6 @@ import { CancelAppointment } from '../../ServiceActions/AppointmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
 import { ClearContext } from '../../Actions/ClearContextAction';
-import AppointmentTypeEnum from '../../Types/Enums/AppointmentStatusEnums';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     tableContainer: {
@@ -78,26 +76,6 @@ export default function AppointmentsTable() {
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
 
-    //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
-    function getLastVisitForCustomer(customerId: string) {
-        var lastVisitedDate = new Date();
-        appointments.forEach((element) => {
-            if (element.customerId === customerId) {
-                var currentAppointmentDate = new Date(
-                    element.scheduledAppointmentStartTime,
-                );
-                if (currentAppointmentDate < lastVisitedDate) {
-                    lastVisitedDate = currentAppointmentDate;
-                }
-            }
-        });
-
-        var currentDate = new Date();
-        var Time = currentDate.getTime() - lastVisitedDate.getTime();
-        var days = Time / (1000 * 3600 * 24);
-        return convertDaysIntoNearestUnit(days);
-    }
-
     function getBackgroundColorForAppointmentState(appointmentState: string) {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
@@ -108,7 +86,7 @@ export default function AppointmentsTable() {
             // case AppointmentTypeEnum.Treatment:
             //     colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
             //     break;
-            case "Finished":
+            case 'Finished':
                 colorCodesToReturn = ['#fff0f1', '#d95087'];
                 break;
             default:
@@ -136,9 +114,6 @@ export default function AppointmentsTable() {
                     >
                         {appointment.customerName}
                     </Link>
-                </TableCell>
-                <TableCell align="left">
-                    {getLastVisitForCustomer(appointment.customerId)}
                 </TableCell>
                 <TableCell>
                     <Typography
@@ -194,13 +169,7 @@ export default function AppointmentsTable() {
                             className={classes.tableHeaderCell}
                             align="left"
                         >
-                            Last Visit
-                        </TableCell>
-                        <TableCell
-                            className={classes.tableHeaderCell}
-                            align="left"
-                        >
-                            Type
+                            Status
                         </TableCell>
                         <TableCell
                             className={classes.tableHeaderCell}

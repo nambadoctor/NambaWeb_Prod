@@ -11,7 +11,7 @@ export const TreatmentPlanDocumentUploadPicker: React.FC<ImageUploadProps> = (pr
     const { showCameraToggle, setShowCameraToggle, handleChange, handleTakePhoto } = useUploadOrCaptureImageHook(props.handlePhotoCallBack)
 
     return (
-        <div>
+        <div style={{marginLeft:20}}>
             <input
                 type="file"
                 accept="image/*"
