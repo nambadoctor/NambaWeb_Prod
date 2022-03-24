@@ -36,10 +36,12 @@ export const PhoneNumberLogin: React.FC = () => {
             <Paper style={{ padding: 20, width: 300 }}>
                 <h3
                     style={{
+                        textAlign: "center",
+                        alignItems: "center",
                         color: '#076bf7',
                         marginTop: 7,
                         marginBottom: 0,
-                        fontSize: 25,
+                        fontSize: 20,
                     }}
                 >
                     N A M B A D O C T O R
@@ -54,11 +56,11 @@ export const PhoneNumberLogin: React.FC = () => {
                 />
 
                 {!otpShow ? (
-                    <h5 style={{ marginBottom: 20 }}>
+                    <h5 style={{ marginBottom: 20, fontSize: 17 }}>
                         Enter your Phone Number
                     </h5>
                 ) : (
-                    <h5 style={{ marginBottom: 20 }}>Enter the OTP</h5>
+                    <h5 style={{ marginBottom: 20, fontSize: 17 }}>Enter the OTP</h5>
                 )}
                 <div>
                     {!otpShow ? (

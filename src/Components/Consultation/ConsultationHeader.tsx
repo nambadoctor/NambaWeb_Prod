@@ -19,114 +19,11 @@ export default function ConsultationHeader() {
         (state: RootState) => state.CurrentCustomerState.Customer,
     );
 
-    function getPreviousAppointmentUI() {
-        return (
-            <Button
-                startIcon={
-                    <Link
-                        to={
-                            '/Consultation/' +
-                            currentConsultation.previousAppointment
-                                ?.appointmentId
-                        }
-                    >
-                        <ArrowBackIcon
-                            style={{ height: 22, width: 22, color: 'blue' }}
-                        ></ArrowBackIcon>
-                    </Link>
-                }
-            >
-                <Link
-                    to={
-                        '/Consultation/' +
-                        currentConsultation.previousAppointment?.appointmentId
-                    }
-                >
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'left',
-                            color: 'blue',
-                        }}
-                    >
-                        {currentConsultation.previousAppointment?.customerName}
-                    </Typography>
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'left',
-                            color: 'blue',
-                        }}
-                    >
-                        {getReadableDateAndTimeString(
-                            currentConsultation.previousAppointment
-                                ?.scheduledAppointmentStartTime ?? '',
-                        )}
-                    </Typography>
-                </Link>
-            </Button>
-        );
-    }
-
-    function getNextAppointmentUI() {
-        return (
-            <Button
-                endIcon={
-                    <Link
-                        to={
-                            '/Consultation/' +
-                            currentConsultation.nextAppointment?.appointmentId
-                        }
-                    >
-                        <ArrowForwardIcon
-                            style={{ height: 22, width: 22, color: 'blue' }}
-                        ></ArrowForwardIcon>
-                    </Link>
-                }
-            >
-                <Link
-                    to={
-                        '/Consultation/' +
-                        currentConsultation.nextAppointment?.appointmentId
-                    }
-                >
-                    <div>
-                        <Typography
-                            style={{
-                                fontSize: 13,
-                                textAlign: 'right',
-                                color: 'blue',
-                            }}
-                        >
-                            {currentConsultation.nextAppointment?.customerName}
-                        </Typography>
-                    </div>
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'right',
-                            color: 'blue',
-                        }}
-                    >
-                        {getReadableDateAndTimeString(
-                            currentConsultation.nextAppointment
-                                ?.scheduledAppointmentStartTime ?? '',
-                        )}
-                    </Typography>
-                </Link>
-            </Button>
-        );
-    }
-
     return (
         <div className="horiztontalContainer">
             <Container fluid>
-                <Row style={{ alignItems: 'flex-end' }}>
-                    <Col className="col-md-1">
-                        {/* {currentConsultation.previousAppointment &&
-                            getPreviousAppointmentUI()} */}
-                    </Col>
-                    <Col className="col-md-10">
+                <Row>
+                    <Col>
                         {currentCustomer && (
                             <Row
                                 style={{
@@ -242,10 +139,6 @@ export default function ConsultationHeader() {
                                 </Col>
                             </Row>
                         )}
-                    </Col>
-                    <Col className="col-md-1">
-                        {/* {currentConsultation.nextAppointment &&
-                            getNextAppointmentUI()} */}
                     </Col>
                 </Row>
             </Container>
