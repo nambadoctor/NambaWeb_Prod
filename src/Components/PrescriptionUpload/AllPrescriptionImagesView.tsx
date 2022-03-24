@@ -81,12 +81,10 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     function imageViewDisplay() {
         return (
             <div style={{ overflow: 'auto' }}>
+                <h5 style={{ marginTop: '8px' }}>History Of Prescriptions</h5>
                 {images && images.length > 0 && (
                     <div>
                         <Row>
-                            <Col md={8}>
-                                <h5>History Of Prescriptions</h5>
-                            </Col>
                             {props.showUploadButton && (
                                 <Col>
                                     <PrescriptionUploadPicker

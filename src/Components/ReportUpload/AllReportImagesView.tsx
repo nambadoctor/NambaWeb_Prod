@@ -74,12 +74,10 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         return (
             <div style={{ overflow: 'auto' }}>
                 <div>
+                    <h5 style={{ marginTop: '8px' }}>History Of Reports</h5>
                     {images && images.length > 0 && (
                         <div>
                             <Row>
-                                <Col md={8}>
-                                    <h5>History Of Reports</h5>
-                                </Col>
                                 {props.showUploadButton && (
                                     <Col>
                                         <ReportUploadPicker
