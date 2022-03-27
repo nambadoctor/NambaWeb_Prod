@@ -4,7 +4,7 @@ import ConsultationHeader from './ConsultationHeader';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
@@ -19,6 +19,7 @@ import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
+import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -40,7 +41,14 @@ export default function ConsultationView() {
 
     return (
         <div>
-            <ConsultationHeader />
+            <Row>
+                <Col>
+                    <ConsultationHeader />
+                </Col>
+                <Col>
+                    <ReferToOthers></ReferToOthers>
+                </Col>
+            </Row>
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">

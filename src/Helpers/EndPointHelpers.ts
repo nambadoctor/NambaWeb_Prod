@@ -153,3 +153,7 @@ export function GetCustomerAllPrescriptionsEndPoint (organisationId:string, cust
 export function GetCustomerAllNotesEndPoint (organisationId:string, customerId:string) {
     return "note/All/" + organisationId + "/" + customerId;
 }
+
+export function ReferPatientEndPoint () {
+    return "referral"
+}
