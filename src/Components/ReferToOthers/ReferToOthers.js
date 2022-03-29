@@ -64,7 +64,7 @@ export function ReferToOthers({ referralContacts }) {
                                 label={
                                     'Reason For Referral (' +
                                     formik.values.reasonForReferral.length +
-                                    '/28)'
+                                    '/25)'
                                 }
                                 placeholder="Reason For Referral"
                                 margin="normal"
