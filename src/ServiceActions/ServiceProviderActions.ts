@@ -207,8 +207,8 @@ export const GetServiceProviderSettings =
 
             dispatch(SetServiceProviderSettings(response.data));
         } catch (error) {
-            dispatch(
-                SetNonFatalError('Could not retrieve ServiceProviderSetting'),
-            );
+            // dispatch(
+            //     SetNonFatalError('Could not retrieve ServiceProviderSetting'),
+            // );
         }
     };
