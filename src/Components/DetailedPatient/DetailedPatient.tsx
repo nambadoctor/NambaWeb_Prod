@@ -3,7 +3,7 @@ import ReportImageView from '../ReportUpload/ReportImageView';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
@@ -28,11 +28,16 @@ import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentP
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
 import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
+import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
 
 export default function DetailedPatient() {
     const dispatch = useDispatch();
     const currentServiceProvider = useSelector(
         (state: RootState) => state.CurrentServiceProviderState.serviceProvider,
+    );
+    const serviceProviderSettings = useSelector(
+        (state: RootState) =>
+            state.CurrentServiceProviderState.serviceProviderSettings,
     );
     const { id } = useParams();
 
@@ -45,7 +50,23 @@ export default function DetailedPatient() {
 
     return (
         <div>
-            <ConsultationHeader />
+            <Row>
+                <Col>
+                    <ConsultationHeader />
+                </Col>
+                <Col>
+                    {serviceProviderSettings &&
+                    serviceProviderSettings.referralWhitelist &&
+                    serviceProviderSettings.referralWhitelist.isEnabled ? (
+                        <ReferToOthers
+                            referralContacts={
+                                serviceProviderSettings.referralWhitelist
+                                    .referralContacts
+                            }
+                        />
+                    ) : null}
+                </Col>
+            </Row>
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">

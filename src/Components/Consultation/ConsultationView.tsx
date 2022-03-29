@@ -30,6 +30,7 @@ export default function ConsultationView() {
         (state: RootState) =>
             state.CurrentServiceProviderState.serviceProviderSettings,
     );
+    
     const { id } = useParams();
 
     useEffect(() => {
@@ -38,10 +39,6 @@ export default function ConsultationView() {
             dispatch(GetAppointment(id as string));
         }
     }, [currentServiceProvider, id]);
-
-    const currentCustomerTreatmentPlans = useSelector(
-        (state: RootState) => state.CurrentCustomerState.TreatmentPlans,
-    );
 
     return (
         <div>

@@ -51,8 +51,6 @@ export function ReferToOthers({ referralContacts }) {
         <div className="horiztontalContainer">
             {currentCustomer && (
                 <div>
-                    <h5>Refer this patient </h5>
-
                     <Row>
                         <div style={{ display: 'flex' }}>
                             <TextField
@@ -91,7 +89,7 @@ export function ReferToOthers({ referralContacts }) {
                                 type="submit"
                                 onClick={formik.handleSubmit}
                                 isPurple={false}
-                                title="Save"
+                                title="Refer"
                                 small={false}
                             />
                         </div>
