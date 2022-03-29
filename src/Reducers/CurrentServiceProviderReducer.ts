@@ -36,10 +36,12 @@ export const currentServiceProviderReducer = (
                 SeverityLevel.Information,
             );
             return {
+                ...state,
                 serviceProvider: action.payload,
             };
         case Current_Service_Provider_State_Types.SET_SERVICE_PROVIDER_SETTINGS:
             return {
+                ...state,
                 serviceProviderSettings: action.payload,
             };
         default:
