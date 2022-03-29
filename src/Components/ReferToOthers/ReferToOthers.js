@@ -50,12 +50,12 @@ export function ReferToOthers({ referralContacts }) {
     return (
         <div className="horiztontalContainer">
             {currentCustomer && (
-                <div>
-                    <Row>
+                <Row>
+                    <Col md="6">
                         <div style={{ display: 'flex' }}>
                             <TextField
                                 fullWidth
-                                label="Reason For Referral"
+                                label={"Reason For Referral (" + formik.values.reasonForReferral.length + "/28)"}
                                 placeholder="Reason For Referral"
                                 margin="normal"
                                 size="small"
@@ -70,31 +70,25 @@ export function ReferToOthers({ referralContacts }) {
                                 }
                                 inputProps={{ maxLength: 25 }}
                             />
-                            <div style={{ marginTop: 12, marginLeft: 10 }}>
-                                {formik.values.reasonForReferral.length}/25
-                                characters
-                            </div>
                         </div>
-                    </Row>
-
-                    <div>
                         <Select
                             defaultValue={selectedOption}
                             onChange={setSelectedOption}
                             options={selectValues}
                             placeholder="Refer To"
                         />
-                        <div style={{ marginTop: '8px' }}>
-                            <CustomButton
+                    </Col>
+
+                    <Col md="6" style={{justifyItems:'baseline'}}>
+                    <CustomButton
                                 type="submit"
                                 onClick={formik.handleSubmit}
                                 isPurple={false}
                                 title="Refer"
                                 small={false}
                             />
-                        </div>
-                    </div>
-                </div>
+                    </Col>
+                </Row>
             )}
         </div>
     );

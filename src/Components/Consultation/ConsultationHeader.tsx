@@ -7,7 +7,6 @@ import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
 import { Typography } from '@mui/material';
 
 export default function ConsultationHeader() {
-
     const currentConsultation = useSelector(
         (state: RootState) => state.ConsultationState,
     );
@@ -27,126 +26,110 @@ export default function ConsultationHeader() {
                                     alignItems: 'flex-end',
                                 }}
                             >
-                                <Row>
-                                    <Col
-                                        className="col-md-auto"
-                                        style={{ marginLeft: 15 }}
+                                <Col
+                                    className="col-md-auto"
+                                    style={{ marginLeft: 15 }}
+                                >
+                                    <Typography
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
                                     >
-                                        <Typography
-                                            style={{
-                                                fontSize: 10,
-                                                opacity: 0.5,
-                                            }}
-                                        >
-                                            Patient Name
-                                        </Typography>
-                                        <Typography
-                                            style={{
-                                                fontSize: 17,
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            {currentConsultation.Appointment
-                                                ?.customerName ??
-                                                currentCustomer.firstName}
-                                        </Typography>
-                                    </Col>
-                                    <Col
-                                        className="col-md-auto"
-                                        style={{ marginLeft: 15 }}
+                                        Patient Name
+                                    </Typography>
+                                    <Typography
+                                        style={{
+                                            fontSize: 17,
+                                            fontWeight: 'bold',
+                                            marginBottom: 15
+                                        }}
                                     >
-                                        <Typography
-                                            style={{
-                                                fontSize: 10,
-                                                opacity: 0.5,
-                                            }}
-                                        >
-                                            Phone Number
-                                        </Typography>
-                                        <Typography
-                                            style={{
-                                                fontSize: 17,
-                                                fontWeight: 'bold',
-                                            }}
-                                        >
-                                            +91
-                                            {currentCustomer?.phoneNumbers[0]
-                                                .number ?? ''}
-                                        </Typography>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col
-                                        className="col-md-auto"
-                                        style={{ marginLeft: 15, marginTop: 20 }}
+                                        {currentConsultation.Appointment
+                                            ?.customerName ??
+                                            currentCustomer.firstName}
+                                    </Typography>
+
+                                    <Typography
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
                                     >
-                                        <Typography
-                                            style={{
-                                                fontSize: 10,
-                                                opacity: 0.5,
-                                            }}
-                                        >
-                                            Age
-                                        </Typography>
-                                        <Col>
+                                        Age
+                                    </Typography>
+                                    <Typography style={{ fontSize: 17 }}>
+                                        {currentCustomer?.dateOfBirth.age ?? ''}
+                                    </Typography>
+                                </Col>
+                                <Col
+                                    className="col-md-auto"
+                                    style={{ marginLeft: 15 }}
+                                >
+                                    <Typography
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
+                                    >
+                                        Phone Number
+                                    </Typography>
+                                    <Typography
+                                        style={{
+                                            fontSize: 17,
+                                            fontWeight: 'bold',
+                                            marginBottom: 15
+                                        }}
+                                    >
+                                        +91
+                                        {currentCustomer?.phoneNumbers[0]
+                                            .number ?? ''}
+                                    </Typography>
+
+                                    <Typography
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
+                                    >
+                                        Gender
+                                    </Typography>
+                                    <Typography style={{ fontSize: 17 }}>
+                                        {currentCustomer?.gender ?? ''}
+                                    </Typography>
+                                </Col>
+                                <Col
+                                    className="col-md-4"
+                                    style={{
+                                        marginLeft: 15,
+                                        marginTop: 20,
+                                    }}
+                                >
+                                    {currentConsultation.Appointment && (
+                                        <div>
                                             <Typography
-                                                style={{ fontSize: 17 }}
+                                                style={{
+                                                    fontSize: 10,
+                                                    opacity: 0.5,
+                                                }}
                                             >
-                                                {currentCustomer?.dateOfBirth
-                                                    .age ?? ''}
+                                                Appointment Time
                                             </Typography>
-                                        </Col>
-                                    </Col>
-                                    <Col
-                                        className="col-md-auto"
-                                        style={{ marginLeft: 15, marginTop: 20 }}
-                                    >
-                                        <Typography
-                                            style={{
-                                                fontSize: 10,
-                                                opacity: 0.5,
-                                            }}
-                                        >
-                                            Gender
-                                        </Typography>
-                                        <Col>
-                                            <Typography
-                                                style={{ fontSize: 17 }}
-                                            >
-                                                {currentCustomer?.gender ?? ''}
-                                            </Typography>
-                                        </Col>
-                                    </Col>
-                                    <Col
-                                        className="col-md-auto"
-                                        style={{ marginLeft: 15, marginTop: 20 }}
-                                    >
-                                        {currentConsultation.Appointment && (
-                                            <div>
+                                            <Col>
                                                 <Typography
-                                                    style={{
-                                                        fontSize: 10,
-                                                        opacity: 0.5,
-                                                    }}
+                                                    style={{ fontSize: 17 }}
                                                 >
-                                                    Appointment Time
+                                                    {getReadableDateAndTimeString(
+                                                        currentConsultation
+                                                            .Appointment
+                                                            ?.scheduledAppointmentStartTime ??
+                                                            '',
+                                                    )}{' '}
                                                 </Typography>
-                                                <Col>
-                                                    <Typography
-                                                        style={{ fontSize: 17 }}
-                                                    >
-                                                        {getReadableDateAndTimeString(
-                                                            currentConsultation
-                                                                .Appointment
-                                                                ?.scheduledAppointmentStartTime ??
-                                                                '',
-                                                        )}{' '}
-                                                    </Typography>
-                                                </Col>
-                                            </div>
-                                        )}
-                                    </Col>
-                                </Row>
+                                            </Col>
+                                        </div>
+                                    )}
+                                </Col>
                             </Row>
                         )}
                     </Col>
