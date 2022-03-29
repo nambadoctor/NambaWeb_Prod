@@ -10,18 +10,18 @@ import CustomButton from '../CustomButton';
 import { Col, Row } from 'react-bootstrap';
 import { ReferPatient } from '../../ServiceActions/ReferralActions';
 
-//TEMP HACK REFERRAL DATA
-const sujathaReferals = [
-    { value: 'sujatha-kousalya', label: 'Kousalya', number: '7530043008' },
-    { value: 'sujatha-rajesh', label: 'Rajesh', number: '7530043008' },
-    { value: 'sujatha-manivannan', label: 'Manivannan', number: '7530043008' },
-];
-//END DATA
-
-export function ReferToOthers() {
+export function ReferToOthers({ referralContacts }) {
     const currentCustomer = useSelector(
         (state) => state.CurrentCustomerState.Customer,
     );
+
+    const selectValues = referralContacts.map((contact, index) => {
+        return {
+            value: index,
+            label: contact.contactName,
+            number: contact.phoneNumber,
+        };
+    });
 
     const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ export function ReferToOthers() {
                         <Select
                             defaultValue={selectedOption}
                             onChange={setSelectedOption}
-                            options={sujathaReferals}
+                            options={selectValues}
                             placeholder="Refer To"
                         />
                         <div style={{ marginTop: '8px' }}>

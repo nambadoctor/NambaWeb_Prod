@@ -26,6 +26,10 @@ export default function ConsultationView() {
     const currentServiceProvider = useSelector(
         (state: RootState) => state.CurrentServiceProviderState.serviceProvider,
     );
+    const serviceProviderSettings = useSelector(
+        (state: RootState) =>
+            state.CurrentServiceProviderState.serviceProviderSettings,
+    );
     const { id } = useParams();
 
     useEffect(() => {
@@ -46,7 +50,16 @@ export default function ConsultationView() {
                     <ConsultationHeader />
                 </Col>
                 <Col>
-                    <ReferToOthers></ReferToOthers>
+                    {serviceProviderSettings &&
+                    serviceProviderSettings.referralWhitelist &&
+                    serviceProviderSettings.referralWhitelist.isEnabled ? (
+                        <ReferToOthers
+                            referralContacts={
+                                serviceProviderSettings.referralWhitelist
+                                    .referralContacts
+                            }
+                        />
+                    ) : null}
                 </Col>
             </Row>
             <Row style={{ margin: 20 }}>
