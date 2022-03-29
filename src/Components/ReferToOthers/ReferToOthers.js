@@ -18,7 +18,7 @@ export function ReferToOthers({ referralContacts }) {
     const selectValues = referralContacts.map((contact, index) => {
         return {
             value: index,
-            label: contact.contactName,
+            label: `${contact.contactName} (${contact.phoneNumber})`,
             number: contact.phoneNumber,
         };
     });
