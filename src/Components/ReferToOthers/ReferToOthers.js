@@ -51,11 +51,21 @@ export function ReferToOthers({ referralContacts }) {
         <div className="horiztontalContainer">
             {currentCustomer && (
                 <Row>
-                    <Col md="6">
-                        <div style={{ display: 'flex' }}>
+                    <Col md="8">
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                gap: '10px',
+                            }}
+                        >
                             <TextField
                                 fullWidth
-                                label={"Reason For Referral (" + formik.values.reasonForReferral.length + "/28)"}
+                                label={
+                                    'Reason For Referral (' +
+                                    formik.values.reasonForReferral.length +
+                                    '/28)'
+                                }
                                 placeholder="Reason For Referral"
                                 margin="normal"
                                 size="small"
@@ -79,14 +89,21 @@ export function ReferToOthers({ referralContacts }) {
                         />
                     </Col>
 
-                    <Col md="6" style={{justifyItems:'baseline'}}>
-                    <CustomButton
-                                type="submit"
-                                onClick={formik.handleSubmit}
-                                isPurple={false}
-                                title="Refer"
-                                small={false}
-                            />
+                    <Col
+                        lg="4"
+                        style={{
+                            justifyItems: 'baseline',
+                            marginTop: 'auto',
+                            marginLeft: 'auto',
+                        }}
+                    >
+                        <CustomButton
+                            type="submit"
+                            onClick={formik.handleSubmit}
+                            isPurple={false}
+                            title="Refer"
+                            small={false}
+                        />
                     </Col>
                 </Row>
             )}
