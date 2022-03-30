@@ -2,7 +2,7 @@ import { Action } from "../Types/ActionType";
 import { ThunkAction } from "redux-thunk";
 import { SetDatesWithAppointmentsRange } from "../Actions/SelectedDateActions";
 import { RootState } from "../store";
-import { CancelAppointmentEndPoint, EndAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint } from "../Helpers/EndPointHelpers";
+import { CancelAppointmentEndPoint, EndAppointmentEndPoint, GetAppointmentForServiceProviderEndPoint, GetServiceProviderAppointmentsInOrganisationEndPoint, SetNewAppointmentEndPoint, SetNewAppointmentWithTreatmentEndPoint } from "../Helpers/EndPointHelpers";
 import IAppointmentData from "../Types/IncomingDataModels/Appointment";
 import { getCall, postCall, putCall } from "../Http/http-helpers";
 import SetTrackTrace from "../Telemetry/SetTrackTrace";
@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { GetCustomer } from "./CustomerActions";
 import { SetSelectedAppointmentForConsultation } from "../Actions/ConsultationActions";
 import { GetNextAndPreviousAppointmentForConsultation, SetAppointments } from "../Actions/AppointmentsActions";
+import { GetAllTreatmentPlans } from "./TreatmentActions";
 
 //Get all appointments for currently logged in doctor.
 export const GetAllAppointments = (): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {
@@ -53,13 +54,14 @@ export const SetAppointment = (appointment: IAppointmentOutgoing): ThunkAction<v
     if (response) {
       dispatch(SetLinearLoadingBarToggle(false))
       dispatch(GetAllAppointments())
+      dispatch(GetAllTreatmentPlans())
+
       toast.success("Appointment Set Successfully")
     }
   } catch (error) {
     dispatch(SetNonFatalError("Could not create appointment"))
   }
 };
-
 
 //TODO: CHANGE IAPPOINTMENTDATA TO IAPPOINTMENTOUTGOINGDATA. Need to write converter for this!
 export const CancelAppointment = (appointment: IAppointmentData): ThunkAction<void, RootState, null, Action> => async (dispatch, getState) => {

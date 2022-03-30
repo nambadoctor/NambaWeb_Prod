@@ -1,8 +1,6 @@
 import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
 import ReportImageView from '../ReportUpload/ReportImageView';
 import ConsultationHeader from './ConsultationHeader';
-import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
-import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,12 +14,23 @@ import { UploadPrescriptionForConsultation } from '../../ServiceActions/Prescrip
 import NotesView from '../Notes/NotesView';
 import { GetAppointment } from '../../ServiceActions/AppointmentActions';
 import { ClearContext } from '../../Actions/ClearContextAction';
+import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
+import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
+import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
+import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
+import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
     const currentServiceProvider = useSelector(
         (state: RootState) => state.CurrentServiceProviderState.serviceProvider,
     );
+    const serviceProviderSettings = useSelector(
+        (state: RootState) =>
+            state.CurrentServiceProviderState.serviceProviderSettings,
+    );
+    
     const { id } = useParams();
 
     useEffect(() => {
@@ -33,16 +42,34 @@ export default function ConsultationView() {
 
     return (
         <div>
-            <ConsultationHeader />
+            <Row>
+                <Col>
+                    <ConsultationHeader />
+                </Col>
+                <Col>
+                    {serviceProviderSettings &&
+                    serviceProviderSettings.referralWhitelist &&
+                    serviceProviderSettings.referralWhitelist.isEnabled ? (
+                        <ReferToOthers
+                            referralContacts={
+                                serviceProviderSettings.referralWhitelist
+                                    .referralContacts
+                            }
+                        />
+                    ) : null}
+                </Col>
+            </Row>
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Prescriptions
+                        <PrescriptionUploadPicker
+                            handlePhotoCallBack={
+                                UploadPrescriptionForConsultation
+                            }
+                            uploadButtonColor="#1672f9"
+                        />
                     </h3>
-                    <PrescriptionUploadPicker
-                        handlePhotoCallBack={UploadPrescriptionForConsultation}
-                        uploadButtonColor="#1672f9"
-                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <PrescriptionImageView />
@@ -57,11 +84,11 @@ export default function ConsultationView() {
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Reports
+                        <ReportUploadPicker
+                            handlePhotoCallBack={UploadReportForConsultation}
+                            uploadButtonColor="#1672f9"
+                        />
                     </h3>
-                    <ReportUploadPicker
-                        handlePhotoCallBack={UploadReportForConsultation}
-                        uploadButtonColor="#1672f9"
-                    />
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <ReportImageView />
@@ -69,6 +96,21 @@ export default function ConsultationView() {
                         showUploadButton={false}
                         showCancelImageButton={false}
                     />
+                </div>
+            </Row>
+
+            <Row style={{ margin: 20 }}>
+                <div className="blue_filled_rounded_box_top">
+                    <h3 className="blue_filled_rounded_box_top_title_item">
+                        Treatment Plans
+                        <TreatmentPlanDocumentUploadPicker
+                            handlePhotoCallBack={UploadTreatmentPlanDocument}
+                            uploadButtonColor="#1672f9"
+                        />
+                    </h3>
+                </div>
+                <div className="blue_border_rounded_white_box">
+                    <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
                 </div>
             </Row>
 

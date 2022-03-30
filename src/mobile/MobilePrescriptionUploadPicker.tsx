@@ -2,13 +2,9 @@ import ImageCaptureComponent from '../Components/ImageCapture/ImageCaptureCompon
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { Row, Col } from 'react-bootstrap';
 import useUploadOrCaptureImageHook from '../CustomHooks/useCaptureOrUploadHook';
-import { MobileImageUploadProps } from '../Helpers/CommonProps';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { Button } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { SetSelectedAppointmentForConsultation } from '../Actions/ConsultationActions';
+import { ImageUploadProps } from '../Helpers/CommonProps';
 
-export const MobilePrescriptionUploadPicker: React.FC<MobileImageUploadProps> = (
+export const MobilePrescriptionUploadPicker: React.FC<ImageUploadProps> = (
     props,
 ) => {
     const {
@@ -17,12 +13,6 @@ export const MobilePrescriptionUploadPicker: React.FC<MobileImageUploadProps> = 
         handleChange,
         handleTakePhoto,
     } = useUploadOrCaptureImageHook(props.handlePhotoCallBack);
-
-    const dispatch = useDispatch();
-
-    const setConsultationAppointment = () => {
-        dispatch(SetSelectedAppointmentForConsultation(props.appointment))
-    }
 
     return (
         <div>
@@ -33,26 +23,15 @@ export const MobilePrescriptionUploadPicker: React.FC<MobileImageUploadProps> = 
                 id="prescription_upload_picker"
                 onChange={handleChange}
             />
-            <Button
-                variant="contained"
-                startIcon={
-                    <label htmlFor="prescription_upload_picker">
-                        <CloudUploadIcon
-                            style={{ color: props.uploadButtonColor }}
-                        />
-                    </label>
-                }
-                endIcon={
+            <Row>
+                <Col>
                     <div onClick={() => setShowCameraToggle(true)}>
                         <CameraAltIcon
                             style={{ color: props.uploadButtonColor }}
                         />
                     </div>
-                }
-                onClick={() => setConsultationAppointment()}
-            >
-                |
-            </Button>
+                </Col>
+            </Row>
 
             {showCameraToggle && (
                 <ImageCaptureComponent

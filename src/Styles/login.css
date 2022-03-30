@@ -1,29 +1,11 @@
 @media all and (min-width: 480px) {
-    .Login {
-        padding: 60px 0;
-    }
+  .Login {
+    padding: 60px 0;
+  }
 
-    .Login form {
-        margin: 0 auto;
-        max-width: 320px;
-        align-items: center;
-    }
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.5em;
-}
-
-input {
-    width: 10em;
-}
-
-#code {
-    width: 2.5em;
-}
-
-button {
-    width: fit-content;
+  .Login form {
+    margin: 0 auto;
+    max-width: 320px;
+    align-items: center;
+  }
 }

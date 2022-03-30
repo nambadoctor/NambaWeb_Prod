@@ -3,13 +3,17 @@ import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
-
 import CustomButton from '../CustomButton';
 import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
 
 export default function AddPatientView() {
-    const { addPatientState, genderOptions, gender, formik, setGender } =
-        usePatientInputHook(true);
+    const {
+        addPatientState,
+        genderOptions,
+        gender,
+        formik,
+        setGender,
+    } = usePatientInputHook(true);
 
     return (
         <div>
@@ -45,9 +49,6 @@ export default function AddPatientView() {
                 ) : (
                     <div />
                 )}
-
-                {/* Indicator to display once customer exists check is complete
-                {addPatientState.isCustomerExists ? <CheckCircleIcon style={{width: 30, height: 30, marginLeft: 5, color: '#149c4a'}}/> : <div />} */}
             </div>
 
             {addPatientState.isCustomerExists ? (
@@ -95,18 +96,6 @@ export default function AddPatientView() {
             />
 
             <Row className="align-items-center">
-                {/* <LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                        disabled={addPatientState.isInvalidNumber}
-                        renderInput={(props) => <TextField {...props} />}
-                        label="Date Of Birth"
-                        value={formik.values.dateOfBirth}
-                        onChange={(newValue) => {
-                            formik.setFieldValue('dateOfBirth', newValue);
-                        }}
-                    />
-                </LocalizationProvider> */}
-
                 <Col>
                     <TextField
                         fullWidth

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import AddPatientView from '../AddPatientAndBookAppointment/AddPatientView';
@@ -7,6 +8,7 @@ import { PatientsTableView } from './PatientsTableView';
 export default function PatientsTabMainView() {
     const [isSchedulingAppointment, setIsSchedulingAppointment] =
         useState(false);
+
 
     return (
         <div>
@@ -20,7 +22,7 @@ export default function PatientsTabMainView() {
                         ></PatientsTableView>
                     </Col>
                     <Col md="3">
-                        <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
+                        <h5 style={{ paddingTop: 10 }}>{isSchedulingAppointment ? "Book Appointment" : "Add/Edit Patient"}</h5>
                         {isSchedulingAppointment ? (
                             <AddPatientView></AddPatientView>
                         ) : (

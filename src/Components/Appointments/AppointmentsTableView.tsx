@@ -6,13 +6,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {
-    convertDaysIntoNearestUnit,
     getReadableDateAndTimeString,
     isDatesEqual,
 } from '../../Utils/GeneralUtils';
 import { makeStyles } from '@mui/styles';
 import { Box, TableFooter, TablePagination, Typography } from '@mui/material';
-import AppointmentStatusEnum from '../../Types/Enums/AppointmentStatusEnums';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
 import IAppointmentData from '../../Types/IncomingDataModels/Appointment';
@@ -26,9 +24,6 @@ import { createSelector } from 'reselect';
 import { ClearContext } from '../../Actions/ClearContextAction';
 
 const useAppointmentTableStyles = makeStyles(() => ({
-    table: {
-        minWidth: 650,
-    },
     tableContainer: {
         borderRadius: 15,
         margin: '10px 10px',
@@ -65,7 +60,7 @@ export default function AppointmentsTable() {
         (state: RootState) => state.SelectedDatesState.selectedDateRage,
     );
 
-    const showAppointmentReports = createSelector(
+    const showAppointments = createSelector(
         (state: RootState) => state.AppointmentState.appointments,
         (appointments) =>
             appointments.filter((appointment) =>
@@ -76,63 +71,26 @@ export default function AppointmentsTable() {
             ),
     );
 
-    const appointments = useSelector(showAppointmentReports);
+    const appointments = useSelector(showAppointments);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
-
-    //Once this is moved to service, instead of listening to appointment state, UI can listen directly to filtered appointments
-    function getLastVisitForCustomer(customerId: string) {
-        var lastVisitedDate = new Date();
-        appointments.forEach((element) => {
-            if (element.customerId === customerId) {
-                var currentAppointmentDate = new Date(
-                    element.scheduledAppointmentStartTime,
-                );
-                if (currentAppointmentDate < lastVisitedDate) {
-                    lastVisitedDate = currentAppointmentDate;
-                }
-            }
-        });
-
-        var currentDate = new Date();
-        var Time = currentDate.getTime() - lastVisitedDate.getTime();
-        var days = Time / (1000 * 3600 * 24);
-        return convertDaysIntoNearestUnit(days);
-    }
-
-    function getDisplayNameForAppointmentState(appointmentState: string) {
-        switch (appointmentState) {
-            case AppointmentStatusEnum.Confirmed:
-                return 'Confirmed';
-            case AppointmentStatusEnum.StartedConsultation:
-                return 'Started';
-            case AppointmentStatusEnum.Finished:
-                return 'Finished';
-            case AppointmentStatusEnum.Cancelled:
-                return 'Cancelled';
-            default:
-                break;
-        }
-    }
 
     function getBackgroundColorForAppointmentState(appointmentState: string) {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
         switch (appointmentState) {
-            case AppointmentStatusEnum.Confirmed:
-                colorCodesToReturn = ['#e5faf2', '#3bb077'];
-                break;
-            case AppointmentStatusEnum.StartedConsultation:
-                colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
-                break;
-            case AppointmentStatusEnum.Finished:
+            // case AppointmentTypeEnum.Consultation:
+            //     colorCodesToReturn = ['#e5faf2', '#3bb077'];
+            //     break;
+            // case AppointmentTypeEnum.Treatment:
+            //     colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
+            //     break;
+            case 'Finished':
                 colorCodesToReturn = ['#fff0f1', '#d95087'];
                 break;
-            case AppointmentStatusEnum.Cancelled:
-                colorCodesToReturn = ['', ''];
-                break;
             default:
+                colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
                 break;
         }
 
@@ -157,9 +115,6 @@ export default function AppointmentsTable() {
                         {appointment.customerName}
                     </Link>
                 </TableCell>
-                <TableCell align="left">
-                    {getLastVisitForCustomer(appointment.customerId)}
-                </TableCell>
                 <TableCell>
                     <Typography
                         className={classes.status}
@@ -173,7 +128,7 @@ export default function AppointmentsTable() {
                             )[1],
                         }}
                     >
-                        {getDisplayNameForAppointmentState(appointment.status)}
+                        {appointment.status}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
@@ -191,12 +146,8 @@ export default function AppointmentsTable() {
     }
 
     function cancelAppointment(appointment: IAppointmentData) {
-        if (appointment.status !== AppointmentStatusEnum.Finished) {
-            if (window.confirm('Do you want to cancel this appointment?')) {
-                dispatch(CancelAppointment(appointment));
-            }
-        } else {
-            window.confirm('Sorry you cannot delete this appointment');
+        if (window.confirm('Do you want to delete this appointment?')) {
+            dispatch(CancelAppointment(appointment));
         }
     }
 
@@ -205,7 +156,7 @@ export default function AppointmentsTable() {
             component={Paper}
             style={{ borderRadius: 15, marginBottom: 10 }}
         >
-            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <Table sx={{ minWidth: 300 }} aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
                         <TableCell
@@ -213,12 +164,6 @@ export default function AppointmentsTable() {
                             align="left"
                         >
                             Name
-                        </TableCell>
-                        <TableCell
-                            className={classes.tableHeaderCell}
-                            align="left"
-                        >
-                            Last Visit
                         </TableCell>
                         <TableCell
                             className={classes.tableHeaderCell}

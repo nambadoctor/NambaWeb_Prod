@@ -1,17 +1,12 @@
 import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Col, Container, Row } from 'react-bootstrap';
 import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
-import { Button, Typography } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 export default function ConsultationHeader() {
-    const Spacer = require('react-spacer');
-
     const currentConsultation = useSelector(
         (state: RootState) => state.ConsultationState,
     );
@@ -19,114 +14,11 @@ export default function ConsultationHeader() {
         (state: RootState) => state.CurrentCustomerState.Customer,
     );
 
-    function getPreviousAppointmentUI() {
-        return (
-            <Button
-                startIcon={
-                    <Link
-                        to={
-                            '/Consultation/' +
-                            currentConsultation.previousAppointment
-                                ?.appointmentId
-                        }
-                    >
-                        <ArrowBackIcon
-                            style={{ height: 22, width: 22, color: 'blue' }}
-                        ></ArrowBackIcon>
-                    </Link>
-                }
-            >
-                <Link
-                    to={
-                        '/Consultation/' +
-                        currentConsultation.previousAppointment?.appointmentId
-                    }
-                >
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'left',
-                            color: 'blue',
-                        }}
-                    >
-                        {currentConsultation.previousAppointment?.customerName}
-                    </Typography>
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'left',
-                            color: 'blue',
-                        }}
-                    >
-                        {getReadableDateAndTimeString(
-                            currentConsultation.previousAppointment
-                                ?.scheduledAppointmentStartTime ?? '',
-                        )}
-                    </Typography>
-                </Link>
-            </Button>
-        );
-    }
-
-    function getNextAppointmentUI() {
-        return (
-            <Button
-                endIcon={
-                    <Link
-                        to={
-                            '/Consultation/' +
-                            currentConsultation.nextAppointment?.appointmentId
-                        }
-                    >
-                        <ArrowForwardIcon
-                            style={{ height: 22, width: 22, color: 'blue' }}
-                        ></ArrowForwardIcon>
-                    </Link>
-                }
-            >
-                <Link
-                    to={
-                        '/Consultation/' +
-                        currentConsultation.nextAppointment?.appointmentId
-                    }
-                >
-                    <div>
-                        <Typography
-                            style={{
-                                fontSize: 13,
-                                textAlign: 'right',
-                                color: 'blue',
-                            }}
-                        >
-                            {currentConsultation.nextAppointment?.customerName}
-                        </Typography>
-                    </div>
-                    <Typography
-                        style={{
-                            fontSize: 13,
-                            textAlign: 'right',
-                            color: 'blue',
-                        }}
-                    >
-                        {getReadableDateAndTimeString(
-                            currentConsultation.nextAppointment
-                                ?.scheduledAppointmentStartTime ?? '',
-                        )}
-                    </Typography>
-                </Link>
-            </Button>
-        );
-    }
-
     return (
         <div className="horiztontalContainer">
             <Container fluid>
-                <Row style={{ alignItems: 'flex-end' }}>
-                    <Col className="col-md-1">
-                        {/* {currentConsultation.previousAppointment &&
-                            getPreviousAppointmentUI()} */}
-                    </Col>
-                    <Col className="col-md-10">
+                <Row>
+                    <Col>
                         {currentCustomer && (
                             <Row
                                 style={{
@@ -134,15 +26,15 @@ export default function ConsultationHeader() {
                                     alignItems: 'flex-end',
                                 }}
                             >
-                                <Col>
-                                    <Spacer grow="1" />
-                                </Col>
                                 <Col
                                     className="col-md-auto"
                                     style={{ marginLeft: 15 }}
                                 >
                                     <Typography
-                                        style={{ fontSize: 10, opacity: 0.5 }}
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
                                     >
                                         Patient Name
                                     </Typography>
@@ -150,11 +42,24 @@ export default function ConsultationHeader() {
                                         style={{
                                             fontSize: 17,
                                             fontWeight: 'bold',
+                                            marginBottom: 15
                                         }}
                                     >
                                         {currentConsultation.Appointment
                                             ?.customerName ??
                                             currentCustomer.firstName}
+                                    </Typography>
+
+                                    <Typography
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
+                                    >
+                                        Age
+                                    </Typography>
+                                    <Typography style={{ fontSize: 17 }}>
+                                        {currentCustomer?.dateOfBirth.age ?? ''}
                                     </Typography>
                                 </Col>
                                 <Col
@@ -162,7 +67,10 @@ export default function ConsultationHeader() {
                                     style={{ marginLeft: 15 }}
                                 >
                                     <Typography
-                                        style={{ fontSize: 10, opacity: 0.5 }}
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
                                     >
                                         Phone Number
                                     </Typography>
@@ -170,47 +78,32 @@ export default function ConsultationHeader() {
                                         style={{
                                             fontSize: 17,
                                             fontWeight: 'bold',
+                                            marginBottom: 15
                                         }}
                                     >
                                         +91
                                         {currentCustomer?.phoneNumbers[0]
                                             .number ?? ''}
                                     </Typography>
-                                </Col>
-                                <Col
-                                    className="col-md-auto"
-                                    style={{ marginLeft: 15 }}
-                                >
+
                                     <Typography
-                                        style={{ fontSize: 10, opacity: 0.5 }}
-                                    >
-                                        Age
-                                    </Typography>
-                                    <Col>
-                                        <Typography style={{ fontSize: 17 }}>
-                                            {currentCustomer?.dateOfBirth.age ??
-                                                ''}
-                                        </Typography>
-                                    </Col>
-                                </Col>
-                                <Col
-                                    className="col-md-auto"
-                                    style={{ marginLeft: 15 }}
-                                >
-                                    <Typography
-                                        style={{ fontSize: 10, opacity: 0.5 }}
+                                        style={{
+                                            fontSize: 10,
+                                            opacity: 0.5,
+                                        }}
                                     >
                                         Gender
                                     </Typography>
-                                    <Col>
-                                        <Typography style={{ fontSize: 17 }}>
-                                            {currentCustomer?.gender ?? ''}
-                                        </Typography>
-                                    </Col>
+                                    <Typography style={{ fontSize: 17 }}>
+                                        {currentCustomer?.gender ?? ''}
+                                    </Typography>
                                 </Col>
                                 <Col
-                                    className="col-md-auto"
-                                    style={{ marginLeft: 15 }}
+                                    className="col-md-4"
+                                    style={{
+                                        marginLeft: 15,
+                                        marginTop: 20,
+                                    }}
                                 >
                                     {currentConsultation.Appointment && (
                                         <div>
@@ -237,15 +130,8 @@ export default function ConsultationHeader() {
                                         </div>
                                     )}
                                 </Col>
-                                <Col>
-                                    <Spacer grow="1" />
-                                </Col>
                             </Row>
                         )}
-                    </Col>
-                    <Col className="col-md-1">
-                        {/* {currentConsultation.nextAppointment &&
-                            getNextAppointmentUI()} */}
                     </Col>
                 </Row>
             </Container>

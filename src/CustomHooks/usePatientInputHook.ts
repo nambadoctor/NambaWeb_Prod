@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { useEffect, useState } from "react";
 import { ICustomerProfileOutgoing } from "../Types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest";
 import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
+import { ClearCurrentCustomerState, SetCurrentCustomer } from "../Actions/CurrentCustomerActions";
 import IAppointmentOutgoing from "../Types/OutgoingDataModels/AppointmentOutgoing";
 import ICustomerProfileWithAppointmentOutgoingData from "../Types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing";
 import { SetAppointment } from "../ServiceActions/AppointmentActions";
@@ -43,7 +43,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             age: Yup.number().positive().integer(),
             gender: Yup.string(),
             dateForAppointment: Yup.date().nullable(),
-            dateOfBirth: Yup.date().nullable()
+            dateOfBirth: Yup.date().nullable(),
         }),
         onSubmit: (values) => {
             if (isForPatientAndAppointment) {
@@ -62,6 +62,7 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
         } else {
             dispatch(SetCurrentCustomer(null))
             dispatch(ClearAddPatientState())
+            dispatch(ClearCurrentCustomerState())
         }
     }, [formik.values.phonenumber])
 
@@ -123,9 +124,11 @@ export default function usePatientInputHook(isForPatientAndAppointment: boolean)
             serviceRequestId: "",
             serviceProviderId: currentServiceProvider?.serviceProviderId,
             customerId: currentCustomer?.customerId ?? "",
-            appointmentType: "InPerson",
+            appointmentType: "Consultation",
             addressId: "",
             status: "",
+            treatmentId: "",
+            treatmentPlanId: "",
             scheduledAppointmentStartTime: formik.values.dateForAppointment,
             scheduledAppointmentEndTime: new Date(),
             actualAppointmentStartTime: new Date(),

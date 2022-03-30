@@ -11,13 +11,14 @@ import { Link } from 'react-router-dom';
 import TablePaginationActions from '../Pagination/PaginationActions';
 import usePaginationHook from '../../CustomHooks/usePaginationHook';
 import usePatientsTableViewHook from '../../CustomHooks/usePatientsTableViewHook';
+
+import EditIcon from '@mui/icons-material/Edit';
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import { ClearCurrentCustomerState } from '../../Actions/CurrentCustomerActions';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ClearContext } from '../../Actions/ClearContextAction';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
-import EditIcon from '@mui/icons-material/Edit';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import { ClearCurrentCustomerState } from '../../Actions/CurrentCustomerActions';
 
 interface EditPatientViewProps {
     setIsSchedulingAppointment: Dispatch<SetStateAction<boolean>>;
@@ -27,7 +28,6 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     const classes = usePatientTableStyles();
 
     const [selectedID, setSelectedID] = useState('');
-
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(10);
 
@@ -75,24 +75,25 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                         {customer.phoneNumbers[0].number}
                     </Link>
                 </TableCell>
+
                 <TableCell>
                     <EditIcon
                         color="primary"
                         onClick={() => {
-                            dispatch(ClearCurrentCustomerState())
+                            dispatch(ClearCurrentCustomerState());
                             props.setIsSchedulingAppointment(false);
                             handleCustomerSelect(customer);
                         }}
-                        style={{cursor:"pointer"}}
+                        style={{ cursor: 'pointer' }}
                     ></EditIcon>
                     <DateRangeIcon
                         color="primary"
                         onClick={() => {
-                            dispatch(ClearCurrentCustomerState())
+                            dispatch(ClearCurrentCustomerState());
                             props.setIsSchedulingAppointment(true);
                             handleCustomerSelect(customer);
                         }}
-                        style={{ marginLeft: 15, cursor:"pointer" }}
+                        style={{ marginLeft: 15, cursor: 'pointer' }}
                     ></DateRangeIcon>
                 </TableCell>
             </TableRow>
@@ -108,16 +109,24 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                     marginRight: '5em',
                 }}
             >
-                <h5 style={{ marginBottom: 20 }}>Add/Edit Patient</h5>
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    value={search}
-                    onChange={(e) => onSearch(e.target.value)}
-                />
+                <h5 style={{ paddingTop: 10 }}>Patients</h5>
+                <div style={{ border: '3px solid #1672f9', borderRadius: 10 }}>
+                    <input
+                        type="text"
+                        placeholder="Search..."
+                        value={search}
+                        onChange={(e) => onSearch(e.target.value)}
+                        style={{
+                            marginLeft: 10,
+                            backgroundColor: 'white',
+                            color: 'black',
+                            width: 200,
+                        }}
+                    />
+                </div>
             </div>
 
-            <TableContainer component={Paper} style={{ borderRadius: 15 }}>
+            <TableContainer component={Paper} style={{ borderRadius: 15, marginTop: 10 }}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow style={{ height: 10 }}>
