@@ -1,12 +1,12 @@
-import '../../styles/topbar.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import OrganisationPicker from '../OrganisationPicker/OrganisationPicker';
-import { Navbar, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Nav, Navbar } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { ClearContext } from '../../actions/ClearContextAction';
 import useAuthHook from '../../service-actions/LoginActions';
+import '../../styles/topbar.css';
+import OrganisationPicker from '../OrganisationPicker/OrganisationPicker';
 
 export default function Topbar() {
     const dispatch = useDispatch();
@@ -20,7 +20,7 @@ export default function Topbar() {
     return (
         <Navbar bg="topBarBlue" fixed="top" expand="sm">
             <Link to={'/'} onClick={() => dispatch(ClearContext())}>
-                <Navbar.Brand>
+                <Navbar.Brand className="flex justify-center items-center">
                     <img
                         alt="logo"
                         style={{
