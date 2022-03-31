@@ -1,12 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { NativeBaseProvider } from 'native-base'; //extendTheme
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { HashRouter } from 'react-router-dom';
-import './index.css';
 import App from './App';
 import { AuthProvider } from './auth/Provider/AuthProvider';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Provider } from 'react-redux';
+import './index.css';
 import store from './store';
-import { NativeBaseProvider } from 'native-base'; //extendTheme
+import './styles/globals.css';
 
 ReactDOM.render(
     <HashRouter>
