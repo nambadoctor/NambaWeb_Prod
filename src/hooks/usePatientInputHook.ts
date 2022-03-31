@@ -1,24 +1,24 @@
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import { ClearAddPatientState } from '../actions/AddPatientActions';
+import {
+    ClearCurrentCustomerState,
+    SetCurrentCustomer,
+} from '../actions/CurrentCustomerActions';
+import { SetAppointment } from '../service-actions/AppointmentActions';
 import {
     CheckIfCustomerExists,
     SetCustomer,
     SetCustomerAndBookAppointment,
 } from '../service-actions/CustomerActions';
 import { RootState } from '../store';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
-import { ICustomerProfileOutgoing } from '../types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest';
 import ICustomerIncomingData from '../types/IncomingDataModels/CustomerIncoming';
-import {
-    ClearCurrentCustomerState,
-    SetCurrentCustomer,
-} from '../actions/CurrentCustomerActions';
 import IAppointmentOutgoing from '../types/OutgoingDataModels/AppointmentOutgoing';
 import ICustomerProfileWithAppointmentOutgoingData from '../types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing';
-import { SetAppointment } from '../service-actions/AppointmentActions';
 import IDateOfBirthData from '../types/OutgoingDataModels/DateOfBirth';
+import { ICustomerProfileOutgoing } from '../types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest';
 import IPhoneNumberData from '../types/OutgoingDataModels/PhoneNumber';
 
 export default function usePatientInputHook(
@@ -60,7 +60,7 @@ export default function usePatientInputHook(
             dateForAppointment: Yup.date().nullable(),
             dateOfBirth: Yup.date().nullable(),
         }),
-        onSubmit: (values) => {
+        onSubmit: (_values) => {
             if (isForPatientAndAppointment) {
                 makeCustomerAndAppointmentRequest();
             } else {
@@ -72,7 +72,7 @@ export default function usePatientInputHook(
     //Phone Number Change Handler
     useEffect(() => {
         const number = formik.values.phonenumber;
-        if (number.length == 10) {
+        if (number.length === 10) {
             dispatch(
                 CheckIfCustomerExists(
                     number,

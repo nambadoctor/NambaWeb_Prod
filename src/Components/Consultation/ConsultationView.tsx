@@ -1,25 +1,25 @@
-import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
-import ReportImageView from '../ReportUpload/ReportImageView';
-import ConsultationHeader from './ConsultationHeader';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import '../../../src/App.css';
-import { RootState } from '../../store';
-import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
-import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
-import { UploadReportForConsultation } from '../../service-actions/ReportActions';
-import { UploadPrescriptionForConsultation } from '../../service-actions/PrescriptionActions';
-import NotesView from '../Notes/NotesView';
-import { GetAppointment } from '../../service-actions/AppointmentActions';
 import { ClearContext } from '../../actions/ClearContextAction';
-import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
-import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
+import { GetAppointment } from '../../service-actions/AppointmentActions';
+import { UploadPrescriptionForConsultation } from '../../service-actions/PrescriptionActions';
+import { UploadReportForConsultation } from '../../service-actions/ReportActions';
 import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
+import { RootState } from '../../store';
+import NotesView from '../Notes/NotesView';
+import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
+import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
+import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
+import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
+import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
+import ReportImageView from '../ReportUpload/ReportImageView';
+import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
-import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
+import ConsultationHeader from './ConsultationHeader';
 
 export default function ConsultationView() {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function ConsultationView() {
         if (currentServiceProvider) {
             dispatch(GetAppointment(id as string));
         }
-    }, [currentServiceProvider, id]);
+    }, [currentServiceProvider, id, dispatch]);
 
     return (
         <div>

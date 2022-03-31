@@ -1,7 +1,23 @@
-import { Action } from '../types/ActionType';
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { toast } from 'react-toastify';
 import { ThunkAction } from 'redux-thunk';
+import {
+    GetNextAndPreviousAppointmentForConsultation,
+    SetAppointments,
+} from '../actions/AppointmentsActions';
+import {
+    SetFatalError,
+    SetLinearLoadingBarToggle,
+    SetNonFatalError,
+} from '../actions/common/UIControlActions';
+import { SetSelectedAppointmentForConsultation } from '../actions/ConsultationActions';
 import { SetDatesWithAppointmentsRange } from '../actions/SelectedDateActions';
+import { getCall, postCall, putCall } from '../http/http-helpers';
 import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import IAppointmentData from '../types/IncomingDataModels/Appointment';
+import IAppointmentOutgoing from '../types/OutgoingDataModels/AppointmentOutgoing';
 import {
     CancelAppointmentEndPoint,
     EndAppointmentEndPoint,
@@ -9,23 +25,7 @@ import {
     GetServiceProviderAppointmentsInOrganisationEndPoint,
     SetNewAppointmentEndPoint,
 } from '../utils/EndPointHelpers';
-import IAppointmentData from '../types/IncomingDataModels/Appointment';
-import { getCall, postCall, putCall } from '../http/http-helpers';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
-import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import IAppointmentOutgoing from '../types/OutgoingDataModels/AppointmentOutgoing';
-import {
-    SetFatalError,
-    SetLinearLoadingBarToggle,
-    SetNonFatalError,
-} from '../actions/common/UIControlActions';
-import { toast } from 'react-toastify';
 import { GetCustomer } from './CustomerActions';
-import { SetSelectedAppointmentForConsultation } from '../actions/ConsultationActions';
-import {
-    GetNextAndPreviousAppointmentForConsultation,
-    SetAppointments,
-} from '../actions/AppointmentsActions';
 import { GetAllTreatmentPlans } from './TreatmentActions';
 
 //Get all appointments for currently logged in doctor.
@@ -89,7 +89,7 @@ export const SetAppointment =
     (
         appointment: IAppointmentOutgoing,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(
@@ -124,7 +124,7 @@ export const CancelAppointment =
     (
         appointment: IAppointmentData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(
@@ -157,7 +157,7 @@ export const EndAppointment =
     (
         appointment: IAppointmentData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(

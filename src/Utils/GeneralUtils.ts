@@ -26,7 +26,7 @@ export const getReadableDateAndTimeString = (date: string) =>
 
 export const convertDaysIntoNearestUnit = (days: number): string => {
     if (days < 7) {
-        if (Math.trunc(days) == 0) {
+        if (Math.trunc(days) === 0) {
             return 'First Time';
         } else {
             return String(Math.ceil(days / 1) + ' days ago');

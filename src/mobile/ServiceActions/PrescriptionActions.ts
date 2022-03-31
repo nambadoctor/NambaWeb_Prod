@@ -1,17 +1,16 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import React from 'react';
 import { toast } from 'react-toastify';
 import { ThunkAction } from 'redux-thunk';
 import {
     SetLinearLoadingBarToggle,
     SetNonFatalError,
 } from '../../actions/common/UIControlActions';
-import { SetCustomerPrescriptionEndPoint } from '../../utils/EndPointHelpers';
 import { postCall } from '../../http/http-helpers';
 import { RootState } from '../../store';
 import SetTrackTrace from '../../telemetry/SetTrackTrace';
 import { Action } from '../../types/ActionType';
 import { IPrescriptionUploadData } from '../../types/OutgoingDataModels/PrescriptionUpload';
+import { SetCustomerPrescriptionEndPoint } from '../../utils/EndPointHelpers';
 import { ConvertInputToFileOrBase64 } from '../../utils/GeneralUtils';
 
 export const UploadPrescriptionForConsultation =

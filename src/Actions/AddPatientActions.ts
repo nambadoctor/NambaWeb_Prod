@@ -45,7 +45,7 @@ const SetAddPatientIsInvalidNumber = (isInvalidNumber: boolean): Action =>
 
 export const SetIsCheckingForCustomer =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetAddPatientIsCheckingForCustomer(true));
         dispatch(SetAddPatientIsCustomerExists(false));
         dispatch(SetAddPatientIsInvalidNumber(false));
@@ -53,7 +53,7 @@ export const SetIsCheckingForCustomer =
 
 export const SetIsInvalidNumber =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetAddPatientIsCheckingForCustomer(false));
         dispatch(SetAddPatientIsCustomerExists(false));
         dispatch(SetAddPatientIsInvalidNumber(true));
@@ -61,7 +61,7 @@ export const SetIsInvalidNumber =
 
 export const SetCustomerExists =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetAddPatientIsCheckingForCustomer(false));
         dispatch(SetAddPatientIsCustomerExists(true));
         dispatch(SetAddPatientIsInvalidNumber(false));

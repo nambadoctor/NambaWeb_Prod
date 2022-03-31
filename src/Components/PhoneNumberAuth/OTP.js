@@ -45,7 +45,6 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -82,7 +81,6 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -123,7 +121,6 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -164,7 +161,6 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -205,7 +201,6 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -245,7 +240,6 @@ export default function OtpEntry() {
                     justifySelf: 'center',
                     textAlign: 'center',
                     borderRadius: 5,
-                    fontSize: 20,
                 }}
                 onChange={(event) => {
                     if (

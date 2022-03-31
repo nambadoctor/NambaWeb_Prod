@@ -1,4 +1,27 @@
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { toast } from 'react-toastify';
 import { ThunkAction } from 'redux-thunk';
+import {
+    ClearAddPatientState,
+    SetCustomerExists,
+    SetIsCheckingForCustomer,
+    SetIsInvalidNumber,
+} from '../actions/AddPatientActions';
+import { ClearContext } from '../actions/ClearContextAction';
+import {
+    SetLinearLoadingBarToggle,
+    SetNonFatalError,
+} from '../actions/common/UIControlActions';
+import { SetCurrentCustomer } from '../actions/CurrentCustomerActions';
+import { SetCustomers } from '../actions/CustomerActions';
+import { SetCustomersLoadedState } from '../actions/LoadedStatesActions';
+import { getCall, postCall, putCall } from '../http/http-helpers';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import ICustomerIncomingData from '../types/IncomingDataModels/CustomerIncoming';
+import ICustomerProfileWithAppointmentOutgoingData from '../types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing';
+import { ICustomerProfileOutgoing } from '../types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest';
 import {
     GetCustomerForServiceProviderEndPoint,
     GetCustomerFromPhoneNumberEndPoint,
@@ -6,33 +29,10 @@ import {
     SetCustomerEndPoint,
     SetCustomerWithAppointmentEndPoint,
 } from '../utils/EndPointHelpers';
-import { RootState } from '../store';
-import { Action } from '../types/ActionType';
-import ICustomerIncomingData from '../types/IncomingDataModels/CustomerIncoming';
-import {
-    ClearAddPatientState,
-    SetCustomerExists,
-    SetIsCheckingForCustomer,
-    SetIsInvalidNumber,
-} from '../actions/AddPatientActions';
-import { getCall, postCall, putCall } from '../http/http-helpers';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
-import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { GetAllAppointments } from './AppointmentActions';
-import { ICustomerProfileOutgoing } from '../types/OutgoingDataModels/PatientCreationAndAppointmentBookRequest';
-import ICustomerProfileWithAppointmentOutgoingData from '../types/OutgoingDataModels/CustomerProfileWithAppointmentOutgoing';
-import {
-    SetLinearLoadingBarToggle,
-    SetNonFatalError,
-} from '../actions/common/UIControlActions';
-import { SetCustomersLoadedState } from '../actions/LoadedStatesActions';
-import { toast } from 'react-toastify';
-import { GetReports } from './ReportActions';
-import { GetPrescriptions } from './PrescriptionActions';
 import { GetNotes } from './NoteActions';
-import { SetCurrentCustomer } from '../actions/CurrentCustomerActions';
-import { SetCustomers } from '../actions/CustomerActions';
-import { ClearContext } from '../actions/ClearContextAction';
+import { GetPrescriptions } from './PrescriptionActions';
+import { GetReports } from './ReportActions';
 import {
     GetAllTreatmentPlans,
     GetTreatmentDocumentsForCustomer,
@@ -86,7 +86,7 @@ export const CheckIfCustomerExists =
         phoneNumber: string,
         organisationId: string,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetIsCheckingForCustomer());
         SetTrackTrace(
             'Enter Check If Customer Exists with Phone Number Action PhNumber:' +
@@ -122,7 +122,7 @@ export const SetCustomerAndBookAppointment =
     (
         customerProfileWithAppointment: ICustomerProfileWithAppointmentOutgoingData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(
@@ -166,7 +166,7 @@ export const SetCustomer =
     (
         customerRequest: ICustomerProfileOutgoing,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(
@@ -283,7 +283,7 @@ export const GetCustomer =
 
 export const GetCustomerData =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(GetReports());
         dispatch(GetPrescriptions());
         dispatch(GetNotes());

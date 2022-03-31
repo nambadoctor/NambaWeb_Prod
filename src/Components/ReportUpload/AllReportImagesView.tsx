@@ -1,21 +1,15 @@
 import { useEffect } from 'react';
-import ImageViewer from 'react-simple-image-viewer';
-import {
-    DeleteReport,
-    UploadReportAsStray,
-} from '../../service-actions/ReportActions';
-import { RootState } from '../../store';
-import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../types/IncomingDataModels/ReportIncoming';
 import { Col, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import ImageViewer from 'react-simple-image-viewer';
 import useImagesHook from '../../hooks/useImagesViewHook';
-import { ReportUploadPicker } from './ReportUploadPicker';
+import { UploadReportAsStray } from '../../service-actions/ReportActions';
+import { RootState } from '../../store';
 import { AllImageDisplayProps } from '../../utils/CommonProps';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
+import { ReportUploadPicker } from './ReportUploadPicker';
 
 export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
-    const dispatch = useDispatch();
-
     const {
         currentImage,
         isViewerOpen,
@@ -29,14 +23,6 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         (state: RootState) =>
             state.ConsultationState.Appointment?.appointmentId,
     );
-
-    // const showAppointmentReports = createSelector(
-    //     (state: RootState) => state.CurrentCustomerState.Reports,
-    //     (reports) =>
-    //         reports?.filter(
-    //             (report) => report.appointmentId !== currentAppointmentId,
-    //         ),
-    // );
 
     let allCustomerReportsImages = useSelector(
         (state: RootState) => state.CurrentCustomerState.Reports,
@@ -60,14 +46,6 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
         }
 
         setImages(stringList);
-    }
-
-    function deleteReport(report: IReportIncomingData) {
-        if (
-            window.confirm('Are you sure you want to delete this prescription?')
-        ) {
-            dispatch(DeleteReport(report));
-        }
     }
 
     function imageViewDisplay() {

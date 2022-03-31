@@ -39,7 +39,7 @@ export default function OrganisationInitialModalPickerComponent() {
                 </div>
 
                 {orgState.organisations.map(
-                    (organisation: IOrganisationBasic, index: number) => (
+                    (organisation: IOrganisationBasic, _index: number) => (
                         <Button
                             variant="primary"
                             onClick={() => selectOrg(organisation)}

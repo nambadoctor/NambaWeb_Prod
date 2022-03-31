@@ -1,22 +1,21 @@
 import {
-    TableRow,
-    TableCell,
+    Button,
     Paper,
     Table,
     TableBody,
+    TableCell,
     TableContainer,
     TableHead,
-    Button,
+    TableRow,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import { ITreatmentIncoming } from '../../types/IncomingDataModels/TreatmentIncoming';
 import { ITreatmentPlanIncoming } from '../../types/IncomingDataModels/TreatmentPlanIncoming';
+import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 import { NewTreatmentRow } from './NewTreatmentRow';
 import { TreatmentRow } from './TreatmentRow';
-import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
-import { RootState } from '../../store';
-import { useSelector } from 'react-redux';
-import { makeStyles } from '@mui/styles';
 
 interface TreatmentPlanContainerProps {
     treatmentPlan: ITreatmentPlanIncoming;
@@ -85,7 +84,7 @@ export const TreatmentPlanContainer: React.FC<TreatmentPlanContainerProps> = (
                                 props.treatmentPlan.treatments.map(
                                     (
                                         treatment: ITreatmentIncoming,
-                                        index: number,
+                                        _index: number,
                                     ) => (
                                         <TreatmentRow
                                             treatment={treatment}

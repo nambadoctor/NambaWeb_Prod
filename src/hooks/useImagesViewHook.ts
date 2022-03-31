@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { SetIsViewingImage } from '../actions/common/UIControlActions';
 
@@ -8,11 +8,14 @@ export default function useImagesHook() {
     const [images, setImages] = useState(['']);
     const dispatch = useDispatch();
 
-    const openImageViewer = useCallback((index) => {
-        dispatch(SetIsViewingImage(true));
-        setCurrentImage(index);
-        setIsViewerOpen(true);
-    }, []);
+    const openImageViewer = useCallback(
+        (index) => {
+            dispatch(SetIsViewingImage(true));
+            setCurrentImage(index);
+            setIsViewerOpen(true);
+        },
+        [dispatch],
+    );
 
     const closeImageViewer = () => {
         dispatch(SetIsViewingImage(false));

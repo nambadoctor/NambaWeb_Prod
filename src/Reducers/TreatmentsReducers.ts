@@ -1,6 +1,5 @@
 import { Action } from '../types/ActionType';
 import { ITreatmentIncoming } from '../types/IncomingDataModels/TreatmentIncoming';
-import { ITreatmentPlanIncoming } from '../types/IncomingDataModels/TreatmentPlanIncoming';
 
 export enum Treatment_Types {
     SET_TREATMENTS = 'SET_TREATMENTS',

@@ -1,8 +1,8 @@
-import { Action } from '../../types/ActionType';
-import { UITrigger_Types } from '../../reducers/Common/UITriggerReducer';
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../../store';
 import { toast } from 'react-toastify';
+import { ThunkAction } from 'redux-thunk';
+import { UITrigger_Types } from '../../reducers/Common/UITriggerReducer';
+import { RootState } from '../../store';
+import { Action } from '../../types/ActionType';
 
 //TODO: MAKE ALL COMMON USECASE ACTIONS IN ONE FILE
 function setBooleanPayload(payload: boolean, actionType: string) {
@@ -13,7 +13,7 @@ function setBooleanPayload(payload: boolean, actionType: string) {
 }
 
 function setErrorPayload(
-    toggle: boolean,
+    _toggle: boolean,
     payload: string | null,
     actionType: string,
 ) {
@@ -56,7 +56,7 @@ export const SetIsViewingImage = (isViewingImage: boolean): Action =>
 
 export const SetNonFatalError =
     (errorMessage: string): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(false));
         toast.error(errorMessage, { position: toast.POSITION.BOTTOM_CENTER });
         setErrorPayload(

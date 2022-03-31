@@ -1,12 +1,7 @@
-import { Paper, TextField, IconButton, Divider } from '@mui/material';
-import { useEffect } from 'react';
-import { Button } from '@mui/material';
-import useGeoLocation from '../../hooks/useGeoLocation';
-import Otp from './OTP.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button, Divider, IconButton, Paper, TextField } from '@mui/material';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import '../../styles/otpstyles.css';
-
 import {
     SetCodeAction,
     SetConfirmationResultAction,
@@ -15,6 +10,9 @@ import {
     SetPNOAction,
 } from '../../actions/LoginActions';
 import useAuthHook from '../../hooks/useAuthHook';
+import useGeoLocation from '../../hooks/useGeoLocation';
+import '../../styles/otpstyles.css';
+import Otp from './OTP.js';
 
 export const PhoneNumberLogin: React.FC = () => {
     const { countryCode } = useGeoLocation();
@@ -25,7 +23,7 @@ export const PhoneNumberLogin: React.FC = () => {
 
     useEffect(() => {
         dispatch(SetCodeAction(countryCode));
-    }, [countryCode]);
+    }, [countryCode, dispatch]);
 
     function isNumeric(n: any) {
         return !isNaN(parseInt(n)) && isFinite(n);

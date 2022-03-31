@@ -1,13 +1,13 @@
-import { styled, alpha } from '@mui/material/styles';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { alpha, styled } from '@mui/material/styles';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { SetSelectedOrg } from '../../actions/OrganisationActions';
+import { RootState } from '../../store';
 import '../../styles/organisation_picker.css';
 import IOrganisationBasic from '../../types/IncomingDataModels/OrganisationBasic';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import { RootState } from '../../store';
-import { SetSelectedOrg } from '../../actions/OrganisationActions';
 
 export const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -108,7 +108,7 @@ export default function OrganisationPicker() {
             >
                 {organisationState.organisations.length !== 0 &&
                     organisationState.organisations.map(
-                        (organisation: IOrganisationBasic, index: number) => (
+                        (organisation: IOrganisationBasic, _index: number) => (
                             <MenuItem
                                 onClick={() => {
                                     getSelectedOption(organisation);

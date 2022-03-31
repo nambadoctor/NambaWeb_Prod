@@ -1,21 +1,21 @@
-import { Routes, Route } from 'react-router-dom';
-import { Container, Row, Col } from 'react-bootstrap';
-import '../App.css';
-import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { useEffect } from 'react';
-import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasicActions';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { useEffect } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
+import '../App.css';
 import Calendar from '../components/CalendarPicker/Calendar';
+import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
+import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
+import CriticalAlertDisplay from '../components/UIHelperComponents/CriticalAlertDisplay';
 import FullPageLoadingDisplay from '../components/UIHelperComponents/FullPageLoadingDisplay';
 import NonExistentUserDisplayComponent from '../components/UIHelperComponents/NonExistentUserDisplayComponent';
-import CriticalAlertDisplay from '../components/UIHelperComponents/CriticalAlertDisplay';
-import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
-import MobileNavBar from './MobileNavBar';
+import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasicActions';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
-import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
+import MobileNavBar from './MobileNavBar';
 
 function MobileDashboard() {
     const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function MobileDashboard() {
         );
         dispatch(SetInitialLoadingStartTime());
         dispatch(GetServiceProviderBasic());
-    }, []);
+    }, [dispatch]);
 
     function AppointmentsAndCalendarView() {
         return (

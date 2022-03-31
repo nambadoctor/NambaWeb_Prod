@@ -1,12 +1,9 @@
-import { Action } from '../types/ActionType';
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import {
-    LoadedState,
-    LoadedStatesReducer_Types,
-} from '../reducers/LoadedStatesReducer';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { ThunkAction } from 'redux-thunk';
+import { LoadedStatesReducer_Types } from '../reducers/LoadedStatesReducer';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
 
 //TODO: MAKE ALL COMMON USECASE ACTIONS IN ONE FILE
 function setBooleanPayload(payload: boolean, actionType: string) {
@@ -25,7 +22,7 @@ function setDatePayload(payload: Date, actionType: string) {
 
 export const SetInitialLoadingStartTime =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(
             setDatePayload(
                 new Date(),
@@ -36,7 +33,7 @@ export const SetInitialLoadingStartTime =
 
 export const SetServiceProviderBasicLoadedState =
     (isLoaded: boolean): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(
             setBooleanPayload(
                 isLoaded,
@@ -48,7 +45,7 @@ export const SetServiceProviderBasicLoadedState =
 
 export const SetCurrentServiceProviderLoadedState =
     (isLoaded: boolean): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(
             setBooleanPayload(
                 isLoaded,
@@ -60,7 +57,7 @@ export const SetCurrentServiceProviderLoadedState =
 
 export const SetAppointmentsLoadedState =
     (isLoaded: boolean): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(
             setBooleanPayload(
                 isLoaded,
@@ -72,7 +69,7 @@ export const SetAppointmentsLoadedState =
 
 export const SetCustomersLoadedState =
     (isLoaded: boolean): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(
             setBooleanPayload(
                 isLoaded,
@@ -84,7 +81,7 @@ export const SetCustomersLoadedState =
 
 export const CheckForAllStatesLoaded =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (_dispatch, getState) => {
         const loadedState = getState().LoadedState;
 
         if (

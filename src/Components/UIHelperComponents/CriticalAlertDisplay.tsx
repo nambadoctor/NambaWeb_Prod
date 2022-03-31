@@ -1,5 +1,4 @@
-import { Box, Button, LinearProgress } from '@mui/material';
-import React from 'react';
+import { Box, Button } from '@mui/material';
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import useAuthHook from '../../hooks/useAuthHook';

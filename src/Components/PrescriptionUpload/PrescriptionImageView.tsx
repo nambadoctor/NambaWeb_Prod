@@ -1,15 +1,11 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
-import { RootState } from '../../store';
-import IPrescriptionIncomingData from '../../types/IncomingDataModels/PrescriptionIncoming';
 import useImagesHook from '../../hooks/useImagesViewHook';
-import { Row } from 'react-bootstrap';
+import { RootState } from '../../store';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export default function PrescriptionImageView() {
-    const dispatch = useDispatch();
-
     const {
         currentImage,
         isViewerOpen,

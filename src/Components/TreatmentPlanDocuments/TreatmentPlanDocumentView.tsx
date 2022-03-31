@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import ImageViewer from 'react-simple-image-viewer';
-import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ImageViewer from 'react-simple-image-viewer';
 import useImagesHook from '../../hooks/useImagesViewHook';
-import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
 import { DeleteTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
+import { RootState } from '../../store';
+import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
 
 export default function TreatmentPlanDocumentImageView() {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ export default function TreatmentPlanDocumentImageView() {
         if (currentCustomerTreatmentImages) {
             currentCustomerTreatmentImages
                 .filter(
-                    (doc) => doc.serviceRequestId == currentServiceRequestId,
+                    (doc) => doc.serviceRequestId === currentServiceRequestId,
                 )
                 .forEach((element) => {
                     stringList.push(element.sasUrl);
@@ -66,7 +66,7 @@ export default function TreatmentPlanDocumentImageView() {
                         currentCustomerTreatmentImages
                             .filter(
                                 (treatment) =>
-                                    treatment.serviceRequestId ==
+                                    treatment.serviceRequestId ===
                                     currentServiceRequestId,
                             )
                             .map((src, index) => (

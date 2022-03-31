@@ -24,7 +24,7 @@ export const SetSelectedCustomer =
     (
         customer: ICustomerIncomingData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(ClearAddPatientState());
         dispatch(ClearAllValuesForConsultation());
         dispatch(

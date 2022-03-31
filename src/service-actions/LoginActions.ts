@@ -1,7 +1,7 @@
 import {
-    signInWithPhoneNumber,
     getAuth,
     RecaptchaVerifier,
+    signInWithPhoneNumber,
 } from '@firebase/auth';
 import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
 
@@ -10,7 +10,7 @@ function getAppVerifier() {
         'sign-in-button',
         {
             size: 'invisible',
-            callback: (response: any) => {
+            callback: (_: any) => {
                 // reCAPTCHA solved, allow signInWithPhoneNumber.
                 //onSignInSubmit();
             },
@@ -30,18 +30,18 @@ export default function useAuthHook() {
 
                 var confirmationResultTemp = confirmationResult
                     .confirm(verificationCode!)
-                    .then((result) => {
+                    .then((_) => {
                         // User signed in successfully.
                         // ...
                     })
-                    .catch((error) => {
+                    .catch((_) => {
                         // User couldn't sign in (bad verification code?)
                         // ...
                     });
 
                 return confirmationResultTemp;
             })
-            .catch(function (error) {
+            .catch(function (_) {
                 // Handle Errors here.
             });
     }

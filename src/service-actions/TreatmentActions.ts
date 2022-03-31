@@ -11,16 +11,6 @@ import {
     SetPatientTreatmentPlans,
 } from '../actions/CurrentCustomerActions';
 import { SetTreatments } from '../actions/TreatmentActions';
-import {
-    AddTreatmentEndPoint,
-    AddTreatmentPlanDocumentEndPoint,
-    AddTreatmentPlanEndPoint,
-    DeleteTreatmentEndPoint,
-    DeleteTreatmentPlanDocumentEndPoint,
-    GetServiceProviderTreatmentPlansInOrganisationEndPoint,
-    GetServiceProviderTreatmentsInOrganisationEndPoint,
-    GetTreatmentPlanDocumentsForCustomerEndPoint,
-} from '../utils/EndPointHelpers';
 import { deleteCall, getCall, postCall, putCall } from '../http/http-helpers';
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
@@ -31,10 +21,20 @@ import { ITreatmentPlanIncoming } from '../types/IncomingDataModels/TreatmentPla
 import { ITreatmentOutgoing } from '../types/OutgoingDataModels/TreatmentOutgoing';
 import { ITreatmentPlanDocumentOutgoing } from '../types/OutgoingDataModels/TreatmentPlanDocumentOutgoing';
 import { ITreatmentPlanOutgoing } from '../types/OutgoingDataModels/TreatmentPlanOutgoing';
+import {
+    AddTreatmentEndPoint,
+    AddTreatmentPlanDocumentEndPoint,
+    AddTreatmentPlanEndPoint,
+    DeleteTreatmentEndPoint,
+    DeleteTreatmentPlanDocumentEndPoint,
+    GetServiceProviderTreatmentPlansInOrganisationEndPoint,
+    GetServiceProviderTreatmentsInOrganisationEndPoint,
+    GetTreatmentPlanDocumentsForCustomerEndPoint,
+} from '../utils/EndPointHelpers';
 import { ConvertInputToFileOrBase64 } from '../utils/GeneralUtils';
 
 export const GetAllTreatments =
-    (onlyShowUpcoming: boolean): ThunkAction<void, RootState, null, Action> =>
+    (_onlyShowUpcoming: boolean): ThunkAction<void, RootState, null, Action> =>
     async (dispatch, getState) => {
         SetTrackTrace(
             'Enter Get All Treatments Action',
@@ -77,8 +77,7 @@ export const GetAllTreatments =
                 SeverityLevel.Information,
             );
             dispatch(SetTreatments(response.data));
-        } catch (error) {
-            var x = error;
+        } catch (_error) {
             dispatch(SetFatalError('Could not retrieve treatments!'));
         }
     };
@@ -253,14 +252,14 @@ export const AddTreatmentPlan =
             //TODO: Handle if selected organisation is null, SHOW ORG PICKER MODAL
 
             if (treatmentPlan.treatmentPlanId) {
-                let response = await putCall(
+                await putCall(
                     {} as Array<ITreatmentIncoming>,
                     AddTreatmentPlanEndPoint(),
                     treatmentPlan,
                     'UpdateTreatmentPlan',
                 );
             } else {
-                let response = await postCall(
+                await postCall(
                     {} as Array<ITreatmentIncoming>,
                     AddTreatmentEndPoint(AddTreatmentPlanEndPoint()),
                     treatmentPlan,
@@ -276,7 +275,7 @@ export const DeleteTreatment =
     (
         treatmentToDelete: ITreatmentIncoming,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(
@@ -374,7 +373,7 @@ export const GetTreatmentDocumentsForCustomer =
 
 export const DeleteTreatmentPlanDocument =
     (treatmentDocumentId: string): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(

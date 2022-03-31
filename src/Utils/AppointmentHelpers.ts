@@ -1,4 +1,3 @@
-import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import IAppointmentData from '../types/IncomingDataModels/Appointment';
 
 export function getIndexOfAppointment(

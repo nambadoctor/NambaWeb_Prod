@@ -1,26 +1,25 @@
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import { Action } from '../types/ActionType';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import { deleteCall, getCall, postCall, putCall } from '../http/http-helpers';
-import {
-    DeleteCustomerReportEndPoint,
-    GetCustomerAllReportsEndPoint,
-    GetCustomerReportEndPoint,
-    SetCustomerReportEndPoint,
-    SetCustomerStrayReportEndPoint,
-} from '../utils/EndPointHelpers';
-import IReportUploadData from '../types/OutgoingDataModels/ReportUpload';
-import IReportIncomingData from '../types/IncomingDataModels/ReportIncoming';
-import { ConvertInputToFileOrBase64 } from '../utils/GeneralUtils';
+import { toast } from 'react-toastify';
+import { ThunkAction } from 'redux-thunk';
 import {
     SetLinearLoadingBarToggle,
     SetNonFatalError,
 } from '../actions/common/UIControlActions';
-import { toast } from 'react-toastify';
 import { SetReports } from '../actions/CurrentCustomerActions';
+import { deleteCall, getCall, postCall } from '../http/http-helpers';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
 import IAppointmentData from '../types/IncomingDataModels/Appointment';
+import IReportIncomingData from '../types/IncomingDataModels/ReportIncoming';
+import IReportUploadData from '../types/OutgoingDataModels/ReportUpload';
+import {
+    DeleteCustomerReportEndPoint,
+    GetCustomerAllReportsEndPoint,
+    SetCustomerReportEndPoint,
+    SetCustomerStrayReportEndPoint,
+} from '../utils/EndPointHelpers';
+import { ConvertInputToFileOrBase64 } from '../utils/GeneralUtils';
 
 export const GetReports =
     (): ThunkAction<void, RootState, null, Action> =>
@@ -147,7 +146,7 @@ export const DeleteReport =
     (
         reportToDelete: IReportIncomingData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(

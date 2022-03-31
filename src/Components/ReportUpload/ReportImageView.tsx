@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
-import { DeleteReport } from '../../service-actions/ReportActions';
-import { RootState } from '../../store';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../types/IncomingDataModels/ReportIncoming';
 import useImagesHook from '../../hooks/useImagesViewHook';
+import { RootState } from '../../store';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export default function ReportImageView() {
-    const dispatch = useDispatch();
-
     const {
         currentImage,
         isViewerOpen,
@@ -24,14 +19,6 @@ export default function ReportImageView() {
         (state: RootState) =>
             state.ConsultationState.Appointment?.appointmentId,
     );
-
-    // const showAppointmentReports = createSelector(
-    //     (state: RootState) => state.CurrentCustomerState.Reports,
-    //     (reports) =>
-    //         reports?.filter(
-    //             (report) => report.appointmentId == currentAppointmentId,
-    //         ),
-    // );
 
     let currentCustomerReportsImages = useSelector(
         (state: RootState) => state.CurrentCustomerState.Reports,
@@ -47,7 +34,7 @@ export default function ReportImageView() {
         if (currentCustomerReportsImages) {
             currentCustomerReportsImages
                 .filter(
-                    (report) => report.appointmentId == currentAppointmentId,
+                    (report) => report.appointmentId === currentAppointmentId,
                 )
                 .forEach((element) => {
                     stringList.push(element.sasUrl);
@@ -55,14 +42,6 @@ export default function ReportImageView() {
         }
 
         setImages(stringList);
-    }
-
-    function deleteReport(report: IReportIncomingData) {
-        if (
-            window.confirm('Are you sure you want to delete this prescription?')
-        ) {
-            dispatch(DeleteReport(report));
-        }
     }
 
     function imageViewDisplay() {
@@ -73,7 +52,7 @@ export default function ReportImageView() {
                         currentCustomerReportsImages
                             .filter(
                                 (report) =>
-                                    report.appointmentId ==
+                                    report.appointmentId ===
                                     currentAppointmentId,
                             )
                             .map((src, index) => (

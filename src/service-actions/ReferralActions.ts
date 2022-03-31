@@ -5,12 +5,12 @@ import {
     SetFatalError,
     SetLinearLoadingBarToggle,
 } from '../actions/common/UIControlActions';
-import { ReferPatientEndPoint } from '../utils/EndPointHelpers';
 import { postCall } from '../http/http-helpers';
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { Action } from '../types/ActionType';
 import { IReferalOutgoing } from '../types/OutgoingDataModels/ReferalOutgoing';
+import { ReferPatientEndPoint } from '../utils/EndPointHelpers';
 
 export const ReferPatient =
     (
@@ -85,8 +85,7 @@ export const ReferPatient =
             }
 
             dispatch(SetLinearLoadingBarToggle(false));
-        } catch (error) {
-            var x = error;
+        } catch (_error) {
             dispatch(SetFatalError('Could not make referal!'));
         }
     };

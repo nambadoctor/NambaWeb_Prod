@@ -7,17 +7,17 @@ import {
     SetNonFatalError,
 } from '../actions/common/UIControlActions';
 import { SetNotes } from '../actions/CurrentCustomerActions';
+import { deleteCall, getCall, postCall, putCall } from '../http/http-helpers';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { INoteIncomingData } from '../types/IncomingDataModels/NoteIncoming';
+import { INoteOutgoingData } from '../types/OutgoingDataModels/NoteOutgoing';
 import {
     DeleteCustomerNoteEndPoint,
     GetCustomerAllNotesEndPoint,
     SetCustomerNoteEndPoint,
     SetCustomerStrayNoteEndPoint,
 } from '../utils/EndPointHelpers';
-import { deleteCall, getCall, postCall, putCall } from '../http/http-helpers';
-import { RootState } from '../store';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
-import { INoteIncomingData } from '../types/IncomingDataModels/NoteIncoming';
-import { INoteOutgoingData } from '../types/OutgoingDataModels/NoteOutgoing';
 
 export const GetNotes =
     (): ThunkAction<void, RootState, null, Action> =>
@@ -46,7 +46,7 @@ export const GetNotes =
 
 export const UploadNote =
     (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         try {
@@ -105,7 +105,7 @@ export const UploadStrayNote =
 
 export const EditNote =
     (note: INoteOutgoingData): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         try {
             let response = await putCall(
                 {} as any,
@@ -125,7 +125,7 @@ export const EditNote =
 
 export const DeleteNote =
     (noteId: string): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(

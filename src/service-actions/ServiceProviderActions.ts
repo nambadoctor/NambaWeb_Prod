@@ -1,17 +1,5 @@
-import { Action } from '../types/ActionType';
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import IServiceProvider from '../types/IncomingDataModels/ServiceProvider';
-import { GetAllAppointments } from './AppointmentActions';
-import {
-    GetServiceProviderProfileEndPoint,
-    GetServiceProviderSettingsEndpoint,
-    GetServiceProvidersInOrgEndPoint,
-} from '../utils/EndPointHelpers';
-import { GetAllCustomers } from './CustomerActions';
-import { getCall } from '../http/http-helpers';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { ThunkAction } from 'redux-thunk';
 import {
     SetFatalError,
     SetLinearLoadingBarToggle,
@@ -21,8 +9,20 @@ import {
     SetCurrentServiceProvider,
     SetServiceProviderSettings,
 } from '../actions/ServiceProviderActions';
-import { GetAllTreatments } from './TreatmentActions';
+import { getCall } from '../http/http-helpers';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import IServiceProvider from '../types/IncomingDataModels/ServiceProvider';
 import SettingsConfigurationOutgoing from '../types/OutgoingDataModels/SettingsConfigurationOutgoing';
+import {
+    GetServiceProviderProfileEndPoint,
+    GetServiceProviderSettingsEndpoint,
+    GetServiceProvidersInOrgEndPoint,
+} from '../utils/EndPointHelpers';
+import { GetAllAppointments } from './AppointmentActions';
+import { GetAllCustomers } from './CustomerActions';
+import { GetAllTreatments } from './TreatmentActions';
 
 export const GetCurrentServiceProvider =
     (): ThunkAction<void, RootState, null, Action> =>
@@ -123,7 +123,7 @@ export const GetCurrentServiceProvider =
                 SeverityLevel.Information,
             );
             dispatch(GetServiceProviderSettings());
-        } catch (error) {
+        } catch (_error) {
             dispatch(SetFatalError('Cannot get service provider!'));
         }
     };
@@ -173,7 +173,7 @@ export const GetServiceProvidersInOrg =
         }
 
         try {
-            let response = await getCall(
+            await getCall(
                 {} as IServiceProvider,
                 GetServiceProvidersInOrgEndPoint(selectedOrganisationId!),
                 'GetServiceProviderInOrg',
@@ -181,7 +181,7 @@ export const GetServiceProvidersInOrg =
 
             dispatch(SetLinearLoadingBarToggle(false));
             dispatch(SetCurrentServiceProviderLoadedState(true));
-        } catch (error) {
+        } catch (_error) {
             dispatch(SetFatalError('Cannot get service providers in org!'));
         }
     };

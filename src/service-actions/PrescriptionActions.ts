@@ -1,27 +1,24 @@
-import { ThunkAction } from 'redux-thunk';
-import { RootState } from '../store';
-import { Action } from '../types/ActionType';
-import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import { toast } from 'react-toastify';
+import { ThunkAction } from 'redux-thunk';
+import {
+    SetLinearLoadingBarToggle,
+    SetNonFatalError,
+} from '../actions/common/UIControlActions';
+import { SetPrescriptions } from '../actions/CurrentCustomerActions';
 import { deleteCall, getCall, postCall } from '../http/http-helpers';
+import { RootState } from '../store';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import IPrescriptionIncomingData from '../types/IncomingDataModels/PrescriptionIncoming';
+import { IPrescriptionUploadData } from '../types/OutgoingDataModels/PrescriptionUpload';
 import {
     DeleteCustomerPrescriptionEndPoint,
     GetCustomerAllPrescriptionsEndPoint,
     SetCustomerPrescriptionEndPoint,
     SetCustomerStrayPrescriptionEndPoint,
 } from '../utils/EndPointHelpers';
-import {
-    ConvertInputToFileOrBase64,
-    fileToBase64,
-} from '../utils/GeneralUtils';
-import IPrescriptionIncomingData from '../types/IncomingDataModels/PrescriptionIncoming';
-import { IPrescriptionUploadData } from '../types/OutgoingDataModels/PrescriptionUpload';
-import {
-    SetLinearLoadingBarToggle,
-    SetNonFatalError,
-} from '../actions/common/UIControlActions';
-import { toast } from 'react-toastify';
-import { SetPrescriptions } from '../actions/CurrentCustomerActions';
+import { ConvertInputToFileOrBase64 } from '../utils/GeneralUtils';
 
 export const GetPrescriptions =
     (): ThunkAction<void, RootState, null, Action> =>
@@ -146,7 +143,7 @@ export const DeletePrescription =
     (
         prescriptionToDelete: IPrescriptionIncomingData,
     ): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetLinearLoadingBarToggle(true));
 
         SetTrackTrace(

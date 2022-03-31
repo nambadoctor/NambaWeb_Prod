@@ -1,11 +1,10 @@
+import CancelIcon from '@mui/icons-material/Cancel';
 import React from 'react';
 import { Row } from 'react-bootstrap';
-import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch } from 'react-redux';
 import { DeletePrescription } from '../../service-actions/PrescriptionActions';
-import IPrescriptionIncomingData from '../../types/IncomingDataModels/PrescriptionIncoming';
-import { dateToDateString } from '../../utils/GeneralUtils';
 import { DeleteReport } from '../../service-actions/ReportActions';
+import { dateToDateString } from '../../utils/GeneralUtils';
 
 interface ThumbnailProps {
     src: any;

@@ -1,15 +1,14 @@
 import {
-    TableContainer,
     Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
     TableHead,
     TableRow,
-    TableCell,
-    TableBody,
-    Table,
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { TreatmentRow } from '../TreatmentsTable/TreatmentRow';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 import { TreatmentTabTreatmentRow } from './TreatmentsTabTreatmentRow';
 
@@ -72,7 +71,7 @@ export default function Treatments() {
                     </TableHead>
                     <TableBody>
                         {treatments &&
-                            treatments.map((treatment, index) => (
+                            treatments.map((treatment, _index) => (
                                 <TreatmentTabTreatmentRow
                                     treatment={treatment}
                                 ></TreatmentTabTreatmentRow>

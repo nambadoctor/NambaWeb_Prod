@@ -43,7 +43,7 @@ export function SetConfirmationResultAction(
 
 export const ClearLoginStates =
     (): ThunkAction<void, RootState, null, Action> =>
-    async (dispatch, getState) => {
+    async (dispatch, _getState) => {
         dispatch(SetCodeAction(''));
         dispatch(SetOtpAction(''));
         dispatch(SetPNOAction(''));

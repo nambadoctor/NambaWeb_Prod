@@ -1,7 +1,7 @@
 import {
-    signInWithPhoneNumber,
     getAuth,
     RecaptchaVerifier,
+    signInWithPhoneNumber,
 } from '@firebase/auth';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,9 +64,8 @@ export default function useAuthHook() {
         confirmationR &&
             confirmationR
                 .confirm(otp)
-                .then((result) => {
+                .then((_result) => {
                     // User signed in successfully.
-                    const user = result.user;
                     dispatch(ClearLoginStates());
                     // ...
                 })

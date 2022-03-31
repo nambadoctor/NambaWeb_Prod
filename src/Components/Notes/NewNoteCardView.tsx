@@ -1,24 +1,11 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
+import Button from '@mui/material/Button';
+import * as React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UploadNote, UploadStrayNote } from '../../service-actions/NoteActions';
-import { INoteOutgoingData } from '../../types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
-
-const bull = (
-    <Box
-        component="span"
-        sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-    >
-        •
-    </Box>
-);
+import { INoteOutgoingData } from '../../types/OutgoingDataModels/NoteOutgoing';
 
 export default function NewNoteCard() {
     const dispatch = useDispatch();

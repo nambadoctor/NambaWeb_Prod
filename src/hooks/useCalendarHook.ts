@@ -1,11 +1,13 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { SetSelectedDateRange } from '../actions/SelectedDateActions';
 import { RootState } from '../store';
+import {
+    default as ICustomDateData,
+    default as IMatrixDateObj,
+} from '../types/MatrixDateObj';
 import { generateMatrix } from '../utils/CalendarUtils';
 import { checkIfDateExists } from '../utils/GeneralUtils';
-import IMatrixDateObj from '../types/MatrixDateObj';
-import ICustomDateData from '../types/MatrixDateObj';
 
 export default function useCalendarHook() {
     const dispatch = useDispatch();

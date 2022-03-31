@@ -1,23 +1,22 @@
+import DateRangeIcon from '@mui/icons-material/DateRange';
+import EditIcon from '@mui/icons-material/Edit';
+import { TableFooter, TablePagination } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import ICustomerIncomingData from '../../types/IncomingDataModels/CustomerIncoming';
-import { TableFooter, TablePagination } from '@mui/material';
-import { Link } from 'react-router-dom';
-import TablePaginationActions from '../Pagination/PaginationActions';
-import usePaginationHook from '../../hooks/usePaginationHook';
-import usePatientsTableViewHook from '../../hooks/usePatientsTableViewHook';
-
-import EditIcon from '@mui/icons-material/Edit';
-import DateRangeIcon from '@mui/icons-material/DateRange';
-import { ClearCurrentCustomerState } from '../../actions/CurrentCustomerActions';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { ClearContext } from '../../actions/ClearContextAction';
+import { ClearCurrentCustomerState } from '../../actions/CurrentCustomerActions';
+import usePaginationHook from '../../hooks/usePaginationHook';
+import usePatientsTableViewHook from '../../hooks/usePatientsTableViewHook';
+import ICustomerIncomingData from '../../types/IncomingDataModels/CustomerIncoming';
+import TablePaginationActions from '../Pagination/PaginationActions';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 
 interface EditPatientViewProps {
@@ -44,7 +43,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                       page * rowsPerPage + rowsPerPage,
                   )
                 : filtered
-        ).map((customer: ICustomerIncomingData, index: number) => (
+        ).map((customer: ICustomerIncomingData, _index: number) => (
             <TableRow
                 key={customer.customerId}
                 onClick={() => {

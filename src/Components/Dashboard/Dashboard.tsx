@@ -1,29 +1,28 @@
-import Topbar from '../Topbar/Topbar';
-import { Routes, Route } from 'react-router-dom';
-import AppointmentsTableView from '../Appointments/AppointmentsTableView';
-import { Container, Row, Col } from 'react-bootstrap';
-import '../../App.css';
-import OrganisationInitialModalPickerComponent from '../OrganisationPicker/OrganisationInitialModalPickerComponent';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { useEffect } from 'react';
-import { GetServiceProviderBasic } from '../../service-actions/ServiceProviderBasicActions';
-import AddPatientForm from '../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
-import { Divider } from '@mui/material';
-import SetTrackTrace from '../../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import ConsultationView from '../Consultation/ConsultationView';
-import PatientsTabMainView from '../PatientsList/PatientsTabMainView';
+import { Divider } from '@mui/material';
+import { useEffect } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { SetInitialLoadingStartTime } from '../../actions/LoadedStatesActions';
+import '../../App.css';
+import { clearAuthToken } from '../../auth/FirebaseUserInfoHelper';
+import { GetServiceProviderBasic } from '../../service-actions/ServiceProviderBasicActions';
+import { RootState } from '../../store';
+import SetTrackTrace from '../../telemetry/SetTrackTrace';
+import AddPatientForm from '../AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
+import AppointmentsTableView from '../Appointments/AppointmentsTableView';
 import Calendar from '../CalendarPicker/Calendar';
+import ConsultationView from '../Consultation/ConsultationView';
+import DetailedPatient from '../DetailedPatient/DetailedPatient';
+import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
+import OrganisationInitialModalPickerComponent from '../OrganisationPicker/OrganisationInitialModalPickerComponent';
+import PatientsTabMainView from '../PatientsList/PatientsTabMainView';
+import Topbar from '../Topbar/Topbar';
+import Treatments from '../TreatmentsTab/Treatments';
+import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
 import FullPageLoadingDisplay from '../UIHelperComponents/FullPageLoadingDisplay';
 import NonExistentUserDisplayComponent from '../UIHelperComponents/NonExistentUserDisplayComponent';
-import CriticalAlertDisplay from '../UIHelperComponents/CriticalAlertDisplay';
-import { SetInitialLoadingStartTime } from '../../actions/LoadedStatesActions';
-import { clearAuthToken } from '../../auth/FirebaseUserInfoHelper';
-import Treatments from '../TreatmentsTab/Treatments';
-import DetailedPatient from '../DetailedPatient/DetailedPatient';
-import MobileDashboard from '../../mobile/MobileDashboard';
-import MobileDesktopToggleView from '../MobileDesktopToggleView/MobileDesktopToggleView';
 
 function Dashboard() {
     const dispatch = useDispatch();
@@ -33,11 +32,6 @@ function Dashboard() {
 
     const isViewingImage = useSelector(
         (state: RootState) => state.UITriggerState.isViewingImage,
-    );
-
-    const treatmentsExistForPatient = useSelector(
-        (state: RootState) =>
-            (state.CurrentCustomerState.Treatments?.length ?? 0) > 0,
     );
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
@@ -51,7 +45,7 @@ function Dashboard() {
         clearAuthToken();
         dispatch(SetInitialLoadingStartTime());
         dispatch(GetServiceProviderBasic());
-    }, []);
+    }, [dispatch]);
     //END
 
     const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);

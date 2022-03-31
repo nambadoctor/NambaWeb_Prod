@@ -1,10 +1,10 @@
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { CircularProgress, TextField } from '@mui/material';
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-import CustomButton from '../CustomButton';
 import usePatientInputHook from '../../hooks/usePatientInputHook';
+import CustomButton from '../CustomButton';
 
 export default function AddPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
@@ -122,7 +122,7 @@ export default function AddPatientView() {
                                 name="gender"
                                 value={gender}
                                 checked={gender === genderOption}
-                                onChange={(e) => setGender(genderOption)}
+                                onChange={(_e) => setGender(genderOption)}
                             >
                                 {genderOption}
                             </ToggleButton>

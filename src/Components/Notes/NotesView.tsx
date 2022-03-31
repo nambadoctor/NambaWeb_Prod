@@ -1,10 +1,10 @@
-import { Col, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
 import { RootState } from '../../store';
 import { INoteIncomingData } from '../../types/IncomingDataModels/NoteIncoming';
 import NewNoteCard from './NewNoteCardView';
 import { NoteCard } from './SingleNoteCardView';
-import { createSelector } from 'reselect';
 
 export default function NotesView() {
     const currentAppointmentId = useSelector(
@@ -22,7 +22,7 @@ export default function NotesView() {
             notes?.filter(
                 (note) =>
                     (currentAppointmentId &&
-                        note.appointmentId == currentAppointmentId) ||
+                        note.appointmentId === currentAppointmentId) ||
                     currentCustomer !== null,
             ),
     );
@@ -35,7 +35,7 @@ export default function NotesView() {
                 <NewNoteCard></NewNoteCard>
                 {currentConsultationNotes &&
                     currentConsultationNotes.map(
-                        (note: INoteIncomingData, index: number) => (
+                        (note: INoteIncomingData, _index: number) => (
                             <NoteCard note={note}></NoteCard>
                         ),
                     )}
