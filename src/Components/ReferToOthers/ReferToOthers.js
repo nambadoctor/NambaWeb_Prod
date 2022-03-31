@@ -8,7 +8,7 @@ import { useState } from 'react';
 import Select from 'react-select';
 import CustomButton from '../CustomButton';
 import { Col, Row } from 'react-bootstrap';
-import { ReferPatient } from '../../ServiceActions/ReferralActions';
+import { ReferPatient } from '../../service-actions/ReferralActions';
 
 export function ReferToOthers({ referralContacts }) {
     const currentCustomer = useSelector(

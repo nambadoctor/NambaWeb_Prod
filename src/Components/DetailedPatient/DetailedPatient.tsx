@@ -11,22 +11,22 @@ import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescription
 import {
     UploadReportAsStray,
     UploadReportForConsultation,
-} from '../../ServiceActions/ReportActions';
+} from '../../service-actions/ReportActions';
 import {
     UploadPrescriptionAsStray,
     UploadPrescriptionForConsultation,
-} from '../../ServiceActions/PrescriptionActions';
+} from '../../service-actions/PrescriptionActions';
 import NotesView from '../Notes/NotesView';
-import { GetAppointment } from '../../ServiceActions/AppointmentActions';
-import { ClearContext } from '../../Actions/ClearContextAction';
+import { GetAppointment } from '../../service-actions/AppointmentActions';
+import { ClearContext } from '../../actions/ClearContextAction';
 import { TreatmentPlansTable } from '../TreatmentsTable/TreatmentsTable';
 import ConsultationHeader from '../Consultation/ConsultationHeader';
-import { GetCustomer } from '../../ServiceActions/CustomerActions';
+import { GetCustomer } from '../../service-actions/CustomerActions';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
 import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
-import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
 import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
 

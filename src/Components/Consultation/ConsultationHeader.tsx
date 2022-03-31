@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
 import { Col, Container, Row } from 'react-bootstrap';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
+import { getReadableDateAndTimeString } from '../../utils/GeneralUtils';
 import { Typography } from '@mui/material';
 
 export default function ConsultationHeader() {
@@ -42,7 +42,7 @@ export default function ConsultationHeader() {
                                         style={{
                                             fontSize: 17,
                                             fontWeight: 'bold',
-                                            marginBottom: 15
+                                            marginBottom: 15,
                                         }}
                                     >
                                         {currentConsultation.Appointment
@@ -78,7 +78,7 @@ export default function ConsultationHeader() {
                                         style={{
                                             fontSize: 17,
                                             fontWeight: 'bold',
-                                            marginBottom: 15
+                                            marginBottom: 15,
                                         }}
                                     >
                                         +91

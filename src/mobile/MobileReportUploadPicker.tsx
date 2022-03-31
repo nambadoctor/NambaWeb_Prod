@@ -1,9 +1,9 @@
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import ImageCaptureComponent from '../Components/ImageCapture/ImageCaptureComponent';
+import ImageCaptureComponent from '../components/ImageCapture/ImageCaptureComponent';
 import { Col, Row } from 'react-bootstrap';
-import useUploadOrCaptureImageHook from '../CustomHooks/useCaptureOrUploadHook';
+import useUploadOrCaptureImageHook from '../hooks/useCaptureOrUploadHook';
 import React from 'react';
-import { ImageUploadProps } from '../Helpers/CommonProps';
+import { ImageUploadProps } from '../utils/CommonProps';
 
 export const MobileReportUploadPicker: React.FC<ImageUploadProps> = (props) => {
     const {

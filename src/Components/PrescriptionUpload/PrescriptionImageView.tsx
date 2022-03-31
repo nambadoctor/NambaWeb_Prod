@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
-import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
+import IPrescriptionIncomingData from '../../types/IncomingDataModels/PrescriptionIncoming';
+import useImagesHook from '../../hooks/useImagesViewHook';
 import { Row } from 'react-bootstrap';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 

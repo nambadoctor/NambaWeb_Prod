@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store';
-import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
+import { INoteIncomingData } from '../../types/IncomingDataModels/NoteIncoming';
 import NewNoteCard from './NewNoteCardView';
 import { NoteCard } from './SingleNoteCardView';
 import { createSelector } from 'reselect';

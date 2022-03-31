@@ -9,14 +9,14 @@ import '../../../src/App.css';
 import { RootState } from '../../store';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
-import { UploadReportForConsultation } from '../../ServiceActions/ReportActions';
-import { UploadPrescriptionForConsultation } from '../../ServiceActions/PrescriptionActions';
+import { UploadReportForConsultation } from '../../service-actions/ReportActions';
+import { UploadPrescriptionForConsultation } from '../../service-actions/PrescriptionActions';
 import NotesView from '../Notes/NotesView';
-import { GetAppointment } from '../../ServiceActions/AppointmentActions';
-import { ClearContext } from '../../Actions/ClearContextAction';
+import { GetAppointment } from '../../service-actions/AppointmentActions';
+import { ClearContext } from '../../actions/ClearContextAction';
 import { PrescriptionUploadPicker } from '../PrescriptionUpload/PrescriptionUploadPicker';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
-import { UploadTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
 import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
@@ -30,7 +30,7 @@ export default function ConsultationView() {
         (state: RootState) =>
             state.CurrentServiceProviderState.serviceProviderSettings,
     );
-    
+
     const { id } = useParams();
 
     useEffect(() => {

@@ -6,9 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
-import useTreatmentsHook from '../../CustomHooks/useTreatmentsHook';
-import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
-import { ITreatmentPlanIncoming } from '../../Types/IncomingDataModels/TreatmentPlanIncoming';
+import useTreatmentsHook from '../../hooks/useTreatmentsHook';
+import { ITreatmentIncoming } from '../../types/IncomingDataModels/TreatmentIncoming';
+import { ITreatmentPlanIncoming } from '../../types/IncomingDataModels/TreatmentPlanIncoming';
 import { TreatmentRow } from './TreatmentRow';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
@@ -20,8 +20,6 @@ interface TreatmentsTableProps {
 }
 
 export const TreatmentPlansTable: React.FC<TreatmentsTableProps> = (props) => {
-    
-
     const currentCustomer = useSelector(
         (state: RootState) => state.CurrentCustomerState.Customer,
     );
@@ -41,7 +39,9 @@ export const TreatmentPlansTable: React.FC<TreatmentsTableProps> = (props) => {
                             treatmentPlan: ITreatmentPlanIncoming,
                             index: number,
                         ) => (
-                            <TreatmentPlanContainer treatmentPlan={treatmentPlan}></TreatmentPlanContainer>
+                            <TreatmentPlanContainer
+                                treatmentPlan={treatmentPlan}
+                            ></TreatmentPlanContainer>
                         ),
                     )}
         </div>

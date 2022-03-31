@@ -4,16 +4,11 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import CustomButton from '../CustomButton';
-import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+import usePatientInputHook from '../../hooks/usePatientInputHook';
 
 export default function AddPatientView() {
-    const {
-        addPatientState,
-        genderOptions,
-        gender,
-        formik,
-        setGender,
-    } = usePatientInputHook(true);
+    const { addPatientState, genderOptions, gender, formik, setGender } =
+        usePatientInputHook(true);
 
     return (
         <div>

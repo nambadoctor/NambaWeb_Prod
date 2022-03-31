@@ -7,8 +7,8 @@ import Button from '@mui/material/Button';
 import { TextField } from '@mui/material';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UploadNote, UploadStrayNote } from '../../ServiceActions/NoteActions';
-import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
+import { UploadNote, UploadStrayNote } from '../../service-actions/NoteActions';
+import { INoteOutgoingData } from '../../types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
 const bull = (
@@ -39,7 +39,7 @@ export default function NewNoteCard() {
         if (currentAppointment) {
             dispatch(UploadNote(noteOutgoing));
         } else {
-            dispatch(UploadStrayNote(noteOutgoing))
+            dispatch(UploadStrayNote(noteOutgoing));
         }
         setNote('');
     }
@@ -49,7 +49,7 @@ export default function NewNoteCard() {
     };
 
     return (
-        <div style={{display:'flex', flexDirection:'row'}}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
             <TextField
                 fullWidth
                 label=""
@@ -61,12 +61,10 @@ export default function NewNoteCard() {
                 onChange={handleEditedChange}
                 multiline
                 maxRows={6}
-                style={{marginTop:10}}
+                style={{ marginTop: 10 }}
             />
 
-            <Button onClick={makeNewNote}>
-                Add
-            </Button>
+            <Button onClick={makeNewNote}>Add</Button>
         </div>
     );
 }

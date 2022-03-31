@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
-import { DeleteReport } from '../../ServiceActions/ReportActions';
+import { DeleteReport } from '../../service-actions/ReportActions';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
+import IReportIncomingData from '../../types/IncomingDataModels/ReportIncoming';
+import useImagesHook from '../../hooks/useImagesViewHook';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export default function ReportImageView() {

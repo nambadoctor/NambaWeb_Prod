@@ -1,7 +1,7 @@
-import { Current_Service_Provider_State_Types } from '../Reducers/CurrentServiceProviderReducer';
-import { Action } from '../Types/ActionType';
-import IServiceProvider from '../Types/IncomingDataModels/ServiceProvider';
-import SettingsConfigurationOutgoing from '../Types/OutgoingDataModels/SettingsConfigurationOutgoing';
+import { Current_Service_Provider_State_Types } from '../reducers/CurrentServiceProviderReducer';
+import { Action } from '../types/ActionType';
+import IServiceProvider from '../types/IncomingDataModels/ServiceProvider';
+import SettingsConfigurationOutgoing from '../types/OutgoingDataModels/SettingsConfigurationOutgoing';
 
 function setCurrentServiceProviderAction(serviceProvider: IServiceProvider) {
     return {

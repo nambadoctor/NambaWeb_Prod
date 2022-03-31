@@ -1,27 +1,30 @@
-import { Action } from "../Types/ActionType"
-import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
-import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
+import { Action } from '../types/ActionType';
+import { ITreatmentIncoming } from '../types/IncomingDataModels/TreatmentIncoming';
+import { ITreatmentPlanIncoming } from '../types/IncomingDataModels/TreatmentPlanIncoming';
 
 export enum Treatment_Types {
-  SET_TREATMENTS = "SET_TREATMENTS",
+    SET_TREATMENTS = 'SET_TREATMENTS',
 }
 
 export interface TreatmentState {
-  treatments: ITreatmentIncoming[] | null
+    treatments: ITreatmentIncoming[] | null;
 }
 
 const initialState: TreatmentState = {
-  treatments: null,
-}
+    treatments: null,
+};
 
-export const treatmentsReducer = (state: TreatmentState = initialState, action: Action): TreatmentState => {
-  switch (action.type) {
-    case Treatment_Types.SET_TREATMENTS:
-      return {
-        ...state,
-        treatments: action.payload,
-      }
-    default:
-      return state
-  }
+export const treatmentsReducer = (
+    state: TreatmentState = initialState,
+    action: Action,
+): TreatmentState => {
+    switch (action.type) {
+        case Treatment_Types.SET_TREATMENTS:
+            return {
+                ...state,
+                treatments: action.payload,
+            };
+        default:
+            return state;
+    }
 };

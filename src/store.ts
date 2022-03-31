@@ -1,21 +1,20 @@
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
-import { orgReducer } from "./Reducers/OrganisationsReducer";
-import { serviceProviderBasicReducer } from "./Reducers/Common/ServiceProviderBasicReducer";
-import { appointmentReducer } from "./Reducers/AppointmentsReducer";
-import { selectedDateReducer } from "./Reducers/SelectedDateReducer";
-import { customerReducer } from "./Reducers/CustomersReducer";
-import { uiTriggerReducer } from "./Reducers/Common/UITriggerReducer";
-import { currentServiceProviderReducer } from "./Reducers/CurrentServiceProviderReducer";
-import { addPatientReducer } from "./Reducers/AddPatientReducer";
-import { ConsultationReducer } from "./Reducers/ConsultationReducer";
-import { LoadedStatesReducer } from "./Reducers/LoadedStatesReducer";
-import { CurrentCustomerReducer } from "./Reducers/CurrentCustomerReducer";
-import { treatmentsReducer } from "./Reducers/TreatmentsReducers";
-import { LoginReducer } from "./Reducers/LoginReducer";
-import { MobileOrDesktopViewReducer } from "./Reducers/MobileOrDesktopViewReducer";
-
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { orgReducer } from './reducers/OrganisationsReducer';
+import { serviceProviderBasicReducer } from './reducers/Common/ServiceProviderBasicReducer';
+import { appointmentReducer } from './reducers/AppointmentsReducer';
+import { selectedDateReducer } from './reducers/SelectedDateReducer';
+import { customerReducer } from './reducers/CustomersReducer';
+import { uiTriggerReducer } from './reducers/Common/UITriggerReducer';
+import { currentServiceProviderReducer } from './reducers/CurrentServiceProviderReducer';
+import { addPatientReducer } from './reducers/AddPatientReducer';
+import { ConsultationReducer } from './reducers/ConsultationReducer';
+import { LoadedStatesReducer } from './reducers/LoadedStatesReducer';
+import { CurrentCustomerReducer } from './reducers/CurrentCustomerReducer';
+import { treatmentsReducer } from './reducers/TreatmentsReducers';
+import { LoginReducer } from './reducers/LoginReducer';
+import { MobileOrDesktopViewReducer } from './reducers/MobileOrDesktopViewReducer';
 
 const rootReducer = combineReducers({
     OrgState: orgReducer,
@@ -34,8 +33,11 @@ const rootReducer = combineReducers({
     TreatmentState: treatmentsReducer,
 });
 
-const Store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
+const Store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk)),
+);
 
-export default Store
+export default Store;
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof rootReducer>;

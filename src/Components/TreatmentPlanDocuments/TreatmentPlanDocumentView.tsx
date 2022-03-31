@@ -3,9 +3,9 @@ import ImageViewer from 'react-simple-image-viewer';
 import { RootState } from '../../store';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import ITreatmentPlanDocumentIncomingData from '../../Types/IncomingDataModels/TreatmentPlanDocumentIncoming';
-import { DeleteTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import useImagesHook from '../../hooks/useImagesViewHook';
+import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { DeleteTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 
 export default function TreatmentPlanDocumentImageView() {
     const dispatch = useDispatch();
@@ -51,10 +51,10 @@ export default function TreatmentPlanDocumentImageView() {
     function deleteTreatmentPlanDocument(
         treatment: ITreatmentPlanDocumentIncomingData,
     ) {
-        if (
-            window.confirm('Are you sure you want to delete this treatment?')
-        ) {
-            dispatch(DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId));
+        if (window.confirm('Are you sure you want to delete this treatment?')) {
+            dispatch(
+                DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId),
+            );
         }
     }
 

@@ -2,10 +2,10 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch } from 'react-redux';
-import { DeletePrescription } from '../../ServiceActions/PrescriptionActions';
-import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
-import { dateToDateString } from '../../Utils/GeneralUtils';
-import { DeleteReport } from '../../ServiceActions/ReportActions';
+import { DeletePrescription } from '../../service-actions/PrescriptionActions';
+import IPrescriptionIncomingData from '../../types/IncomingDataModels/PrescriptionIncoming';
+import { dateToDateString } from '../../utils/GeneralUtils';
+import { DeleteReport } from '../../service-actions/ReportActions';
 
 interface ThumbnailProps {
     src: any;
@@ -17,16 +17,15 @@ interface ThumbnailProps {
 }
 
 export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
-    const pdfLogo = require('../../Assets/pdfImage.png');
     const dispatch = useDispatch();
 
     function deleteFile(file: any) {
         if (
             window.confirm('Are you sure you want to delete this prescription?')
         ) {
-            if (props.type === "Prescription") {
+            if (props.type === 'Prescription') {
                 dispatch(DeletePrescription(file));
-            } else if (props.type === "Report") {
+            } else if (props.type === 'Report') {
                 dispatch(DeleteReport(file));
             }
         }
@@ -38,15 +37,18 @@ export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
                 display: 'inline-block',
                 position: 'relative',
                 marginTop: 10,
-                marginRight: 20
+                marginRight: 20,
             }}
         >
             {props.src.fileType === 'application/pdf' ? (
-                <Row style={{ marginLeft: 10 }} onClick={() => window.open(props.src.sasUrl)}>
+                <Row
+                    style={{ marginLeft: 10 }}
+                    onClick={() => window.open(props.src.sasUrl)}
+                >
                     <Row>
                         <img
                             alt="reportPdf"
-                            src={pdfLogo}
+                            src={'/images/pdf.png'}
                             onClick={() => window.open(props.src.sasUrl)}
                             width="100"
                             height="60"
@@ -62,7 +64,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
                             style={{
                                 width: 50,
                                 fontSize: 10,
-                                textDecorationLine: "underline"
+                                textDecorationLine: 'underline',
                             }}
                             onClick={() => window.open(props.src.sasUrl)}
                         >

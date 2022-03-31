@@ -5,19 +5,19 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import ICustomerIncomingData from '../../Types/IncomingDataModels/CustomerIncoming';
+import ICustomerIncomingData from '../../types/IncomingDataModels/CustomerIncoming';
 import { TableFooter, TablePagination } from '@mui/material';
 import { Link } from 'react-router-dom';
 import TablePaginationActions from '../Pagination/PaginationActions';
-import usePaginationHook from '../../CustomHooks/usePaginationHook';
-import usePatientsTableViewHook from '../../CustomHooks/usePatientsTableViewHook';
+import usePaginationHook from '../../hooks/usePaginationHook';
+import usePatientsTableViewHook from '../../hooks/usePatientsTableViewHook';
 
 import EditIcon from '@mui/icons-material/Edit';
 import DateRangeIcon from '@mui/icons-material/DateRange';
-import { ClearCurrentCustomerState } from '../../Actions/CurrentCustomerActions';
+import { ClearCurrentCustomerState } from '../../actions/CurrentCustomerActions';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ClearContext } from '../../Actions/ClearContextAction';
+import { ClearContext } from '../../actions/ClearContextAction';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 
 interface EditPatientViewProps {
@@ -126,7 +126,10 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                 </div>
             </div>
 
-            <TableContainer component={Paper} style={{ borderRadius: 15, marginTop: 10 }}>
+            <TableContainer
+                component={Paper}
+                style={{ borderRadius: 15, marginTop: 10 }}
+            >
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow style={{ height: 10 }}>

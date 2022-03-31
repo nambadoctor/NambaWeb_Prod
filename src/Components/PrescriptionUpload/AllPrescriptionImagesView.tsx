@@ -5,15 +5,11 @@ import { RootState } from '../../store';
 import {
     DeletePrescription,
     UploadPrescriptionAsStray,
-} from '../../ServiceActions/PrescriptionActions';
-import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
+} from '../../service-actions/PrescriptionActions';
+import IPrescriptionIncomingData from '../../types/IncomingDataModels/PrescriptionIncoming';
 import { Col, Row } from 'react-bootstrap';
-import { Divider } from '@mui/material';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { AllImageDisplayProps } from '../../Helpers/CommonProps';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { createSelector } from 'reselect';
-import { dateToDateString } from '../../Utils/GeneralUtils';
+import useImagesHook from '../../hooks/useImagesViewHook';
+import { AllImageDisplayProps } from '../../utils/CommonProps';
 import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 

@@ -2,12 +2,12 @@ import { styled, alpha } from '@mui/material/styles';
 import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import '../../Styles/organisation_picker.css';
-import IOrganisationBasic from '../../Types/IncomingDataModels/OrganisationBasic';
+import '../../styles/organisation_picker.css';
+import IOrganisationBasic from '../../types/IncomingDataModels/OrganisationBasic';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { RootState } from '../../store';
-import { SetSelectedOrg } from '../../Actions/OrganisationActions';
+import { SetSelectedOrg } from '../../actions/OrganisationActions';
 
 export const StyledMenu = styled((props: MenuProps) => (
     <Menu

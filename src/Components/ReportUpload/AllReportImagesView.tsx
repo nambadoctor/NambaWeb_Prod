@@ -3,14 +3,14 @@ import ImageViewer from 'react-simple-image-viewer';
 import {
     DeleteReport,
     UploadReportAsStray,
-} from '../../ServiceActions/ReportActions';
+} from '../../service-actions/ReportActions';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
+import IReportIncomingData from '../../types/IncomingDataModels/ReportIncoming';
 import { Col, Row } from 'react-bootstrap';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
+import useImagesHook from '../../hooks/useImagesViewHook';
 import { ReportUploadPicker } from './ReportUploadPicker';
-import { AllImageDisplayProps } from '../../Helpers/CommonProps';
+import { AllImageDisplayProps } from '../../utils/CommonProps';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
 
 export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {

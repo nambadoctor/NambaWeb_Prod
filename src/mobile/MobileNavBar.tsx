@@ -1,18 +1,17 @@
-import '../Styles/topbar.css';
+import '../styles/topbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import OrganisationPicker from '../Components/OrganisationPicker/OrganisationPicker';
+import OrganisationPicker from '../components/OrganisationPicker/OrganisationPicker';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from 'react-redux';
-import { ClearContext } from '../Actions/ClearContextAction';
-import useAuthHook from '../ServiceActions/LoginActions';
+import { ClearContext } from '../actions/ClearContextAction';
+import useAuthHook from '../service-actions/LoginActions';
 
 export default function MobileNavBar() {
-    const logo = require('../Assets/NDLogo.png');
     const dispatch = useDispatch();
 
-    const {SignOut} = useAuthHook();
+    const { SignOut } = useAuthHook();
 
     function switchTabs() {
         dispatch(ClearContext());
@@ -30,7 +29,7 @@ export default function MobileNavBar() {
                         marginRight: 10,
                         marginLeft: 10,
                     }}
-                    src={String(logo)}
+                    src={'/assets/DLNgoo.png'}
                 />
                 <span className="logo">NAMBA DOCTOR</span>
             </Navbar.Brand>

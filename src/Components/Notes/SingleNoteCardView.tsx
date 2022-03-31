@@ -5,7 +5,7 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
+import { getReadableDateAndTimeString } from '../../utils/GeneralUtils';
 import { TextField } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,9 +13,9 @@ import {
     DeleteNote,
     EditNote,
     UploadNote,
-} from '../../ServiceActions/NoteActions';
-import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
-import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
+} from '../../service-actions/NoteActions';
+import { INoteIncomingData } from '../../types/IncomingDataModels/NoteIncoming';
+import { INoteOutgoingData } from '../../types/OutgoingDataModels/NoteOutgoing';
 import { RootState } from '../../store';
 
 export default interface NotesProps {

@@ -8,20 +8,20 @@ import Paper from '@mui/material/Paper';
 import {
     getReadableDateAndTimeString,
     isDatesEqual,
-} from '../../Utils/GeneralUtils';
+} from '../../utils/GeneralUtils';
 import { makeStyles } from '@mui/styles';
 import { Box, TableFooter, TablePagination, Typography } from '@mui/material';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import IAppointmentData from '../../Types/IncomingDataModels/Appointment';
+import IAppointmentData from '../../types/IncomingDataModels/Appointment';
 import { Link } from 'react-router-dom';
 import NoAppointmentsView from './NoAppointmentsView';
 import TablePaginationActions from '../Pagination/PaginationActions';
-import usePaginationHook from '../../CustomHooks/usePaginationHook';
-import { CancelAppointment } from '../../ServiceActions/AppointmentActions';
+import usePaginationHook from '../../hooks/usePaginationHook';
+import { CancelAppointment } from '../../service-actions/AppointmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { createSelector } from 'reselect';
-import { ClearContext } from '../../Actions/ClearContextAction';
+import { ClearContext } from '../../actions/ClearContextAction';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     tableContainer: {

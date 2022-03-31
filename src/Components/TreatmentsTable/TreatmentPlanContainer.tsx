@@ -9,15 +9,14 @@ import {
     Button,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
-import { ITreatmentPlanIncoming } from '../../Types/IncomingDataModels/TreatmentPlanIncoming';
+import { ITreatmentIncoming } from '../../types/IncomingDataModels/TreatmentIncoming';
+import { ITreatmentPlanIncoming } from '../../types/IncomingDataModels/TreatmentPlanIncoming';
 import { NewTreatmentRow } from './NewTreatmentRow';
 import { TreatmentRow } from './TreatmentRow';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 import { RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@mui/styles';
-
 
 interface TreatmentPlanContainerProps {
     treatmentPlan: ITreatmentPlanIncoming;

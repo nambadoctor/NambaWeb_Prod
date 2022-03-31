@@ -1,18 +1,12 @@
 import { useEffect } from 'react';
 import ImageViewer from 'react-simple-image-viewer';
-import {
-    DeleteReport,
-    UploadReportAsStray,
-} from '../../ServiceActions/ReportActions';
 import { RootState } from '../../store';
 import { useDispatch, useSelector } from 'react-redux';
-import IReportIncomingData from '../../Types/IncomingDataModels/ReportIncoming';
-import { Divider } from '@mui/material';
 import { Col, Row } from 'react-bootstrap';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { AllImageDisplayProps } from '../../Helpers/CommonProps';
-import ITreatmentPlanDocumentIncomingData from '../../Types/IncomingDataModels/TreatmentPlanDocumentIncoming';
-import { DeleteTreatmentPlanDocument } from '../../ServiceActions/TreatmentActions';
+import useImagesHook from '../../hooks/useImagesViewHook';
+import { AllImageDisplayProps } from '../../utils/CommonProps';
+import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { DeleteTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 export const AllTreatmentPlanDocumentImageView: React.FC<
@@ -61,9 +55,7 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
     function deleteTreatmentPlanDocument(
         treatment: ITreatmentPlanDocumentIncomingData,
     ) {
-        if (
-            window.confirm('Are you sure you want to delete this treatment?')
-        ) {
+        if (window.confirm('Are you sure you want to delete this treatment?')) {
             dispatch(
                 DeleteTreatmentPlanDocument(treatment.treatmentPlanDocumentId),
             );

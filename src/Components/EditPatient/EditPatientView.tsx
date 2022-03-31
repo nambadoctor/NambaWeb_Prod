@@ -1,6 +1,6 @@
 import { CircularProgress, TextField } from '@mui/material';
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
-import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+import usePatientInputHook from '../../hooks/usePatientInputHook';
 import CustomButton from '../CustomButton';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -11,7 +11,7 @@ export default function EditPatientView() {
         usePatientInputHook(false);
 
     return (
-        <div style={{width: 350}}>
+        <div style={{ width: 350 }}>
             <div
                 style={{
                     display: 'flex',

@@ -1,21 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
 import '../App.css';
-import OrganisationInitialModalPickerComponent from '../Components/OrganisationPicker/OrganisationInitialModalPickerComponent';
+import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { useEffect } from 'react';
-import { GetServiceProviderBasic } from '../ServiceActions/ServiceProviderBasicActions';
-import SetTrackTrace from '../Telemetry/SetTrackTrace';
+import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasicActions';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import Calendar from '../Components/CalendarPicker/Calendar';
-import FullPageLoadingDisplay from '../Components/UIHelperComponents/FullPageLoadingDisplay';
-import NonExistentUserDisplayComponent from '../Components/UIHelperComponents/NonExistentUserDisplayComponent';
-import CriticalAlertDisplay from '../Components/UIHelperComponents/CriticalAlertDisplay';
-import { SetInitialLoadingStartTime } from '../Actions/LoadedStatesActions';
+import Calendar from '../components/CalendarPicker/Calendar';
+import FullPageLoadingDisplay from '../components/UIHelperComponents/FullPageLoadingDisplay';
+import NonExistentUserDisplayComponent from '../components/UIHelperComponents/NonExistentUserDisplayComponent';
+import CriticalAlertDisplay from '../components/UIHelperComponents/CriticalAlertDisplay';
+import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
 import MobileNavBar from './MobileNavBar';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
-import MobileDesktopToggleView from '../Components/MobileDesktopToggleView/MobileDesktopToggleView';
+import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
 
 function MobileDashboard() {
     const dispatch = useDispatch();
