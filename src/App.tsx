@@ -1,17 +1,17 @@
-import './App.css';
-import { AuthContext } from '../src/Auth/Context/AuthContext';
-import { useContext, useEffect } from 'react';
-import Dashboard from './Components/Dashboard/Dashboard';
-import './index.css';
 import { AppInsightsContext } from '@microsoft/applicationinsights-react-js';
-import { reactPlugin } from '../src/Telemetry/AppInsights';
+import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import styles from '../src/styles/loginstyles.module.scss';
+import './App.css';
+import { AuthContext } from './auth/Context/AuthContext';
+import Dashboard from './components/Dashboard/Dashboard';
+import { PhoneNumberLogin } from './components/PhoneNumberAuth/PhoneNumberLogin';
+import './index.css';
 import MobileDashboard from './mobile/MobileDashboard';
-import { PhoneNumberLogin } from './Components/PhoneNumberAuth/PhoneNumberLogin';
-import styles from '../src/Styles/loginstyles.module.scss';
 import { RootState } from './store';
-import { useSelector } from 'react-redux';
+import { reactPlugin } from './telemetry/AppInsights';
 toast.configure();
 
 function App() {

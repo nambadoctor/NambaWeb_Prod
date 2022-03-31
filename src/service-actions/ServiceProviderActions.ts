@@ -1,30 +1,28 @@
-import { Action } from '../Types/ActionType';
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { ThunkAction } from 'redux-thunk';
+import {
+    SetFatalError,
+    SetLinearLoadingBarToggle,
+} from '../actions/common/UIControlActions';
+import { SetCurrentServiceProviderLoadedState } from '../actions/LoadedStatesActions';
+import {
+    SetCurrentServiceProvider,
+    SetServiceProviderSettings,
+} from '../actions/ServiceProviderActions';
+import { getCall } from '../http/http-helpers';
 import { RootState } from '../store';
-import IServiceProvider from '../Types/IncomingDataModels/ServiceProvider';
-import { Current_Service_Provider_State_Types } from '../Reducers/CurrentServiceProviderReducer';
-import { GetAllAppointments } from './AppointmentActions';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import IServiceProvider from '../types/IncomingDataModels/ServiceProvider';
+import SettingsConfigurationOutgoing from '../types/OutgoingDataModels/SettingsConfigurationOutgoing';
 import {
     GetServiceProviderProfileEndPoint,
     GetServiceProviderSettingsEndpoint,
     GetServiceProvidersInOrgEndPoint,
-} from '../Helpers/EndPointHelpers';
+} from '../utils/EndPointHelpers';
+import { GetAllAppointments } from './AppointmentActions';
 import { GetAllCustomers } from './CustomerActions';
-import { getCall } from '../Http/http-helpers';
-import SetTrackTrace from '../Telemetry/SetTrackTrace';
-import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import {
-    SetFatalError,
-    SetLinearLoadingBarToggle,
-    SetNonFatalError,
-} from '../Actions/Common/UIControlActions';
-import { SetCurrentServiceProviderLoadedState } from '../Actions/LoadedStatesActions';
-import {
-    SetCurrentServiceProvider,
-    SetServiceProviderSettings,
-} from '../Actions/ServiceProviderActions';
 import { GetAllTreatments } from './TreatmentActions';
-import SettingsConfigurationOutgoing from '../Types/OutgoingDataModels/SettingsConfigurationOutgoing';
 
 export const GetCurrentServiceProvider =
     (): ThunkAction<void, RootState, null, Action> =>
@@ -125,7 +123,7 @@ export const GetCurrentServiceProvider =
                 SeverityLevel.Information,
             );
             dispatch(GetServiceProviderSettings());
-        } catch (error) {
+        } catch (_error) {
             dispatch(SetFatalError('Cannot get service provider!'));
         }
     };
@@ -175,7 +173,7 @@ export const GetServiceProvidersInOrg =
         }
 
         try {
-            let response = await getCall(
+            await getCall(
                 {} as IServiceProvider,
                 GetServiceProvidersInOrgEndPoint(selectedOrganisationId!),
                 'GetServiceProviderInOrg',
@@ -183,7 +181,7 @@ export const GetServiceProvidersInOrg =
 
             dispatch(SetLinearLoadingBarToggle(false));
             dispatch(SetCurrentServiceProviderLoadedState(true));
-        } catch (error) {
+        } catch (_error) {
             dispatch(SetFatalError('Cannot get service providers in org!'));
         }
     };

@@ -1,27 +1,27 @@
+import CancelIcon from '@mui/icons-material/Cancel';
+import { TableFooter, TablePagination, Typography } from '@mui/material';
+import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { makeStyles } from '@mui/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { createSelector } from 'reselect';
+import { ClearContext } from '../../actions/ClearContextAction';
+import usePaginationHook from '../../hooks/usePaginationHook';
+import { CancelAppointment } from '../../service-actions/AppointmentActions';
+import { RootState } from '../../store';
+import IAppointmentData from '../../types/IncomingDataModels/Appointment';
 import {
     getReadableDateAndTimeString,
     isDatesEqual,
-} from '../../Utils/GeneralUtils';
-import { makeStyles } from '@mui/styles';
-import { Box, TableFooter, TablePagination, Typography } from '@mui/material';
-import { RootState } from '../../store';
-import { useDispatch, useSelector } from 'react-redux';
-import IAppointmentData from '../../Types/IncomingDataModels/Appointment';
-import { Link } from 'react-router-dom';
-import NoAppointmentsView from './NoAppointmentsView';
+} from '../../utils/GeneralUtils';
 import TablePaginationActions from '../Pagination/PaginationActions';
-import usePaginationHook from '../../CustomHooks/usePaginationHook';
-import { CancelAppointment } from '../../ServiceActions/AppointmentActions';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { createSelector } from 'reselect';
-import { ClearContext } from '../../Actions/ClearContextAction';
+import NoAppointmentsView from './NoAppointmentsView';
 
 const useAppointmentTableStyles = makeStyles(() => ({
     tableContainer: {
@@ -105,7 +105,7 @@ export default function AppointmentsTable() {
                       page * rowsPerPage + rowsPerPage,
                   )
                 : appointments
-        ).map((appointment: IAppointmentData, index: number) => (
+        ).map((appointment: IAppointmentData, _index: number) => (
             <TableRow key={appointment.appointmentId}>
                 <TableCell align="left">
                     <Link

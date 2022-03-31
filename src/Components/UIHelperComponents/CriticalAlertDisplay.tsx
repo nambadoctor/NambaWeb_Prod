@@ -1,14 +1,16 @@
-import { Box, Button, LinearProgress } from '@mui/material';
-import React from 'react'
+import { Box, Button } from '@mui/material';
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import useAuthHook from '../../CustomHooks/useAuthHook';
+import useAuthHook from '../../hooks/useAuthHook';
 import { RootState } from '../../store';
+import './../../styles/globals.css';
 
 export default function CriticalAlertDisplay() {
-    const FatalErrorState = useSelector((state: RootState) => state.UITriggerState.FatalError);
+    const FatalErrorState = useSelector(
+        (state: RootState) => state.UITriggerState.FatalError,
+    );
 
-    const {SignOut} = useAuthHook();
+    const { SignOut } = useAuthHook();
 
     return (
         <div>
@@ -16,15 +18,18 @@ export default function CriticalAlertDisplay() {
                 show={FatalErrorState && FatalErrorState.toggle}
                 size="sm"
                 aria-labelledby="contained-modal-title-vcenter"
-                centered>
+                centered
+            >
+                <Box
+                    sx={{ width: '100%', backgroundColor: 'white', padding: 5 }}
+                >
+                    <h2>
+                        {FatalErrorState.message && FatalErrorState.message}
+                    </h2>
 
-                <Box sx={{ width: '100%', backgroundColor:"white", padding:5 }}>
-                    <h2>{FatalErrorState.message && FatalErrorState.message}</h2>
-                    
                     <Button onClick={() => SignOut()}>Logout</Button>
                 </Box>
-
             </Modal>
         </div>
-    )
+    );
 }

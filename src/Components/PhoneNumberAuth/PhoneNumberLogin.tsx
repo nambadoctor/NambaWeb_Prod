@@ -1,20 +1,18 @@
-import { Paper, TextField, IconButton, Divider } from '@mui/material';
-import { useEffect } from 'react';
-import { Button } from '@mui/material';
-import useGeoLocation from '../../CustomHooks/useGeoLocation';
-import Otp from './OTP.js';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { Button, Divider, IconButton, Paper, TextField } from '@mui/material';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import '../../Styles/otpstyles.css';
-
 import {
     SetCodeAction,
     SetConfirmationResultAction,
     SetOtpAction,
     SetOtpShowAction,
     SetPNOAction,
-} from '../../Actions/LoginActions';
-import useAuthHook from '../../CustomHooks/useAuthHook';
+} from '../../actions/LoginActions';
+import useAuthHook from '../../hooks/useAuthHook';
+import useGeoLocation from '../../hooks/useGeoLocation';
+import '../../styles/otpstyles.css';
+import Otp from './OTP.js';
 
 export const PhoneNumberLogin: React.FC = () => {
     const { countryCode } = useGeoLocation();
@@ -25,7 +23,7 @@ export const PhoneNumberLogin: React.FC = () => {
 
     useEffect(() => {
         dispatch(SetCodeAction(countryCode));
-    }, [countryCode]);
+    }, [countryCode, dispatch]);
 
     function isNumeric(n: any) {
         return !isNaN(parseInt(n)) && isFinite(n);
@@ -36,8 +34,8 @@ export const PhoneNumberLogin: React.FC = () => {
             <Paper style={{ padding: 20, width: 300 }}>
                 <h3
                     style={{
-                        textAlign: "center",
-                        alignItems: "center",
+                        textAlign: 'center',
+                        alignItems: 'center',
                         color: '#076bf7',
                         marginTop: 7,
                         marginBottom: 0,
@@ -60,7 +58,9 @@ export const PhoneNumberLogin: React.FC = () => {
                         Enter your Phone Number
                     </h5>
                 ) : (
-                    <h5 style={{ marginBottom: 20, fontSize: 17 }}>Enter the OTP</h5>
+                    <h5 style={{ marginBottom: 20, fontSize: 17 }}>
+                        Enter the OTP
+                    </h5>
                 )}
                 <div>
                     {!otpShow ? (

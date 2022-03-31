@@ -2,16 +2,20 @@ import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { Col, Row } from 'react-bootstrap';
-import useUploadOrCaptureImageHook from '../../CustomHooks/useCaptureOrUploadHook';
+import useUploadOrCaptureImageHook from '../../hooks/useCaptureOrUploadHook';
 import React from 'react';
-import { ImageUploadProps } from '../../Helpers/CommonProps';
+import { ImageUploadProps } from '../../utils/CommonProps';
 
 export const ReportUploadPicker: React.FC<ImageUploadProps> = (props) => {
-
-    const { showCameraToggle, setShowCameraToggle, handleChange, handleTakePhoto } = useUploadOrCaptureImageHook(props.handlePhotoCallBack)
+    const {
+        showCameraToggle,
+        setShowCameraToggle,
+        handleChange,
+        handleTakePhoto,
+    } = useUploadOrCaptureImageHook(props.handlePhotoCallBack);
 
     return (
-        <div  style={{marginLeft:20}}>
+        <div style={{ marginLeft: 20 }}>
             <input
                 type="file"
                 accept="image/*,application/pdf"
@@ -20,11 +24,28 @@ export const ReportUploadPicker: React.FC<ImageUploadProps> = (props) => {
                 onChange={handleChange}
             />
             <Row>
-                <Col><label htmlFor="report_upload_picker"><CloudUploadIcon style={{ color: props.uploadButtonColor }} /></label></Col>
-                <Col><div onClick={() => setShowCameraToggle(true)}><CameraAltIcon style={{ color: props.uploadButtonColor }} ></CameraAltIcon></div></Col>
+                <Col>
+                    <label htmlFor="report_upload_picker">
+                        <CloudUploadIcon
+                            style={{ color: props.uploadButtonColor }}
+                        />
+                    </label>
+                </Col>
+                <Col>
+                    <div onClick={() => setShowCameraToggle(true)}>
+                        <CameraAltIcon
+                            style={{ color: props.uploadButtonColor }}
+                        ></CameraAltIcon>
+                    </div>
+                </Col>
             </Row>
 
-            {showCameraToggle && <ImageCaptureComponent setShowCameraToggle={setShowCameraToggle} handleTakePhoto={handleTakePhoto}></ImageCaptureComponent>}
+            {showCameraToggle && (
+                <ImageCaptureComponent
+                    setShowCameraToggle={setShowCameraToggle}
+                    handleTakePhoto={handleTakePhoto}
+                ></ImageCaptureComponent>
+            )}
         </div>
-    )
-}
+    );
+};

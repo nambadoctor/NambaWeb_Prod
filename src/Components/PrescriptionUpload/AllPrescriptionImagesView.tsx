@@ -1,40 +1,21 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import ImageViewer from 'react-simple-image-viewer';
-import { RootState } from '../../store';
-import {
-    DeletePrescription,
-    UploadPrescriptionAsStray,
-} from '../../ServiceActions/PrescriptionActions';
-import IPrescriptionIncomingData from '../../Types/IncomingDataModels/PrescriptionIncoming';
 import { Col, Row } from 'react-bootstrap';
-import { Divider } from '@mui/material';
-import useImagesHook from '../../CustomHooks/useImagesViewHook';
-import { AllImageDisplayProps } from '../../Helpers/CommonProps';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { createSelector } from 'reselect';
-import { dateToDateString } from '../../Utils/GeneralUtils';
-import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
+import { useSelector } from 'react-redux';
+import ImageViewer from 'react-simple-image-viewer';
+import useImagesHook from '../../hooks/useImagesViewHook';
+import { UploadPrescriptionAsStray } from '../../service-actions/PrescriptionActions';
+import { RootState } from '../../store';
+import { AllImageDisplayProps } from '../../utils/CommonProps';
 import { Thumbnail } from '../Thumbnail/Thumbnail';
+import { PrescriptionUploadPicker } from './PrescriptionUploadPicker';
 
 export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
     props,
 ) => {
-    const dispatch = useDispatch();
-
     const currentAppointmentId = useSelector(
         (state: RootState) =>
             state.ConsultationState.Appointment?.appointmentId,
     );
-
-    // const showAppointmentPrescriptions = createSelector(
-    //     (state: RootState) => state.CurrentCustomerState.Prescriptions,
-    //     (prescriptions) =>
-    //         prescriptions?.filter(
-    //             (prescription) =>
-    //                 prescription.appointmentId !== currentAppointmentId,
-    //         ),
-    // );
 
     let allCustomerPrescriptionImages = useSelector(
         (state: RootState) => state.CurrentCustomerState.Prescriptions,
@@ -68,14 +49,6 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
         }
 
         setImages(stringList);
-    }
-
-    function deletePrescription(prescription: IPrescriptionIncomingData) {
-        if (
-            window.confirm('Are you sure you want to delete this prescription?')
-        ) {
-            dispatch(DeletePrescription(prescription));
-        }
     }
 
     function imageViewDisplay() {

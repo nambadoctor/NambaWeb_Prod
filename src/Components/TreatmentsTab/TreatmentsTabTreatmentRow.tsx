@@ -1,28 +1,26 @@
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import {
-    TableRow,
-    TableCell,
-    TextField,
     Button,
+    TableCell,
+    TableRow,
+    TextField,
     Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { AddTreatment } from '../../ServiceActions/TreatmentActions';
-import { RootState } from '../../store';
-import { ITreatmentIncoming } from '../../Types/IncomingDataModels/TreatmentIncoming';
-import { ITreatmentOutgoing } from '../../Types/OutgoingDataModels/TreatmentOutgoing';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
-import EditIcon from '@mui/icons-material/Edit';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { AddTreatment } from '../../service-actions/TreatmentActions';
+import { RootState } from '../../store';
+import { ITreatmentIncoming } from '../../types/IncomingDataModels/TreatmentIncoming';
+import { ITreatmentOutgoing } from '../../types/OutgoingDataModels/TreatmentOutgoing';
+import { getReadableDateAndTimeString } from '../../utils/GeneralUtils';
 import { useTreatmentActionsStyles } from '../TreatmentsTable/TreatmentRow';
-import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import CallIcon from '@mui/icons-material/Call';
 
 interface TreatmentRowProps {
     treatment: ITreatmentIncoming;
@@ -40,7 +38,9 @@ export const TreatmentTabTreatmentRow: React.FC<TreatmentRowProps> = (
         (state: RootState) => state.ConsultationState.Appointment,
     );
 
-    const customers = useSelector((state: RootState) => state.CustomersState.customers);
+    const customers = useSelector(
+        (state: RootState) => state.CustomersState.customers,
+    );
 
     const dispatch = useDispatch();
 
@@ -110,7 +110,13 @@ export const TreatmentTabTreatmentRow: React.FC<TreatmentRowProps> = (
     return (
         <TableRow>
             <TableCell align="left">{props.treatment.customerName}</TableCell>
-            <TableCell align="left">{customers && customers.find(customer => customer.customerId === props.treatment.customerId)?.phoneNumbers[0].number}</TableCell>
+            <TableCell align="left">
+                {customers &&
+                    customers.find(
+                        (customer) =>
+                            customer.customerId === props.treatment.customerId,
+                    )?.phoneNumbers[0].number}
+            </TableCell>
             <TableCell align="left">
                 {props.treatment.treatmentPlanName}
             </TableCell>

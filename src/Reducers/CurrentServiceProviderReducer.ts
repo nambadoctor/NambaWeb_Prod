@@ -1,8 +1,8 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import SetTrackTrace from '../Telemetry/SetTrackTrace';
-import { Action } from '../Types/ActionType';
-import IServiceProvider from '../Types/IncomingDataModels/ServiceProvider';
-import SettingsConfigurationOutgoing from '../Types/OutgoingDataModels/SettingsConfigurationOutgoing';
+import SetTrackTrace from '../telemetry/SetTrackTrace';
+import { Action } from '../types/ActionType';
+import IServiceProvider from '../types/IncomingDataModels/ServiceProvider';
+import SettingsConfigurationOutgoing from '../types/OutgoingDataModels/SettingsConfigurationOutgoing';
 
 export enum Current_Service_Provider_State_Types {
     SET_CURRENT_SERVICE_PROVIDER = 'SET_CURRENT_SERVICE_PROVIDER',

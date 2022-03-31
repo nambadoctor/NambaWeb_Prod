@@ -1,11 +1,9 @@
-import { Col, Row } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
-import NewNoteCard from './NewNoteCardView';
-import { NoteCard } from './SingleNoteCardView';
 import { createSelector } from 'reselect';
-import { Divider } from '@mui/material';
+import { RootState } from '../../store';
+import { INoteIncomingData } from '../../types/IncomingDataModels/NoteIncoming';
+import { NoteCard } from './SingleNoteCardView';
 
 export default function AllNotesView() {
     const currentAppointmentId = useSelector(
@@ -28,7 +26,7 @@ export default function AllNotesView() {
             <Row>
                 {currentConsultationNotes &&
                     currentConsultationNotes.map(
-                        (note: INoteIncomingData, index: number) => (
+                        (note: INoteIncomingData, _index: number) => (
                             <NoteCard note={note}></NoteCard>
                         ),
                     )}

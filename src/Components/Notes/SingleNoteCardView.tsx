@@ -1,22 +1,17 @@
-import * as React from 'react';
+import { TextField } from '@mui/material';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { getReadableDateAndTimeString } from '../../Utils/GeneralUtils';
-import { TextField } from '@mui/material';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-    DeleteNote,
-    EditNote,
-    UploadNote,
-} from '../../ServiceActions/NoteActions';
-import { INoteIncomingData } from '../../Types/IncomingDataModels/NoteIncoming';
-import { INoteOutgoingData } from '../../Types/OutgoingDataModels/NoteOutgoing';
-import { RootState } from '../../store';
+import { useDispatch } from 'react-redux';
+import { DeleteNote, EditNote } from '../../service-actions/NoteActions';
+import { INoteIncomingData } from '../../types/IncomingDataModels/NoteIncoming';
+import { INoteOutgoingData } from '../../types/OutgoingDataModels/NoteOutgoing';
+import { getReadableDateAndTimeString } from '../../utils/GeneralUtils';
 
 export default interface NotesProps {
     note: INoteIncomingData;
@@ -27,10 +22,6 @@ export const NoteCard: React.FC<NotesProps> = (props) => {
     const [editing, setEditing] = useState(false);
 
     const [editedText, setEditedText] = useState('');
-
-    const currentAppointment = useSelector(
-        (state: RootState) => state.ConsultationState.Appointment,
-    );
 
     function toggleEditing() {
         if (editing) {
@@ -53,7 +44,7 @@ export const NoteCard: React.FC<NotesProps> = (props) => {
 
     useEffect(() => {
         setEditedText(props.note.note);
-    }, []);
+    }, [props.note.note]);
 
     const handleEditedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEditedText(event.target.value);

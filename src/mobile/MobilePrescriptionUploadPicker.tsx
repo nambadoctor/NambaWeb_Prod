@@ -1,8 +1,8 @@
-import ImageCaptureComponent from '../Components/ImageCapture/ImageCaptureComponent';
+import ImageCaptureComponent from '../components/ImageCapture/ImageCaptureComponent';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
 import { Row, Col } from 'react-bootstrap';
-import useUploadOrCaptureImageHook from '../CustomHooks/useCaptureOrUploadHook';
-import { ImageUploadProps } from '../Helpers/CommonProps';
+import useUploadOrCaptureImageHook from '../hooks/useCaptureOrUploadHook';
+import { ImageUploadProps } from '../utils/CommonProps';
 
 export const MobilePrescriptionUploadPicker: React.FC<ImageUploadProps> = (
     props,

@@ -1,31 +1,31 @@
-import { Action } from "../Types/ActionType"
-import ICustomerIncomingData from "../Types/IncomingDataModels/CustomerIncoming";
-import { INoteIncomingData } from "../Types/IncomingDataModels/NoteIncoming";
-import IPrescriptionIncomingData from "../Types/IncomingDataModels/PrescriptionIncoming";
-import IReportIncomingData from "../Types/IncomingDataModels/ReportIncoming";
-import { ITreatmentIncoming } from "../Types/IncomingDataModels/TreatmentIncoming";
-import ITreatmentPlanDocumentIncomingData from "../Types/IncomingDataModels/TreatmentPlanDocumentIncoming";
-import { ITreatmentPlanIncoming } from "../Types/IncomingDataModels/TreatmentPlanIncoming";
+import { Action } from '../types/ActionType';
+import ICustomerIncomingData from '../types/IncomingDataModels/CustomerIncoming';
+import { INoteIncomingData } from '../types/IncomingDataModels/NoteIncoming';
+import IPrescriptionIncomingData from '../types/IncomingDataModels/PrescriptionIncoming';
+import IReportIncomingData from '../types/IncomingDataModels/ReportIncoming';
+import { ITreatmentIncoming } from '../types/IncomingDataModels/TreatmentIncoming';
+import ITreatmentPlanDocumentIncomingData from '../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { ITreatmentPlanIncoming } from '../types/IncomingDataModels/TreatmentPlanIncoming';
 
 export enum CurrentCustomer_Types {
-    SET_CUSTOMER = "SET_CUSTOMER",
-    SET_REPORTS = "SET_REPORTS",
-    SET_PRESCRIPTIONS = "SET_PRESCRIPTIONS",
-    SET_NOTES = "SET_NOTES",
-    SET_TREATMENT_PLANS = "SET_TREATMENT_PLANS",
-    SET_TREATMENTS = "SET_TREATMENTS",
-    SET_TREATMENT_PLAN_DOCUMENTS = "SET_TREATMENT_PLAN_DOCUMENTS",
-    CLEAR_ALL = "CLEAR_ALL"
+    SET_CUSTOMER = 'SET_CUSTOMER',
+    SET_REPORTS = 'SET_REPORTS',
+    SET_PRESCRIPTIONS = 'SET_PRESCRIPTIONS',
+    SET_NOTES = 'SET_NOTES',
+    SET_TREATMENT_PLANS = 'SET_TREATMENT_PLANS',
+    SET_TREATMENTS = 'SET_TREATMENTS',
+    SET_TREATMENT_PLAN_DOCUMENTS = 'SET_TREATMENT_PLAN_DOCUMENTS',
+    CLEAR_ALL = 'CLEAR_ALL',
 }
 
 export interface CurrentCustomerState {
-    Customer: ICustomerIncomingData | null,
-    Reports: IReportIncomingData[] | null,
-    Prescriptions: IPrescriptionIncomingData[] | null,
-    Notes: INoteIncomingData[] | null,
-    TreatmentPlans: ITreatmentPlanIncoming[] | null
-    Treatments: ITreatmentIncoming[] | null,
-    TreatmentPlanDocuments: ITreatmentPlanDocumentIncomingData[] | null
+    Customer: ICustomerIncomingData | null;
+    Reports: IReportIncomingData[] | null;
+    Prescriptions: IPrescriptionIncomingData[] | null;
+    Notes: INoteIncomingData[] | null;
+    TreatmentPlans: ITreatmentPlanIncoming[] | null;
+    Treatments: ITreatmentIncoming[] | null;
+    TreatmentPlanDocuments: ITreatmentPlanDocumentIncomingData[] | null;
 }
 
 const initialState: CurrentCustomerState = {
@@ -35,46 +35,49 @@ const initialState: CurrentCustomerState = {
     Notes: null,
     TreatmentPlans: null,
     Treatments: null,
-    TreatmentPlanDocuments: null
-}
+    TreatmentPlanDocuments: null,
+};
 
-export const CurrentCustomerReducer = (state: CurrentCustomerState = initialState, action: Action): CurrentCustomerState => {
+export const CurrentCustomerReducer = (
+    state: CurrentCustomerState = initialState,
+    action: Action,
+): CurrentCustomerState => {
     switch (action.type) {
         case CurrentCustomer_Types.SET_CUSTOMER:
             return {
                 ...state,
-                Customer: action.payload
-            }
+                Customer: action.payload,
+            };
         case CurrentCustomer_Types.SET_REPORTS:
             return {
                 ...state,
-                Reports: action.payload
-            }
+                Reports: action.payload,
+            };
         case CurrentCustomer_Types.SET_PRESCRIPTIONS:
             return {
                 ...state,
-                Prescriptions: action.payload
-            }
+                Prescriptions: action.payload,
+            };
         case CurrentCustomer_Types.SET_NOTES:
             return {
                 ...state,
-                Notes: action.payload
-            }
+                Notes: action.payload,
+            };
         case CurrentCustomer_Types.SET_TREATMENT_PLANS:
             return {
                 ...state,
-                TreatmentPlans: action.payload
-            }
+                TreatmentPlans: action.payload,
+            };
         case CurrentCustomer_Types.SET_TREATMENTS:
             return {
                 ...state,
-                Treatments: action.payload
-            }
+                Treatments: action.payload,
+            };
         case CurrentCustomer_Types.SET_TREATMENT_PLAN_DOCUMENTS:
             return {
                 ...state,
-                TreatmentPlanDocuments: action.payload
-            }
+                TreatmentPlanDocuments: action.payload,
+            };
         case CurrentCustomer_Types.CLEAR_ALL:
             return {
                 Customer: null,
@@ -83,9 +86,9 @@ export const CurrentCustomerReducer = (state: CurrentCustomerState = initialStat
                 Notes: null,
                 TreatmentPlans: null,
                 Treatments: null,
-                TreatmentPlanDocuments: null
-            }
+                TreatmentPlanDocuments: null,
+            };
         default:
-            return state
+            return state;
     }
 };

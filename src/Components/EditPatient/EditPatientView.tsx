@@ -1,17 +1,14 @@
 import { CircularProgress, TextField } from '@mui/material';
 import { ButtonGroup, Col, Row, ToggleButton } from 'react-bootstrap';
-import usePatientInputHook from '../../CustomHooks/usePatientInputHook';
+import usePatientInputHook from '../../hooks/usePatientInputHook';
 import CustomButton from '../CustomButton';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DateTimePicker from '@mui/lab/DateTimePicker';
 
 export default function EditPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
         usePatientInputHook(false);
 
     return (
-        <div style={{width: 350}}>
+        <div style={{ width: 350 }}>
             <div
                 style={{
                     display: 'flex',
@@ -107,7 +104,7 @@ export default function EditPatientView() {
                                 name="gender"
                                 value={gender}
                                 checked={gender === genderOption}
-                                onChange={(e) => setGender(genderOption)}
+                                onChange={(_e) => setGender(genderOption)}
                             >
                                 {genderOption}
                             </ToggleButton>
