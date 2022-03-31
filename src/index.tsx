@@ -7,7 +7,7 @@ import App from './App';
 import { AuthProvider } from './auth/Provider/AuthProvider';
 import './index.css';
 import store from './store';
-import './styles/globals.css';
+//import './styles/globals.css';
 
 ReactDOM.render(
     <HashRouter>

@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import useAuthHook from '../../hooks/useAuthHook';
 import { RootState } from '../../store';
-import './../../styles/globals.css';
 
 export default function CriticalAlertDisplay() {
     const FatalErrorState = useSelector(
