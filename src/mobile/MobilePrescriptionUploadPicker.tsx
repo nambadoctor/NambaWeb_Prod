@@ -1,6 +1,7 @@
-import ImageCaptureComponent from '../components/ImageCapture/ImageCaptureComponent';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
-import { Row, Col } from 'react-bootstrap';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Col, Row } from 'react-bootstrap';
+import ImageCaptureComponent from '../components/ImageCapture/ImageCaptureComponent';
 import useUploadOrCaptureImageHook from '../hooks/useCaptureOrUploadHook';
 import { ImageUploadProps } from '../utils/CommonProps';
 
@@ -30,6 +31,13 @@ export const MobilePrescriptionUploadPicker: React.FC<ImageUploadProps> = (
                             style={{ color: props.uploadButtonColor }}
                         />
                     </div>
+                </Col>
+                <Col>
+                    <label htmlFor="prescription_upload_picker">
+                        <CloudUploadIcon
+                            style={{ color: props.uploadButtonColor }}
+                        />
+                    </label>
                 </Col>
             </Row>
 

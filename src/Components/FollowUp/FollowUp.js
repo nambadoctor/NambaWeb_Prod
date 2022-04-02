@@ -7,15 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import * as Yup from 'yup';
 import '../../App.css';
-import { ReferPatient } from '../../service-actions/ReferralActions';
 import CustomButton from '../CustomButton';
 
-export function ReferToOthers({ referralContacts }) {
+export function FollowUp({ followUpConfig }) {
     const currentCustomer = useSelector(
         (state) => state.CurrentCustomerState.Customer,
     );
 
-    const selectValues = referralContacts.map((contact, index) => {
+    const selectValues = followUpConfig.map((follow, index) => {
         return {
             value: index,
             label: `${contact.contactName} (${contact.phoneNumber})`,
@@ -27,19 +26,19 @@ export function ReferToOthers({ referralContacts }) {
 
     const formik = useFormik({
         initialValues: {
-            reasonForReferral: '',
+            followUpReason: '',
         },
         validationSchema: Yup.object({
-            reasonForReferral: Yup.string(),
+            followUpReason: Yup.string(),
         }),
         onSubmit: (values) => {
-            dispatch(
-                ReferPatient(
-                    selectedOption.number,
-                    values.reasonForReferral,
-                    selectedOption.label,
-                ),
-            );
+            // dispatch(
+            //     ReferPatient(
+            //         selectedOption.number,
+            //         values.followUpReason,
+            //         selectedOption.label,
+            //     ),
+            // );
             formik.resetForm();
             setSelectedOption(null);
         },
@@ -62,11 +61,11 @@ export function ReferToOthers({ referralContacts }) {
                             <TextField
                                 fullWidth
                                 label={
-                                    'Reason For Referral (' +
+                                    'Set follow-up (' +
                                     formik.values.reasonForReferral.length +
                                     '/25)'
                                 }
-                                placeholder="Reason For Referral"
+                                placeholder="Set Follow-up"
                                 margin="normal"
                                 size="small"
                                 {...formik.getFieldProps('reasonForReferral')}
