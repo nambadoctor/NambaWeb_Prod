@@ -47,29 +47,29 @@ export default function ConsultationView() {
                 <Col>
                     <ConsultationHeader />
                 </Col>
-                <Col>
-                    {serviceProviderSettings &&
-                    serviceProviderSettings.referralWhitelist &&
-                    serviceProviderSettings.referralWhitelist.isEnabled ? (
+                {serviceProviderSettings &&
+                serviceProviderSettings.referralWhitelist &&
+                serviceProviderSettings.referralWhitelist.isEnabled ? (
+                    <Col>
                         <ReferToOthers
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
                                     .referralContacts
                             }
                         />
-                    ) : null}
-                </Col>
-                <Col>
-                    {serviceProviderSettings &&
-                    serviceProviderSettings.followupSettings &&
-                    serviceProviderSettings.followupSettings.isEnabled ? (
+                    </Col>
+                ) : null}
+                {serviceProviderSettings &&
+                serviceProviderSettings.followupSettings &&
+                serviceProviderSettings.followupSettings.isEnabled ? (
+                    <Col>
                         <FollowUp
                             followUpConfig={
                                 serviceProviderSettings.followupSettings
                             }
                         />
-                    ) : null}
-                </Col>
+                    </Col>
+                ) : null}
             </Row>
             <Row style={{ margin: 20 }}>
                 <div className="blue_filled_rounded_box_top">
