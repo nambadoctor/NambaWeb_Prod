@@ -1,30 +1,31 @@
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import DateTimePicker from '@mui/lab/DateTimePicker';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import { TextField } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import * as Yup from 'yup';
 import '../../App.css';
-import CustomButton from '../CustomButton';
+import { SetFolloupWithPatient } from '../../service-actions/NotificationActions';
 
 export function FollowUp({ followUpConfig }) {
     const currentCustomer = useSelector(
         (state) => state.CurrentCustomerState.Customer,
     );
 
-    const selectValues = followUpConfig.map((follow, index) => {
+    const selectValues = followUpConfig.reasons.map((reason, index) => {
         return {
-            value: index,
-            label: `${contact.contactName} (${contact.phoneNumber})`,
-            number: contact.phoneNumber,
+            value: reason,
+            label: reason,
         };
     });
 
     const dispatch = useDispatch();
 
-    const formik = useFormik({
+    const reasonFormik = useFormik({
         initialValues: {
             followUpReason: '',
         },
@@ -32,79 +33,51 @@ export function FollowUp({ followUpConfig }) {
             followUpReason: Yup.string(),
         }),
         onSubmit: (values) => {
-            // dispatch(
-            //     ReferPatient(
-            //         selectedOption.number,
-            //         values.followUpReason,
-            //         selectedOption.label,
-            //     ),
-            // );
-            formik.resetForm();
+            dispatch(SetFolloupWithPatient(selectedOption.value, selectedDate));
+            reasonFormik.resetForm();
             setSelectedOption(null);
         },
     });
 
     const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     return (
         <div className="horiztontalContainer">
             {currentCustomer && (
-                <Row>
-                    <Col md="8">
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                gap: '10px',
-                            }}
-                        >
-                            <TextField
-                                fullWidth
-                                label={
-                                    'Set follow-up (' +
-                                    formik.values.reasonForReferral.length +
-                                    '/25)'
-                                }
-                                placeholder="Set Follow-up"
-                                margin="normal"
-                                size="small"
-                                {...formik.getFieldProps('reasonForReferral')}
-                                helperText={
-                                    formik.touched.reasonForReferral &&
-                                    formik.errors.reasonForReferral
-                                }
-                                error={
-                                    formik.touched.reasonForReferral &&
-                                    !!formik.errors.reasonForReferral
-                                }
-                                inputProps={{ maxLength: 25 }}
-                            />
+                <div className="flex md:flex-row flex-col justify-center md:items-end items-center space-x-4">
+                    <div className="flex flex-col py-2">
+                        <div>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                <DateTimePicker
+                                    renderInput={(props) => (
+                                        <TextField {...props} />
+                                    )}
+                                    label="Followup Date"
+                                    value={selectedDate}
+                                    onChange={(newValue) => {
+                                        setSelectedDate(new Date(newValue));
+                                    }}
+                                />
+                            </LocalizationProvider>
                         </div>
                         <Select
+                            className="mt-2"
                             defaultValue={selectedOption}
                             onChange={setSelectedOption}
                             options={selectValues}
-                            placeholder="Refer To"
+                            placeholder="Follow-up reason"
                         />
-                    </Col>
-
-                    <Col
-                        lg="4"
-                        style={{
-                            justifyItems: 'baseline',
-                            marginTop: 'auto',
-                            marginLeft: 'auto',
-                        }}
+                    </div>
+                    <button
+                        type="submit"
+                        className="btn btn-primary !rounded-lg w-24"
+                        onClick={reasonFormik.handleSubmit}
+                        disabled={selectedOption === null}
                     >
-                        <CustomButton
-                            type="submit"
-                            onClick={formik.handleSubmit}
-                            isPurple={false}
-                            title="Refer"
-                            small={false}
-                        />
-                    </Col>
-                </Row>
+                        Schedule
+                    </button>
+                </div>
             )}
         </div>
     );

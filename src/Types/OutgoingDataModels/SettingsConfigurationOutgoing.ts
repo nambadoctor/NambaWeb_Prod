@@ -1,4 +1,5 @@
 import { AppointmentSettingsOutgoing } from './AppointmentSettingsOutgoing';
+import { FollowupSettingsOutgoing } from './FollowupSettingsOutgoing';
 import { ReferralWhitelistOutgoing } from './ReferralWhitelistOutgoing';
 
 export default interface SettingsConfigurationOutgoing {
@@ -6,4 +7,5 @@ export default interface SettingsConfigurationOutgoing {
     serviceProviderId: string;
     appointmentSettings: AppointmentSettingsOutgoing;
     referralWhitelist: ReferralWhitelistOutgoing;
+    followupSettings: FollowupSettingsOutgoing;
 }

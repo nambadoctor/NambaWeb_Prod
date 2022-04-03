@@ -2,13 +2,11 @@ import { TextField } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
 import * as Yup from 'yup';
 import '../../App.css';
-import { ReferPatient } from '../../service-actions/ReferralActions';
-import CustomButton from '../CustomButton';
+import { ReferPatient } from '../../service-actions/NotificationActions';
 
 export function ReferToOthers({ referralContacts }) {
     const currentCustomer = useSelector(
@@ -50,62 +48,45 @@ export function ReferToOthers({ referralContacts }) {
     return (
         <div className="horiztontalContainer">
             {currentCustomer && (
-                <Row>
-                    <Col md="8">
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                gap: '10px',
-                            }}
-                        >
-                            <TextField
-                                fullWidth
-                                label={
-                                    'Reason For Referral (' +
-                                    formik.values.reasonForReferral.length +
-                                    '/25)'
-                                }
-                                placeholder="Reason For Referral"
-                                margin="normal"
-                                size="small"
-                                {...formik.getFieldProps('reasonForReferral')}
-                                helperText={
-                                    formik.touched.reasonForReferral &&
-                                    formik.errors.reasonForReferral
-                                }
-                                error={
-                                    formik.touched.reasonForReferral &&
-                                    !!formik.errors.reasonForReferral
-                                }
-                                inputProps={{ maxLength: 25 }}
-                            />
-                        </div>
+                <div className="flex md:flex-row flex-col justify-center md:items-end items-center space-x-4">
+                    <div className="flex flex-col py-2">
+                        <TextField
+                            fullWidth
+                            label={
+                                'Reason For Referral (' +
+                                formik.values.reasonForReferral.length +
+                                '/25)'
+                            }
+                            placeholder="Reason For Referral"
+                            margin="normal"
+                            size="small"
+                            {...formik.getFieldProps('reasonForReferral')}
+                            helperText={
+                                formik.touched.reasonForReferral &&
+                                formik.errors.reasonForReferral
+                            }
+                            error={
+                                formik.touched.reasonForReferral &&
+                                !!formik.errors.reasonForReferral
+                            }
+                            inputProps={{ maxLength: 25 }}
+                        />
                         <Select
                             defaultValue={selectedOption}
                             onChange={setSelectedOption}
                             options={selectValues}
                             placeholder="Refer To"
                         />
-                    </Col>
-
-                    <Col
-                        lg="4"
-                        style={{
-                            justifyItems: 'baseline',
-                            marginTop: 'auto',
-                            marginLeft: 'auto',
-                        }}
+                    </div>
+                    <button
+                        type="submit"
+                        className="btn btn-primary !rounded-lg w-24"
+                        onClick={formik.handleSubmit}
+                        disabled={selectedOption === null}
                     >
-                        <CustomButton
-                            type="submit"
-                            onClick={formik.handleSubmit}
-                            isPurple={false}
-                            title="Refer"
-                            small={false}
-                        />
-                    </Col>
-                </Row>
+                        Refer
+                    </button>
+                </div>
             )}
         </div>
     );

@@ -9,6 +9,7 @@ import { UploadPrescriptionForConsultation } from '../../service-actions/Prescri
 import { UploadReportForConsultation } from '../../service-actions/ReportActions';
 import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { RootState } from '../../store';
+import { FollowUp } from '../FollowUp/FollowUp';
 import NotesView from '../Notes/NotesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
@@ -54,6 +55,17 @@ export default function ConsultationView() {
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
                                     .referralContacts
+                            }
+                        />
+                    ) : null}
+                </Col>
+                <Col>
+                    {serviceProviderSettings &&
+                    serviceProviderSettings.followupSettings &&
+                    serviceProviderSettings.followupSettings.isEnabled ? (
+                        <FollowUp
+                            followUpConfig={
+                                serviceProviderSettings.followupSettings
                             }
                         />
                     ) : null}
