@@ -1,0 +1,50 @@
+import ImageCaptureComponent from '../ImageCapture/ImageCaptureComponent';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { Row, Col } from 'react-bootstrap';
+import useUploadOrCaptureImageHook from '../../hooks/useCaptureOrUploadHook';
+import { ImageUploadProps } from '../../utils/CommonProps';
+
+export const PrescriptionUploadPicker: React.FC<ImageUploadProps> = (props) => {
+    const {
+        showCameraToggle,
+        setShowCameraToggle,
+        handleChange,
+        handleTakePhoto,
+    } = useUploadOrCaptureImageHook(props.handlePhotoCallBack);
+
+    return (
+        <div style={{ marginLeft: 20 }}>
+            <input
+                type="file"
+                accept="image/*,application/pdf"
+                style={{ display: 'none' }}
+                id="prescription_upload_picker"
+                onChange={handleChange}
+            />
+            <Row>
+                <Col>
+                    <label htmlFor="prescription_upload_picker">
+                        <CloudUploadIcon
+                            style={{ color: props.uploadButtonColor }}
+                        />
+                    </label>
+                </Col>
+                <Col>
+                    <div onClick={() => setShowCameraToggle(true)}>
+                        <CameraAltIcon
+                            style={{ color: props.uploadButtonColor }}
+                        ></CameraAltIcon>
+                    </div>
+                </Col>
+            </Row>
+
+            {showCameraToggle && (
+                <ImageCaptureComponent
+                    setShowCameraToggle={setShowCameraToggle}
+                    handleTakePhoto={handleTakePhoto}
+                ></ImageCaptureComponent>
+            )}
+        </div>
+    );
+};
