@@ -99,6 +99,7 @@
         "autoprefixer": "^10.4.4",
         "postcss": "^8.4.12",
         "tailwindcss": "^3.0.23",
+        "sass": "^1.49.7",
         "ts-node": "^10.4.0"
     },
     "proxy": "http://localhost:5001",
