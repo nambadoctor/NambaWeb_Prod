@@ -45,8 +45,8 @@ export function FollowUp({ followUpConfig }) {
     return (
         <div className="horiztontalContainer">
             {currentCustomer && (
-                <div className="flex md:flex-row flex-col justify-center md:items-end items-center space-x-4">
-                    <div className="flex flex-col py-2">
+                <div className="flex py-2 md:flex-row flex-col justify-center md:items-end items-center space-x-4">
+                    <div className="flex flex-col">
                         <div>
                             <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <DateTimePicker
@@ -71,7 +71,7 @@ export function FollowUp({ followUpConfig }) {
                     </div>
                     <button
                         type="submit"
-                        className="btn btn-primary !rounded-lg w-24"
+                        className="btn btn-primary !rounded-lg w-24 md:mt-0 mt-2"
                         onClick={reasonFormik.handleSubmit}
                         disabled={selectedOption === null}
                     >
