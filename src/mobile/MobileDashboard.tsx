@@ -1,8 +1,8 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Nav, NavItem, NavLink, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
 import '../App.css';
 import Calendar from '../components/CalendarPicker/Calendar';
@@ -15,7 +15,30 @@ import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasic
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
-import MobileNavBar from './MobileNavBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faSearch,
+    faHome,
+    faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
+
+const tabs = [
+    {
+        route: '/Appointments',
+        icon: faHome,
+        label: 'appointments',
+    },
+    {
+        route: '/Patients',
+        icon: faSearch,
+        label: 'patients',
+    },
+    {
+        route: '/login',
+        icon: faUserCircle,
+        label: '+',
+    },
+];
 
 function MobileDashboard() {
     const dispatch = useDispatch();
@@ -64,9 +87,8 @@ function MobileDashboard() {
 
     function MobileDashboardView() {
         return (
-            <div style={{ overflowX: 'hidden' }}>
-                <MobileNavBar />
-                <div style={{ marginTop: 50 }}>
+            <div>
+                <div style={{marginBottom: 200}}>
                     <Routes>
                         <Route
                             path="/Appointments"
@@ -78,6 +100,39 @@ function MobileDashboard() {
                         />
                     </Routes>
                 </div>
+
+                <nav
+                    className="navbar fixed-bottom navbar-light"
+                    role="navigation"
+                >
+                    <Nav className="w-100">
+                        <div className=" d-flex flex-row justify-content-around w-100">
+                            {tabs.map((tab, index) => (
+                                <NavItem key={`tab-${index}`}>
+                                    <Link
+                                        to={tab.route}
+                                        style={{
+                                            color: 'black',
+                                            fontSize: 18,
+                                            fontWeight: '600',
+                                            marginLeft: 20,
+                                            marginRight: 40,
+                                            textDecoration: 'none',
+                                        }}
+                                    >
+                                        <div className="row d-flex flex-column justify-content-center align-items-center">
+                                            <FontAwesomeIcon
+                                                size="lg"
+                                                icon={tab.icon}
+                                            />
+                                            <div>{tab.label}</div>
+                                        </div>
+                                    </Link>
+                                </NavItem>
+                            ))}
+                        </div>
+                    </Nav>
+                </nav>
             </div>
         );
     }

@@ -80,12 +80,6 @@ export default function AppointmentsTable() {
         // return is [background color, font color]
         var colorCodesToReturn = ['', ''];
         switch (appointmentState) {
-            // case AppointmentTypeEnum.Consultation:
-            //     colorCodesToReturn = ['#e5faf2', '#3bb077'];
-            //     break;
-            // case AppointmentTypeEnum.Treatment:
-            //     colorCodesToReturn = ['#ebf1fe', '#2a7ade'];
-            //     break;
             case 'Finished':
                 colorCodesToReturn = ['#fff0f1', '#d95087'];
                 break;

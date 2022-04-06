@@ -9,7 +9,7 @@ import { AuthContext } from './auth/Context/AuthContext';
 import Dashboard from './components/Dashboard/Dashboard';
 import { PhoneNumberLogin } from './components/PhoneNumberAuth/PhoneNumberLogin';
 import './index.css';
-import MobileDashboard from './mobile/MobileDashboard';
+import MobileDashboardRedone from './mobile/MobileDashboardRedone';
 import { RootState } from './store';
 import { reactPlugin } from './telemetry/AppInsights';
 toast.configure();
@@ -45,7 +45,7 @@ export const MobileOrDesktopViewDecider: React.FC<MobileOrDesktopViewProps> = (
 ) => {
     // const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    return <div>{props.isMobile ? <MobileDashboard /> : <Dashboard />}</div>;
+    return <div>{props.isMobile ? <MobileDashboardRedone /> : <Dashboard />}</div>;
 };
 
 export default App;

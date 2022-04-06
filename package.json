@@ -5,6 +5,9 @@
     "dependencies": {
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
+        "@fortawesome/fontawesome-svg-core": "^6.1.1",
+        "@fortawesome/free-solid-svg-icons": "^6.1.1",
+        "@fortawesome/react-fontawesome": "^0.1.18",
         "@microsoft/applicationinsights-react-js": "^3.2.2",
         "@microsoft/applicationinsights-web": "^2.7.2",
         "@mui/core": "^5.0.0-alpha.54",
@@ -98,8 +101,8 @@
         "@types/uuid": "^8.3.3",
         "autoprefixer": "^10.4.4",
         "postcss": "^8.4.12",
-        "tailwindcss": "^3.0.23",
         "sass": "^1.49.7",
+        "tailwindcss": "^3.0.23",
         "ts-node": "^10.4.0"
     },
     "proxy": "http://localhost:5001",

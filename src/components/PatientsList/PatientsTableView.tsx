@@ -20,7 +20,7 @@ import TablePaginationActions from '../Pagination/PaginationActions';
 import { usePatientTableStyles } from '../UIHelperComponents/TableStyles';
 
 interface EditPatientViewProps {
-    setIsSchedulingAppointment: Dispatch<SetStateAction<boolean>>;
+    setIsSchedulingAppointment: Dispatch<SetStateAction<boolean>> | null;
 }
 
 export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
@@ -80,7 +80,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                         color="primary"
                         onClick={() => {
                             dispatch(ClearCurrentCustomerState());
-                            props.setIsSchedulingAppointment(false);
+                            props.setIsSchedulingAppointment && props.setIsSchedulingAppointment(false);
                             handleCustomerSelect(customer);
                         }}
                         style={{ cursor: 'pointer' }}
@@ -89,7 +89,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                         color="primary"
                         onClick={() => {
                             dispatch(ClearCurrentCustomerState());
-                            props.setIsSchedulingAppointment(true);
+                            props.setIsSchedulingAppointment && props.setIsSchedulingAppointment(true);
                             handleCustomerSelect(customer);
                         }}
                         style={{ marginLeft: 15, cursor: 'pointer' }}

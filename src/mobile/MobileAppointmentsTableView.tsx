@@ -8,7 +8,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { createSelector } from 'reselect';
+import { ClearContext } from '../actions/ClearContextAction';
 import { SetSelectedAppointmentForConsultation } from '../actions/ConsultationActions';
 import NoAppointmentsView from '../components/Appointments/NoAppointmentsView';
 import TablePaginationActions from '../components/Pagination/PaginationActions';
@@ -94,7 +96,12 @@ export default function MobileAppointmentsTableView() {
                     onClick={getAppointment}
                 >
                     <TableCell align="left" style={{ wordBreak: 'break-word' }}>
-                        {appointment.customerName}
+                        <Link
+                            to={'/Consultation/' + appointment.appointmentId}
+                            onClick={() => dispatch(ClearContext())}
+                        >
+                            {appointment.customerName}
+                        </Link>
                     </TableCell>
                     <TableCell align="left">
                         <MobileReportUploadPicker
