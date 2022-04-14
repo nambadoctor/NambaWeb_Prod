@@ -28,7 +28,7 @@ import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
 
-export default function MobileDashboardRedone() {
+export default function MobileDashboard() {
     const dispatch = useDispatch();
     const serviceProviderBasicState = useSelector(
         (state: RootState) => state.ServiceProviderBasicState,
