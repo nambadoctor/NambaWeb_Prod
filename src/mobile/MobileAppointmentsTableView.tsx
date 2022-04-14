@@ -1,4 +1,3 @@
-import { TableFooter, TablePagination } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,7 +12,6 @@ import { createSelector } from 'reselect';
 import { ClearContext } from '../actions/ClearContextAction';
 import { SetSelectedAppointmentForConsultation } from '../actions/ConsultationActions';
 import NoAppointmentsView from '../components/Appointments/NoAppointmentsView';
-import TablePaginationActions from '../components/Pagination/PaginationActions';
 import usePaginationHook from '../hooks/usePaginationHook';
 import { RootState } from '../store';
 import IAppointmentData from '../types/IncomingDataModels/Appointment';
@@ -79,47 +77,51 @@ export default function MobileAppointmentsTableView() {
         usePaginationHook(-1);
 
     function GetAppointmentList() {
-        return (
-            rowsPerPage > 0
-                ? appointments.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                  )
-                : appointments
-        ).map((appointment: IAppointmentData, _index: number) => {
-            const getAppointment = () => {
-                dispatch(SetSelectedAppointmentForConsultation(appointment));
-            };
-            return (
-                <TableRow
-                    key={appointment.appointmentId}
-                    onClick={getAppointment}
-                >
-                    <TableCell align="left" style={{ wordBreak: 'break-word' }}>
-                        <Link
-                            to={'/Consultation/' + appointment.appointmentId}
-                            onClick={() => dispatch(ClearContext())}
+        return appointments.map(
+            (appointment: IAppointmentData, _index: number) => {
+                const getAppointment = () => {
+                    dispatch(
+                        SetSelectedAppointmentForConsultation(appointment),
+                    );
+                };
+                return (
+                    <TableRow
+                        key={appointment.appointmentId}
+                        onClick={getAppointment}
+                    >
+                        <TableCell
+                            align="left"
+                            style={{ wordBreak: 'break-word' }}
                         >
-                            {appointment.customerName}
-                        </Link>
-                    </TableCell>
-                    <TableCell align="left">
-                        <MobileReportUploadPicker
-                            handlePhotoCallBack={UploadReportForConsultation}
-                            uploadButtonColor="#1672f9"
-                        />
-                    </TableCell>
-                    <TableCell align="left">
-                        <MobilePrescriptionUploadPicker
-                            handlePhotoCallBack={
-                                UploadPrescriptionForConsultation
-                            }
-                            uploadButtonColor="#1672f9"
-                        />
-                    </TableCell>
-                </TableRow>
-            );
-        });
+                            <Link
+                                to={
+                                    '/Consultation/' + appointment.appointmentId
+                                }
+                                onClick={() => dispatch(ClearContext())}
+                            >
+                                {appointment.customerName}
+                            </Link>
+                        </TableCell>
+                        <TableCell align="left">
+                            <MobileReportUploadPicker
+                                handlePhotoCallBack={
+                                    UploadReportForConsultation
+                                }
+                                uploadButtonColor="#1672f9"
+                            />
+                        </TableCell>
+                        <TableCell align="left">
+                            <MobilePrescriptionUploadPicker
+                                handlePhotoCallBack={
+                                    UploadPrescriptionForConsultation
+                                }
+                                uploadButtonColor="#1672f9"
+                            />
+                        </TableCell>
+                    </TableRow>
+                );
+            },
+        );
     }
 
     return (
@@ -156,31 +158,6 @@ export default function MobileAppointmentsTableView() {
                         </TableCell>
                     )}
                 </TableBody>
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[
-                                5,
-                                10,
-                                25,
-                                { label: 'All', value: -1 },
-                            ]}
-                            colSpan={3}
-                            count={appointments.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {
-                                    'aria-label': 'rows per page',
-                                },
-                                native: true,
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
             </Table>
         </TableContainer>
     );

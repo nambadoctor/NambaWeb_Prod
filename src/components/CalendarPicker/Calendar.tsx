@@ -1,12 +1,12 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { months } from '../../utils/CalendarConst';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import CircleIcon from '@mui/icons-material/Circle';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import useCalendarHook from '../../hooks/useCalendarHook';
 import '../../styles/CalendarStyling.css';
 import { CalendarTheme } from '../../styles/CalendarTheme';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ICustomDateData from '../../types/MatrixDateObj';
-import CircleIcon from '@mui/icons-material/Circle';
-import useCalendarHook from '../../hooks/useCalendarHook';
+import { months } from '../../utils/CalendarConst';
 import { checkIfDateExists } from '../../utils/GeneralUtils';
 
 export default function Calendar() {

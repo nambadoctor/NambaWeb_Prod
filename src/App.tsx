@@ -45,7 +45,11 @@ export const MobileOrDesktopViewDecider: React.FC<MobileOrDesktopViewProps> = (
 ) => {
     // const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    return <div>{props.isMobile ? <MobileDashboardRedone /> : <Dashboard />}</div>;
+    return (
+        <div>
+            {props.isMobile || true ? <MobileDashboardRedone /> : <Dashboard />}
+        </div>
+    );
 };
 
 export default App;

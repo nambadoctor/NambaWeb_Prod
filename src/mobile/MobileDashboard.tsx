@@ -1,10 +1,17 @@
+import {
+    faHome,
+    faSearch,
+    faUserCircle,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { useEffect } from 'react';
-import { Col, Container, Nav, NavItem, NavLink, Row } from 'react-bootstrap';
+import { Col, Container, Nav, NavItem, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
 import '../App.css';
+import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
 import Calendar from '../components/CalendarPicker/Calendar';
 import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
 import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
@@ -15,12 +22,6 @@ import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasic
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faSearch,
-    faHome,
-    faUserCircle,
-} from '@fortawesome/free-solid-svg-icons';
 
 const tabs = [
     {
@@ -45,13 +46,14 @@ function MobileDashboard() {
     const serviceProviderBasicState = useSelector(
         (state: RootState) => state.ServiceProviderBasicState,
     );
-
     useEffect(() => {
+        console.log('hello init mobile');
         SetTrackTrace(
             'Dashboard Mounted',
             'Dashboard',
             SeverityLevel.Information,
         );
+        clearAuthToken();
         dispatch(SetInitialLoadingStartTime());
         dispatch(GetServiceProviderBasic());
     }, [dispatch]);
@@ -88,7 +90,7 @@ function MobileDashboard() {
     function MobileDashboardView() {
         return (
             <div>
-                <div style={{marginBottom: 200}}>
+                <div style={{ marginBottom: 200 }}>
                     <Routes>
                         <Route
                             path="/Appointments"

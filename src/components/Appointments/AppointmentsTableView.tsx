@@ -72,6 +72,7 @@ export default function AppointmentsTable() {
     );
 
     const appointments = useSelector(showAppointments);
+    console.log('appointments', appointments);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
