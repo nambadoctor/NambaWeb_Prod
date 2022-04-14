@@ -1,5 +1,7 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
-import AcUnitIcon from '@mui/icons-material/AcUnit';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import Home from '@mui/icons-material/Home';
+import PeopleAlt from '@mui/icons-material/PeopleAlt';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,8 +13,10 @@ import { Link, Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
 import '../App.css';
 import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
+import AddPatientForm from '../components/AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
 import Calendar from '../components/CalendarPicker/Calendar';
 import ConsultationView from '../components/Consultation/ConsultationView';
+import DetailedPatient from '../components/DetailedPatient/DetailedPatient';
 import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
 import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
 import { PatientsTableView } from '../components/PatientsList/PatientsTableView';
@@ -88,18 +92,28 @@ export default function MobileDashboardRedone() {
                             <Route
                                 path="/Patients"
                                 element={
-                                    <PatientsTableView
-                                        setIsSchedulingAppointment={null}
-                                    ></PatientsTableView>
+                                    <div className="p-4">
+                                        <PatientsTableView
+                                            setIsSchedulingAppointment={null}
+                                        />
+                                    </div>
                                 }
                             />
                             <Route
                                 path="/AddOrBook"
-                                element={AppointmentsAndCalendarView()}
+                                element={
+                                    <div className="p-4">
+                                        <AddPatientForm />
+                                    </div>
+                                }
                             />
                             <Route
                                 path="/Consultation/:id"
-                                element={<ConsultationView></ConsultationView>}
+                                element={<ConsultationView />}
+                            />
+                            <Route
+                                path="/Patient/:id"
+                                element={<DetailedPatient />}
                             />
                         </Routes>
                     </div>
@@ -126,9 +140,25 @@ export default function MobileDashboardRedone() {
                                     textDecoration: 'none',
                                 }}
                             >
-                                <div className="row d-flex flex-column justify-content-center align-items-center">
-                                    <AcUnitIcon />
+                                <div className="flex flex-column justify-content-center align-items-center">
+                                    <Home />
                                     <div>Appointments</div>
+                                </div>
+                            </Link>
+                            <Link
+                                to={'/AddOrBook'}
+                                style={{
+                                    color: 'black',
+                                    fontSize: 18,
+                                    fontWeight: '600',
+                                    marginLeft: 20,
+                                    marginRight: 40,
+                                    textDecoration: 'none',
+                                }}
+                            >
+                                <div className="flex flex-column justify-content-center align-items-center">
+                                    <AddBoxIcon />
+                                    <div>Add</div>
                                 </div>
                             </Link>
                             <Link
@@ -142,25 +172,9 @@ export default function MobileDashboardRedone() {
                                     textDecoration: 'none',
                                 }}
                             >
-                                <div className="row d-flex flex-column justify-content-center align-items-center">
-                                    <AcUnitIcon />
+                                <div className="flex flex-column justify-content-center align-items-center">
+                                    <PeopleAlt />
                                     <div>Patients</div>
-                                </div>
-                            </Link>
-                            <Link
-                                to={'/'}
-                                style={{
-                                    color: 'black',
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    marginLeft: 20,
-                                    marginRight: 40,
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <div className="row d-flex flex-column justify-content-center align-items-center">
-                                    <AcUnitIcon />
-                                    <div>Add</div>
                                 </div>
                             </Link>
                         </BottomNavigation>
