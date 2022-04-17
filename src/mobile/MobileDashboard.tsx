@@ -97,7 +97,7 @@ export default function MobileDashboard() {
                             <Route
                                 path="/Patients"
                                 element={
-                                    <div className="p-4">
+                                    <div className="p-4 mb-20">
                                         <PatientsTableView
                                             setIsSchedulingAppointment={null}
                                         />
@@ -114,11 +114,19 @@ export default function MobileDashboard() {
                             />
                             <Route
                                 path="/Consultation/:id"
-                                element={<ConsultationView />}
+                                element={
+                                    <div className="mb-20">
+                                        <ConsultationView />
+                                    </div>
+                                }
                             />
                             <Route
                                 path="/Patient/:id"
-                                element={<DetailedPatient />}
+                                element={
+                                    <div className="mb-20">
+                                        <DetailedPatient />
+                                    </div>
+                                }
                             />
                         </Routes>
                     </div>

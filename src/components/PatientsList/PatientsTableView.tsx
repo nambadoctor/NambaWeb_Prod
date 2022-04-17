@@ -102,7 +102,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     }
 
     return (
-        <div className="mb-20">
+        <div>
             <div
                 style={{
                     display: 'flex',
