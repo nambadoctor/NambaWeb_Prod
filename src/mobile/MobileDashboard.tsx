@@ -2,7 +2,6 @@ import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import Home from '@mui/icons-material/Home';
 import PeopleAlt from '@mui/icons-material/PeopleAlt';
-import BottomNavigation from '@mui/material/BottomNavigation';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
@@ -69,7 +68,7 @@ export default function MobileDashboard() {
                             </Row>
                         </Col>
                         <Col md="9">
-                            <h5 style={{ marginBottom: 20, marginTop: 20 }}>
+                            <h5 style={{ marginBottom: 20, marginTop: 30 }}>
                                 Appointments
                             </h5>
                             <MobileAppointmentsTableView />
@@ -81,11 +80,11 @@ export default function MobileDashboard() {
     }
 
     return (
-        <div>
+        <div className="h-screen">
             {serviceProviderBasicState.serviceProvider ? (
-                <Box sx={{ pb: 7 }}>
+                <Box>
                     <CssBaseline />
-                    <div style={{ marginBottom: 200 }}>
+                    <div>
                         <Routes>
                             <Route
                                 path="/Appointments"
@@ -125,69 +124,53 @@ export default function MobileDashboard() {
                     </div>
 
                     <Paper
-                        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+                        className="fixed bottom-0 flex w-full justify-between px-4"
                         elevation={3}
                     >
-                        <BottomNavigation
-                            showLabels
-                            // value={value}
-                            // onChange={(_event, newValue) => {
-                            //     setValue(newValue);
-                            // }}
+                        <Link
+                            to={'/Appointments'}
+                            style={{
+                                color: 'black',
+                                fontSize: 18,
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                            }}
                         >
-                            <Link
-                                to={'/Appointments'}
-                                style={{
-                                    color: 'black',
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    marginLeft: 20,
-                                    marginRight: 40,
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <div className="flex flex-column justify-content-center align-items-center">
-                                    <Home color="primary" />
-                                    <div className="text-[#1976D2]">
-                                        Appointments
-                                    </div>
+                            <div className="flex flex-column justify-content-center align-items-center">
+                                <Home color="primary" />
+                                <div className="text-[#1976D2]">
+                                    Appointments
                                 </div>
-                            </Link>
-                            <Link
-                                to={'/AddOrBook'}
-                                style={{
-                                    color: 'black',
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    marginLeft: 20,
-                                    marginRight: 40,
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <div className="flex flex-column justify-content-center align-items-center">
-                                    <AddBoxIcon color="primary" />
-                                    <div className="text-[#1976D2]">Add</div>
-                                </div>
-                            </Link>
-                            <Link
-                                to={'/Patients'}
-                                style={{
-                                    color: 'black',
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    marginLeft: 20,
-                                    marginRight: 40,
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <div className="flex flex-column justify-content-center align-items-center">
-                                    <PeopleAlt color="primary" />
-                                    <div className="text-[#1976D2]">
-                                        Patients
-                                    </div>
-                                </div>
-                            </Link>
-                        </BottomNavigation>
+                            </div>
+                        </Link>
+                        <Link
+                            to={'/AddOrBook'}
+                            style={{
+                                color: 'black',
+                                fontSize: 18,
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <div className="flex flex-column justify-content-center align-items-center">
+                                <AddBoxIcon color="primary" />
+                                <div className="text-[#1976D2]">Add</div>
+                            </div>
+                        </Link>
+                        <Link
+                            to={'/Patients'}
+                            style={{
+                                color: 'black',
+                                fontSize: 18,
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <div className="flex flex-column justify-content-center align-items-center">
+                                <PeopleAlt color="primary" />
+                                <div className="text-[#1976D2]">Patients</div>
+                            </div>
+                        </Link>
                     </Paper>
                 </Box>
             ) : (
