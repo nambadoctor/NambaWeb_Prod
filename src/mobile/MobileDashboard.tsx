@@ -17,7 +17,6 @@ import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
 import AddPatientForm from '../components/AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
 import ConsultationView from '../components/Consultation/ConsultationView';
 import DetailedPatient from '../components/DetailedPatient/DetailedPatient';
-import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
 import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
 import { PatientsTableView } from '../components/PatientsList/PatientsTableView';
 import CriticalAlertDisplay from '../components/UIHelperComponents/CriticalAlertDisplay';
@@ -70,7 +69,6 @@ export default function MobileDashboard() {
                             </Row>
                         </Col>
                         <Col md="9">
-                            <MobileDesktopToggleView></MobileDesktopToggleView>
                             <h5 style={{ marginBottom: 20 }}>Appointments</h5>
                             <MobileAppointmentsTableView />
                         </Col>
