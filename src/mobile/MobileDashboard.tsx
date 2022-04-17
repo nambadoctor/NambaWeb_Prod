@@ -61,16 +61,16 @@ export default function MobileDashboard() {
                 <Container fluid>
                     <Row>
                         <Col md="3">
-                            <Row>
+                            <h5 style={{ marginBottom: 20, marginTop: 30 }}>
+                                Appointments
+                            </h5>
+                            <Row style={{ marginBottom: 20, marginTop: 30 }}>
                                 <MobileCalendar
                                     onDateChange={onCalendarDateChange}
                                 />
                             </Row>
                         </Col>
                         <Col md="9">
-                            <h5 style={{ marginBottom: 20, marginTop: 30 }}>
-                                Appointments
-                            </h5>
                             <MobileAppointmentsTableView />
                         </Col>
                     </Row>
