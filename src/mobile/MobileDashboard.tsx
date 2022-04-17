@@ -69,7 +69,9 @@ export default function MobileDashboard() {
                             </Row>
                         </Col>
                         <Col md="9">
-                            <h5 style={{ marginBottom: 20 }}>Appointments</h5>
+                            <h5 style={{ marginBottom: 20, marginTop: 20 }}>
+                                Appointments
+                            </h5>
                             <MobileAppointmentsTableView />
                         </Col>
                     </Row>
@@ -145,8 +147,10 @@ export default function MobileDashboard() {
                                 }}
                             >
                                 <div className="flex flex-column justify-content-center align-items-center">
-                                    <Home />
-                                    <div>Appointments</div>
+                                    <Home color="primary" />
+                                    <div className="text-[#1976D2]">
+                                        Appointments
+                                    </div>
                                 </div>
                             </Link>
                             <Link
@@ -161,8 +165,8 @@ export default function MobileDashboard() {
                                 }}
                             >
                                 <div className="flex flex-column justify-content-center align-items-center">
-                                    <AddBoxIcon />
-                                    <div>Add</div>
+                                    <AddBoxIcon color="primary" />
+                                    <div className="text-[#1976D2]">Add</div>
                                 </div>
                             </Link>
                             <Link
@@ -177,8 +181,10 @@ export default function MobileDashboard() {
                                 }}
                             >
                                 <div className="flex flex-column justify-content-center align-items-center">
-                                    <PeopleAlt />
-                                    <div>Patients</div>
+                                    <PeopleAlt color="primary" />
+                                    <div className="text-[#1976D2]">
+                                        Patients
+                                    </div>
                                 </div>
                             </Link>
                         </BottomNavigation>
