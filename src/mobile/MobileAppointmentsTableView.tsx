@@ -57,7 +57,7 @@ export default function MobileAppointmentsTableView() {
     const dispatch = useDispatch();
 
     const dates = useSelector(
-        (state: RootState) => state.SelectedDatesState.selectedDateRage,
+        (state: RootState) => state.SelectedDatesState.selectedDateRange,
     );
 
     const showAppointmentReports = createSelector(

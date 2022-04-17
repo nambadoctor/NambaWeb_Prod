@@ -57,7 +57,7 @@ export default function AppointmentsTable() {
     const dispatch = useDispatch();
 
     const dates = useSelector(
-        (state: RootState) => state.SelectedDatesState.selectedDateRage,
+        (state: RootState) => state.SelectedDatesState.selectedDateRange,
     );
 
     const showAppointments = createSelector(

@@ -32,9 +32,9 @@ export default function Calendar() {
         if (
             checkIfDateExists(item) &&
             viewingDate.getMonth() ===
-                selectedDatesState.selectedDateRage[0].getMonth() &&
+                selectedDatesState.selectedDateRange[0].getMonth() &&
             item.date.getDate() ===
-                selectedDatesState.selectedDateRage[0].getDate()
+                selectedDatesState.selectedDateRange[0].getDate()
         ) {
             return styles.activeDate;
         } else {
@@ -46,7 +46,7 @@ export default function Calendar() {
         let rowItems = row.map((item: ICustomDateData, colIndex: number) => {
             return (
                 <div>
-                    {selectedDatesState.selectedDateRage[0] && (
+                    {selectedDatesState.selectedDateRange[0] && (
                         <TouchableOpacity
                             key={colIndex}
                             onPress={() => _onPress(item)}
@@ -96,7 +96,7 @@ export default function Calendar() {
 
     return (
         <div className="wholeCalendarContainer">
-            {selectedDatesState.selectedDateRage[0] &&
+            {selectedDatesState.selectedDateRange[0] &&
                 selectedDatesState.datesWithAppointments && (
                     <div>
                         <div className="titleAndActionContainer">

@@ -41,9 +41,9 @@ export default function useCalendarHook() {
     function checkIfCurrentDateSelected(item: IMatrixDateObj) {
         return (
             viewingDate.getMonth() ===
-                selectedDatesState.selectedDateRage[0].getMonth() &&
+                selectedDatesState.selectedDateRange[0].getMonth() &&
             item.date.getDate() ===
-                selectedDatesState.selectedDateRage[0].getDate()
+                selectedDatesState.selectedDateRange[0].getDate()
         );
     }
 

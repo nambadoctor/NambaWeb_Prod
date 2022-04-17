@@ -11,10 +11,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
+import { SetSelectedDateRange } from '../actions/SelectedDateActions';
 import '../App.css';
 import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
 import AddPatientForm from '../components/AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
-import Calendar from '../components/CalendarPicker/Calendar';
 import ConsultationView from '../components/Consultation/ConsultationView';
 import DetailedPatient from '../components/DetailedPatient/DetailedPatient';
 import MobileDesktopToggleView from '../components/MobileDesktopToggleView/MobileDesktopToggleView';
@@ -27,6 +27,7 @@ import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasic
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import MobileAppointmentsTableView from './MobileAppointmentsTableView';
+import { MobileCalendar } from './MobileCalendar';
 
 export default function MobileDashboard() {
     const dispatch = useDispatch();
@@ -45,6 +46,10 @@ export default function MobileDashboard() {
         dispatch(GetServiceProviderBasic());
     }, [dispatch]);
 
+    const onCalendarDateChange = (date: Date) => {
+        dispatch(SetSelectedDateRange([date, date]));
+    };
+
     function AppointmentsAndCalendarView() {
         return (
             <div
@@ -57,16 +62,17 @@ export default function MobileDashboard() {
             >
                 <Container fluid>
                     <Row>
+                        <Col md="3">
+                            <Row>
+                                <MobileCalendar
+                                    onDateChange={onCalendarDateChange}
+                                />
+                            </Row>
+                        </Col>
                         <Col md="9">
                             <MobileDesktopToggleView></MobileDesktopToggleView>
                             <h5 style={{ marginBottom: 20 }}>Appointments</h5>
                             <MobileAppointmentsTableView />
-                        </Col>
-                        <Col md="3">
-                            <h5 style={{ marginBottom: 20 }}>Calendar</h5>
-                            <Row>
-                                <Calendar />
-                            </Row>
                         </Col>
                     </Row>
                 </Container>

@@ -8,12 +8,12 @@ export enum SelectedDateReducer {
 }
 
 export interface SelectedDateState {
-    selectedDateRage: Date[];
+    selectedDateRange: Date[];
     datesWithAppointments: Date[];
 }
 
 const initialState: SelectedDateState = {
-    selectedDateRage: [],
+    selectedDateRange: [],
     datesWithAppointments: [],
 };
 
@@ -35,7 +35,7 @@ export const selectedDateReducer = (
             );
             return {
                 ...state,
-                selectedDateRage: action.payload,
+                selectedDateRange: action.payload,
             };
         case SelectedDateReducer.SET_DATES_WITH_APPOINTMENTS:
             SetTrackTrace(
