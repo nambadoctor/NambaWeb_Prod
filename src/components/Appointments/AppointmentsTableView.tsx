@@ -9,7 +9,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { makeStyles } from '@mui/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { createSelector } from 'reselect';
 import { ClearContext } from '../../actions/ClearContextAction';
 import usePaginationHook from '../../hooks/usePaginationHook';
@@ -103,12 +102,12 @@ export default function AppointmentsTable() {
         ).map((appointment: IAppointmentData, _index: number) => (
             <TableRow key={appointment.appointmentId}>
                 <TableCell align="left">
-                    <Link
-                        to={'/Consultation/' + appointment.appointmentId}
+                    <a
                         onClick={() => dispatch(ClearContext())}
+                        href={'#/Consultation/' + appointment.appointmentId}
                     >
                         {appointment.customerName}
-                    </Link>
+                    </a>
                 </TableCell>
                 <TableCell>
                     <Typography
