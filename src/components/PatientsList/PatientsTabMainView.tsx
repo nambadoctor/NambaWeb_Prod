@@ -14,15 +14,15 @@ export default function PatientsTabMainView() {
                     setIsSchedulingAppointment={setIsSchedulingAppointment}
                 />
                 <div>
-                    <span className="font-bold pt-3">
+                    <span className="font-bold pt-3 text-lg">
                         {isSchedulingAppointment
                             ? 'Book Appointment'
                             : 'Add/Edit Patient'}
                     </span>
                     {isSchedulingAppointment ? (
-                        <AddPatientView></AddPatientView>
+                        <AddPatientView />
                     ) : (
-                        <EditPatientView></EditPatientView>
+                        <EditPatientView />
                     )}
                 </div>
             </div>

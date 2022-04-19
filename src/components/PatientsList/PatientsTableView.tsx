@@ -107,10 +107,9 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                 style={{
                     display: 'flex',
                     justifyContent: 'space-between',
-                    marginRight: '5em',
                 }}
             >
-                <span className="font-bold pt-2">Patients</span>
+                <span className="font-bold pt-2 text-lg">Patients</span>
                 <input
                     className="w-48 bg-white text-black p-1 rounded-lg border-2 border-solid border-blue-500"
                     type="text"
