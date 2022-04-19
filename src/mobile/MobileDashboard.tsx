@@ -14,6 +14,7 @@ import { SetSelectedDateRange } from '../actions/SelectedDateActions';
 import '../App.css';
 import { clearAuthToken } from '../auth/FirebaseUserInfoHelper';
 import AddPatientForm from '../components/AddPatientAndBookAppointment/AddPatientAndBookAppointmentForm';
+import AppointmentsTableView from '../components/Appointments/AppointmentsTableView';
 import ConsultationView from '../components/Consultation/ConsultationView';
 import DetailedPatient from '../components/DetailedPatient/DetailedPatient';
 import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
@@ -24,7 +25,6 @@ import NonExistentUserDisplayComponent from '../components/UIHelperComponents/No
 import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasicActions';
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
-import MobileAppointmentsTableView from './MobileAppointmentsTableView';
 import { MobileCalendar } from './MobileCalendar';
 
 export default function MobileDashboard() {
@@ -71,7 +71,7 @@ export default function MobileDashboard() {
                             </Row>
                         </Col>
                         <Col md="9">
-                            <MobileAppointmentsTableView />
+                            <AppointmentsTableView />
                         </Col>
                     </Row>
                 </Container>
@@ -97,7 +97,7 @@ export default function MobileDashboard() {
                             <Route
                                 path="/Patients"
                                 element={
-                                    <div className="p-4 mb-20">
+                                    <div className="p-4 mb-28">
                                         <PatientsTableView
                                             setIsSchedulingAppointment={null}
                                         />
@@ -132,7 +132,7 @@ export default function MobileDashboard() {
                     </div>
 
                     <Paper
-                        className="fixed bottom-0 flex w-full justify-between px-4"
+                        className="navclass fixed bottom-0 flex w-full justify-between px-4"
                         elevation={3}
                     >
                         <Link

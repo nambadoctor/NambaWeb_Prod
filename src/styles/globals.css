@@ -37,6 +37,12 @@ select {
     outline: none;
 }
 
+@media (max-height: 400px) {
+    .navclass {
+        display: none;
+    }
+}
+
 .big-underline {
     text-underline-offset: 0.25em;
 }

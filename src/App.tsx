@@ -24,9 +24,7 @@ function App() {
     return (
         <AppInsightsContext.Provider value={reactPlugin}>
             {user ? (
-                user !== 'loading' && (
-                    <MobileOrDesktopViewDecider isMobile={isMobile} />
-                )
+                user !== 'loading' && <MobileOrDesktopViewDecider />
             ) : (
                 <div className={styles.container}>
                     <PhoneNumberLogin />
@@ -36,16 +34,19 @@ function App() {
     );
 }
 
-interface MobileOrDesktopViewProps {
-    isMobile: boolean;
-}
-
-export const MobileOrDesktopViewDecider: React.FC<MobileOrDesktopViewProps> = (
-    props,
-) => {
+export const MobileOrDesktopViewDecider = () => {
     // const isMobileCheck = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    return <div>{props.isMobile ? <MobileDashboard /> : <Dashboard />}</div>;
+    return (
+        <div>
+            <div className="md:hidden block">
+                <MobileDashboard />
+            </div>
+            <div className="md:block hidden">
+                <Dashboard />
+            </div>
+        </div>
+    );
 };
 
 export default App;

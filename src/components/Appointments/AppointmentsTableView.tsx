@@ -50,7 +50,11 @@ const useAppointmentTableStyles = makeStyles(() => ({
     },
 }));
 
-export default function AppointmentsTable() {
+export type AppointmentsTableProps = {
+    toShowPagination?: boolean;
+};
+
+export default function AppointmentsTable(props: AppointmentsTableProps) {
     const classes = useAppointmentTableStyles();
     const dispatch = useDispatch();
 
@@ -186,32 +190,33 @@ export default function AppointmentsTable() {
                         </TableCell>
                     )}
                 </TableBody>
-
-                <TableFooter>
-                    <TableRow>
-                        <TablePagination
-                            rowsPerPageOptions={[
-                                5,
-                                10,
-                                25,
-                                { label: 'All', value: -1 },
-                            ]}
-                            colSpan={3}
-                            count={appointments.length}
-                            rowsPerPage={rowsPerPage}
-                            page={page}
-                            SelectProps={{
-                                inputProps: {
-                                    'aria-label': 'rows per page',
-                                },
-                                native: true,
-                            }}
-                            onPageChange={handleChangePage}
-                            onRowsPerPageChange={handleChangeRowsPerPage}
-                            ActionsComponent={TablePaginationActions}
-                        />
-                    </TableRow>
-                </TableFooter>
+                {props.toShowPagination ? (
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[
+                                    5,
+                                    10,
+                                    25,
+                                    { label: 'All', value: -1 },
+                                ]}
+                                colSpan={3}
+                                count={appointments.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                SelectProps={{
+                                    inputProps: {
+                                        'aria-label': 'rows per page',
+                                    },
+                                    native: true,
+                                }}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                                ActionsComponent={TablePaginationActions}
+                            />
+                        </TableRow>
+                    </TableFooter>
+                ) : null}
             </Table>
         </TableContainer>
     );
