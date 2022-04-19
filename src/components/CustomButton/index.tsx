@@ -1,5 +1,4 @@
 import React from 'react';
-
 // Local Imports
 import styles from './styles.module.scss';
 
@@ -19,13 +18,13 @@ const CustomButton: React.FC<Props> = (props) => {
                 disabled={props.isDisabled}
                 onClick={props.onClick}
                 type={props.type ? props.type : 'button'}
+                className="w-full"
                 style={{
                     backgroundColor: '#1672f9',
                     border: 'none',
                     color: 'white',
                     paddingTop: 10,
                     paddingBottom: 10,
-                    width: 200,
                     fontWeight: 'bold',
                     fontSize: 17,
                     borderRadius: 10,

@@ -3,41 +3,43 @@
 } */
 
 .datePickerBox {
-  border: solid 1px;
-  border-radius: 0px 0px 15px 15px;
-  border-color: #d0dbf5;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-bottom: 15px;
-  padding-top: 5px;
+    border: solid 1px;
+    border-radius: 0px 0px 15px 15px;
+    border-color: #d0dbf5;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 5px;
 }
 
 .titleAndActionContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  background-color: #1672f9;
-  border-radius: 15px 15px 0px 0px;
-  height: 57px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #e5f0fe;
+    border-radius: 15px 15px 0px 0px;
+    height: 57px;
+    color: black;
 }
 
 .actionItem {
-  height: 30px;
-  background-color: #1672f9;
-  border: #1672f9;
+    height: 30px;
+    background-color: #e5f0fe;
+    border: #e5f0fe;
+    color: black;
 }
 
 .titleItem {
-  font-weight: 600;
-  font-size: 16px;
-  text-align: center;
-  margin-top: 6;
-  color: white;
-  padding: 13px;
+    font-weight: 600;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 6;
+    color: white;
+    padding: 13px;
 }
 
 .textAndAppointmentIndicatorContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

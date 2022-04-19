@@ -106,12 +106,12 @@ export default function Calendar() {
                             >
                                 {
                                     <ArrowBackIosIcon
-                                        style={{ fill: 'white', height: 17 }}
+                                        style={{ fill: 'black', height: 17 }}
                                     ></ArrowBackIosIcon>
                                 }
                             </button>
 
-                            <div className="titleItem">
+                            <div className="titleItem text-black">
                                 {`${
                                     months[viewingDate.getMonth()]
                                 } ${viewingDate.getFullYear()}`}
@@ -123,7 +123,7 @@ export default function Calendar() {
                             >
                                 {
                                     <ArrowForwardIosIcon
-                                        style={{ fill: 'white', height: 17 }}
+                                        style={{ fill: 'black', height: 17 }}
                                     ></ArrowForwardIosIcon>
                                 }
                             </button>

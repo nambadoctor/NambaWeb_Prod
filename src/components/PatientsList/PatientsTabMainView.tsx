@@ -10,7 +10,7 @@ export default function PatientsTabMainView() {
     return (
         <div>
             <div className="flex lg:flex-row flex-col justify-center lg:gap-24 gap-8 lg:px-4 px-1">
-                <div className="mt-4 xl:min-w-[800px]">
+                <div className="xl:min-w-[800px]">
                     <PatientsTableView
                         setIsSchedulingAppointment={setIsSchedulingAppointment}
                     />
