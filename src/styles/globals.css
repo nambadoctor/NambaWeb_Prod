@@ -29,6 +29,14 @@
 /* body {
     @apply bg-white text-grey-100 dark:text-neutral-100 bg-gradient-to-b from-[#eff1fa] to-[#c1c7eb]  min-h-screen dark:bg-neutral-10 dark:bg-gradient-to-b dark:from-black/60 dark:to-[#13193c];
 } */
+
+input[type='text'],
+input[type='password'],
+textarea,
+select {
+    outline: none;
+}
+
 .big-underline {
     text-underline-offset: 0.25em;
 }

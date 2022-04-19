@@ -10,7 +10,7 @@ import { PhoneNumberLogin } from './components/PhoneNumberAuth/PhoneNumberLogin'
 import './index.css';
 import MobileDashboard from './mobile/MobileDashboard';
 import { RootState } from './store';
-//import './styles/globals.css';
+import './styles/globals.css';
 import { reactPlugin } from './telemetry/AppInsights';
 toast.configure();
 

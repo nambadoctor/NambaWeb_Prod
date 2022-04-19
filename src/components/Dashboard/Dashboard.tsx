@@ -1,7 +1,7 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import { Divider } from '@mui/material';
 import { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../../actions/LoadedStatesActions';
@@ -52,36 +52,19 @@ function Dashboard() {
 
     function AppointmentsAndCalendarView() {
         return (
-            <div
-                style={{
-                    margin: 20,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 20,
-                }}
-            >
-                <Container fluid>
-                    <Row>
-                        <Col md="9">
-                            {isMobileCheck && (
-                                <MobileDesktopToggleView></MobileDesktopToggleView>
-                            )}
-                            <h5 style={{ marginBottom: 20 }}> Appointments </h5>
-                            <AppointmentsTableView />
-                        </Col>
-                        <Col md="3">
-                            <Row>
-                                <AddPatientForm></AddPatientForm>
-                            </Row>
-                            <Row>
-                                <Divider style={{ marginBottom: 20 }}></Divider>
-                            </Row>
-                            <Row>
-                                <Calendar />
-                            </Row>
-                        </Col>
-                    </Row>
-                </Container>
+            <div className="flex lg:flex-row flex-col justify-center lg:px-4 px-8 lg:gap-24 gap-8">
+                <div>
+                    {isMobileCheck && <MobileDesktopToggleView />}
+                    <span className="font-bold mb-5 text-lg">Appointments</span>
+                    <div className="mt-4 lg:min-w-[800px]">
+                        <AppointmentsTableView />
+                    </div>
+                </div>
+                <div className="flex flex-col max-w-sm">
+                    <AddPatientForm />
+                    <Divider style={{ marginBottom: 20 }}></Divider>
+                    <Calendar />
+                </div>
             </div>
         );
     }

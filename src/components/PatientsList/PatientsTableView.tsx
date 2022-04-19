@@ -110,21 +110,14 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                     marginRight: '5em',
                 }}
             >
-                <h5 style={{ paddingTop: 10 }}>Patients</h5>
-                <div style={{ border: '3px solid #1672f9', borderRadius: 10 }}>
-                    <input
-                        type="text"
-                        placeholder="Search..."
-                        value={search}
-                        onChange={(e) => onSearch(e.target.value)}
-                        style={{
-                            marginLeft: 10,
-                            backgroundColor: 'white',
-                            color: 'black',
-                            width: 200,
-                        }}
-                    />
-                </div>
+                <span className="font-bold pt-2">Patients</span>
+                <input
+                    className="w-48 bg-white text-black p-1 rounded-lg border-2 border-solid border-blue-500"
+                    type="text"
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => onSearch(e.target.value)}
+                />
             </div>
 
             <TableContainer

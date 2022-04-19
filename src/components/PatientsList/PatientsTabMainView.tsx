@@ -1,6 +1,4 @@
-
 import React, { useState } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import AddPatientView from '../AddPatientAndBookAppointment/AddPatientView';
 import EditPatientView from '../EditPatient/EditPatientView';
 import { PatientsTableView } from './PatientsTableView';
@@ -9,28 +7,25 @@ export default function PatientsTabMainView() {
     const [isSchedulingAppointment, setIsSchedulingAppointment] =
         useState(false);
 
-
     return (
         <div>
-            <Container fluid>
-                <Row>
-                    <Col md="9">
-                        <PatientsTableView
-                            setIsSchedulingAppointment={
-                                setIsSchedulingAppointment
-                            }
-                        ></PatientsTableView>
-                    </Col>
-                    <Col md="3">
-                        <h5 style={{ paddingTop: 10 }}>{isSchedulingAppointment ? "Book Appointment" : "Add/Edit Patient"}</h5>
-                        {isSchedulingAppointment ? (
-                            <AddPatientView></AddPatientView>
-                        ) : (
-                            <EditPatientView></EditPatientView>
-                        )}
-                    </Col>
-                </Row>
-            </Container>
+            <div className="flex lg:flex-row flex-col justify-center lg:gap-24 gap-8 lg:px-4 px-1">
+                <PatientsTableView
+                    setIsSchedulingAppointment={setIsSchedulingAppointment}
+                />
+                <div>
+                    <span className="font-bold pt-3">
+                        {isSchedulingAppointment
+                            ? 'Book Appointment'
+                            : 'Add/Edit Patient'}
+                    </span>
+                    {isSchedulingAppointment ? (
+                        <AddPatientView></AddPatientView>
+                    ) : (
+                        <EditPatientView></EditPatientView>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
