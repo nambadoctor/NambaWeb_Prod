@@ -41,7 +41,7 @@ export default function DetailedPatient() {
     }, [currentServiceProvider, id, dispatch]);
 
     return (
-        <div>
+        <div className="mx-1 md:mx-6">
             <Row>
                 <Col>
                     <ConsultationHeader />
