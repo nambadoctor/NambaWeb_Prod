@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import '../../../src/App.css';
 import { ClearContext } from '../../actions/ClearContextAction';
-import { SetIsMobileView } from '../../actions/common/MobileOrDesktopActions';
 import { GetAppointment } from '../../service-actions/AppointmentActions';
 import { UploadPrescriptionForConsultation } from '../../service-actions/PrescriptionActions';
 import { UploadReportForConsultation } from '../../service-actions/ReportActions';
@@ -67,7 +66,7 @@ export default function ConsultationView() {
                             }}
                         >
                             <Link
-                                to={"/"}
+                                to={'/'}
                                 style={{
                                     color: 'black',
                                     fontSize: 18,
@@ -167,7 +166,7 @@ export default function ConsultationView() {
                     </h3>
                 </div>
                 <div className="blue_border_rounded_white_box">
-                    <TreatmentPlanDocumentImageView></TreatmentPlanDocumentImageView>
+                    <TreatmentPlanDocumentImageView />
                 </div>
             </Row>
 

@@ -47,7 +47,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = (props) => {
                     <Row>
                         <img
                             alt="reportPdf"
-                            src={'/images/pdf.png'}
+                            src={'/assets/pdfImage.png'}
                             onClick={() => window.open(props.src.sasUrl)}
                             width="100"
                             height="60"
