@@ -1,6 +1,5 @@
 import CancelIcon from '@mui/icons-material/Cancel';
 import { TableFooter, TablePagination, Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -71,7 +70,6 @@ export default function AppointmentsTable() {
     );
 
     const appointments = useSelector(showAppointments);
-    console.log('appointments', appointments);
 
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
         usePaginationHook(-1);
@@ -92,51 +90,56 @@ export default function AppointmentsTable() {
     }
 
     function GetAppointmentList() {
-        return (
-            rowsPerPage > 0
-                ? appointments.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                  )
-                : appointments
-        ).map((appointment: IAppointmentData, _index: number) => (
-            <TableRow key={appointment.appointmentId}>
-                <TableCell align="left">
-                    <a
-                        onClick={() => dispatch(ClearContext())}
-                        href={'#/Consultation/' + appointment.appointmentId}
-                    >
-                        {appointment.customerName}
-                    </a>
-                </TableCell>
-                <TableCell>
-                    <Typography
-                        className={classes.status}
-                        style={{
-                            backgroundColor:
-                                getBackgroundColorForAppointmentState(
-                                    appointment.status,
-                                )[0],
-                            color: getBackgroundColorForAppointmentState(
-                                appointment.status,
-                            )[1],
-                        }}
-                    >
-                        {appointment.status}
-                    </Typography>
-                </TableCell>
-                <TableCell align="left">
-                    {getReadableDateAndTimeString(
-                        appointment.scheduledAppointmentStartTime,
-                    )}
-                </TableCell>
-                <TableCell align="left">
-                    <div onClick={() => cancelAppointment(appointment)}>
-                        <CancelIcon />
-                    </div>
-                </TableCell>
-            </TableRow>
-        ));
+        return rowsPerPage > 0
+            ? appointments.slice(
+                  page * rowsPerPage,
+                  page * rowsPerPage + rowsPerPage,
+              )
+            : appointments.map(
+                  (appointment: IAppointmentData, _index: number) => (
+                      <TableRow key={appointment.appointmentId}>
+                          <TableCell align="left">
+                              <a
+                                  onClick={() => dispatch(ClearContext())}
+                                  href={
+                                      '#/Consultation/' +
+                                      appointment.appointmentId
+                                  }
+                              >
+                                  {appointment.customerName}
+                              </a>
+                          </TableCell>
+                          <TableCell>
+                              <Typography
+                                  className={classes.status}
+                                  style={{
+                                      backgroundColor:
+                                          getBackgroundColorForAppointmentState(
+                                              appointment.status,
+                                          )[0],
+                                      color: getBackgroundColorForAppointmentState(
+                                          appointment.status,
+                                      )[1],
+                                  }}
+                              >
+                                  {appointment.status}
+                              </Typography>
+                          </TableCell>
+                          <TableCell align="left">
+                              {getReadableDateAndTimeString(
+                                  appointment.scheduledAppointmentStartTime,
+                              )}
+                          </TableCell>
+                          <TableCell align="left">
+                              <div
+                                  onClick={() => cancelAppointment(appointment)}
+                              >
+                                  <CancelIcon />
+                              </div>
+                          </TableCell>
+                      </TableRow>
+                  ),
+              );
     }
 
     function cancelAppointment(appointment: IAppointmentData) {
@@ -146,11 +149,8 @@ export default function AppointmentsTable() {
     }
 
     return (
-        <TableContainer
-            component={Paper}
-            style={{ borderRadius: 15, marginBottom: 10 }}
-        >
-            <Table sx={{ minWidth: 300 }} aria-label="customized table">
+        <TableContainer className="mt-3 rounded-xl border-grey-20 border-1">
+            <Table aria-label="customized table">
                 <TableHead>
                     <TableRow style={{ height: 10 }}>
                         <TableCell

@@ -10,9 +10,11 @@ export default function PatientsTabMainView() {
     return (
         <div>
             <div className="flex lg:flex-row flex-col justify-center lg:gap-24 gap-8 lg:px-4 px-1">
-                <PatientsTableView
-                    setIsSchedulingAppointment={setIsSchedulingAppointment}
-                />
+                <div className="mt-4 xl:min-w-[800px]">
+                    <PatientsTableView
+                        setIsSchedulingAppointment={setIsSchedulingAppointment}
+                    />
+                </div>
                 <div>
                     <span className="font-bold pt-3 text-lg">
                         {isSchedulingAppointment

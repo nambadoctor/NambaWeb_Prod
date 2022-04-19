@@ -52,11 +52,11 @@ function Dashboard() {
 
     function AppointmentsAndCalendarView() {
         return (
-            <div className="flex lg:flex-row flex-col justify-center lg:px-4 px-8 lg:gap-24 gap-8">
+            <div className="flex lg:flex-row flex-col justify-center lg:px-4 px-8 lg:gap-24 gap-8 w-screen">
                 <div>
                     {isMobileCheck && <MobileDesktopToggleView />}
                     <span className="font-bold mb-5 text-lg">Appointments</span>
-                    <div className="mt-4 lg:min-w-[800px]">
+                    <div className="mt-4 xl:min-w-[800px]">
                         <AppointmentsTableView />
                     </div>
                 </div>

@@ -1,7 +1,6 @@
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import EditIcon from '@mui/icons-material/Edit';
 import { TableFooter, TablePagination } from '@mui/material';
-import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -85,8 +84,9 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                             handleCustomerSelect(customer);
                         }}
                         style={{ cursor: 'pointer' }}
-                    ></EditIcon>
+                    />
                     <DateRangeIcon
+                        className="md:ml-4"
                         color="primary"
                         onClick={() => {
                             dispatch(ClearCurrentCustomerState());
@@ -94,8 +94,8 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                                 props.setIsSchedulingAppointment(true);
                             handleCustomerSelect(customer);
                         }}
-                        style={{ marginLeft: 15, cursor: 'pointer' }}
-                    ></DateRangeIcon>
+                        style={{ cursor: 'pointer' }}
+                    />
                 </TableCell>
             </TableRow>
         ));
@@ -103,12 +103,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
 
     return (
         <div>
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                }}
-            >
+            <div className="flex justify-between">
                 <span className="font-bold pt-2 text-lg">Patients</span>
                 <input
                     className="w-48 bg-white text-black p-1 rounded-lg border-2 border-solid border-blue-500"
@@ -119,11 +114,8 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                 />
             </div>
 
-            <TableContainer
-                component={Paper}
-                style={{ borderRadius: 15, marginTop: 10 }}
-            >
-                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableContainer className="mt-3 rounded-xl border-grey-20 border-1">
+                <Table aria-label="customized table">
                     <TableHead>
                         <TableRow style={{ height: 10 }}>
                             <TableCell
