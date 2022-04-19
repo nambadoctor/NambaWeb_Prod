@@ -47,7 +47,7 @@ export default function ConsultationView() {
     );
 
     return (
-        <div>
+        <div className="mx-1 lg:mx-5">
             <Row>
                 {isMobileView && (
                     <Row

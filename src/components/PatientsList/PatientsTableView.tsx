@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ClearContext } from '../../actions/ClearContextAction';
 import { ClearCurrentCustomerState } from '../../actions/CurrentCustomerActions';
 import usePaginationHook from '../../hooks/usePaginationHook';
@@ -24,6 +24,7 @@ interface EditPatientViewProps {
 
 export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     const classes = usePatientTableStyles();
+    const navigate = useNavigate();
 
     const [selectedID, setSelectedID] = useState('');
     const { page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } =
@@ -75,27 +76,54 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                 </TableCell>
 
                 <TableCell>
-                    <EditIcon
-                        color="primary"
-                        onClick={() => {
-                            dispatch(ClearCurrentCustomerState());
-                            props.setIsSchedulingAppointment &&
-                                props.setIsSchedulingAppointment(false);
-                            handleCustomerSelect(customer);
-                        }}
-                        style={{ cursor: 'pointer' }}
-                    />
-                    <DateRangeIcon
-                        className="md:ml-4"
-                        color="primary"
-                        onClick={() => {
-                            dispatch(ClearCurrentCustomerState());
-                            props.setIsSchedulingAppointment &&
-                                props.setIsSchedulingAppointment(true);
-                            handleCustomerSelect(customer);
-                        }}
-                        style={{ cursor: 'pointer' }}
-                    />
+                    <div className="hidden md:block">
+                        <EditIcon
+                            color="primary"
+                            onClick={() => {
+                                dispatch(ClearCurrentCustomerState());
+                                props.setIsSchedulingAppointment &&
+                                    props.setIsSchedulingAppointment(false);
+                                handleCustomerSelect(customer);
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        />
+                        <DateRangeIcon
+                            className="md:ml-4"
+                            color="primary"
+                            onClick={() => {
+                                dispatch(ClearCurrentCustomerState());
+                                props.setIsSchedulingAppointment &&
+                                    props.setIsSchedulingAppointment(true);
+                                handleCustomerSelect(customer);
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </div>
+                    <div className="block md:hidden">
+                        <EditIcon
+                            color="primary"
+                            onClick={() => {
+                                dispatch(ClearCurrentCustomerState());
+                                props.setIsSchedulingAppointment &&
+                                    props.setIsSchedulingAppointment(false);
+                                handleCustomerSelect(customer);
+                                navigate('/EditPatient');
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        />
+                        <DateRangeIcon
+                            className="md:ml-4"
+                            color="primary"
+                            onClick={() => {
+                                dispatch(ClearCurrentCustomerState());
+                                props.setIsSchedulingAppointment &&
+                                    props.setIsSchedulingAppointment(true);
+                                handleCustomerSelect(customer);
+                                navigate('/AddOrBook');
+                            }}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </div>
                 </TableCell>
             </TableRow>
         ));

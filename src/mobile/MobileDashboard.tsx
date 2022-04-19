@@ -18,6 +18,7 @@ import AppointmentsTableView from '../components/Appointments/AppointmentsTableV
 import ConsultationView from '../components/Consultation/ConsultationView';
 import DetailedPatient from '../components/DetailedPatient/DetailedPatient';
 import OrganisationInitialModalPickerComponent from '../components/OrganisationPicker/OrganisationInitialModalPickerComponent';
+import { PatientAddEdit } from '../components/PatientsList/PatientAddEdit';
 import { PatientsTableView } from '../components/PatientsList/PatientsTableView';
 import CriticalAlertDisplay from '../components/UIHelperComponents/CriticalAlertDisplay';
 import FullPageLoadingDisplay from '../components/UIHelperComponents/FullPageLoadingDisplay';
@@ -89,6 +90,16 @@ export default function MobileDashboard() {
                                 element={
                                     <div className="p-4">
                                         <AddPatientForm />
+                                    </div>
+                                }
+                            />
+                            <Route
+                                path="/EditPatient"
+                                element={
+                                    <div className="p-4">
+                                        <PatientAddEdit
+                                            isSchedulingAppointment={false}
+                                        />
                                     </div>
                                 }
                             />

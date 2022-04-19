@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import AddPatientView from '../AddPatientAndBookAppointment/AddPatientView';
-import EditPatientView from '../EditPatient/EditPatientView';
+import { PatientAddEdit } from './PatientAddEdit';
 import { PatientsTableView } from './PatientsTableView';
 
 export default function PatientsTabMainView() {
@@ -15,18 +14,9 @@ export default function PatientsTabMainView() {
                         setIsSchedulingAppointment={setIsSchedulingAppointment}
                     />
                 </div>
-                <div>
-                    <span className="font-bold pt-3 text-lg">
-                        {isSchedulingAppointment
-                            ? 'Book Appointment'
-                            : 'Add/Edit Patient'}
-                    </span>
-                    {isSchedulingAppointment ? (
-                        <AddPatientView />
-                    ) : (
-                        <EditPatientView />
-                    )}
-                </div>
+                <PatientAddEdit
+                    isSchedulingAppointment={isSchedulingAppointment}
+                />
             </div>
         </div>
     );
