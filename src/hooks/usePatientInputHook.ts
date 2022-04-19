@@ -7,6 +7,7 @@ import {
     ClearCurrentCustomerState,
     SetCurrentCustomer,
 } from '../actions/CurrentCustomerActions';
+import { SetSelectedCustomer } from '../actions/CustomerActions';
 import { SetAppointment } from '../service-actions/AppointmentActions';
 import {
     CheckIfCustomerExists,
@@ -62,10 +63,13 @@ export default function usePatientInputHook(
         }),
         onSubmit: (_values) => {
             formik.getFieldHelpers('phonenumber').setValue('');
+            dispatch(ClearCurrentCustomerState());
             if (isForPatientAndAppointment) {
                 makeCustomerAndAppointmentRequest();
             } else {
                 dispatch(SetCustomer(makeCustomerObject()));
+                dispatch(ClearCurrentCustomerState());
+                dispatch(SetSelectedCustomer(null));
             }
         },
     });

@@ -51,30 +51,6 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                 }}
                 selected={selectedID === customer.customerId}
             >
-                <TableCell
-                    align="left"
-                    onClick={() => handleCustomerSelect(customer)}
-                >
-                    <Link
-                        to={'/Patient/' + customer.customerId}
-                        onClick={() => dispatch(ClearContext())}
-                    >
-                        {customer.firstName +
-                            ' ' +
-                            (customer.lastName ? customer.lastName : '')}
-                    </Link>
-                </TableCell>
-                <TableCell align="left">{customer.gender}</TableCell>
-                <TableCell align="left">{customer.dateOfBirth.age}</TableCell>
-                <TableCell onClick={() => handleCustomerSelect(customer)}>
-                    <Link
-                        to={'/Patient/' + customer.customerId}
-                        onClick={() => dispatch(ClearContext())}
-                    >
-                        {customer.phoneNumbers[0].number}
-                    </Link>
-                </TableCell>
-
                 <TableCell>
                     <div className="hidden md:block">
                         <EditIcon
@@ -125,6 +101,32 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                         />
                     </div>
                 </TableCell>
+                <TableCell
+                    className="md:w-48 w-4 overflow-hidden"
+                    align="left"
+                    onClick={() => handleCustomerSelect(customer)}
+                >
+                    <Link
+                        to={'/Patient/' + customer.customerId}
+                        onClick={() => dispatch(ClearContext())}
+                    >
+                        {customer.firstName +
+                            ' ' +
+                            (customer.lastName ? customer.lastName : '')}
+                    </Link>
+                </TableCell>
+                <TableCell className="md:w-48 w-16" align="left">
+                    {customer.gender?.substring(0, 1)}/
+                    {customer.dateOfBirth.age}
+                </TableCell>
+                <TableCell onClick={() => handleCustomerSelect(customer)}>
+                    <Link
+                        to={'/Patient/' + customer.customerId}
+                        onClick={() => dispatch(ClearContext())}
+                    >
+                        {customer.phoneNumbers[0].number}
+                    </Link>
+                </TableCell>
             </TableRow>
         ));
     }
@@ -150,19 +152,19 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
                                 className={classes.tableHeaderCell}
                                 align="left"
                             >
+                                Action
+                            </TableCell>
+                            <TableCell
+                                className={classes.tableHeaderCell}
+                                align="left"
+                            >
                                 Name
                             </TableCell>
                             <TableCell
                                 className={classes.tableHeaderCell}
                                 align="left"
                             >
-                                Gender
-                            </TableCell>
-                            <TableCell
-                                className={classes.tableHeaderCell}
-                                align="left"
-                            >
-                                Age
+                                Gender/Age
                             </TableCell>
                             <TableCell
                                 className={classes.tableHeaderCell}

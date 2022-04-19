@@ -22,16 +22,18 @@ export const SetCustomers = (customers: Array<ICustomerIncomingData>): Action =>
 
 export const SetSelectedCustomer =
     (
-        customer: ICustomerIncomingData,
+        customer: ICustomerIncomingData | null,
     ): ThunkAction<void, RootState, null, Action> =>
     async (dispatch, _getState) => {
         dispatch(ClearAddPatientState());
         dispatch(ClearAllValuesForConsultation());
-        dispatch(
-            CheckIfCustomerExists(
-                customer.phoneNumbers[0].number,
-                customer.organisationId,
-            ),
-        );
-        dispatch(GetCustomer(customer.customerId));
+        if (customer) {
+            dispatch(
+                CheckIfCustomerExists(
+                    customer!.phoneNumbers[0].number,
+                    customer!.organisationId,
+                ),
+            );
+            dispatch(GetCustomer(customer!.customerId));
+        }
     };
