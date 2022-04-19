@@ -1,12 +1,12 @@
 import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
+import AccountBox from '@mui/icons-material/AccountBox';
 import AddBoxIcon from '@mui/icons-material/AddBox';
-import Home from '@mui/icons-material/Home';
 import PeopleAlt from '@mui/icons-material/PeopleAlt';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes } from 'react-router-dom';
 import { SetInitialLoadingStartTime } from '../actions/LoadedStatesActions';
@@ -26,6 +26,7 @@ import { GetServiceProviderBasic } from '../service-actions/ServiceProviderBasic
 import { RootState } from '../store';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
 import { MobileCalendar } from './MobileCalendar';
+import { ProfilePage } from './ProfilePage';
 
 export default function MobileDashboard() {
     const dispatch = useDispatch();
@@ -50,31 +51,10 @@ export default function MobileDashboard() {
 
     function AppointmentsAndCalendarView() {
         return (
-            <div
-                style={{
-                    margin: 20,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    gap: 20,
-                }}
-            >
-                <Container fluid>
-                    <Row>
-                        <Col md="3">
-                            <h5 style={{ marginBottom: 20, marginTop: 30 }}>
-                                Appointments
-                            </h5>
-                            <Row style={{ marginBottom: 20, marginTop: 30 }}>
-                                <MobileCalendar
-                                    onDateChange={onCalendarDateChange}
-                                />
-                            </Row>
-                        </Col>
-                        <Col md="9">
-                            <AppointmentsTableView />
-                        </Col>
-                    </Row>
-                </Container>
+            <div className="flex flex-col justify-center items-center my-3 mx-2 gap-3">
+                <span className="text-xl font-bold mb-4">Appointments</span>
+                <MobileCalendar onDateChange={onCalendarDateChange} />
+                <AppointmentsTableView />
             </div>
         );
     }
@@ -128,6 +108,14 @@ export default function MobileDashboard() {
                                     </div>
                                 }
                             />
+                            <Route
+                                path="/Profile"
+                                element={
+                                    <div className="mb-20">
+                                        <ProfilePage />
+                                    </div>
+                                }
+                            />
                         </Routes>
                     </div>
 
@@ -139,13 +127,13 @@ export default function MobileDashboard() {
                             to={'/Appointments'}
                             style={{
                                 color: 'black',
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: '600',
                                 textDecoration: 'none',
                             }}
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
-                                <Home color="primary" />
+                                <AccessTimeFilledIcon color="primary" />
                                 <div className="text-[#1976D2]">
                                     Appointments
                                 </div>
@@ -155,7 +143,7 @@ export default function MobileDashboard() {
                             to={'/AddOrBook'}
                             style={{
                                 color: 'black',
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: '600',
                                 textDecoration: 'none',
                             }}
@@ -169,7 +157,7 @@ export default function MobileDashboard() {
                             to={'/Patients'}
                             style={{
                                 color: 'black',
-                                fontSize: 18,
+                                fontSize: 15,
                                 fontWeight: '600',
                                 textDecoration: 'none',
                             }}
@@ -177,6 +165,20 @@ export default function MobileDashboard() {
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <PeopleAlt color="primary" />
                                 <div className="text-[#1976D2]">Patients</div>
+                            </div>
+                        </Link>
+                        <Link
+                            to={'/Profile'}
+                            style={{
+                                color: 'black',
+                                fontSize: 15,
+                                fontWeight: '600',
+                                textDecoration: 'none',
+                            }}
+                        >
+                            <div className="flex flex-column justify-content-center align-items-center">
+                                <AccountBox color="primary" />
+                                <div className="text-[#1976D2]">Profile</div>
                             </div>
                         </Link>
                     </Paper>

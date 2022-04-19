@@ -173,7 +173,7 @@ export default function AppointmentsTable(props: AppointmentsTableProps) {
                             className={classes.tableHeaderCell}
                             align="left"
                         >
-                            Appointment Time
+                            Time
                         </TableCell>
                         <TableCell
                             className={classes.tableHeaderCell}
