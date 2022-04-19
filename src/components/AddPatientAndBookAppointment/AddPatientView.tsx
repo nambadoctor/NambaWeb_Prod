@@ -9,7 +9,7 @@ import CustomButton from '../CustomButton';
 export default function AddPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
         usePatientInputHook(true);
-
+    console.log(formik.getFieldProps('phonenumber'));
     return (
         <div>
             <div
@@ -170,7 +170,7 @@ export default function AddPatientView() {
                         type="submit"
                         onClick={formik.handleSubmit}
                         isPurple={false}
-                        title="Save"
+                        title="Book appointment"
                         small={false}
                     />
                 </div>

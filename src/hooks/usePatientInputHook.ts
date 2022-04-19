@@ -61,6 +61,7 @@ export default function usePatientInputHook(
             dateOfBirth: Yup.date().nullable(),
         }),
         onSubmit: (_values) => {
+            formik.getFieldHelpers('phonenumber').setValue('');
             if (isForPatientAndAppointment) {
                 makeCustomerAndAppointmentRequest();
             } else {
