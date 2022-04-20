@@ -278,7 +278,7 @@ export function GetCustomerAllNotesEndPoint(
 }
 
 export function ReferPatientEndPoint() {
-    return 'notification/referral';
+    return '/notification/referral';
 }
 
 export function FollowupEndPoint() {
