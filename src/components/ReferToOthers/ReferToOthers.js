@@ -7,6 +7,7 @@ import Select from 'react-select';
 import * as Yup from 'yup';
 import '../../App.css';
 import { ReferPatient } from '../../service-actions/NotificationActions';
+import CustomButton from '../CustomButton';
 
 export function ReferToOthers({ referralContacts }) {
     const currentCustomer = useSelector(
@@ -48,7 +49,7 @@ export function ReferToOthers({ referralContacts }) {
     return (
         <div className="horiztontalContainer">
             {currentCustomer && (
-                <div className="flex py-2 md:flex-row flex-col justify-center md:items-end items-center space-x-4">
+                <div className="flex py-2 lg:flex-row flex-col justify-center md:items-end items-center space-x-8">
                     <div className="flex flex-col">
                         <TextField
                             fullWidth
@@ -78,14 +79,16 @@ export function ReferToOthers({ referralContacts }) {
                             placeholder="Refer To"
                         />
                     </div>
-                    <button
+                    <CustomButton
+                        isPurple={false}
+                        title="Refer"
                         type="submit"
-                        className="btn btn-primary !rounded-lg w-24 md:mt-0 mt-2"
+                        className="md:mt-0 mt-2"
                         onClick={formik.handleSubmit}
                         disabled={selectedOption === null}
                     >
                         Refer
-                    </button>
+                    </CustomButton>
                 </div>
             )}
         </div>

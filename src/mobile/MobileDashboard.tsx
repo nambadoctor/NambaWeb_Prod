@@ -4,7 +4,6 @@ import AccountBox from '@mui/icons-material/AccountBox';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import PeopleAlt from '@mui/icons-material/PeopleAlt';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Paper from '@mui/material/Paper';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,7 +63,6 @@ export default function MobileDashboard() {
         <div className="h-screen">
             {serviceProviderBasicState.serviceProvider ? (
                 <Box>
-                    <CssBaseline />
                     <div>
                         <Routes>
                             <Route
@@ -106,7 +104,7 @@ export default function MobileDashboard() {
                             <Route
                                 path="/Consultation/:id"
                                 element={
-                                    <div className="mb-20">
+                                    <div className="mb-28">
                                         <ConsultationView />
                                     </div>
                                 }
@@ -114,7 +112,7 @@ export default function MobileDashboard() {
                             <Route
                                 path="/Patient/:id"
                                 element={
-                                    <div className="mb-20">
+                                    <div className="mb-28">
                                         <DetailedPatient />
                                     </div>
                                 }
@@ -131,17 +129,12 @@ export default function MobileDashboard() {
                     </div>
 
                     <Paper
-                        className="navclass fixed bottom-0 flex w-full justify-between px-4"
+                        className="fixed bottom-0 flex w-full justify-between px-4"
                         elevation={3}
                     >
                         <Link
+                            className="text-black text-sm font-bold decoration-white py-2"
                             to={'/Appointments'}
-                            style={{
-                                color: 'black',
-                                fontSize: 15,
-                                fontWeight: '600',
-                                textDecoration: 'none',
-                            }}
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <AccessTimeFilledIcon color="primary" />
@@ -152,12 +145,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/AddOrBook'}
-                            style={{
-                                color: 'black',
-                                fontSize: 15,
-                                fontWeight: '600',
-                                textDecoration: 'none',
-                            }}
+                            className="text-black text-sm font-bold decoration-white py-2"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <AddBoxIcon color="primary" />
@@ -166,12 +154,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/Patients'}
-                            style={{
-                                color: 'black',
-                                fontSize: 15,
-                                fontWeight: '600',
-                                textDecoration: 'none',
-                            }}
+                            className="text-black text-sm font-bold decoration-white py-2"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <PeopleAlt color="primary" />
@@ -180,12 +163,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/Profile'}
-                            style={{
-                                color: 'black',
-                                fontSize: 15,
-                                fontWeight: '600',
-                                textDecoration: 'none',
-                            }}
+                            className="text-black text-sm font-bold decoration-white py-2"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <AccountBox color="primary" />
