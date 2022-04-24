@@ -38,10 +38,13 @@ export default function ConsultationHeader() {
                             {currentCustomer?.dateOfBirth.age ?? ''}
                         </span>
                         <span className="t__body--b2">
-                            {getReadableDateAndTimeString(
-                                currentConsultation.Appointment
-                                    ?.scheduledAppointmentStartTime ?? '',
-                            )}
+                            {currentConsultation.Appointment
+                                ?.scheduledAppointmentStartTime
+                                ? getReadableDateAndTimeString(
+                                      currentConsultation.Appointment
+                                          ?.scheduledAppointmentStartTime ?? '',
+                                  )
+                                : null}
                         </span>
                     </div>
                 </div>
