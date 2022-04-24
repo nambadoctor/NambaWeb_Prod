@@ -33,6 +33,8 @@ export default function OtpEntry() {
             <input
                 placeholder="•"
                 ref={ref0}
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 maxLength="1"
                 value={otp.slice(0, 1)}
                 style={{
@@ -45,6 +47,7 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -68,6 +71,8 @@ export default function OtpEntry() {
 
             <input
                 placeholder="•"
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 ref={ref1}
                 maxLength="1"
                 value={otp.slice(1, 2)}
@@ -81,6 +86,7 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -108,6 +114,8 @@ export default function OtpEntry() {
 
             <input
                 placeholder="•"
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 ref={ref2}
                 maxLength="1"
                 value={otp.slice(2, 3)}
@@ -121,6 +129,7 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -148,6 +157,8 @@ export default function OtpEntry() {
 
             <input
                 placeholder="•"
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 ref={ref3}
                 maxLength="1"
                 value={otp.slice(3, 4)}
@@ -161,6 +172,7 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -188,6 +200,8 @@ export default function OtpEntry() {
 
             <input
                 placeholder="•"
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 ref={ref4}
                 maxLength="1"
                 value={otp.slice(4, 5)}
@@ -201,6 +215,7 @@ export default function OtpEntry() {
                     textAlign: 'center',
                     marginRight: 5,
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (isNumeric(event.target.value)) {
@@ -228,6 +243,8 @@ export default function OtpEntry() {
 
             <input
                 placeholder="•"
+                type="number"
+                className=" border-2 border-solid border-gray-300"
                 ref={ref5}
                 maxLength="1"
                 value={otp.slice(5)}
@@ -240,6 +257,7 @@ export default function OtpEntry() {
                     justifySelf: 'center',
                     textAlign: 'center',
                     borderRadius: 5,
+                    backgroundColor: 'white',
                 }}
                 onChange={(event) => {
                     if (
