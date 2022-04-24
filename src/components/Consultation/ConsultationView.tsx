@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import '../../../src/App.css';
 import { ClearContext } from '../../actions/ClearContextAction';
 import { GetAppointment } from '../../service-actions/AppointmentActions';
@@ -9,8 +8,6 @@ import { UploadPrescriptionForConsultation } from '../../service-actions/Prescri
 import { UploadReportForConsultation } from '../../service-actions/ReportActions';
 import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { RootState } from '../../store';
-import CustomButton from '../CustomButton';
-import { FollowUp } from '../FollowUp/FollowUp';
 import NotesView from '../Notes/NotesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
@@ -19,6 +16,7 @@ import { ReferToOthers } from '../ReferToOthers/ReferToOthers';
 import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 import ReportImageView from '../ReportUpload/ReportImageView';
 import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
+import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
 import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
 import ConsultationHeader from './ConsultationHeader';
@@ -42,80 +40,26 @@ export default function ConsultationView() {
         }
     }, [currentServiceProvider, id, dispatch]);
 
-    const isMobileView = useSelector(
-        (state: RootState) => state.mobileOrDesktopViewReducer.isMobile,
-    );
-
     return (
-        <div className="mx-1 lg:mx-5">
-            <Row>
-                {isMobileView && (
-                    <Row
-                        style={{
-                            marginBottom: 10,
-                            marginLeft: 0,
-                            marginRight: 0,
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Link
-                                to={'/'}
-                                style={{
-                                    color: 'black',
-                                    fontSize: 18,
-                                    fontWeight: '600',
-                                    marginLeft: 20,
-                                    marginRight: 40,
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <CustomButton
-                                    type="submit"
-                                    onClick={() => {}}
-                                    isPurple={false}
-                                    title="Go Back"
-                                    small={false}
-                                />
-                            </Link>
-                        </div>
-                    </Row>
-                )}
-
-                <Col>
+        <div className="mx-1 lg:mx-5 md:mt-16 mt-4 flex flex-col">
+            <div className="flex md:flex-row flex-col justify-between mx-4 gap-2">
+                <div className="md:w-1/2">
                     <ConsultationHeader />
-                </Col>
+                </div>
                 {serviceProviderSettings &&
                 serviceProviderSettings.referralWhitelist &&
                 serviceProviderSettings.referralWhitelist.isEnabled ? (
-                    <Col>
+                    <div className="md:w-1/2 h-full">
                         <ReferToOthers
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
                                     .referralContacts
                             }
                         />
-                    </Col>
+                    </div>
                 ) : null}
-                {serviceProviderSettings &&
-                serviceProviderSettings.followupSettings &&
-                serviceProviderSettings.followupSettings.isEnabled ? (
-                    <Col>
-                        <FollowUp
-                            followUpConfig={
-                                serviceProviderSettings.followupSettings
-                            }
-                        />
-                    </Col>
-                ) : null}
-            </Row>
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 mt-5 mb-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Prescriptions
@@ -134,9 +78,8 @@ export default function ConsultationView() {
                         showCancelImageButton={false}
                     />
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 my-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Reports
@@ -153,9 +96,8 @@ export default function ConsultationView() {
                         showCancelImageButton={false}
                     />
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 my-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatment Plans
@@ -167,10 +109,13 @@ export default function ConsultationView() {
                 </div>
                 <div className="blue_border_rounded_white_box">
                     <TreatmentPlanDocumentImageView />
+                    <AllTreatmentPlanDocumentImageView
+                        showUploadButton={false}
+                        showCancelImageButton={false}
+                    ></AllTreatmentPlanDocumentImageView>
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 mt-2 mb-16">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Notes
@@ -179,7 +124,7 @@ export default function ConsultationView() {
                 <div className="blue_border_rounded_white_box">
                     <NotesView></NotesView>
                 </div>
-            </Row>
+            </div>
         </div>
     );
 }

@@ -47,10 +47,10 @@ export function ReferToOthers({ referralContacts }) {
     const [selectedOption, setSelectedOption] = useState(null);
 
     return (
-        <div className="horiztontalContainer">
+        <div className="card p-3 mt-8 pb-4">
             {currentCustomer && (
-                <div className="flex py-2 lg:flex-row flex-col justify-center md:items-end items-center space-x-8">
-                    <div className="flex flex-col">
+                <div className="flex md:flex-row flex-col md:justify-between md:items-end gap-2">
+                    <div className="flex flex-col md:w-1/2">
                         <TextField
                             fullWidth
                             label={
@@ -79,16 +79,17 @@ export function ReferToOthers({ referralContacts }) {
                             placeholder="Refer To"
                         />
                     </div>
-                    <CustomButton
-                        isPurple={false}
-                        title="Refer"
-                        type="submit"
-                        className="md:mt-0 mt-2"
-                        onClick={formik.handleSubmit}
-                        disabled={selectedOption === null}
-                    >
-                        Refer
-                    </CustomButton>
+                    <div className="md:w-1/2">
+                        <CustomButton
+                            isPurple={false}
+                            title="Refer"
+                            type="submit"
+                            onClick={formik.handleSubmit}
+                            disabled={selectedOption === null}
+                        >
+                            Refer
+                        </CustomButton>
+                    </div>
                 </div>
             )}
         </div>

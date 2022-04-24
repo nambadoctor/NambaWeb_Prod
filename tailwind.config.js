@@ -173,6 +173,12 @@ module.exports = {
                     fontSize: '12px',
                     fontWeight: 500,
                 },
+                '.t__caption--c2': {
+                    letterSpacing: '0.4px',
+                    lineHeight: '16px',
+                    fontSize: '10px',
+                    fontWeight: 400,
+                },
                 '.t__heading--h1': {
                     letterSpacing: '-1.5px',
                     lineHeight: '104px',

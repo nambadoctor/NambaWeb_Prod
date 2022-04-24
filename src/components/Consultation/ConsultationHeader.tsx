@@ -1,10 +1,8 @@
-import '../../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSelector } from 'react-redux';
+import '../../App.css';
 import { RootState } from '../../store';
-import { Col, Container, Row } from 'react-bootstrap';
 import { getReadableDateAndTimeString } from '../../utils/GeneralUtils';
-import { Typography } from '@mui/material';
 
 export default function ConsultationHeader() {
     const currentConsultation = useSelector(
@@ -15,126 +13,39 @@ export default function ConsultationHeader() {
     );
 
     return (
-        <div className="horiztontalContainer">
-            <Container fluid>
-                <Row>
-                    <Col>
-                        {currentCustomer && (
-                            <Row
-                                style={{
-                                    marginRight: 20,
-                                    alignItems: 'flex-end',
-                                }}
-                            >
-                                <Col
-                                    className="col-md-auto"
-                                    style={{ marginLeft: 15 }}
-                                >
-                                    <Typography
-                                        style={{
-                                            fontSize: 10,
-                                            opacity: 0.5,
-                                        }}
-                                    >
-                                        Patient Name
-                                    </Typography>
-                                    <Typography
-                                        style={{
-                                            fontSize: 17,
-                                            fontWeight: 'bold',
-                                            marginBottom: 15,
-                                        }}
-                                    >
-                                        {currentConsultation.Appointment
-                                            ?.customerName ??
-                                            currentCustomer.firstName}
-                                    </Typography>
-
-                                    <Typography
-                                        style={{
-                                            fontSize: 10,
-                                            opacity: 0.5,
-                                        }}
-                                    >
-                                        Age
-                                    </Typography>
-                                    <Typography style={{ fontSize: 17 }}>
-                                        {currentCustomer?.dateOfBirth.age ?? ''}
-                                    </Typography>
-                                </Col>
-                                <Col
-                                    className="col-md-auto"
-                                    style={{ marginLeft: 15 }}
-                                >
-                                    <Typography
-                                        style={{
-                                            fontSize: 10,
-                                            opacity: 0.5,
-                                        }}
-                                    >
-                                        Phone Number
-                                    </Typography>
-                                    <Typography
-                                        style={{
-                                            fontSize: 17,
-                                            fontWeight: 'bold',
-                                            marginBottom: 15,
-                                        }}
-                                    >
-                                        +91
-                                        {currentCustomer?.phoneNumbers[0]
-                                            .number ?? ''}
-                                    </Typography>
-
-                                    <Typography
-                                        style={{
-                                            fontSize: 10,
-                                            opacity: 0.5,
-                                        }}
-                                    >
-                                        Gender
-                                    </Typography>
-                                    <Typography style={{ fontSize: 17 }}>
-                                        {currentCustomer?.gender ?? ''}
-                                    </Typography>
-                                </Col>
-                                <Col
-                                    className="col-md-4"
-                                    style={{
-                                        marginLeft: 15,
-                                        marginTop: 20,
-                                    }}
-                                >
-                                    {currentConsultation.Appointment && (
-                                        <div>
-                                            <Typography
-                                                style={{
-                                                    fontSize: 10,
-                                                    opacity: 0.5,
-                                                }}
-                                            >
-                                                Appointment Time
-                                            </Typography>
-                                            <Col>
-                                                <Typography
-                                                    style={{ fontSize: 17 }}
-                                                >
-                                                    {getReadableDateAndTimeString(
-                                                        currentConsultation
-                                                            .Appointment
-                                                            ?.scheduledAppointmentStartTime ??
-                                                            '',
-                                                    )}{' '}
-                                                </Typography>
-                                            </Col>
-                                        </div>
-                                    )}
-                                </Col>
-                            </Row>
-                        )}
-                    </Col>
-                </Row>
-            </Container>
+        <div className="card p-4 mt-8">
+            {currentCustomer && (
+                <div className="flex gap-4">
+                    <img
+                        src={
+                            currentCustomer?.gender?.toLowerCase() == 'male'
+                                ? '/assets/male.svg'
+                                : '/assets/female.svg'
+                        }
+                        height={84}
+                        width={96}
+                    />
+                    <div className="flex flex-col">
+                        <span className="t__body--b1 font-semibold">
+                            {currentConsultation.Appointment?.customerName ??
+                                currentCustomer.firstName}
+                        </span>
+                        <span className="t__body--b2">
+                            +91
+                            {currentCustomer?.phoneNumbers[0].number ?? ''}
+                        </span>
+                        <span className="t__body--b2">
+                            {currentCustomer?.dateOfBirth.age ?? ''}
+                        </span>
+                        <span className="t__body--b2">
+                            {getReadableDateAndTimeString(
+                                currentConsultation.Appointment
+                                    ?.scheduledAppointmentStartTime ?? '',
+                            )}
+                        </span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

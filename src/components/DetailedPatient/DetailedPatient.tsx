@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import '../../../src/App.css';
@@ -41,25 +40,25 @@ export default function DetailedPatient() {
     }, [currentServiceProvider, id, dispatch]);
 
     return (
-        <div className="mx-1 md:mx-6">
-            <Row>
-                <Col>
+        <div className="mx-1 lg:mx-5 md:mt-16 mt-4 flex flex-col">
+            <div className="flex md:flex-row flex-col justify-between mx-4 gap-2">
+                <div className="md:w-1/2">
                     <ConsultationHeader />
-                </Col>
-                <Col>
-                    {serviceProviderSettings &&
-                    serviceProviderSettings.referralWhitelist &&
-                    serviceProviderSettings.referralWhitelist.isEnabled ? (
+                </div>
+                {serviceProviderSettings &&
+                serviceProviderSettings.referralWhitelist &&
+                serviceProviderSettings.referralWhitelist.isEnabled ? (
+                    <div className="md:w-1/2 h-full">
                         <ReferToOthers
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
                                     .referralContacts
                             }
                         />
-                    ) : null}
-                </Col>
-            </Row>
-            <Row style={{ margin: 20 }}>
+                    </div>
+                ) : null}
+            </div>
+            <div className="mx-4 mt-5 mb-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Prescriptions
@@ -76,9 +75,8 @@ export default function DetailedPatient() {
                         showCancelImageButton={false}
                     />
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 my-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Reports
@@ -95,9 +93,8 @@ export default function DetailedPatient() {
                         showCancelImageButton={false}
                     />
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 my-2">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatments
@@ -114,9 +111,8 @@ export default function DetailedPatient() {
                         showCancelImageButton={false}
                     ></AllTreatmentPlanDocumentImageView>
                 </div>
-            </Row>
-
-            <Row style={{ margin: 20 }}>
+            </div>
+            <div className="mx-4 mt-2 mb-16">
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Notes
@@ -125,7 +121,7 @@ export default function DetailedPatient() {
                 <div className="blue_border_rounded_white_box">
                     <NotesView></NotesView>
                 </div>
-            </Row>
+            </div>
         </div>
     );
 }

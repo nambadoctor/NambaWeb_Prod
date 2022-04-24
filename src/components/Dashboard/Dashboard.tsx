@@ -52,7 +52,7 @@ function Dashboard() {
             <div className="flex lg:flex-row flex-col justify-center lg:px-4 px-8 lg:gap-24 gap-8 w-screen">
                 <div>
                     <span className="font-bold mb-5 text-lg">Appointments</span>
-                    <div className="mt-4 xl:min-w-[800px]">
+                    <div className="mt-4 xl:min-w-[800px] lg:min-w-[500px]">
                         <AppointmentsTableView />
                     </div>
                 </div>

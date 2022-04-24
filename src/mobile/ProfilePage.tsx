@@ -19,7 +19,7 @@ export const ProfilePage = () => {
     const { SignOut } = useAuthHook();
 
     return (
-        <div className="flex flex-col justify-center items-center my-2 mx-2 gap-2">
+        <div className="flex flex-col justify-center items-center mx-2 gap-2 h-[60vh]">
             <span className="text-xl font-bold">Profile</span>
             <object
                 className=" h-24 w-24"
