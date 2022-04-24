@@ -299,15 +299,16 @@ export const PhoneNumberLogin: React.FC = () => {
                                             </h4>
                                             <p className="text-sm">
                                                 We are a dedicated team of
-                                                entrepreneurs focussed on
-                                                helping doctors manage their
-                                                patient records and get insights
-                                                on their business.
+                                                entrepreneurs and doctors
+                                                focussed on helping doctors
+                                                manage their patient records and
+                                                get insights on their business.
                                                 <br />
                                                 <br />
                                                 You can contact us anytime at
-                                                nambadoctor@gmail.com or call us
-                                                at +91-8281863638.
+                                                nambadoctor@gmail.com or
+                                                Call/Whatsapp us at
+                                                +91-8281863638.
                                             </p>
                                         </div>
                                     </div>
