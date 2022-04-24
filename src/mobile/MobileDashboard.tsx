@@ -76,7 +76,7 @@ export default function MobileDashboard() {
                             <Route
                                 path="/Patients"
                                 element={
-                                    <div className="p-4 mb-28">
+                                    <div className="p-4">
                                         <PatientsTableView
                                             setIsSchedulingAppointment={null}
                                         />

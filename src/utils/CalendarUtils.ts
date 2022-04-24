@@ -1,7 +1,7 @@
-import { weekDays, daysInEachMonth } from './CalendarConst';
-import { checkDatesWithOnlyMonthAndDay } from './GeneralUtils';
-import ICustomDateData from '../types/MatrixDateObj';
 import { v4 as uuidv4 } from 'uuid';
+import ICustomDateData from '../types/MatrixDateObj';
+import { daysInEachMonth, weekDays } from './CalendarConst';
+import { checkDatesWithOnlyMonthAndDay } from './GeneralUtils';
 
 export function generateMatrix(currentDate: Date, datesToMark: Date[]) {
     let matrix: ICustomDateData[][] = [];
@@ -101,8 +101,6 @@ export function generateMatrix(currentDate: Date, datesToMark: Date[]) {
     if (lastRowEmpty) {
         matrix[6].splice(0);
     }
-
-    //console.log(matrix)
 
     return matrix;
 }

@@ -132,7 +132,7 @@ export const PatientsTableView: React.FC<EditPatientViewProps> = (props) => {
     }
 
     return (
-        <div>
+        <div className="md:mb-0 mb-16">
             <div className="flex justify-between">
                 <span className="font-bold pt-2 text-lg">Patients</span>
                 <input

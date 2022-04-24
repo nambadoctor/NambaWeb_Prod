@@ -1,7 +1,7 @@
-import http from './http-common';
+import { SeverityLevel } from '@microsoft/applicationinsights-web';
 import GetHeadersHelper from '../actions/common/GetHeader';
 import SetTrackTrace from '../telemetry/SetTrackTrace';
-import { SeverityLevel } from '@microsoft/applicationinsights-web';
+import http from './http-common';
 
 async function getCall(returnType: any, endPoint: string, caller: string) {
     SetTrackTrace(
@@ -54,8 +54,6 @@ async function putCall(
     );
 
     var jsonPayload = JSON.stringify(payload);
-
-    console.log('PAYLOAD: ' + jsonPayload);
 
     let response = await http.put<typeof returnType>(endPoint, jsonPayload, {
         headers: headersContent,

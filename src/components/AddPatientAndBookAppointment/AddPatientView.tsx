@@ -9,7 +9,6 @@ import CustomButton from '../CustomButton';
 export default function AddPatientView() {
     const { addPatientState, genderOptions, gender, formik, setGender } =
         usePatientInputHook(true);
-    console.log(formik.getFieldProps('phonenumber'));
     return (
         <div>
             <div
