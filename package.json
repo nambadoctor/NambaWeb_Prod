@@ -1,10 +1,13 @@
 {
     "name": "nambaweb-prod",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "private": true,
     "dependencies": {
         "@emotion/react": "^11.7.1",
         "@emotion/styled": "^11.6.0",
+        "@fortawesome/fontawesome-svg-core": "^6.1.1",
+        "@fortawesome/free-solid-svg-icons": "^6.1.1",
+        "@fortawesome/react-fontawesome": "^0.1.18",
         "@microsoft/applicationinsights-react-js": "^3.2.2",
         "@microsoft/applicationinsights-web": "^2.7.2",
         "@mui/core": "^5.0.0-alpha.54",
@@ -28,9 +31,7 @@
         "date-fns": "^2.28.0",
         "firebase": "^9.6.1",
         "formik": "^2.2.9",
-        "http2": "^3.3.7",
         "jwt-decode": "^3.1.2",
-        "mongodb": "^4.2.2",
         "native-base": "^3.2.2",
         "net": "^1.0.2",
         "persist": "^0.2.7",
@@ -60,12 +61,15 @@
         "redux-thunk": "^2.4.1",
         "stream": "^0.0.2",
         "styled-components": "^5.3.3",
-        "ts-proto": "^1.95.0",
         "typescript": "^4.5.4",
         "util": "^0.12.4",
         "uuid": "^8.3.2",
         "web-vitals": "^2.1.2",
-        "yup": "^0.32.11"
+        "yup": "^0.32.11",
+        "autoprefixer": "^10.4.4",
+        "postcss": "^8.4.12",
+        "sass": "^1.49.7",
+        "tailwindcss": "^3.0.23"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -94,15 +98,11 @@
     "main": "index.js",
     "license": "MIT",
     "devDependencies": {
-        "@types/google-protobuf": "^3.15.5",
         "@types/react-html5-camera-photo": "^1.5.1",
         "@types/react-native": "^0.66.10",
         "@types/react-pdf": "^5.0.9",
         "@types/redux-persist": "^4.3.1",
         "@types/uuid": "^8.3.3",
-        "grpc_tools_node_protoc_ts": "^5.3.2",
-        "grpc-tools": "^1.11.2",
-        "sass": "^1.49.7",
         "ts-node": "^10.4.0"
     },
     "proxy": "http://localhost:5001",
