@@ -8,6 +8,7 @@ import { UploadPrescriptionForConsultation } from '../../service-actions/Prescri
 import { UploadReportForConsultation } from '../../service-actions/ReportActions';
 import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { RootState } from '../../store';
+import { FollowUp } from '../FollowUp/FollowUp';
 import NotesView from '../Notes/NotesView';
 import { AllPrescriptionImagesView } from '../PrescriptionUpload/AllPrescriptionImagesView';
 import PrescriptionImageView from '../PrescriptionUpload/PrescriptionImageView';
@@ -41,15 +42,15 @@ export default function ConsultationView() {
     }, [currentServiceProvider, id, dispatch]);
 
     return (
-        <div className="mx-1 lg:mx-5 md:mt-16 mt-4 flex flex-col">
-            <div className="flex md:flex-row flex-col justify-between mx-4 gap-2">
+        <div className="flex flex-col mx-1 mt-4 lg:mx-5 md:mt-16">
+            <div className="flex flex-col justify-between gap-2 mx-4 md:flex-row">
                 <div className="md:w-1/2">
                     <ConsultationHeader />
                 </div>
                 {serviceProviderSettings &&
                 serviceProviderSettings.referralWhitelist &&
                 serviceProviderSettings.referralWhitelist.isEnabled ? (
-                    <div className="md:w-1/2 h-full">
+                    <div className="h-full md:w-1/2">
                         <ReferToOthers
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
@@ -58,6 +59,15 @@ export default function ConsultationView() {
                         />
                     </div>
                 ) : null}
+                {serviceProviderSettings?.followupSettings?.isEnabled && (
+                    <div className="h-full md:w-1/2">
+                        <FollowUp
+                            followUpConfig={
+                                serviceProviderSettings.followupSettings
+                            }
+                        />
+                    </div>
+                )}
             </div>
             <div className="mx-4 mt-5 mb-2">
                 <div className="blue_filled_rounded_box_top">

@@ -6,7 +6,6 @@ import { ClearContext } from '../../actions/ClearContextAction';
 import { GetCustomer } from '../../service-actions/CustomerActions';
 import { UploadPrescriptionAsStray } from '../../service-actions/PrescriptionActions';
 import { UploadReportAsStray } from '../../service-actions/ReportActions';
-import { UploadTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import { RootState } from '../../store';
 import ConsultationHeader from '../Consultation/ConsultationHeader';
 import NotesView from '../Notes/NotesView';
@@ -18,7 +17,6 @@ import { AllReportImagesView } from '../ReportUpload/AllReportImagesView';
 import ReportImageView from '../ReportUpload/ReportImageView';
 import { ReportUploadPicker } from '../ReportUpload/ReportUploadPicker';
 import { AllTreatmentPlanDocumentImageView } from '../TreatmentPlanDocuments/AllTreatmentPlanDocumentImagesView';
-import { TreatmentPlanDocumentUploadPicker } from '../TreatmentPlanDocuments/TreatmentPlanDocumentUploadPicker';
 import TreatmentPlanDocumentImageView from '../TreatmentPlanDocuments/TreatmentPlanDocumentView';
 
 export default function DetailedPatient() {
@@ -40,15 +38,15 @@ export default function DetailedPatient() {
     }, [currentServiceProvider, id, dispatch]);
 
     return (
-        <div className="mx-1 lg:mx-5 md:mt-16 mt-4 flex flex-col">
-            <div className="flex md:flex-row flex-col justify-between mx-4 gap-2">
+        <div className="flex flex-col mx-1 mt-4 lg:mx-5 md:mt-16">
+            <div className="flex flex-col justify-between gap-2 mx-4 md:flex-row">
                 <div className="md:w-1/2">
                     <ConsultationHeader />
                 </div>
                 {serviceProviderSettings &&
                 serviceProviderSettings.referralWhitelist &&
                 serviceProviderSettings.referralWhitelist.isEnabled ? (
-                    <div className="md:w-1/2 h-full">
+                    <div className="h-full md:w-1/2">
                         <ReferToOthers
                             referralContacts={
                                 serviceProviderSettings.referralWhitelist
@@ -98,10 +96,10 @@ export default function DetailedPatient() {
                 <div className="blue_filled_rounded_box_top">
                     <h3 className="blue_filled_rounded_box_top_title_item">
                         Treatments
-                        <TreatmentPlanDocumentUploadPicker
+                        {/* <TreatmentPlanDocumentUploadPicker
                             handlePhotoCallBack={UploadTreatmentPlanDocument}
                             uploadButtonColor="#1672f9"
-                        />
+                        /> */}
                     </h3>
                 </div>
                 <div className="blue_border_rounded_white_box">

@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import ImageViewer from 'react-simple-image-viewer';
-import { RootState } from '../../store';
-import { useDispatch, useSelector } from 'react-redux';
-import { Col, Row } from 'react-bootstrap';
-import useImagesHook from '../../hooks/useImagesViewHook';
-import { AllImageDisplayProps } from '../../utils/CommonProps';
-import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
-import { DeleteTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { useEffect } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import ImageViewer from 'react-simple-image-viewer';
+import useImagesHook from '../../hooks/useImagesViewHook';
+import { DeleteTreatmentPlanDocument } from '../../service-actions/TreatmentActions';
+import { RootState } from '../../store';
+import ITreatmentPlanDocumentIncomingData from '../../types/IncomingDataModels/TreatmentPlanDocumentIncoming';
+import { AllImageDisplayProps } from '../../utils/CommonProps';
 
 export const AllTreatmentPlanDocumentImageView: React.FC<
     AllImageDisplayProps
@@ -28,8 +28,13 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
             state.ConsultationState.Appointment?.serviceRequestId,
     );
 
-    let currentCustomerTreatmentImages = useSelector(
-        (state: RootState) => state.CurrentCustomerState.TreatmentPlanDocuments,
+    let historyExists = false;
+
+    let currentCustomerTreatmentImages = useSelector((state: RootState) =>
+        state.CurrentCustomerState.TreatmentPlanDocuments?.filter((doc) => {
+            historyExists = true;
+            return doc.serviceRequestId !== currentServiceRequestId;
+        }),
     );
 
     useEffect(() => {
@@ -127,7 +132,7 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
         );
     }
 
-    function noReportsDisplay() {
+    function noTreatmentsDisplay() {
         return (
             <div
                 style={{
@@ -162,7 +167,9 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
             {currentCustomerTreatmentImages &&
             currentCustomerTreatmentImages.length > 0
                 ? imageViewDisplay()
-                : noReportsDisplay()}
+                : !historyExists
+                ? noTreatmentsDisplay()
+                : null}
         </div>
     );
 };
