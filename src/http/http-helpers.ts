@@ -92,8 +92,6 @@ async function postCall(
 
     var jsonPayload = JSON.stringify(payload);
 
-    console.log('PAYLOAD: ' + jsonPayload);
-
     let response = await http.post<typeof returnType>(endPoint, jsonPayload, {
         headers: headersContent,
     });

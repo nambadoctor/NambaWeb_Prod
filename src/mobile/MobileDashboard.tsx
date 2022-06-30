@@ -34,7 +34,6 @@ export default function MobileDashboard() {
         (state: RootState) => state.ServiceProviderBasicState,
     );
     useEffect(() => {
-        console.log('hello init mobile');
         SetTrackTrace(
             'Dashboard Mounted',
             'Dashboard',
@@ -51,8 +50,8 @@ export default function MobileDashboard() {
 
     function AppointmentsAndCalendarView() {
         return (
-            <div className="flex flex-col justify-center items-center my-3 mx-2 gap-3">
-                <span className="text-xl font-bold mb-4">Appointments</span>
+            <div className="flex flex-col items-center justify-center gap-3 mx-2 my-3">
+                <span className="mb-4 text-xl font-bold">Appointments</span>
                 <MobileCalendar onDateChange={onCalendarDateChange} />
                 <AppointmentsTableView />
             </div>
@@ -129,11 +128,11 @@ export default function MobileDashboard() {
                     </div>
 
                     <Paper
-                        className="fixed bottom-0 flex w-full justify-between px-4"
+                        className="fixed bottom-0 flex justify-between w-full px-4"
                         elevation={3}
                     >
                         <Link
-                            className="text-black text-sm font-bold decoration-white py-2"
+                            className="py-2 text-sm font-bold text-black decoration-white"
                             to={'/Appointments'}
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
@@ -145,7 +144,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/AddOrBook'}
-                            className="text-black text-sm font-bold decoration-white py-2"
+                            className="py-2 text-sm font-bold text-black decoration-white"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <AddBoxIcon color="primary" />
@@ -154,7 +153,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/Patients'}
-                            className="text-black text-sm font-bold decoration-white py-2"
+                            className="py-2 text-sm font-bold text-black decoration-white"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <PeopleAlt color="primary" />
@@ -163,7 +162,7 @@ export default function MobileDashboard() {
                         </Link>
                         <Link
                             to={'/Profile'}
-                            className="text-black text-sm font-bold decoration-white py-2"
+                            className="py-2 text-sm font-bold text-black decoration-white"
                         >
                             <div className="flex flex-column justify-content-center align-items-center">
                                 <AccountBox color="primary" />

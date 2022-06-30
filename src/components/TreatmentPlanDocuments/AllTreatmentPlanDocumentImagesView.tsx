@@ -30,11 +30,15 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
 
     let historyExists = false;
 
-    let currentCustomerTreatmentImages = useSelector((state: RootState) =>
-        state.CurrentCustomerState.TreatmentPlanDocuments?.filter((doc) => {
+    let currentCustomerTreatmentImages = useSelector(
+        (state: RootState) => state.CurrentCustomerState.TreatmentPlanDocuments,
+    );
+
+    let filteredTreatmentImages = currentCustomerTreatmentImages?.filter(
+        (doc) => {
             historyExists = true;
             return doc.serviceRequestId !== currentServiceRequestId;
-        }),
+        },
     );
 
     useEffect(() => {
@@ -53,10 +57,6 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
         setImages(stringList);
     }
 
-    useEffect(() => {
-        var c = 5;
-    }, [images]);
-
     function deleteTreatmentPlanDocument(
         treatment: ITreatmentPlanDocumentIncomingData,
     ) {
@@ -73,48 +73,47 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
                 <div>
                     {images && images.length > 0 && (
                         <div>
-                            {currentCustomerTreatmentImages &&
-                                currentCustomerTreatmentImages.map(
-                                    (src, index) => (
-                                        <div
+                            {filteredTreatmentImages &&
+                                filteredTreatmentImages.map((src, index) => (
+                                    <div
+                                        style={{
+                                            display: 'inline-block',
+                                            position: 'relative',
+                                            marginTop: 10,
+                                            marginRight: 20,
+                                        }}
+                                        key={index}
+                                    >
+                                        <img
+                                            src={src.sasUrl}
+                                            onClick={() =>
+                                                openImageViewer(index)
+                                            }
+                                            key={index}
                                             style={{
-                                                display: 'inline-block',
-                                                position: 'relative',
-                                                marginTop: 10,
-                                                marginRight: 20,
+                                                width: 100,
+                                                height: 100,
                                             }}
-                                        >
-                                            <img
-                                                src={src.sasUrl}
-                                                onClick={() =>
-                                                    openImageViewer(index)
-                                                }
-                                                key={index}
-                                                style={{
-                                                    width: 100,
-                                                    height: 100,
-                                                }}
-                                            />
+                                        />
 
-                                            {props.showCancelImageButton && (
-                                                <div
-                                                    onClick={() =>
-                                                        deleteTreatmentPlanDocument(
-                                                            src,
-                                                        )
-                                                    }
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: -10,
-                                                        right: -15,
-                                                    }}
-                                                >
-                                                    <CancelIcon />
-                                                </div>
-                                            )}
-                                        </div>
-                                    ),
-                                )}
+                                        {props.showCancelImageButton && (
+                                            <div
+                                                onClick={() =>
+                                                    deleteTreatmentPlanDocument(
+                                                        src,
+                                                    )
+                                                }
+                                                style={{
+                                                    position: 'absolute',
+                                                    top: -10,
+                                                    right: -15,
+                                                }}
+                                            >
+                                                <CancelIcon />
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                         </div>
                     )}
 
@@ -164,8 +163,7 @@ export const AllTreatmentPlanDocumentImageView: React.FC<
 
     return (
         <div>
-            {currentCustomerTreatmentImages &&
-            currentCustomerTreatmentImages.length > 0
+            {filteredTreatmentImages && filteredTreatmentImages.length > 0
                 ? imageViewDisplay()
                 : !historyExists
                 ? noTreatmentsDisplay()

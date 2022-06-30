@@ -113,6 +113,7 @@ export default function OrganisationPicker() {
                                 onClick={() => {
                                     getSelectedOption(organisation);
                                 }}
+                                key={organisation.organisationId}
                                 disableRipple
                             >
                                 {organisation.name}

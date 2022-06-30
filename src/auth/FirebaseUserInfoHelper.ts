@@ -61,7 +61,6 @@ const RefreshIdToken = async (): Promise<string> => {
                     'RefreshIdToken',
                     SeverityLevel.Error,
                 );
-                console.log(error);
                 resolve(String(error));
             });
     });

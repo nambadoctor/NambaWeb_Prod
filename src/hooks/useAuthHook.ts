@@ -26,21 +26,15 @@ export default function useAuthHook() {
         (state: RootState) => state.loginState.confirmationR,
     );
 
-    useEffect(() => {
-        console.log(confirmationR);
-    }, [confirmationR]);
+    useEffect(() => {}, [confirmationR]);
 
     function getAppVerifier() {
         return new RecaptchaVerifier(
             'recaptcha-container',
             {
                 size: 'invisible',
-                callback: () => {
-                    console.log('success');
-                },
-                'expired-callback': () => {
-                    console.log('expired');
-                },
+                callback: () => {},
+                'expired-callback': () => {},
             },
             auth,
         );
@@ -53,10 +47,9 @@ export default function useAuthHook() {
                 dispatch(SetConfirmationResultAction(confirmationResult));
                 dispatch(SetOtpShowAction(true));
             })
-            .catch((error) => {
+            .catch(() => {
                 // User couldn't sign in (bad verification code?)
                 // ...
-                console.log(error);
             });
     };
 
@@ -69,10 +62,9 @@ export default function useAuthHook() {
                     dispatch(ClearLoginStates());
                     // ...
                 })
-                .catch((error) => {
+                .catch(() => {
                     // User couldn't sign in (bad verification code?)
                     // ...
-                    console.log(error);
                 });
     };
 

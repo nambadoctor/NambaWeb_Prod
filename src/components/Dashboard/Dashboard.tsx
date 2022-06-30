@@ -35,7 +35,6 @@ function Dashboard() {
 
     //SINCE THIS IS VERY FIRST COMPONENT LOAD. THIS IS INITIAL TRIGGER POINT
     useEffect(() => {
-        console.log('hello init');
         SetTrackTrace(
             'Dashboard Mounted',
             'Dashboard',
@@ -49,9 +48,9 @@ function Dashboard() {
 
     function AppointmentsAndCalendarView() {
         return (
-            <div className="flex lg:flex-row flex-col justify-center lg:px-4 px-8 lg:gap-24 gap-8 w-screen">
+            <div className="flex flex-col justify-center w-screen gap-8 px-8 lg:flex-row lg:px-4 lg:gap-24">
                 <div>
-                    <span className="font-bold mb-5 text-lg">Appointments</span>
+                    <span className="mb-5 text-lg font-bold">Appointments</span>
                     <div className="mt-4 xl:min-w-[800px] lg:min-w-[500px]">
                         <AppointmentsTableView />
                     </div>

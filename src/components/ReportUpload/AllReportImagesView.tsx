@@ -79,6 +79,7 @@ export const AllReportImagesView: React.FC<AllImageDisplayProps> = (props) => {
                                         <Thumbnail
                                             src={src}
                                             index={index}
+                                            key={index}
                                             openImage={openImageViewer}
                                             showCancelImageButton={
                                                 props.showCancelImageButton
