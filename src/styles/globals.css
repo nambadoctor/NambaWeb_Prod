@@ -22,7 +22,7 @@
 
 @layer components {
     .card {
-        @apply rounded-2xl bg-white;
+        @apply bg-white rounded-2xl;
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
     }
@@ -159,7 +159,7 @@ input[type='number'] {
 }
 
 a {
-    @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
+    @apply text-blue-600 underline hover:text-blue-800 visited:text-purple-600;
 }
 
 .tippy-tooltip {
@@ -208,4 +208,15 @@ a {
 }
 ::-webkit-scrollbar-corner {
     background: transparent;
+}
+
+.section__container {
+    @apply container px-4 mx-auto md:px-8;
+}
+
+.section__content {
+    @apply container px-8 mx-auto xl:px-60 lg:px-44 md:px-24;
+}
+.section__heading {
+    @apply t__heading--h4 md:t__heading--h3;
 }

@@ -19,9 +19,7 @@ function App() {
             {user ? (
                 user !== 'loading' && <MobileOrDesktopViewDecider />
             ) : (
-                <div>
-                    <PhoneNumberLogin />
-                </div>
+                <PhoneNumberLogin />
             )}
         </AppInsightsContext.Provider>
     );
@@ -30,10 +28,10 @@ function App() {
 export const MobileOrDesktopViewDecider = () => {
     return (
         <div>
-            <div className="md:hidden block">
+            <div className="block md:hidden">
                 <MobileDashboard />
             </div>
-            <div className="md:block hidden">
+            <div className="hidden md:block">
                 <Dashboard />
             </div>
         </div>
