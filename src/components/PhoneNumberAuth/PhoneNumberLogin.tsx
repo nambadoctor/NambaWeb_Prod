@@ -43,13 +43,13 @@ export const PhoneNumberLogin: React.FC = () => {
         {
             title: 'Patient document uploads',
             caption:
-                "Keep a track of your patient's documents and progress pictures from the moment they walk in",
+                "Keep a track of your patient's documents and progress pictures from the moment they walk in.",
             image: <GoCloudUpload size={'72px'} />,
         },
         {
             title: 'Easy search',
             caption:
-                'Easily find the data you want by powerful patient search and sorting by date/patient details',
+                'Easily find the data you want by powerful patient search and sorting by date/patient details.',
             image: <HiDocumentSearch size={'72px'} />,
         },
         {
@@ -320,6 +320,73 @@ export const PhoneNumberLogin: React.FC = () => {
             <section className="text-blue-900 bg-blue-200">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
                     <header className="md:w-1/2">
+                        <div className="px-8 mb-4 section__heading t__heading--h3 lg:pr-12">
+                            Hear from our doctors
+                        </div>
+                        <div className="px-8 mb-16 text-xl font-light md:px-24 t__body--b1 lg:pr-12">
+                            Real doctors. Real impact. We have very a very
+                            satisfied doctors using the app in their daily
+                            practice.
+                        </div>
+                    </header>
+                    <div className="flex flex-col w-1/2 space-y-16">
+                        <div className="flex space-x-4">
+                            <img
+                                className="mb-auto"
+                                src="/assets/dr_sujatha.png"
+                                alt="Dr Sujatha"
+                                height={'128px'}
+                                width={'128px'}
+                            />
+                            <div className="flex flex-col text-left">
+                                <span className=" t__body--b1">
+                                    Dr. Sujatha Rajnikanth
+                                </span>
+                                <span className=" t__body--b3">
+                                    Gynaecologist, Chennai
+                                </span>
+                                <span className="w-4/5 mt-3">
+                                    "Nambadoctor has been a great help in my
+                                    clinic for patient electronic recording,
+                                    fixing appointments, reminders on day of
+                                    consult. Works seamlessly. Good customer
+                                    support team with immediate response and
+                                    rectification. Would like their online
+                                    consultation to come back :) Otherwise great
+                                    app. Easy to use, not many confusing tabs
+                                    and less clutter"
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex space-x-4">
+                            <img
+                                className="mb-auto"
+                                src="/assets/dr_rajesh.jpg"
+                                alt="Dr Rajesh Balasubramanian"
+                                height={'128px'}
+                                width={'128px'}
+                            />
+                            <div className="flex flex-col text-left">
+                                <span className=" t__body--b1">
+                                    Dr Rajesh Balasubramanian
+                                </span>
+                                <span className=" t__body--b3">
+                                    Breast Surgeon, Chennai
+                                </span>
+                                <span className="w-4/5 mt-3">
+                                    "Managing patient records, tracking their
+                                    progress with pre and post-op recovery
+                                    documents has been hugely helpful. Highly
+                                    recommend the app."
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="text-white bg-blue-500">
+                <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
+                    <header className="md:w-1/2">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
                             Contact us
                         </div>
@@ -328,21 +395,17 @@ export const PhoneNumberLogin: React.FC = () => {
                         </div>
                     </header>
                     <div className="flex flex-col pr-4 space-x-4 space-y-4 lg:space-x-12 md:space-y-0 md:flex-row">
-                        <div className="flex flex-col items-center text-green-50">
+                        <div className="flex flex-col items-center space-y-2 text-white">
                             <AiOutlineWhatsApp size={'48px'} />{' '}
-                            <span className="text-blue-900">
-                                +44 7712 403366
-                            </span>
+                            <span className="text-white">+44 7712 403366</span>
                         </div>
-                        <div className="flex flex-col items-center text-blue-900">
+                        <div className="flex flex-col items-center space-y-2 text-white">
                             <BiPhoneCall size={'48px'} />{' '}
-                            <span className="text-blue-900">
-                                +91 82175 99596
-                            </span>
+                            <span className="text-white">+91 82175 99596</span>
                         </div>
-                        <div className="flex flex-col items-center text-grey-90">
+                        <div className="flex flex-col items-center space-y-2 text-white">
                             <AiOutlineMail size={'48px'} />{' '}
-                            <span className="text-blue-900">
+                            <span className="text-white">
                                 admin@nambadoctor.com
                             </span>
                         </div>
