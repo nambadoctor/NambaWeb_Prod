@@ -14,7 +14,7 @@ interface FeatureCardProps extends DefaultProps {
 export const FeatureCard: FC<FeatureCardProps> = (props) => {
     return (
         <div
-            className={classNames('bg-blue-600', {
+            className={classNames('bg-blue-800', {
                 'flex flex-col': props.isImageOnTop,
                 'flex flex-row': !props.isImageOnTop,
             })}
