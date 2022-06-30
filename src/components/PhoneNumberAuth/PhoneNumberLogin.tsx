@@ -81,7 +81,7 @@ export const PhoneNumberLogin: React.FC = () => {
     return (
         <div className="flex flex-col h-screen bg-blue-100">
             <section className="flex flex-col items-center hero md:h-screen md:justify-center md:flex-row-reverse gradient-form">
-                <div className="w-full h-full pt-8 pb-8 text-blue-900 bg-white md:h-full md:w-1/2 md:pt-16">
+                <div className="w-full h-full pt-8 pb-8 text-blue-900 bg-white md:h-full md:w-1/2 md:pt-24">
                     <div className="text-center">
                         <img
                             className="w-48 mx-auto"
@@ -278,7 +278,7 @@ export const PhoneNumberLogin: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col items-center w-full px-4 pt-8 pb-4 text-center text-blue-900 bg-blue-100 md:w-1/2">
+                <div className="flex flex-col items-center w-full px-4 pt-12 pb-4 text-center text-blue-900 bg-blue-100 md:w-1/2">
                     <span className="t__heading--h2">Namba Doctor</span>
                     <span className="px-8 mt-8 xl:px-24 t__body--b2">
                         We are a dedicated team of doctors and engineers
