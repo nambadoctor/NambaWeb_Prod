@@ -292,7 +292,7 @@ export const PhoneNumberLogin: React.FC = () => {
                     />
                 </div>
             </section>
-            <section className="bg-blue-500">
+            <section className="bg-blue-600">
                 <div className="relative flex flex-col mt-16 mb-16 text-white md:mt-32 section__container md:flex-row">
                     <header className="md:w-1/2">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
@@ -324,9 +324,8 @@ export const PhoneNumberLogin: React.FC = () => {
                             Hear from our doctors
                         </div>
                         <div className="px-8 mb-16 text-xl font-light md:px-24 t__body--b1 lg:pr-12">
-                            Real doctors. Real impact. We have very a very
-                            satisfied doctors using the app in their daily
-                            practice.
+                            Real doctors. Real impact. We have very satisfied
+                            doctors using the app in their daily practice.
                         </div>
                     </header>
                     <div className="flex flex-col px-16 space-y-16 md:w-1/2 md:px-0">
@@ -384,7 +383,7 @@ export const PhoneNumberLogin: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <section className="text-white bg-blue-500">
+            <section className="text-white bg-blue-600">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
                     <header className="md:w-1/2">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
