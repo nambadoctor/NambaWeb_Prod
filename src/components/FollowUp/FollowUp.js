@@ -10,6 +10,7 @@ import Select from 'react-select';
 import * as Yup from 'yup';
 import '../../App.css';
 import { SetFolloupWithPatient } from '../../service-actions/NotificationActions';
+import CustomButton from '../CustomButton';
 
 export function FollowUp({ followUpConfig }) {
     const currentCustomer = useSelector(
@@ -43,40 +44,35 @@ export function FollowUp({ followUpConfig }) {
     const [selectedDate, setSelectedDate] = useState(new Date());
 
     return (
-        <div className="horiztontalContainer">
+        <div className="p-3 pb-4 mt-8 card">
             {currentCustomer && (
-                <div className="flex py-2 md:flex-row flex-col justify-center md:items-end items-center space-x-4">
-                    <div className="flex flex-col">
-                        <div>
-                            <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                <DateTimePicker
-                                    renderInput={(props) => (
-                                        <TextField {...props} />
-                                    )}
-                                    label="Followup Date"
-                                    value={selectedDate}
-                                    onChange={(newValue) => {
-                                        setSelectedDate(new Date(newValue));
-                                    }}
-                                />
-                            </LocalizationProvider>
-                        </div>
+                <div className="flex flex-col items-start justify-center">
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            renderInput={(props) => <TextField {...props} />}
+                            label="Followup Date"
+                            value={selectedDate}
+                            onChange={(newValue) => {
+                                setSelectedDate(new Date(newValue));
+                            }}
+                        />
+                    </LocalizationProvider>
+                    <div className="flex flex-row items-start justify-start w-full mt-1 space-x-4">
                         <Select
-                            className="mt-2"
                             defaultValue={selectedOption}
                             onChange={setSelectedOption}
                             options={selectValues}
                             placeholder="Follow-up reason"
                         />
+                        <CustomButton
+                            isPurple={false}
+                            title="Schedule"
+                            type="submit"
+                            className="w-1/2"
+                            onClick={reasonFormik.handleSubmit}
+                            disabled={selectedOption === null}
+                        />
                     </div>
-                    <button
-                        type="submit"
-                        className="btn btn-primary !rounded-lg w-24 md:mt-0 mt-2"
-                        onClick={reasonFormik.handleSubmit}
-                        disabled={selectedOption === null}
-                    >
-                        Schedule
-                    </button>
                 </div>
             )}
         </div>

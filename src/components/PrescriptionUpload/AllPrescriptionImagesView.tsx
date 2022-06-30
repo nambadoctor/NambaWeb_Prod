@@ -81,6 +81,7 @@ export const AllPrescriptionImagesView: React.FC<AllImageDisplayProps> = (
                                     <Thumbnail
                                         src={src}
                                         index={index}
+                                        key={index}
                                         openImage={openImageViewer}
                                         showCancelImageButton={
                                             props.showCancelImageButton

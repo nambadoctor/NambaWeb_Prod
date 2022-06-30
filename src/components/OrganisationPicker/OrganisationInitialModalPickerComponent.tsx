@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { SetOrgPickerModalToggle } from '../../actions/common/UIControlActions';
@@ -42,6 +41,7 @@ export default function OrganisationInitialModalPickerComponent() {
                     (organisation: IOrganisationBasic, _index: number) => (
                         <Button
                             variant="primary"
+                            key={organisation.organisationId}
                             onClick={() => selectOrg(organisation)}
                             style={{ maxWidth: 350, margin: 5 }}
                         >

@@ -77,6 +77,7 @@ export default function TreatmentPlanDocumentImageView() {
                                         marginTop: 10,
                                         marginRight: 20,
                                     }}
+                                    key={index}
                                 >
                                     <img
                                         src={src.sasUrl}

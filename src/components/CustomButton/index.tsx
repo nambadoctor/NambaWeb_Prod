@@ -6,6 +6,7 @@ type Props = {
     isPurple: boolean;
     title: string;
     small: boolean;
+    className?: string;
     type?: 'button' | 'submit' | 'reset' | undefined;
     isDisabled?: boolean;
     onClick: () => void;
@@ -18,7 +19,7 @@ const CustomButton: React.FC<Props> = (props) => {
                 disabled={props.isDisabled}
                 onClick={props.onClick}
                 type={props.type ? props.type : 'button'}
-                className="w-full"
+                className={props.className ? props.className : 'w-full'}
                 style={{
                     backgroundColor: '#1672f9',
                     border: 'none',
