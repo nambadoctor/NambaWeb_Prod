@@ -293,14 +293,16 @@ export const PhoneNumberLogin: React.FC = () => {
                 </div>
             </section>
             <section className="bg-blue-500">
-                <div className="relative flex flex-col mt-8 mb-16 text-white md:mt-32 section__container md:flex-row">
+                <div className="relative flex flex-col mt-16 mb-16 text-white md:mt-32 section__container md:flex-row">
                     <header className="md:w-1/2">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
                             Why choose us
                         </div>
                         <div className="pr-8 mb-16 text-xl font-light t__body--b1 text-grey-10 lg:pr-20">
-                            Tailor made experiences. We're there for you when
-                            you need help.
+                            Tailor made experiences. Whatever your requirement,
+                            we make sure you can serve your patients in the
+                            simplest and smartest way possible. We're there for
+                            you when you need help.
                         </div>
                     </header>
                     <div className="grid gap-4 md:w-1/2 md:ml-8 card-grid lg:grid-cols-2 md:grid-cols-2 lg:gap-8">
@@ -321,7 +323,7 @@ export const PhoneNumberLogin: React.FC = () => {
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
                             Contact us
                         </div>
-                        <div className="pr-8 mb-16 text-xl font-light t__body--b1 lg:pr-20">
+                        <div className="pr-8 mb-16 text-xl font-light t__body--b1 lg:pr-12">
                             Want to schedule a demo?
                         </div>
                     </header>
