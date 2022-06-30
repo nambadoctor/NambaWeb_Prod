@@ -81,7 +81,7 @@ export const PhoneNumberLogin: React.FC = () => {
     return (
         <div className="flex flex-col h-screen bg-blue-100">
             <section className="flex flex-col items-center hero md:h-screen md:justify-center md:flex-row-reverse gradient-form">
-                <div className="w-full h-full pt-8 pb-8 text-blue-900 bg-white md:h-full md:w-1/2 md:pt-24">
+                <div className="w-full h-full px-8 pt-8 pb-8 text-blue-900 bg-white md:px-16 md:h-full md:w-1/2 md:pt-24">
                     <div className="text-center">
                         <img
                             className="w-48 mx-auto"
@@ -329,8 +329,8 @@ export const PhoneNumberLogin: React.FC = () => {
                             practice.
                         </div>
                     </header>
-                    <div className="flex flex-col w-1/2 space-y-16">
-                        <div className="flex space-x-4">
+                    <div className="flex flex-col px-16 space-y-16 md:w-1/2 md:px-0">
+                        <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
                             <img
                                 className="mb-auto"
                                 src="/assets/dr_sujatha.png"
@@ -338,14 +338,14 @@ export const PhoneNumberLogin: React.FC = () => {
                                 height={'128px'}
                                 width={'128px'}
                             />
-                            <div className="flex flex-col text-left">
+                            <div className="flex flex-col md:text-left">
                                 <span className=" t__body--b1">
                                     Dr. Sujatha Rajnikanth
                                 </span>
                                 <span className=" t__body--b3">
                                     Gynaecologist, Chennai
                                 </span>
-                                <span className="w-4/5 mt-3">
+                                <span className="mt-3 md:w-4/5">
                                     "Nambadoctor has been a great help in my
                                     clinic for patient electronic recording,
                                     fixing appointments, reminders on day of
@@ -358,7 +358,7 @@ export const PhoneNumberLogin: React.FC = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className="flex space-x-4">
+                        <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
                             <img
                                 className="mb-auto"
                                 src="/assets/dr_rajesh.jpg"
@@ -366,14 +366,14 @@ export const PhoneNumberLogin: React.FC = () => {
                                 height={'128px'}
                                 width={'128px'}
                             />
-                            <div className="flex flex-col text-left">
+                            <div className="flex flex-col md:text-left">
                                 <span className=" t__body--b1">
                                     Dr Rajesh Balasubramanian
                                 </span>
                                 <span className=" t__body--b3">
                                     Breast Surgeon, Chennai
                                 </span>
-                                <span className="w-4/5 mt-3">
+                                <span className="mt-3 md:w-4/5">
                                     "Managing patient records, tracking their
                                     progress with pre and post-op recovery
                                     documents has been hugely helpful. Highly
