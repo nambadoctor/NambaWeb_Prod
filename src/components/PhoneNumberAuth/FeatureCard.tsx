@@ -14,12 +14,12 @@ interface FeatureCardProps extends DefaultProps {
 export const FeatureCard: FC<FeatureCardProps> = (props) => {
     return (
         <div
-            className={classNames('bg-blue-800', {
+            className={classNames('bg-blue-100 text-blue-900', {
                 'flex flex-col': props.isImageOnTop,
                 'flex flex-row': !props.isImageOnTop,
             })}
         >
-            <div className="mb-1 text-white md:mb-6">{props.image}</div>
+            <div className="mb-1 text-blue-900 md:mb-6">{props.image}</div>
             <div
                 className={classNames({
                     'flex flex-col ml-3': !props.isImageOnTop,
@@ -35,7 +35,7 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
                 </div>
                 <div
                     className={classNames(
-                        't__body--b1 text-white text-xl font-thin',
+                        't__body--b1 text-blue-900 text-xl font-thin',
                         {
                             'mr-12': !props.isImageOnTop,
                             'md:mb-4 mb-16 pr-8': props.isImageOnTop,

@@ -292,13 +292,13 @@ export const PhoneNumberLogin: React.FC = () => {
                     />
                 </div>
             </section>
-            <section className="bg-blue-800">
-                <div className="relative flex flex-col mt-16 mb-16 text-white md:mt-32 section__container md:flex-row">
+            <section className="bg-blue-100">
+                <div className="relative flex flex-col mt-16 mb-16 text-blue-900 md:mt-32 section__container md:flex-row">
                     <header className="md:w-1/2">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
                             Why choose us
                         </div>
-                        <div className="pr-8 mb-16 text-xl font-light t__body--b1 text-grey-10 lg:pr-20">
+                        <div className="pr-8 mb-16 text-xl font-light text-blue-800 t__body--b1 lg:pr-20">
                             Tailor made experiences. Whatever your requirement,
                             we make sure you can serve your patients in the
                             simplest and smartest way possible. We're there for
@@ -317,7 +317,7 @@ export const PhoneNumberLogin: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <section className="text-blue-900 bg-blue-200">
+            <section className="pb-16 text-blue-900 bg-blue-100">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
                     <header className="md:w-1/2">
                         <div className="px-8 mb-4 section__heading t__heading--h3 lg:pr-12">
@@ -383,9 +383,9 @@ export const PhoneNumberLogin: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <section className="text-white bg-blue-800">
+            <section className="text-blue-900 bg-blue-100">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
-                    <header className="md:w-1/2">
+                    <header className="px-8 md:px-32">
                         <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
                             Contact us
                         </div>
@@ -393,18 +393,22 @@ export const PhoneNumberLogin: React.FC = () => {
                             Want to schedule a demo?
                         </div>
                     </header>
-                    <div className="flex flex-col pr-4 space-x-4 space-y-4 lg:space-x-12 md:space-y-0 md:flex-row">
-                        <div className="flex flex-col items-center space-y-2 text-white">
+                    <div className="flex flex-col pr-4 space-x-4 space-y-4 md:ml-auto md:pr-16 lg:space-x-12 md:space-y-0 md:flex-row">
+                        <div className="flex flex-col items-center space-y-2 text-blue-900">
                             <AiOutlineWhatsApp size={'48px'} />{' '}
-                            <span className="text-white">+44 7712 403366</span>
+                            <span className="text-blue-900">
+                                +44 7712 403366
+                            </span>
                         </div>
-                        <div className="flex flex-col items-center space-y-2 text-white">
+                        <div className="flex flex-col items-center space-y-2 text-blue-900">
                             <BiPhoneCall size={'48px'} />{' '}
-                            <span className="text-white">+91 82175 99596</span>
+                            <span className="text-blue-900">
+                                +91 82175 99596
+                            </span>
                         </div>
-                        <div className="flex flex-col items-center space-y-2 text-white">
+                        <div className="flex flex-col items-center space-y-2 text-blue-900">
                             <AiOutlineMail size={'48px'} />{' '}
-                            <span className="text-white">
+                            <span className="text-blue-900">
                                 admin@nambadoctor.com
                             </span>
                         </div>
