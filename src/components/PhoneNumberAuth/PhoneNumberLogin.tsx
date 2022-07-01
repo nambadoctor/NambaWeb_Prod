@@ -3,6 +3,7 @@ import { Button, IconButton, TextField } from '@mui/material';
 import { useEffect } from 'react';
 import { AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiCalendar, BiPhoneCall } from 'react-icons/bi';
+import { BsArrowBarDown } from 'react-icons/bs';
 import { GoCloudUpload } from 'react-icons/go';
 import { HiDocumentSearch } from 'react-icons/hi';
 import {
@@ -79,9 +80,9 @@ export const PhoneNumberLogin: React.FC = () => {
     ];
 
     return (
-        <div className="flex flex-col h-screen bg-blue-100">
-            <section className="flex flex-col items-center hero md:h-screen md:justify-center md:flex-row-reverse gradient-form">
-                <div className="w-full h-full px-8 pt-8 pb-8 text-blue-900 bg-white md:px-16 md:h-full md:w-1/2 md:pt-24">
+        <div className="flex flex-col bg-blue-100">
+            <section className="relative flex flex-col items-center hero md:h-[100vh] md:justify-center md:flex-row-reverse gradient-form">
+                <div className="w-full px-8 pt-8 pb-8 text-blue-900 bg-white md:px-16 md:h-full md:w-1/2 md:pt-24">
                     <div className="text-center">
                         <img
                             className="w-48 mx-auto"
@@ -290,6 +291,10 @@ export const PhoneNumberLogin: React.FC = () => {
                         className="mt-20 md:max-h-96"
                         alt="Patient management"
                     />
+                </div>
+                <div className="absolute bottom-0 flex-col items-center justify-center hidden w-48 mt-auto text-blue-900 left-4 md:flex">
+                    <BsArrowBarDown />
+                    <span className="t__body--b3">Scroll down</span>
                 </div>
             </section>
             <section className="bg-blue-100">
