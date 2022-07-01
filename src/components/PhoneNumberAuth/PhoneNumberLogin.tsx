@@ -383,57 +383,87 @@ export const PhoneNumberLogin: React.FC = () => {
                             </div>
                         </header>
                         <div className="flex flex-col px-16 space-y-16 md:w-1/2 md:px-0">
-                            <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
-                                <img
-                                    className="mb-auto"
-                                    src="/assets/dr_sujatha.png"
-                                    alt="Dr Sujatha"
-                                    height={'128px'}
-                                    width={'128px'}
-                                />
-                                <div className="flex flex-col md:text-left">
-                                    <span className=" t__body--b1">
-                                        Dr. Sujatha Rajnikanth
-                                    </span>
-                                    <span className=" t__body--b3">
-                                        Gynaecologist, Chennai
-                                    </span>
-                                    <span className="mt-3 md:w-4/5">
-                                        "Nambadoctor has been a great help in my
-                                        clinic for patient electronic recording,
-                                        fixing appointments, reminders on day of
-                                        consult. Works seamlessly. Good customer
-                                        support team with immediate response and
-                                        rectification. Would like their online
-                                        consultation to come back :) Otherwise
-                                        great app. Easy to use, not many
-                                        confusing tabs and less clutter"
-                                    </span>
+                            <motion.div
+                                initial="hidden"
+                                animate={animation}
+                                transition={{
+                                    ease: 'easeOut',
+                                    y: [-4, 0],
+                                    duration: 1,
+                                }}
+                                variants={{
+                                    visible: { scale: 0.95 },
+                                    hidden: { scale: 1 },
+                                }}
+                            >
+                                <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
+                                    <img
+                                        className="mb-auto"
+                                        src="/assets/dr_sujatha.png"
+                                        alt="Dr Sujatha"
+                                        height={'128px'}
+                                        width={'128px'}
+                                    />
+                                    <div className="flex flex-col md:text-left">
+                                        <span className=" t__body--b1">
+                                            Dr. Sujatha Rajnikanth
+                                        </span>
+                                        <span className=" t__body--b3">
+                                            Gynaecologist, Chennai
+                                        </span>
+                                        <span className="mt-3 md:w-4/5">
+                                            "Nambadoctor has been a great help
+                                            in my clinic for patient electronic
+                                            recording, fixing appointments,
+                                            reminders on day of consult. Works
+                                            seamlessly. Good customer support
+                                            team with immediate response and
+                                            rectification. Would like their
+                                            online consultation to come back :)
+                                            Otherwise great app. Easy to use,
+                                            not many confusing tabs and less
+                                            clutter"
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
-                                <img
-                                    className="mb-auto"
-                                    src="/assets/dr_rajesh.jpg"
-                                    alt="Dr Rajesh Balasubramanian"
-                                    height={'128px'}
-                                    width={'128px'}
-                                />
-                                <div className="flex flex-col md:text-left">
-                                    <span className=" t__body--b1">
-                                        Dr Rajesh Balasubramanian
-                                    </span>
-                                    <span className=" t__body--b3">
-                                        Breast Surgeon, Chennai
-                                    </span>
-                                    <span className="mt-3 md:w-4/5">
-                                        "Managing patient records, tracking
-                                        their progress with pre and post-op
-                                        recovery documents has been hugely
-                                        helpful. Highly recommend the app."
-                                    </span>
+                            </motion.div>
+                            <motion.div
+                                initial="hidden"
+                                animate={animation}
+                                transition={{
+                                    ease: 'easeOut',
+                                    y: [-4, 0],
+                                    duration: 1,
+                                }}
+                                variants={{
+                                    visible: { scale: 0.95 },
+                                    hidden: { scale: 1 },
+                                }}
+                            >
+                                <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
+                                    <img
+                                        className="mb-auto"
+                                        src="/assets/dr_rajesh.jpg"
+                                        alt="Dr Rajesh Balasubramanian"
+                                        height={'128px'}
+                                        width={'128px'}
+                                    />
+                                    <div className="flex flex-col md:text-left">
+                                        <span className=" t__body--b1">
+                                            Dr Rajesh Balasubramanian
+                                        </span>
+                                        <span className=" t__body--b3">
+                                            Breast Surgeon, Chennai
+                                        </span>
+                                        <span className="mt-3 md:w-4/5">
+                                            "Managing patient records, tracking
+                                            their progress with pre and post-op
+                                            recovery documents has been hugely
+                                            helpful. Highly recommend the app."
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
                 </section>
