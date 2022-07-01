@@ -1,5 +1,6 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Button, IconButton, TextField } from '@mui/material';
+import { motion, useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai';
 import { BiCalendar, BiPhoneCall } from 'react-icons/bi';
@@ -11,6 +12,7 @@ import {
     MdOutlineDevices,
     MdOutlineSupportAgent,
 } from 'react-icons/md';
+import { useInView } from 'react-intersection-observer';
 import { useDispatch } from 'react-redux';
 import {
     SetCodeAction,
@@ -28,7 +30,32 @@ import Otp from './OTP.js';
 export const PhoneNumberLogin: React.FC = () => {
     const { countryCode } = useGeoLocation();
     const dispatch = useDispatch();
+    const animation = useAnimation();
+    const [ref, inView, entry] = useInView({ threshold: 0.1 });
 
+    useEffect(() => {
+        if (inView) {
+            animation.start('visible');
+        } else {
+            animation.start('hidden');
+        }
+    }, [animation, inView]);
+
+    const variants = {
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.5,
+                delayChilden: 0.2,
+                staggerChildren: 0.1,
+            },
+        },
+        hidden: {
+            y: entry,
+            opacity: 0,
+        },
+    };
     const { otp, otpShow, pno, code, SignInWithPhoneNumberHelper, VerifyOtp } =
         useAuthHook();
 
@@ -297,97 +324,121 @@ export const PhoneNumberLogin: React.FC = () => {
                     <span className="t__body--b3">Scroll down</span>
                 </div>
             </section>
-            <section className="bg-blue-100">
-                <div className="relative flex flex-col mt-16 mb-16 text-blue-900 md:mt-32 section__container md:flex-row">
-                    <header className="md:w-1/2">
-                        <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
-                            Why choose us
-                        </div>
-                        <div className="pr-8 mb-16 text-xl font-light text-blue-800 t__body--b1 lg:pr-20">
-                            Tailor made experiences. Whatever your requirement,
-                            we make sure you can serve your patients in the
-                            simplest and smartest way possible. We're there for
-                            you when you need help.
-                        </div>
-                    </header>
-                    <div className="grid gap-4 md:w-1/2 md:ml-8 card-grid lg:grid-cols-2 md:grid-cols-2 lg:gap-8">
-                        {sections.map((section, index) => (
-                            <FeatureCard
-                                key={index}
-                                {...section}
-                                imageHeight={64}
-                                imageWidth={64}
-                            />
-                        ))}
-                    </div>
-                </div>
-            </section>
-            <section className="pb-16 text-blue-900 bg-white">
-                <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
-                    <header className="md:w-1/2">
-                        <div className="px-8 mb-4 section__heading t__heading--h3 lg:pr-12">
-                            Hear from our doctors
-                        </div>
-                        <div className="px-8 mb-16 text-xl font-light md:px-24 t__body--b1 lg:pr-12">
-                            Real doctors. Real impact. We have very satisfied
-                            doctors using the app in their daily practice.
-                        </div>
-                    </header>
-                    <div className="flex flex-col px-16 space-y-16 md:w-1/2 md:px-0">
-                        <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
-                            <img
-                                className="mb-auto"
-                                src="/assets/dr_sujatha.png"
-                                alt="Dr Sujatha"
-                                height={'128px'}
-                                width={'128px'}
-                            />
-                            <div className="flex flex-col md:text-left">
-                                <span className=" t__body--b1">
-                                    Dr. Sujatha Rajnikanth
-                                </span>
-                                <span className=" t__body--b3">
-                                    Gynaecologist, Chennai
-                                </span>
-                                <span className="mt-3 md:w-4/5">
-                                    "Nambadoctor has been a great help in my
-                                    clinic for patient electronic recording,
-                                    fixing appointments, reminders on day of
-                                    consult. Works seamlessly. Good customer
-                                    support team with immediate response and
-                                    rectification. Would like their online
-                                    consultation to come back :) Otherwise great
-                                    app. Easy to use, not many confusing tabs
-                                    and less clutter"
-                                </span>
+            <motion.div
+                ref={ref}
+                animate={animation}
+                initial="hidden"
+                transition={{ ease: 'easeOut', duration: 2 }}
+                variants={{
+                    visible: { scale: 1 },
+                    hidden: { scale: 0.9 },
+                }}
+            >
+                <section className="bg-blue-100">
+                    <div className="relative flex flex-col mt-16 mb-16 text-blue-900 md:mt-32 section__container md:flex-row">
+                        <header className="md:w-1/2">
+                            <div className="pr-8 mb-4 section__heading t__heading--h3 lg:pr-12">
+                                Why choose us
                             </div>
-                        </div>
-                        <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
-                            <img
-                                className="mb-auto"
-                                src="/assets/dr_rajesh.jpg"
-                                alt="Dr Rajesh Balasubramanian"
-                                height={'128px'}
-                                width={'128px'}
-                            />
-                            <div className="flex flex-col md:text-left">
-                                <span className=" t__body--b1">
-                                    Dr Rajesh Balasubramanian
-                                </span>
-                                <span className=" t__body--b3">
-                                    Breast Surgeon, Chennai
-                                </span>
-                                <span className="mt-3 md:w-4/5">
-                                    "Managing patient records, tracking their
-                                    progress with pre and post-op recovery
-                                    documents has been hugely helpful. Highly
-                                    recommend the app."
-                                </span>
+                            <div className="pr-8 mb-16 text-xl font-light text-blue-800 t__body--b1 lg:pr-20">
+                                Tailor made experiences. Whatever your
+                                requirement, we make sure you can serve your
+                                patients in the simplest and smartest way
+                                possible. We're there for you when you need
+                                help.
                             </div>
+                        </header>
+                        <div className="grid gap-4 md:w-1/2 md:ml-8 card-grid lg:grid-cols-2 md:grid-cols-2 lg:gap-8">
+                            {sections.map((section, index) => (
+                                <FeatureCard
+                                    key={index}
+                                    {...section}
+                                    imageHeight={64}
+                                    imageWidth={64}
+                                />
+                            ))}
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </motion.div>
+            <motion.div
+                ref={ref}
+                animate={animation}
+                initial="hidden"
+                transition={{ ease: 'easeIn', duration: 1 }}
+                variants={{
+                    visible: { scale: 0.95 },
+                    hidden: { scale: 1 },
+                }}
+            >
+                <section className="pt-16 pb-16 text-blue-900 bg-white">
+                    <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
+                        <header className="md:w-1/2">
+                            <div className="px-8 mb-4 section__heading t__heading--h3 lg:pr-12">
+                                Hear from our doctors
+                            </div>
+                            <div className="px-8 mb-16 text-xl font-light md:px-24 t__body--b1 lg:pr-12">
+                                Real doctors. Real impact. We have very
+                                satisfied doctors using the app in their daily
+                                practice.
+                            </div>
+                        </header>
+                        <div className="flex flex-col px-16 space-y-16 md:w-1/2 md:px-0">
+                            <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
+                                <img
+                                    className="mb-auto"
+                                    src="/assets/dr_sujatha.png"
+                                    alt="Dr Sujatha"
+                                    height={'128px'}
+                                    width={'128px'}
+                                />
+                                <div className="flex flex-col md:text-left">
+                                    <span className=" t__body--b1">
+                                        Dr. Sujatha Rajnikanth
+                                    </span>
+                                    <span className=" t__body--b3">
+                                        Gynaecologist, Chennai
+                                    </span>
+                                    <span className="mt-3 md:w-4/5">
+                                        "Nambadoctor has been a great help in my
+                                        clinic for patient electronic recording,
+                                        fixing appointments, reminders on day of
+                                        consult. Works seamlessly. Good customer
+                                        support team with immediate response and
+                                        rectification. Would like their online
+                                        consultation to come back :) Otherwise
+                                        great app. Easy to use, not many
+                                        confusing tabs and less clutter"
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="flex flex-col items-center space-y-4 text-center md:space-x-4 md:space-y-0 md:flex-row md:text-left">
+                                <img
+                                    className="mb-auto"
+                                    src="/assets/dr_rajesh.jpg"
+                                    alt="Dr Rajesh Balasubramanian"
+                                    height={'128px'}
+                                    width={'128px'}
+                                />
+                                <div className="flex flex-col md:text-left">
+                                    <span className=" t__body--b1">
+                                        Dr Rajesh Balasubramanian
+                                    </span>
+                                    <span className=" t__body--b3">
+                                        Breast Surgeon, Chennai
+                                    </span>
+                                    <span className="mt-3 md:w-4/5">
+                                        "Managing patient records, tracking
+                                        their progress with pre and post-op
+                                        recovery documents has been hugely
+                                        helpful. Highly recommend the app."
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </motion.div>
             <section className="text-blue-900 bg-blue-100">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
                     <header className="px-8 md:px-32">

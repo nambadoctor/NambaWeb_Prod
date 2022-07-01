@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { motion } from 'framer-motion';
 import { FC } from 'react';
 import { DefaultProps } from '../../utils/CommonProps';
 
@@ -19,7 +20,15 @@ export const FeatureCard: FC<FeatureCardProps> = (props) => {
                 'flex flex-row': !props.isImageOnTop,
             })}
         >
-            <div className="mb-1 text-blue-900 md:mb-6">{props.image}</div>
+            <motion.div
+                animate={{
+                    scale: [0.9, 1, 1.05, 1.1, 1],
+                }}
+                transition={{ duration: 1.5 }}
+                className="mb-1 text-blue-900 md:mb-6"
+            >
+                {props.image}
+            </motion.div>
             <div
                 className={classNames({
                     'flex flex-col ml-3': !props.isImageOnTop,
