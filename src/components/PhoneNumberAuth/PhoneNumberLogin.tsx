@@ -330,8 +330,8 @@ export const PhoneNumberLogin: React.FC = () => {
                 initial="hidden"
                 transition={{ ease: 'easeOut', duration: 2 }}
                 variants={{
-                    visible: { scale: 1 },
-                    hidden: { scale: 0.9 },
+                    visible: { scale: 0.9 },
+                    hidden: { scale: 1 },
                 }}
             >
                 <section className="bg-blue-100">
@@ -362,13 +362,11 @@ export const PhoneNumberLogin: React.FC = () => {
                 </section>
             </motion.div>
             <motion.div
-                ref={ref}
-                animate={animation}
                 initial="hidden"
-                transition={{ ease: 'easeIn', duration: 1 }}
+                transition={{ ease: 'easeIn', y: [-1, 0], duration: 1 }}
                 variants={{
-                    visible: { scale: 0.95 },
-                    hidden: { scale: 1 },
+                    visible: { scale: 1 },
+                    hidden: { scale: 0.95 },
                 }}
             >
                 <section className="pt-16 pb-16 text-blue-900 bg-white">
