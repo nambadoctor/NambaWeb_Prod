@@ -322,7 +322,7 @@ export const PhoneNumberLogin: React.FC = () => {
                     </div>
                 </div>
             </section>
-            <section className="pb-16 text-blue-900 bg-blue-100">
+            <section className="pb-16 text-blue-900 bg-white">
                 <div className="relative flex flex-col mt-8 mb-16 text-center md:mt-32 md:flex-row">
                     <header className="md:w-1/2">
                         <div className="px-8 mb-4 section__heading t__heading--h3 lg:pr-12">
